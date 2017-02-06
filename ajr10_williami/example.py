@@ -1,4 +1,5 @@
 import urllib.request
+import sodapy
 import json
 import dml
 import prov.model
@@ -19,6 +20,13 @@ class example(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('ajr10_williami', 'ajr10_williami')
+
+        # 1 of 5 needed data sources. This is the example from the course notes.
+        # We should change the target url to be a desired source / topic.
+
+        boston_client = sodapy.Socrata("data.cityofboston.gov", None)
+        boston_response = boston_client.get("awu8-dc52", limit=10)
+        print(json.dumps(boston_response, sort_keys=True, indent=2))
 
         url = 'http://cs-people.bu.edu/lapets/591/examples/lost.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
