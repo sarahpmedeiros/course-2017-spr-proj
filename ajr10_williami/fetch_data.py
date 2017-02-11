@@ -22,7 +22,7 @@ class fetch_data(dml.Algorithm):
         repo.authenticate('ajr10_williami', 'ajr10_williami')
 
         # data_targets is formatted as follows
-        # "ajr10_williami.targetname" : ["url_to_target", "target_key"]
+        # "targetname" : ["url_to_target", "target_key"]
         data_targets = {
          "city_of_boston": ["data.cityofboston.gov", "awu8-dc52"],
          "lapets": ["http://cs-people.bu.edu/lapets/591/examples/lost.json", ""]
@@ -42,14 +42,14 @@ class fetch_data(dml.Algorithm):
                 response_data = json.dumps(json.loads(response), sort_keys=True, indent=2)
                 print(response_data)
                
-            '''
+            
             repo.dropCollection(target_name)
             repo.createCollection(target_name)
 
             repo[target_name].insert_many()
             repo[target_name].metadata({'complete':True})
             print(repo[target_name].metadata())
-            '''
+            
             
         repo.logout()
 
