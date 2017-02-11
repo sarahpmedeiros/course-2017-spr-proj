@@ -9,7 +9,8 @@ import uuid
 class fetch_data(dml.Algorithm):
     contributor = 'ajr10_williami'
     reads = []
-    writes = ['ajr10_williami.lost', 'ajr10_williami.found']
+    writes = ['ajr10_williami.open_space_cambridge',\
+              'ajr10_williami.open_space_boston']
 
     @staticmethod
     def execute(trial = False):
@@ -21,36 +22,38 @@ class fetch_data(dml.Algorithm):
         repo = client.repo
         repo.authenticate('ajr10_williami', 'ajr10_williami')
 
-        # data_targets is formatted as follows
-        # "targetname" : ["url_to_target", "target_key"]
-        data_targets = {
-         "city_of_boston": ["data.cityofboston.gov", "awu8-dc52"],
-         "lapets": ["http://cs-people.bu.edu/lapets/591/examples/lost.json", ""]
-         }
+        # open_space_cambridge
+        client = sodapy.Socrata("data.cambridgema.gov", None)
+        response = client.get("5ctr-ccas", limit=10)
+        
+        r = json.loads(json.dumps(response, sort_keys=True, indent=2))
+        print(r)
 
-        for target_name in data_targets:
-            target_info = data_targets[target_name]
-            # do requests here
-            if target_info[1] != "":
-                client = sodapy.Socrata(target_info[0], None)
-                response = client.get(target_info[1], limit=10)
+        repo.dropCollection("open_space_cambridge")
+        repo.createCollection("open_space_cambridge")
 
-                response_data = json.dumps(response, sort_keys=True, indent=2)
-                print(response_data)
-            else:
-                response = urllib.request.urlopen(target_info[0]).read().decode("utf-8")
-                response_data = json.dumps(json.loads(response), sort_keys=True, indent=2)
-                print(response_data)
-               
-            
-            repo.dropCollection(target_name)
-            repo.createCollection(target_name)
+        print("inserting into target: ", "open_space_cambridge")
+        print(type(r))
+        repo["open_space_cambridge"].insert_many(r)
 
-            repo[target_name].insert_many()
-            repo[target_name].metadata({'complete':True})
-            print(repo[target_name].metadata())
-            
-            
+        # open_space_boston
+        response = urllib.request.urlopen\
+                   ("http://bostonopendata-boston.opendata.arcgis.com/datasets/2868d370c55d4d458d4ae2224ef8cddd_7.geojson")\
+                   .read().decode("utf-8")
+        print(response)
+
+        '''
+        repo.dropCollection(target_name)
+        repo.createCollection(target_name)
+
+        print("inserting into target: ", target_name)
+        print(type(response_data))
+        repo[target_name].insert(response_data)
+        repo[target_name].metadata({'complete':True})
+        
+        print(repo[target_name].metadata())
+        '''
+
         repo.logout()
 
         endTime = datetime.datetime.now()
@@ -106,7 +109,7 @@ class fetch_data(dml.Algorithm):
                   
         return doc
 
-example.execute()
+fetch_data.execute()
 '''
 doc = example.provenance()
 print(doc.get_provn())
