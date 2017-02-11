@@ -13,7 +13,7 @@ class example(dml.Algorithm):
 
     @staticmethod
     def execute(trial = False):
-        '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
+        '''Retrieve some data sets and store in mongodb collections.'''
         startTime = datetime.datetime.now()
 
         # Set up the database connection.
@@ -21,31 +21,36 @@ class example(dml.Algorithm):
         repo = client.repo
         repo.authenticate('ajr10_williami', 'ajr10_williami')
 
-        # 1 of 5 needed data sources. This is the example from the course notes.
-        # We should change the target url to be a desired source / topic.
+        # data_targets is formatted as follows
+        # "ajr10_williami.targetname" : ["url_to_target", "target_key"]
+        data_targets = {
+         "city_of_boston": ["data.cityofboston.gov", "awu8-dc52"],
+         "lapets": ["http://cs-people.bu.edu/lapets/591/examples/lost.json", ""]
+         }
 
-        boston_client = sodapy.Socrata("data.cityofboston.gov", None)
-        boston_response = boston_client.get("awu8-dc52", limit=10)
-        print(json.dumps(boston_response, sort_keys=True, indent=2))
+        for target_name in data_targets:
+            target_info = data_targets[target_name]
+            # do requests here
+            if target_info[1] != "":
+                client = sodapy.Socrata(target_info[0], None)
+                response = client.get(target_info[1], limit=10)
 
-        url = 'http://cs-people.bu.edu/lapets/591/examples/lost.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("lost")
-        repo.createCollection("lost")
-        repo['ajr10_williami.lost'].insert_many(r)
-        repo['ajr10_williami.lost'].metadata({'complete':True})
-        print(repo['ajr10_williami.lost'].metadata())
+                response_data = json.dumps(response, sort_keys=True, indent=2)
+                print(response_data)
+            else:
+                response = urllib.request.urlopen(target_info[0]).read().decode("utf-8")
+                response_data = json.dumps(json.loads(response), sort_keys=True, indent=2)
+                print(response_data)
+               
+            '''
+            repo.dropCollection(target_name)
+            repo.createCollection(target_name)
 
-        url = 'http://cs-people.bu.edu/lapets/591/examples/found.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("found")
-        repo.createCollection("found")
-        repo['ajr10_williami.found'].insert_many(r)
-
+            repo[target_name].insert_many()
+            repo[target_name].metadata({'complete':True})
+            print(repo[target_name].metadata())
+            '''
+            
         repo.logout()
 
         endTime = datetime.datetime.now()
@@ -102,8 +107,9 @@ class example(dml.Algorithm):
         return doc
 
 example.execute()
+'''
 doc = example.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
-
+'''
 ## eof
