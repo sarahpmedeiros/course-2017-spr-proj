@@ -6,7 +6,7 @@ import prov.model
 import datetime
 import uuid
 
-class example(dml.Algorithm):
+class fetch_data(dml.Algorithm):
     contributor = 'ajr10_williami'
     reads = []
     writes = ['ajr10_williami.lost', 'ajr10_williami.found']
