@@ -66,10 +66,10 @@ class fetch_data(dml.Algorithm):
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''
-            Create the provenance document describing everything happening
-            in this script. Each run of the script will generate a new
-            document describing that invocation event.
-            '''
+        Create the provenance document describing everything happening
+        in this script. Each run of the script will generate a new
+        document describing that invocation event.
+        '''
 
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
@@ -79,42 +79,31 @@ class fetch_data(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        doc.add_namespace('cdp', 'https://data.cambridgema.gov/resource/')
 
-        this_script = doc.agent('alg:ajr10_williami#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_found = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_lost = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_found, this_script)
-        doc.wasAssociatedWith(get_lost, this_script)
-        doc.usage(get_found, resource, startTime, None,
+        this_script = doc.agent('alg:ajr10_williami#fetch_data', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        resource = doc.entity('cdp:5ctr-ccas', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        get_open_space_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        doc.wasAssociatedWith(get_open_space_cambridge, this_script)
+        doc.usage(get_open_space_cambridge, resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-        doc.usage(get_lost, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
+                  # Need to update this with correct information. Otherwise, this seems to be a valid provenance for open_space_cambridge
+                  'ont:Query':'?type=Open+Spaces'
                   }
                   )
 
-        lost = doc.entity('dat:ajr10_williami#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-
-        found = doc.entity('dat:ajr10_williami#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(found, this_script)
-        doc.wasGeneratedBy(found, get_found, endTime)
-        doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
+        open_space_cambridge = doc.entity('dat:ajr10_williami#open_space_cambridge', {prov.model.PROV_LABEL:'Open Space Cambridge', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(open_space_cambridge, this_script)
+        doc.wasGeneratedBy(open_space_cambridge, get_open_space_cambridge, endTime)
+        doc.wasDerivedFrom(open_space_cambridge, resource, get_open_space_cambridge, get_open_space_cambridge, get_open_space_cambridge)
 
         repo.logout()
                   
         return doc
 
-fetch_data.execute()
+#fetch_data.execute()
 '''
-doc = example.provenance()
+doc = fetch_data.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 '''
