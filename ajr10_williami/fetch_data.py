@@ -21,38 +21,41 @@ class fetch_data(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('ajr10_williami', 'ajr10_williami')
-
+        
         # open_space_cambridge
         client = sodapy.Socrata("data.cambridgema.gov", None)
         response = client.get("5ctr-ccas", limit=10)
         
         r = json.loads(json.dumps(response, sort_keys=True, indent=2))
-        print(r)
-
+        
         repo.dropCollection("open_space_cambridge")
         repo.createCollection("open_space_cambridge")
 
         print("inserting into target: ", "open_space_cambridge")
-        print(type(r))
         repo["open_space_cambridge"].insert_many(r)
-
+        
         # open_space_boston
         response = urllib.request.urlopen\
                    ("http://bostonopendata-boston.opendata.arcgis.com/datasets/2868d370c55d4d458d4ae2224ef8cddd_7.geojson")\
                    .read().decode("utf-8")
-        print(response)
-
-        '''
-        repo.dropCollection(target_name)
-        repo.createCollection(target_name)
-
-        print("inserting into target: ", target_name)
-        print(type(response_data))
-        repo[target_name].insert(response_data)
-        repo[target_name].metadata({'complete':True})
         
-        print(repo[target_name].metadata())
-        '''
+        r = json.loads(json.dumps(response, sort_keys=True, indent=2))
+
+        print(r)
+        repo.dropCollection("open_space_boston")
+        repo.createCollection("open_space_boston")
+
+        print("inserting into target: ", "open_space_boston")
+        print(type(r))
+
+        repo["open_space_boston"].insert_many(r)
+
+        # mbta
+
+        response = urllib.request.urlopen\
+                   ("http://realtime.mbta.com/developer/api/v2/<query>?api_key=<your api key>&format=json&<parameter>=<required/optional parameters>")
+
+
 
         repo.logout()
 
