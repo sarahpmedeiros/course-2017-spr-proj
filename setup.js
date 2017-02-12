@@ -132,4 +132,3 @@ db.system.js.save({_id:"dropCollection", value:createDrop()});
 
 print('Saved custom functions and scripts to "' + config.repo.name + '".');
 
-/* eof */
