@@ -37,20 +37,6 @@ class fetch_data(dml.Algorithm):
 
         print("inserting data into target: ", "open_spaces_cambridge")
         repo["ajr10_williami.open_spaces_cambridge"].insert_many(r)
-        
-        # playgrounds_cambridge
-
-        print("retrieving playgrounds data from data.cambridgema.gov")
-
-        client = sodapy.Socrata("data.cambridgema.gov", None)
-        response = client.get("wagv-xsb4", limit=10)
-        r = json.loads(json.dumps(response, sort_keys=True, indent=2))
-        
-        repo.dropCollection("ajr10_williami.playgrounds_cambridge")
-        repo.createCollection("ajr10_williami.playgrounds_cambridge")
-
-        print("inserting data into target: ", "playgrounds_cambridge")
-        repo["ajr10_williami.playgrounds_cambridge"].insert_many(r)
 
         # trees_cambridge
 
@@ -130,20 +116,17 @@ class fetch_data(dml.Algorithm):
 
         this_script = doc.agent('alg:ajr10_williami#fetch_data', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         open_spaces_cambridge_resource = doc.entity('cdp:5ctr-ccas', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        playgrounds_cambridge_resource = doc.entity('cdp:wagv-xsb4', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         trees_cambridge_resource = doc.entity('cdp:q83f-7quz', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         open_spaces_boston_resource = doc.entity('bod:2868d370c55d4d458d4ae2224ef8cddd_7.geojson', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         trees_boston_resource = doc.entity('bod:ce863d38db284efe83555caf8a832e2a_1.geojson', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
 
         get_open_spaces_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_playgrounds_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_trees_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_open_spaces_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_trees_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         
         doc.wasAssociatedWith(get_open_spaces_cambridge, this_script)
-        doc.wasAssociatedWith(get_playgrounds_cambridge, this_script)
         doc.wasAssociatedWith(get_trees_cambridge, this_script)
         doc.wasAssociatedWith(get_open_spaces_boston, this_script)
         doc.wasAssociatedWith(get_trees_boston, this_script)
@@ -151,12 +134,6 @@ class fetch_data(dml.Algorithm):
         doc.usage(get_open_spaces_cambridge, open_spaces_cambridge_resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
                   'ont:Query':'?type=Open+Spaces+Cambridge'
-                  }
-                  )
-
-        doc.usage(get_playgrounds_cambridge, playgrounds_cambridge_resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Playgrounds+Cambridge'
                   }
                   )
         doc.usage(get_trees_cambridge, trees_cambridge_resource, startTime, None,
@@ -179,11 +156,6 @@ class fetch_data(dml.Algorithm):
         doc.wasAttributedTo(open_spaces_cambridge, this_script)
         doc.wasGeneratedBy(open_spaces_cambridge, get_open_spaces_cambridge, endTime)
         doc.wasDerivedFrom(open_spaces_cambridge, open_spaces_cambridge_resource, get_open_spaces_cambridge, get_open_spaces_cambridge, get_open_spaces_cambridge)
-
-        playgrounds_cambridge = doc.entity('dat:ajr10_williami#playgrounds_cambridge', {prov.model.PROV_LABEL:'Playgrounds Cambridge', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(playgrounds_cambridge, this_script)
-        doc.wasGeneratedBy(playgrounds_cambridge, get_playgrounds_cambridge, endTime)
-        doc.wasDerivedFrom(playgrounds_cambridge, playgrounds_cambridge_resource, get_playgrounds_cambridge, get_playgrounds_cambridge, get_playgrounds_cambridge)
 
         trees_cambridge = doc.entity('dat:ajr10_williami#trees_cambridge', {prov.model.PROV_LABEL:'Trees Cambridge', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(trees_cambridge, this_script)
