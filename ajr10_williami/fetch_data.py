@@ -146,18 +146,22 @@ class fetch_data(dml.Algorithm):
         open_spaces_boston_resource = doc.entity('bod:2868d370c55d4d458d4ae2224ef8cddd_7.geojson', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         trees_boston_resource = doc.entity('bod:ce863d38db284efe83555caf8a832e2a_1.geojson', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         energy_boston_resource = doc.entity('bod:exmd-natm', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        energy_cambridge_resource = doc.entity('cdp:es2i-g3p6', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+
 
         get_open_spaces_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_trees_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_open_spaces_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_trees_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_energy_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_energy_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         
         doc.wasAssociatedWith(get_open_spaces_cambridge, this_script)
         doc.wasAssociatedWith(get_trees_cambridge, this_script)
         doc.wasAssociatedWith(get_open_spaces_boston, this_script)
         doc.wasAssociatedWith(get_trees_boston, this_script)
         doc.wasAssociatedWith(get_energy_boston, this_script)
+        doc.wasAssociatedWith(get_energy_cambridge, this_script)
 
         doc.usage(get_open_spaces_cambridge, open_spaces_cambridge_resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
@@ -184,6 +188,11 @@ class fetch_data(dml.Algorithm):
                   'ont:Query':'?type=Energy+Boston'
                   }
                   )
+        doc.usage(get_energy_cambridge, energy_cambridge_resource, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',
+                  'ont:Query':'?type=Energy+Cambridge'
+                  }
+                  )
 
         open_spaces_cambridge = doc.entity('dat:ajr10_williami#open_spaces_cambridge', {prov.model.PROV_LABEL:'Open spaces Cambridge', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(open_spaces_cambridge, this_script)
@@ -205,10 +214,15 @@ class fetch_data(dml.Algorithm):
         doc.wasGeneratedBy(trees_boston, get_trees_boston, endTime)
         doc.wasDerivedFrom(trees_boston, trees_boston_resource, get_trees_boston, get_trees_boston, get_trees_boston)
 
-        energy_boston = doc.entity('dat:ajr10_williami#energy_boston', {prov.model.PROV_LABEL:'Trees Boston', prov.model.PROV_TYPE:'ont:DataSet'})
+        energy_boston = doc.entity('dat:ajr10_williami#energy_boston', {prov.model.PROV_LABEL:'Energy Boston', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(energy_boston, this_script)
         doc.wasGeneratedBy(energy_boston, get_energy_boston, endTime)
         doc.wasDerivedFrom(energy_boston, energy_boston_resource, get_energy_boston, get_energy_boston, get_energy_boston)
+
+        energy_cambridge = doc.entity('dat:ajr10_williami#energy_cambridge', {prov.model.PROV_LABEL:'Energy Cambridge', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(energy_cambridge, this_script)
+        doc.wasGeneratedBy(energy_cambridge, get_energy_cambridge, endTime)
+        doc.wasDerivedFrom(energy_cambridge, energy_cambridge_resource, get_energy_cambridge, get_energy_cambridge, get_energy_cambridge)
 
         repo.logout()
                   
@@ -216,9 +230,8 @@ class fetch_data(dml.Algorithm):
 
 fetch_data.execute()
 
-'''
 doc = fetch_data.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
-'''
+
 ## eof
