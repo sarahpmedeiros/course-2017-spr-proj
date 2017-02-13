@@ -1,4 +1,0 @@
-'''
-Pauline Ramirez & Carlos Syquia
-
-'''
