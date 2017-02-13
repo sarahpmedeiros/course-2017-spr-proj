@@ -53,7 +53,7 @@ listFiles().forEach(function(f) {
       db.createRole({
           role: userName,
           privileges: [],
-          roles: [{role: "readWrite", db: config.repo.name}]
+          roles: [{role: "read", db: config.repo.name}]
         });
       db.dropUser(userName);
       db.createUser({
