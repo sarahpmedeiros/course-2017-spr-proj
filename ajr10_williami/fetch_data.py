@@ -12,7 +12,8 @@ class fetch_data(dml.Algorithm):
     writes = ['ajr10_williami.open_spaces_cambridge',\
               'ajr10_williami.trees_cambridge',\
               'ajr10_williami.open_spaces_boston',\
-              'ajr10_williami.trees_boston']
+              'ajr10_williami.trees_boston',\
+              'ajr10_williami.energy_boston']
 
     @staticmethod
     def execute(trial = False):
@@ -84,11 +85,19 @@ class fetch_data(dml.Algorithm):
         print("inserting data into target: ", "trees_boston")
         repo["ajr10_williami.trees_boston"].insert_many(r["features"])
 
-        # mbta
+        # energy_boston
+        
+        print("retrieving tree data from data.cityofboston..gov")
 
-        # response = urllib.request.urlopen\
-        #            ("http://realtime.mbta.com/developer/api/v2/<query>?api_key=<your api key>&format=json&<parameter>=<required/optional parameters>")
+        client = sodapy.Socrata("data.cityofboston.gov", None)
+        response = client.get("exmd-natm", limit=10)
+        r = json.loads(json.dumps(response, sort_keys=True, indent=2))
+        
+        repo.dropCollection("ajr10_williami.energy_boston")
+        repo.createCollection("ajr10_williami.energy_boston")
 
+        print("inserting data into target: ", "energy_boston")
+        repo["ajr10_williami.energy_boston"].insert_many(r)
         repo.logout()
 
         endTime = datetime.datetime.now()
