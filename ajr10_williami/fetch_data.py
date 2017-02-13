@@ -29,6 +29,11 @@ class fetch_data(dml.Algorithm):
         client = sodapy.Socrata("data.cambridgema.gov", None)
         response = client.get("5ctr-ccas", limit=10)
         r = json.loads(json.dumps(response, sort_keys=True, indent=2))
+        print(type(r))
+        print(type(r[0]))
+
+        <class 'list'>
+        <class 'dict'>
         
         repo.dropCollection("ajr10_williami.open_space_cambridge")
         repo.createCollection("ajr10_williami.open_space_cambridge")
@@ -38,19 +43,29 @@ class fetch_data(dml.Algorithm):
         
         # open_space_boston
         response = urllib.request.urlopen\
-                   ("http://bostonopendata-boston.opendata.arcgis.com/datasets/2868d370c55d4d458d4ae2224ef8cddd_7.geojson")\
-                   .read().decode("utf-8")
+           ("http://bostonopendata-boston.opendata.arcgis.com/datasets/2868d370c55d4d458d4ae2224ef8cddd_7.geojson")\
+           .read().decode("utf-8")
         
-        r = json.loads(json.dumps(response, sort_keys=True, indent=2))
+        # r = json.loads(json.dumps(response, sort_keys=True, indent=2))
+        # print("r with dumps")
+        # r = json.dumps(response)
+        # print(r)
+        # print()
 
-        print(r)
-        repo.dropCollection("open_space_boston")
-        repo.createCollection("open_space_boston")
+        # print("r with loads")
+        # r = json.loads(response)
+        # print(r)
+        # print()
 
-        print("inserting into target: ", "open_space_boston")
-        print(type(r))
 
-        repo["open_space_boston"].insert_many(r)
+        repo.dropCollection("ajr10_williami.open_space_boston")
+        repo.createCollection("ajr10_williami.open_space_boston")
+
+        # print("inserting into target: ", "open_space_boston")
+        # print(type(r))
+
+
+        repo["ajr10_williami.open_space_boston"].insert_many(response)
 
         # mbta
 
