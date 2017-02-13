@@ -24,9 +24,27 @@ class fetch_data(dml.Algorithm):
         
         # open_space_cambridge
         client = sodapy.Socrata("data.cambridgema.gov", None)
-        response = client.get("5ctr-ccas", limit=10)
-        
-        r = json.loads(json.dumps(response, sort_keys=True, indent=2))
+        response = client.get("5ctr-ccas", limit=2)
+        print("response")
+        print(response)
+        print()
+        r = json.dumps(response, sort_keys=True, indent=2)
+        print("r")
+        print(r)
+        print()
+
+        r = json.loads(r)
+        print("loaded r")
+        print(r)
+        print()
+
+        print("type of r")
+        print(type(r))
+        print()     
+
+        print("type of element r")
+        print(type(r[0]))
+        print()   
         
         repo.dropCollection("open_space_cambridge")
         repo.createCollection("open_space_cambridge")
@@ -34,26 +52,26 @@ class fetch_data(dml.Algorithm):
         print("inserting into target: ", "open_space_cambridge")
         repo["open_space_cambridge"].insert_many(r)
         
-        # open_space_boston
-        response = urllib.request.urlopen\
-                   ("http://bostonopendata-boston.opendata.arcgis.com/datasets/2868d370c55d4d458d4ae2224ef8cddd_7.geojson")\
-                   .read().decode("utf-8")
+        # # open_space_boston
+        # response = urllib.request.urlopen\
+        #            ("http://bostonopendata-boston.opendata.arcgis.com/datasets/2868d370c55d4d458d4ae2224ef8cddd_7.geojson")\
+        #            .read().decode("utf-8")
         
-        r = json.loads(json.dumps(response, sort_keys=True, indent=2))
+        # r = json.loads(json.dumps(response, sort_keys=True, indent=2))
 
-        print(r)
-        repo.dropCollection("open_space_boston")
-        repo.createCollection("open_space_boston")
+        # print(r)
+        # repo.dropCollection("open_space_boston")
+        # repo.createCollection("open_space_boston")
 
-        print("inserting into target: ", "open_space_boston")
-        print(type(r))
+        # print("inserting into target: ", "open_space_boston")
+        # print(type(r))
 
-        repo["open_space_boston"].insert_many(r)
+        # repo["open_space_boston"].insert_many(r)
 
-        # mbta
+        # # mbta
 
-        response = urllib.request.urlopen\
-                   ("http://realtime.mbta.com/developer/api/v2/<query>?api_key=<your api key>&format=json&<parameter>=<required/optional parameters>")
+        # response = urllib.request.urlopen\
+        #            ("http://realtime.mbta.com/developer/api/v2/<query>?api_key=<your api key>&format=json&<parameter>=<required/optional parameters>")
 
 
 
