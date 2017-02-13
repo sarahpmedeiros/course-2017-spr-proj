@@ -67,30 +67,36 @@ class fetch_data(dml.Algorithm):
         repo["ajr10_williami.trees_cambridge"].insert_many(r)
 
         # open_spaces_boston
-        return
+
+        print("retrieving tree data from bostonopendata-boston.opendata.arcgis")
+
         response = urllib.request.urlopen\
            ("http://bostonopendata-boston.opendata.arcgis.com/datasets/2868d370c55d4d458d4ae2224ef8cddd_7.geojson")\
            .read().decode("utf-8")
         
-        # r = json.loads(json.dumps(response, sort_keys=True, indent=2))
-        # print("r with dumps")
-        # r = json.dumps(response)
-        # print(r)
-        # print()
-
-        # print("r with loads")
-        # r = json.loads(response)
-        # print(r)
-        # print()
+        r = json.loads(response)
 
         repo.dropCollection("ajr10_williami.open_spaces_boston")
         repo.createCollection("ajr10_williami.open_spaces_boston")
 
-        # print("inserting into target: ", "open_spaces_boston")
-        # print(type(r))
+        print("inserting into target: ", "open_spaces_boston")
+        repo["ajr10_williami.open_spaces_boston"].insert_many(r["features"])
 
+        # trees_boston
 
-        repo["ajr10_williami.open_spaces_boston"].insert_many(response)
+        print("retrieving tree data from bostonopendata-boston.opendata.arcgis")
+
+        response = urllib.request.urlopen\
+           ('http://bostonopendata-boston.opendata.arcgis.com/datasets/ce863d38db284efe83555caf8a832e2a_1.geojson')\
+           .read().decode("utf-8")
+        
+        r = json.loads(response)
+        
+        repo.dropCollection("ajr10_williami.trees_boston")
+        repo.createCollection("ajr10_williami.trees_boston")
+
+        print("inserting data into target: ", "trees_boston")
+        repo["ajr10_williami.trees_boston"].insert_many(r["features"])
 
         # mbta
 
