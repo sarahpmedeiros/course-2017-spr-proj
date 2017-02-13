@@ -46,11 +46,11 @@ class fetch_data(dml.Algorithm):
         print(type(r[0]))
         print()   
         
-        repo.dropCollection("open_space_cambridge")
-        repo.createCollection("open_space_cambridge")
+        repo.dropCollection("ajr10_williami.open_space_cambridge")
+        repo.createCollection("ajr10_williami.open_space_cambridge")
 
         print("inserting into target: ", "open_space_cambridge")
-        repo["open_space_cambridge"].insert_many(r)
+        repo["ajr10_williami.open_space_cambridge"].insert_many(r)
         
         # # open_space_boston
         # response = urllib.request.urlopen\
@@ -119,7 +119,7 @@ class fetch_data(dml.Algorithm):
                   
         return doc
 
-#fetch_data.execute()
+fetch_data.execute()
 '''
 doc = fetch_data.provenance()
 print(doc.get_provn())
