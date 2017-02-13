@@ -13,7 +13,8 @@ class fetch_data(dml.Algorithm):
               'ajr10_williami.trees_cambridge',\
               'ajr10_williami.open_spaces_boston',\
               'ajr10_williami.trees_boston',\
-              'ajr10_williami.energy_boston']
+              'ajr10_williami.energy_boston',\
+              'ajr10_williami.energy_cambridge']
 
     @staticmethod
     def execute(trial = False):
@@ -87,7 +88,7 @@ class fetch_data(dml.Algorithm):
 
         # energy_boston
         
-        print("retrieving tree data from data.cityofboston..gov")
+        print("retrieving energy data from data.cityofboston.gov")
 
         client = sodapy.Socrata("data.cityofboston.gov", None)
         response = client.get("exmd-natm", limit=10)
@@ -98,6 +99,21 @@ class fetch_data(dml.Algorithm):
 
         print("inserting data into target: ", "energy_boston")
         repo["ajr10_williami.energy_boston"].insert_many(r)
+        repo.logout()
+        
+        # energy_cambridge
+
+        print("retrieving energy data from data.cambridgema.gov")
+
+        client = sodapy.Socrata("data.cambridgema.gov", None)
+        response = client.get("es2i-g3p6", limit=10)
+        r = json.loads(json.dumps(response, sort_keys=True, indent=2))
+        
+        repo.dropCollection("ajr10_williami.energy_cambridge")
+        repo.createCollection("ajr10_williami.energy_cambridge")
+
+        print("inserting data into target: ", "energy_cambridge")
+        repo["ajr10_williami.energy_cambridge"].insert_many(r)
         repo.logout()
 
         endTime = datetime.datetime.now()
