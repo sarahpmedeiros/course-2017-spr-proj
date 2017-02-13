@@ -9,9 +9,10 @@ import uuid
 class fetch_data(dml.Algorithm):
     contributor = 'ajr10_williami'
     reads = []
-    writes = ['ajr10_williami.open_space_cambridge',\
-              'ajr10_williami.playground_cambridge',\
-              'ajr10_williami.open_space_boston']
+    writes = ['ajr10_williami.open_spaces_cambridge',\
+              'ajr10_williami.playgrounds_cambridge',\
+              'ajr10_williami.trees_cambridge',\
+              'ajr10_williami.open_spaces_boston']
 
     @staticmethod
     def execute(trial = False):
@@ -23,35 +24,49 @@ class fetch_data(dml.Algorithm):
         repo = client.repo
         repo.authenticate('ajr10_williami', 'ajr10_williami')
         
-        # open_space_cambridge
+        # open_spaces_cambridge
 
-        print("retrieving open space data from data.cambridgema.gov")
+        print("retrieving open spaces data from data.cambridgema.gov")
 
         client = sodapy.Socrata("data.cambridgema.gov", None)
         response = client.get("5ctr-ccas", limit=10)
         r = json.loads(json.dumps(response, sort_keys=True, indent=2))
         
-        repo.dropCollection("ajr10_williami.open_space_cambridge")
-        repo.createCollection("ajr10_williami.open_space_cambridge")
+        repo.dropCollection("ajr10_williami.open_spaces_cambridge")
+        repo.createCollection("ajr10_williami.open_spaces_cambridge")
 
-        print("inserting data into target: ", "open_space_cambridge")
-        repo["ajr10_williami.open_space_cambridge"].insert_many(r)
+        print("inserting data into target: ", "open_spaces_cambridge")
+        repo["ajr10_williami.open_spaces_cambridge"].insert_many(r)
         
-        # playground_cambridge
+        # playgrounds_cambridge
 
-        print("retrieving playground data from data.cambridgema.gov")
+        print("retrieving playgrounds data from data.cambridgema.gov")
 
         client = sodapy.Socrata("data.cambridgema.gov", None)
         response = client.get("wagv-xsb4", limit=10)
         r = json.loads(json.dumps(response, sort_keys=True, indent=2))
         
-        repo.dropCollection("ajr10_williami.playground_cambridge")
-        repo.createCollection("ajr10_williami.playground_cambridge")
+        repo.dropCollection("ajr10_williami.playgrounds_cambridge")
+        repo.createCollection("ajr10_williami.playgrounds_cambridge")
 
-        print("inserting data into target: ", "playground_cambridge")
-        repo["ajr10_williami.playground_cambridge"].insert_many(r)
+        print("inserting data into target: ", "playgrounds_cambridge")
+        repo["ajr10_williami.playgrounds_cambridge"].insert_many(r)
 
-        # open_space_boston
+        # trees_cambridge
+
+        print("retrieving tree data from data.cambridgema.gov")
+
+        client = sodapy.Socrata("data.cambridgema.gov", None)
+        response = client.get("q83f-7quz", limit=10)
+        r = json.loads(json.dumps(response, sort_keys=True, indent=2))
+        
+        repo.dropCollection("ajr10_williami.trees_cambridge")
+        repo.createCollection("ajr10_williami.trees_cambridge")
+
+        print("inserting data into target: ", "trees_cambridge")
+        repo["ajr10_williami.trees_cambridge"].insert_many(r)
+
+        # open_spaces_boston
         return
         response = urllib.request.urlopen\
            ("http://bostonopendata-boston.opendata.arcgis.com/datasets/2868d370c55d4d458d4ae2224ef8cddd_7.geojson")\
@@ -68,14 +83,14 @@ class fetch_data(dml.Algorithm):
         # print(r)
         # print()
 
-        repo.dropCollection("ajr10_williami.open_space_boston")
-        repo.createCollection("ajr10_williami.open_space_boston")
+        repo.dropCollection("ajr10_williami.open_spaces_boston")
+        repo.createCollection("ajr10_williami.open_spaces_boston")
 
-        # print("inserting into target: ", "open_space_boston")
+        # print("inserting into target: ", "open_spaces_boston")
         # print(type(r))
 
 
-        repo["ajr10_williami.open_space_boston"].insert_many(response)
+        repo["ajr10_williami.open_spaces_boston"].insert_many(response)
 
         # mbta
 
@@ -107,34 +122,49 @@ class fetch_data(dml.Algorithm):
         doc.add_namespace('cdp', 'https://data.cambridgema.gov/resource/')
 
         this_script = doc.agent('alg:ajr10_williami#fetch_data', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        open_space_cambridge_resource = doc.entity('cdp:5ctr-ccas', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        playground_cambridge_resource = doc.entity('cdp:wagv-xsb4', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_open_space_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_playground_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_open_space_cambridge, this_script)
-        doc.usage(get_open_space_cambridge, open_space_cambridge_resource, startTime, None,
+        open_spaces_cambridge_resource = doc.entity('cdp:5ctr-ccas', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        playgrounds_cambridge_resource = doc.entity('cdp:wagv-xsb4', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        trees_cambridge_resource = doc.entity('cdp:q83f-7quz', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        
+        get_open_spaces_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_playgrounds_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_trees_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        
+        doc.wasAssociatedWith(get_open_spaces_cambridge, this_script)
+        doc.wasAssociatedWith(get_playgrounds_cambridge, this_script)
+        doc.wasAssociatedWith(get_trees_cambridge, this_script)
+
+        doc.usage(get_open_spaces_cambridge, open_spaces_cambridge_resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
-                  # Need to update this with correct information. Otherwise, this seems to be a valid provenance for open_space_cambridge
-                  'ont:Query':'?type=Open+Space+Cambridge'
+                  'ont:Query':'?type=Open+Spaces+Cambridge'
                   }
                   )
 
-        doc.usage(get_playground_cambridge, playground_cambridge_resource, startTime, None,
+        doc.usage(get_playgrounds_cambridge, playgrounds_cambridge_resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
-                  # Need to update this with correct information. Otherwise, this seems to be a valid provenance for open_space_cambridge
-                  'ont:Query':'?type=Playground+Cambridge'
+                  'ont:Query':'?type=Playgrounds+Cambridge'
+                  }
+                  )
+        doc.usage(get_trees_cambridge, trees_cambridge_resource, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',
+                  'ont:Query':'?type=Trees+Cambridge'
                   }
                   )
 
-        open_space_cambridge = doc.entity('dat:ajr10_williami#open_space_cambridge', {prov.model.PROV_LABEL:'Open Space Cambridge', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(open_space_cambridge, this_script)
-        doc.wasGeneratedBy(open_space_cambridge, get_open_space_cambridge, endTime)
-        doc.wasDerivedFrom(open_space_cambridge, open_space_cambridge_resource, get_open_space_cambridge, get_open_space_cambridge, get_open_space_cambridge)
+        open_spaces_cambridge = doc.entity('dat:ajr10_williami#open_spaces_cambridge', {prov.model.PROV_LABEL:'Open spaces Cambridge', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(open_spaces_cambridge, this_script)
+        doc.wasGeneratedBy(open_spaces_cambridge, get_open_spaces_cambridge, endTime)
+        doc.wasDerivedFrom(open_spaces_cambridge, open_spaces_cambridge_resource, get_open_spaces_cambridge, get_open_spaces_cambridge, get_open_spaces_cambridge)
 
-        playground_cambridge = doc.entity('dat:ajr10_williami#playground_cambridge', {prov.model.PROV_LABEL:'Playground Cambridge', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(playground_cambridge, this_script)
-        doc.wasGeneratedBy(playground_cambridge, get_playground_cambridge, endTime)
-        doc.wasDerivedFrom(playground_cambridge, playground_cambridge_resource, get_playground_cambridge, get_playground_cambridge, get_playground_cambridge)
+        playgrounds_cambridge = doc.entity('dat:ajr10_williami#playgrounds_cambridge', {prov.model.PROV_LABEL:'Playgrounds Cambridge', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(playgrounds_cambridge, this_script)
+        doc.wasGeneratedBy(playgrounds_cambridge, get_playgrounds_cambridge, endTime)
+        doc.wasDerivedFrom(playgrounds_cambridge, playgrounds_cambridge_resource, get_playgrounds_cambridge, get_playgrounds_cambridge, get_playgrounds_cambridge)
+
+        trees_cambridge = doc.entity('dat:ajr10_williami#trees_cambridge', {prov.model.PROV_LABEL:'Trees Cambridge', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(trees_cambridge, this_script)
+        doc.wasGeneratedBy(trees_cambridge, get_trees_cambridge, endTime)
+        doc.wasDerivedFrom(trees_cambridge, trees_cambridge_resource, get_trees_cambridge, get_trees_cambridge, get_trees_cambridge)
 
         repo.logout()
                   
@@ -142,8 +172,9 @@ class fetch_data(dml.Algorithm):
 
 fetch_data.execute()
 
+'''
 doc = fetch_data.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
-
+'''
 ## eof
