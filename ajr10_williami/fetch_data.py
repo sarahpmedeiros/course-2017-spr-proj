@@ -10,9 +10,9 @@ class fetch_data(dml.Algorithm):
     contributor = 'ajr10_williami'
     reads = []
     writes = ['ajr10_williami.open_spaces_cambridge',\
-              'ajr10_williami.playgrounds_cambridge',\
               'ajr10_williami.trees_cambridge',\
-              'ajr10_williami.open_spaces_boston']
+              'ajr10_williami.open_spaces_boston',\
+              'ajr10_williami.trees_boston']
 
     @staticmethod
     def execute(trial = False):
