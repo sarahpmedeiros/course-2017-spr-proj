@@ -13,3 +13,8 @@ We want to find a best office location for a new company. The first factor we co
 4. [Safety(Crime)](https://data.cityofboston.gov/Public-Safety/Crime-Incident-Reports-August-2015-To-Date-Source-/fqn4-4qap)
 5. [Salary 2015](https://data.cityofboston.gov/Finance/Employee-Earnings-Report-2015/ah28-sywy)
 6. [Salary 2014](https://data.cityofboston.gov/Finance/Employee-Earnings-Report-2014/4swk-wcg8)
+
+# Transformations
+1. Project the Rent data, the new dataset has key: city, value: averge rent
+2. Project MBTA, Food and Safety data, the second new dataset has the key: (location, tag), including (location, "transport") for MBTA data, (location, "restaurant") for Food data and (location, "crime") for Safety data, the values are some detail information. Implement union of three datasets.
+3. Combine the two Salary data, then project the needed information into the third new dataset. 
