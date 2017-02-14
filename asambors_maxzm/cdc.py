@@ -22,10 +22,11 @@ class cdc(dml.Algorithm):
         repo.authenticate('asambors_maxzm','asambors_maxzm')
 
         url = 'https://chronicdata.cdc.gov/api/views/6vp6-wxuq/rows.json?accessType=DOWNLOAD'
+
         print("MAKING REQUEST")
-        response = rq(method="GET", url=url)
+        response = urllib.request.urlopen(url).read().decode("utf-8")
         print("REQUEST DONE")
-        r = json.loads(response.text)
+        r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
         print(s)
 
