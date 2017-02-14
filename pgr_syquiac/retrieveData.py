@@ -37,14 +37,15 @@ class retrieveData(dml.Algorithm):
         repo.createCollection("hospitals")
         repo['pgr_syquiac.hospitals'].insert_many(s)
 
-        # Get data from CDC
-        # url = 'https://chronicdata.cdc.gov/resource/csmm-fdhi.json'
-        # response = urllib.request.urlopen(url).read().decode("utf-8")
-        # r = json.loads(response)
-        # s = json.dumps(r, sort_keys=True, indent=2)
-        # repo.dropCollection("cdc")
-        # repo.createCollection("cdc")
-        # repo['alice_bob.cdc'].insert_many(r)
+       
+
+        client = sodapy.Socrata("chronicedata.cdc.gov", None)
+        response = client.get("csmm-fdhi", limit=10)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("cdc")
+        repo.createCollection("cdc")
+        repo['pgr_syquiac.cdc'].insert_many(r)
+
 
         #Get data of Open Spaces in Cambridge
         client = sodapy.Socrata("data.cambridgema.gov", None)
@@ -53,7 +54,7 @@ class retrieveData(dml.Algorithm):
         print(s)
         repo.dropCollection("openspaces")
         repo.createCollection("openspaces")
-        repo['alice_bob.openspaces'].insert_many(s)
+        repo['pgr_syquiac.openspaces'].insert_many(s)
 
 
 
