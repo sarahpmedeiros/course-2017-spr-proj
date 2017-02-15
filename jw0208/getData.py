@@ -38,6 +38,15 @@ class getData(dml.Algorithm):
         repo['jw0208.poverty'].insert_many(s)
         repo['jw0208.poverty'].metadata({'complete':True})
         #print(json.dumps(s, sort_keys=True, indent=2))
+
+## done----------------------------------------------------------
+        with open('education.json') as r:
+            s = json.loads(r.read())
+        repo.dropCollection("education")
+        repo.createCollection("education")
+        repo['jw0208.education'].insert_many(s)
+        repo['jw0208.education'].metadata({'complete': True})
+        # print(json.dumps(s, sort_keys=True, indent=2))
 ## ----------------------------------------------------------
         client = sodapy.Socrata("chronicdata.cdc.gov", None)
         response = client.get("fq5d-abxc", limit=10)
@@ -48,33 +57,6 @@ class getData(dml.Algorithm):
         repo['jw0208.health'].insert_many(r)
         repo['jw0208.health'].metadata({'complete':True})
         print(json.dumps(response, sort_keys=True, indent=2))
-
-
-
-## ----------------------------------------------------------
-        with open('education.csv', newline='') as csvfile:
-            response = csv.reader(csvfile, delimiter=' ', quotechar='|')
-
-            repo.dropCollection("education")
-            repo.createCollection("education")
-            repo['jw0208.education'].insert_many(response)
-            repo['jw0208.education'].metadata({'complete':True})
-            print(response, sort_keys=True, indent=2)
-
-        repo.logout()
-
-
-##------------------------------------------------------------------------------------
-        with open('poverty.csv', newline='') as csvfile:
-            spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-            for row in spamreader:
-                print(', '.join(row))
-##----------------------------------------------------------
-        with open('Poverty Report.csv', newline='') as csvfile:
-            spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-            for row in spamreader:
-                print(', '.join(row))
-
 
 
         endTime = datetime.datetime.now()

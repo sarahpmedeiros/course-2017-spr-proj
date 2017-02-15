@@ -1,3288 +1,3284 @@
-"Educational attainment for adults age 25 and older for the U.S., States, and counties, 1970-2015",,,,,
-"Sources: Census Bureau, 1970, 1980, 1990, 2000 Censuses of Population, and the 2011-2015 American Community Survey 5-yr average.",,,,,
-"                Rural Classifications - USDA, Economic Research Service - http://www.ers.usda.gov/topics/rural-economy-population/rural-classifications.aspx",,,,,
-"For more information contact: Tim Parker,  tparker@ers.usda.gov",,,,,
-FIPS Code,State,Area name,"Percent of adults with a high school diploma only, 2011-2015","Percent of adults completing some college or associate's degree, 2011-2015","Percent of adults with a bachelor's degree or higher, 2011-2015"
-0,US,United States,27.8,29.1,29.8
-1000,AL,Alabama,31,29.7,23.5
-1001,AL,Autauga County,33.5,30.4,23.2
-1003,AL,Baldwin County,28.8,31.8,29
-1005,AL,Barbour County,34.5,26.3,12.5
-1007,AL,Bibb County,42.1,27.9,10.6
-1009,AL,Blount County,33.4,32.2,12.9
-1011,AL,Bullock County,33.3,17.7,13.9
-1013,AL,Butler County,37.7,25.6,14.5
-1015,AL,Calhoun County,31.8,31.5,17.6
-1017,AL,Chambers County,38.4,29,11.6
-1019,AL,Cherokee County,36.4,29.3,13.8
-1021,AL,Chilton County,39.2,25.1,14.1
-1023,AL,Choctaw County,36.8,27.8,11.8
-1025,AL,Clarke County,43.9,23.7,12.9
-1027,AL,Clay County,36.3,29.2,9.6
-1029,AL,Cleburne County,38.3,24.8,12.1
-1031,AL,Coffee County,29.5,31.3,23.9
-1033,AL,Colbert County,34.5,30.7,18.6
-1035,AL,Conecuh County,44.5,25.4,8.2
-1037,AL,Coosa County,37.6,28,8.5
-1039,AL,Covington County,33.6,31.9,14.3
-1041,AL,Crenshaw County,38,25.7,14.3
-1043,AL,Cullman County,34.7,32.6,14.6
-1045,AL,Dale County,32.2,36.8,16.4
-1047,AL,Dallas County,34.6,29.4,14
-1049,AL,DeKalb County,35.2,26,11.2
-1051,AL,Elmore County,35.4,29.8,21.4
-1053,AL,Escambia County,42.1,25.2,12.5
-1055,AL,Etowah County,31.9,34.5,16
-1057,AL,Fayette County,38.8,24.6,14.1
-1059,AL,Franklin County,37.5,25.7,11.4
-1061,AL,Geneva County,37.1,29.6,12.3
-1063,AL,Greene County,38.9,26,10.9
-1065,AL,Hale County,42.9,23.9,13.9
-1067,AL,Henry County,35.5,26.8,16.5
-1069,AL,Houston County,33.1,31,20.6
-1071,AL,Jackson County,39.8,24.6,12.4
-1073,AL,Jefferson County,26.5,31.2,30.8
-1075,AL,Lamar County,37.1,28.8,11.5
-1077,AL,Lauderdale County,34.1,28.4,21.8
-1079,AL,Lawrence County,40.6,27.1,11.1
-1081,AL,Lee County,25.5,29.1,34
-1083,AL,Limestone County,32.1,27.8,23.2
-1085,AL,Lowndes County,35.3,24.7,14.1
-1087,AL,Macon County,30.9,31.2,19.3
-1089,AL,Madison County,21.3,30,39.4
-1091,AL,Marengo County,42,27.4,15.3
-1093,AL,Marion County,34.5,32.1,11.5
-1095,AL,Marshall County,31.9,29,16.6
-1097,AL,Mobile County,32.8,30.5,22
-1099,AL,Monroe County,44.7,23.9,12.2
-1101,AL,Montgomery County,26,28.2,31.1
-1103,AL,Morgan County,31,30.5,21.3
-1105,AL,Perry County,38.6,22.7,13.2
-1107,AL,Pickens County,42.2,26.6,9.9
-1109,AL,Pike County,33.9,22.5,23.4
-1111,AL,Randolph County,35.6,25.1,15.1
-1113,AL,Russell County,31.4,33.8,17.1
-1115,AL,St. Clair County,35.5,32,15.6
-1117,AL,Shelby County,21.4,29.2,40.8
-1119,AL,Sumter County,40.5,21.5,16.3
-1121,AL,Talladega County,36.3,29.9,13.1
-1123,AL,Tallapoosa County,34.4,28.1,17.3
-1125,AL,Tuscaloosa County,30.5,28,28.5
-1127,AL,Walker County,36.5,31,10.8
-1129,AL,Washington County,46.1,24.5,9.9
-1131,AL,Wilcox County,41.3,23.5,12.5
-1133,AL,Winston County,33.7,29.3,11.4
-2000,AK,Alaska,27.8,36.3,28
-2010,AK,Aleutian Islands,,,
-2013,AK,Aleutians East Borough,39.4,28.2,14
-2016,AK,Aleutians West Census Area,37,32.2,14.7
-2020,AK,Anchorage Municipality,24.1,35.6,33.2
-2050,AK,Bethel Census Area,43.6,23.7,11.6
-2060,AK,Bristol Bay Borough,30.7,41.3,20
-2068,AK,Denali Borough,23.9,38,33.3
-2070,AK,Dillingham Census Area,38.1,32.2,16.2
-2090,AK,Fairbanks North Star Borough,23.4,39.2,31.7
-2100,AK,Haines Borough,27.7,32.1,35.6
-2105,AK,Hoonah-Angoon Census Area,31.3,32.4,26.6
-2110,AK,Juneau City and Borough,21.1,35.2,38.5
-2122,AK,Kenai Peninsula Borough,33.1,37.5,22.8
-2130,AK,Ketchikan Gateway Borough,32.8,35.3,23.8
-2150,AK,Kodiak Island Borough,27.3,38.4,24.7
-2158,AK,Kusilvak Census Area,49,23.5,5
-2160,AK,Kuskokwim Division,,,
-2164,AK,Lake and Peninsula Borough,42.9,31.5,12.9
-2170,AK,Matanuska-Susitna Borough,31.6,39.9,20.7
-2180,AK,Nome Census Area,41.3,29.2,14.1
-2185,AK,North Slope Borough,36.8,38,13.9
-2188,AK,Northwest Arctic Borough,43.6,24.5,10.6
-2195,AK,Petersburg Census Area,31.2,37.4,25.3
-2198,AK,Prince of Wales-Hyder Census Area,40.9,34.1,15.5
-2201,AK,Prince of Wales-Outer Ketchikan Census Area,,,
-2220,AK,Sitka City and Borough,22.1,39.5,31.2
-2230,AK,Skagway Municipality,29,32.4,35.9
-2231,AK,Skagway-Yakutat-Angoon Census Area,,,
-2232,AK,Skagway-Hoonah-Angoon Census Area,,,
-2240,AK,Southeast Fairbanks Census Area,33.2,41,17.9
-2250,AK,Upper Yukon Division,,,
-2261,AK,Valdez-Cordova Census Area,27.2,36.6,28.7
-2275,AK,Wrangell City and Borough,35.6,34.7,19.9
-2280,AK,Wrangell-Petersburg Census Area,,,
-2282,AK,Yakutat City and Borough,44.7,34.5,15.3
-2290,AK,Yukon-Koyukuk Census Area,40.1,31,11.2
-4000,AZ,Arizona,24.4,34.1,27.5
-4001,AZ,Apache County,33.4,32.6,10.8
-4003,AZ,Cochise County,23.4,40.4,22.9
-4005,AZ,Coconino County,21.3,33.5,33.6
-4007,AZ,Gila County,30,37.3,16.7
-4009,AZ,Graham County,32.9,38.7,13.2
-4011,AZ,Greenlee County,37.5,37.4,10.8
-4012,AZ,La Paz County,36.6,29.4,9.9
-4013,AZ,Maricopa County,23,33.3,30.4
-4015,AZ,Mohave County,35.7,36.5,11.8
-4017,AZ,Navajo County,29.5,37.2,14.7
-4019,AZ,Pima County,22.8,34.5,30.3
-4021,AZ,Pinal County,30.1,36.9,18
-4023,AZ,Santa Cruz County,25.3,25.9,22
-4025,AZ,Yavapai County,25.6,38.4,25.6
-4027,AZ,Yuma County,25,31.7,14.4
-5000,AR,Arkansas,34.9,28.7,21.1
-5001,AR,Arkansas County,42.5,27.2,12.4
-5003,AR,Ashley County,41.4,30.3,13.2
-5005,AR,Baxter County,35.6,34,17.9
-5007,AR,Benton County,30.8,25.8,30.2
-5009,AR,Boone County,35.9,35.2,14.7
-5011,AR,Bradley County,42.1,24.5,13
-5013,AR,Calhoun County,49.3,21,10.4
-5015,AR,Carroll County,35,31.5,16.7
-5017,AR,Chicot County,44.6,23.3,11.1
-5019,AR,Clark County,33.6,29.4,23.9
-5021,AR,Clay County,43.8,23.9,11
-5023,AR,Cleburne County,39.2,29,16.8
-5025,AR,Cleveland County,44.8,26.1,15.4
-5027,AR,Columbia County,38.2,25.9,20
-5029,AR,Conway County,42.1,25.7,16.5
-5031,AR,Craighead County,32.8,29.3,25.4
-5033,AR,Crawford County,38.7,32.3,14.5
-5035,AR,Crittenden County,36.3,28.3,16.4
-5037,AR,Cross County,45.8,20.6,13.7
-5039,AR,Dallas County,50.5,19.5,13.1
-5041,AR,Desha County,40.4,25.1,11.9
-5043,AR,Drew County,35.5,26.6,20.5
-5045,AR,Faulkner County,30.6,31.9,28.3
-5047,AR,Franklin County,40.4,29.4,12.3
-5049,AR,Fulton County,43,31.9,10.6
-5051,AR,Garland County,32.2,34.6,21.4
-5053,AR,Grant County,43.1,28.7,17.1
-5055,AR,Greene County,43.1,25.5,15.4
-5057,AR,Hempstead County,38,27.9,12.2
-5059,AR,Hot Spring County,42.1,29.6,13
-5061,AR,Howard County,33.5,29.4,15.1
-5063,AR,Independence County,38.9,28.2,15.9
-5065,AR,Izard County,40,29.4,12.7
-5067,AR,Jackson County,45.3,22.8,8.8
-5069,AR,Jefferson County,38.7,28.6,17.5
-5071,AR,Johnson County,41.1,21.1,17.1
-5073,AR,Lafayette County,43.3,23.3,11.8
-5075,AR,Lawrence County,42.7,26.5,12.9
-5077,AR,Lee County,39.5,21.4,7.9
-5079,AR,Lincoln County,48,21.5,8.9
-5081,AR,Little River County,40.6,34.3,10
-5083,AR,Logan County,43.7,26.2,12.6
-5085,AR,Lonoke County,34,34.1,19.1
-5087,AR,Madison County,46,21.7,10.7
-5089,AR,Marion County,43.4,28.8,13.2
-5091,AR,Miller County,39.3,31.7,14.3
-5093,AR,Mississippi County,36.6,29.9,13.2
-5095,AR,Monroe County,41.2,26.3,9.4
-5097,AR,Montgomery County,37.6,30.4,12.3
-5099,AR,Nevada County,42.8,26.4,14.1
-5101,AR,Newton County,42.4,25,14.6
-5103,AR,Ouachita County,43.2,26.8,16.1
-5105,AR,Perry County,42.1,27.7,11.5
-5107,AR,Phillips County,31.7,33,10.8
-5109,AR,Pike County,35.6,31.4,14.6
-5111,AR,Poinsett County,42.6,26,8.4
-5113,AR,Polk County,39,34.1,12
-5115,AR,Pope County,33.2,28.6,20.9
-5117,AR,Prairie County,41.8,27.1,10.3
-5119,AR,Pulaski County,27,29.8,32.9
-5121,AR,Randolph County,39.3,29.8,13.4
-5123,AR,St. Francis County,39.7,27.4,11.4
-5125,AR,Saline County,33.9,31.7,23
-5127,AR,Scott County,39.6,26.1,11.6
-5129,AR,Searcy County,40.2,27.8,13.9
-5131,AR,Sebastian County,31.9,31.1,19.2
-5133,AR,Sevier County,34.9,26.4,7.9
-5135,AR,Sharp County,45.9,27.4,9.9
-5137,AR,Stone County,35.4,27.8,15.9
-5139,AR,Union County,37.7,28.2,17.5
-5141,AR,Van Buren County,42.7,27,12.3
-5143,AR,Washington County,27.9,25.2,30.5
-5145,AR,White County,37.6,26.2,19.5
-5147,AR,Woodruff County,44.5,18.6,10.4
-5149,AR,Yell County,40.6,22.6,12.6
-6000,CA,California,20.7,29.6,31.4
-6001,CA,Alameda County,18.5,25.5,43
-6003,CA,Alpine County,30.6,31.4,27.5
-6005,CA,Amador County,27,40.1,21.3
-6007,CA,Butte County,22.6,39.5,25.9
-6009,CA,Calaveras County,27.6,43.2,20.9
-6011,CA,Colusa County,21.7,31.9,14.6
-6013,CA,Contra Costa County,18.7,30.6,39.6
-6015,CA,Del Norte County,29.1,35.7,15.1
-6017,CA,El Dorado County,21.8,38.4,32.1
-6019,CA,Fresno County,22.8,31.3,19.4
-6021,CA,Glenn County,29.6,30.6,14.9
-6023,CA,Humboldt County,25.2,36.6,28
-6025,CA,Imperial County,21.9,30.4,14.1
-6027,CA,Inyo County,30.9,32.9,23.9
-6029,CA,Kern County,27.3,30.8,15.4
-6031,CA,Kings County,24.8,34,13.4
-6033,CA,Lake County,28.3,40.1,16
-6035,CA,Lassen County,28.8,38.9,12.3
-6037,CA,Los Angeles County,20.7,26.3,30.3
-6039,CA,Madera County,25.1,32.4,13.3
-6041,CA,Marin County,11.8,25.3,55.8
-6043,CA,Mariposa County,28.5,38.9,22.1
-6045,CA,Mendocino County,26.5,36.6,23.7
-6047,CA,Merced County,24.8,29.9,13.1
-6049,CA,Modoc County,26.1,42.7,18
-6051,CA,Mono County,16.8,35.8,32.3
-6053,CA,Monterey County,20.8,26.8,23.1
-6055,CA,Napa County,19.3,31.5,32.4
-6057,CA,Nevada County,20.2,40,33.7
-6059,CA,Orange County,17.7,28.8,37.7
-6061,CA,Placer County,19.4,38.2,36.4
-6063,CA,Plumas County,23.9,44.7,22
-6065,CA,Riverside County,25.8,33.3,20.9
-6067,CA,Sacramento County,22.3,35.6,28.8
-6069,CA,San Benito County,24.4,34.6,19
-6071,CA,San Bernardino County,26.2,33.4,19
-6073,CA,San Diego County,19,31.3,35.7
-6075,CA,San Francisco County,12.7,20.5,53.8
-6077,CA,San Joaquin County,26.4,33.2,18.4
-6079,CA,San Luis Obispo County,19.7,37,33
-6081,CA,San Mateo County,16.5,26.2,45.6
-6083,CA,Santa Barbara County,17.7,29.7,32.2
-6085,CA,Santa Clara County,15.2,23.9,47.9
-6087,CA,Santa Cruz County,15.5,31.9,38.2
-6089,CA,Shasta County,25.8,43.8,19.6
-6091,CA,Sierra County,34.5,39.3,18.9
-6093,CA,Siskiyou County,24.9,40.9,22.7
-6095,CA,Solano County,23.8,38.7,24.9
-6097,CA,Sonoma County,19.9,34.4,32.9
-6099,CA,Stanislaus County,28.3,32.4,16.5
-6101,CA,Sutter County,24.8,36,17.6
-6103,CA,Tehama County,30.5,37.4,14.4
-6105,CA,Trinity County,31,39.8,20
-6107,CA,Tulare County,25.2,29.3,13.8
-6109,CA,Tuolumne County,29.7,40.2,20.4
-6111,CA,Ventura County,19,32.4,31.7
-6113,CA,Yolo County,19.7,26.8,39
-6115,CA,Yuba County,25,41.5,14.3
-8000,CO,Colorado,21.8,30.8,38.1
-8001,CO,Adams County,28.8,31.3,22.2
-8003,CO,Alamosa County,25.9,33.5,25.5
-8005,CO,Arapahoe County,20.4,31.5,40.1
-8007,CO,Archuleta County,26,30.5,35
-8009,CO,Baca County,31.6,36.6,19
-8011,CO,Bent County,44.5,24.7,7
-8013,CO,Boulder County,12.7,22.5,58.9
-8014,CO,Broomfield County,14.7,29.1,51.9
-8015,CO,Chaffee County,26.7,30.3,34.1
-8017,CO,Cheyenne County,33.6,34.9,22.5
-8019,CO,Clear Creek County,22,33.3,41.5
-8021,CO,Conejos County,32.8,32.4,19.5
-8023,CO,Costilla County,27.4,30.6,17.9
-8025,CO,Crowley County,39.1,33.2,11.1
-8027,CO,Custer County,18.7,39.3,35.5
-8029,CO,Delta County,37.5,31.4,20
-8031,CO,Denver County,17.7,23.5,45
-8033,CO,Dolores County,37.8,30.5,21
-8035,CO,Douglas County,12.9,28.2,56.6
-8037,CO,Eagle County,17.9,24.5,46.7
-8039,CO,Elbert County,27,38.3,30.6
-8041,CO,El Paso County,21,36.9,35.9
-8043,CO,Fremont County,39.2,32.3,15.2
-8045,CO,Garfield County,26.1,30.1,29.7
-8047,CO,Gilpin County,24.4,39.3,32.1
-8049,CO,Grand County,25.5,32.5,36.4
-8051,CO,Gunnison County,17,23.6,54.4
-8053,CO,Hinsdale County,21.5,33.2,40.4
-8055,CO,Huerfano County,27,34.3,27.1
-8057,CO,Jackson County,41.5,28,18.1
-8059,CO,Jefferson County,21.3,31.1,41.6
-8061,CO,Kiowa County,34.3,36.5,20.3
-8063,CO,Kit Carson County,38.5,31.7,13.3
-8065,CO,Lake County,35.5,29.1,27.4
-8067,CO,La Plata County,19.4,31.9,43.3
-8069,CO,Larimer County,19,32.1,44.3
-8071,CO,Las Animas County,28.3,39,17
-8073,CO,Lincoln County,42.2,22.4,15.1
-8075,CO,Logan County,31.3,39.7,15.8
-8077,CO,Mesa County,29.1,34.5,26.3
-8079,CO,Mineral County,21.4,34.1,42.3
-8081,CO,Moffat County,40.3,34.4,15.3
-8083,CO,Montezuma County,29,34,26.7
-8085,CO,Montrose County,31.6,31.3,24.5
-8087,CO,Morgan County,32.1,33.2,14.9
-8089,CO,Otero County,28.9,40.3,15.6
-8091,CO,Ouray County,19.4,26.7,52
-8093,CO,Park County,25.5,41,29.2
-8095,CO,Phillips County,29.1,37.8,21.2
-8097,CO,Pitkin County,11.5,24.6,59.1
-8099,CO,Prowers County,27.8,40,13.5
-8101,CO,Pueblo County,29,37.3,21.6
-8103,CO,Rio Blanco County,33.7,35.4,22
-8105,CO,Rio Grande County,29.5,31.8,22
-8107,CO,Routt County,20.5,26,50.4
-8109,CO,Saguache County,24.7,26.9,27
-8111,CO,San Juan County,33.5,29.7,29.1
-8113,CO,San Miguel County,18,22.7,53.9
-8115,CO,Sedgwick County,35.1,35.1,20.6
-8117,CO,Summit County,17.2,28.8,48.8
-8119,CO,Teller County,24.8,36.4,31.8
-8121,CO,Washington County,35.1,39.5,16.3
-8123,CO,Weld County,27,33.7,26.1
-8125,CO,Yuma County,31.7,35.2,21.5
-9000,CT,Connecticut,27.4,24.9,37.6
-9001,CT,Fairfield County,22.6,21.3,45.8
-9003,CT,Hartford County,27.1,25.4,36.3
-9005,CT,Litchfield County,29.3,28.5,33.6
-9007,CT,Middlesex County,26.8,26.4,40.6
-9009,CT,New Haven County,30.2,24.9,34
-9011,CT,New London County,31.2,27.9,32.1
-9013,CT,Tolland County,27.4,28,38
-9015,CT,Windham County,34.3,30.8,23.1
-10000,DE,Delaware,31.1,27.3,30
-10001,DE,Kent County,33.5,30.3,22.5
-10003,DE,New Castle County,28.6,26.5,35
-10005,DE,Sussex County,35.3,27,23.2
-11000,DC,District of Columbia,18,16.8,54.6
-11001,DC,District of Columbia,18,16.8,54.6
-12000,FL,Florida,29.5,30.1,27.3
-12001,FL,Alachua County,21.5,29.5,41.6
-12003,FL,Baker County,43.8,26.3,11.5
-12005,FL,Bay County,30.6,35.1,22.2
-12007,FL,Bradford County,37,28.7,10.9
-12009,FL,Brevard County,28.8,34.6,27.3
-12011,FL,Broward County,27.6,29.8,30.8
-12013,FL,Calhoun County,37.5,27.3,10.5
-12015,FL,Charlotte County,34.9,33.6,20.8
-12017,FL,Citrus County,38.2,31.5,16.9
-12019,FL,Clay County,30.7,35.9,23.8
-12021,FL,Collier County,26.7,26.1,33.2
-12023,FL,Columbia County,36.1,34.4,15.1
-12027,FL,DeSoto County,40.9,20.2,9.7
-12029,FL,Dixie County,41,29.9,7.9
-12031,FL,Duval County,28.6,32.7,27.3
-12033,FL,Escambia County,28.9,36.2,24.5
-12035,FL,Flagler County,34.7,33.3,23
-12037,FL,Franklin County,35.4,27.9,15.5
-12039,FL,Gadsden County,34.6,26.5,17
-12041,FL,Gilchrist County,38.8,32.7,11.4
-12043,FL,Glades County,44.5,24,8.4
-12045,FL,Gulf County,34.7,31.4,16
-12047,FL,Hamilton County,37.4,26.3,9.9
-12049,FL,Hardee County,41.1,17.5,10.7
-12051,FL,Hendry County,32.2,21,9.8
-12053,FL,Hernando County,37.5,33.9,15.6
-12055,FL,Highlands County,36.3,29.6,16.7
-12057,FL,Hillsborough County,27.3,29.6,30.6
-12059,FL,Holmes County,36.9,27.6,11.3
-12061,FL,Indian River County,30.3,31.2,26.8
-12063,FL,Jackson County,36.5,29.1,13.7
-12065,FL,Jefferson County,31.5,29.9,18.5
-12067,FL,Lafayette County,36.7,27.1,11.6
-12069,FL,Lake County,33.5,32.4,21.5
-12071,FL,Lee County,31.6,29.4,26
-12073,FL,Leon County,19,28.3,45
-12075,FL,Levy County,40.9,29.7,10.9
-12077,FL,Liberty County,43.5,22.6,11.2
-12079,FL,Madison County,39,31.7,11.3
-12081,FL,Manatee County,30.7,29.5,27.7
-12083,FL,Marion County,36.6,31.6,17.8
-12085,FL,Martin County,26.1,32.1,31.6
-12086,FL,Miami-Dade County,28.5,24.7,26.9
-12087,FL,Monroe County,27.9,31.7,31.3
-12089,FL,Nassau County,35.5,31,23
-12091,FL,Okaloosa County,26.2,36.2,28.8
-12093,FL,Okeechobee County,37,22.7,10.6
-12095,FL,Orange County,26.1,30.4,31.1
-12097,FL,Osceola County,34.3,33,18
-12099,FL,Palm Beach County,25.5,28.7,33.6
-12101,FL,Pasco County,33.7,32.9,21.4
-12103,FL,Pinellas County,29.5,31.7,28.9
-12105,FL,Polk County,36.2,28.5,18.9
-12107,FL,Putnam County,38.8,27.8,11.8
-12109,FL,St. Johns County,21.2,30.5,42.1
-12111,FL,St. Lucie County,33.4,32.2,19.9
-12113,FL,Santa Rosa County,28,35.8,26.6
-12115,FL,Sarasota County,30.2,29.7,32.4
-12117,FL,Seminole County,24.1,33.6,35.3
-12119,FL,Sumter County,30.6,30.9,28
-12121,FL,Suwannee County,40.8,26.4,11.6
-12123,FL,Taylor County,39.2,28.1,9
-12125,FL,Union County,37.4,28.9,7.8
-12127,FL,Volusia County,33.8,33.3,21.6
-12129,FL,Wakulla County,39.4,33.4,16.1
-12131,FL,Walton County,28.1,31.2,25.9
-12133,FL,Washington County,41.3,27.9,11.1
-13000,GA,Georgia,28.4,28.2,28.8
-13001,GA,Appling County,42.8,20.3,13.1
-13003,GA,Atkinson County,39.2,22.5,7.8
-13005,GA,Bacon County,40.5,24.3,12.8
-13007,GA,Baker County,42.2,29.5,8.6
-13009,GA,Baldwin County,39,25.8,17.7
-13011,GA,Banks County,45.5,21.4,11.2
-13013,GA,Barrow County,35,30.4,16.5
-13015,GA,Bartow County,35,28.9,17.8
-13017,GA,Ben Hill County,41.7,27.1,10.9
-13019,GA,Berrien County,38,30.8,12.5
-13021,GA,Bibb County,32.6,26.8,23.8
-13023,GA,Bleckley County,44.8,22.8,16.5
-13025,GA,Brantley County,45.6,25,8.4
-13027,GA,Brooks County,38,28.3,11.7
-13029,GA,Bryan County,27.6,30.9,31.1
-13031,GA,Bulloch County,28,29.8,29
-13033,GA,Burke County,39.9,28.1,9.6
-13035,GA,Butts County,43.8,22.2,10.1
-13037,GA,Calhoun County,38.6,24.3,9.9
-13039,GA,Camden County,31.4,38.7,21.1
-13043,GA,Candler County,34.9,23.6,15.4
-13045,GA,Carroll County,35.8,26.6,17.9
-13047,GA,Catoosa County,31.7,33.9,18.6
-13049,GA,Charlton County,41.8,22.8,10
-13051,GA,Chatham County,25.5,30.9,32.6
-13053,GA,Chattahoochee County,27,39.1,25.7
-13055,GA,Chattooga County,39.7,22.2,8.8
-13057,GA,Cherokee County,24.8,30,34.7
-13059,GA,Clarke County,21.8,24.3,40.2
-13061,GA,Clay County,44.8,27.1,7.8
-13063,GA,Clayton County,32,32.1,18.3
-13065,GA,Clinch County,35.4,24.3,13.5
-13067,GA,Cobb County,19.5,27.4,44.1
-13069,GA,Coffee County,39.1,24.7,13.7
-13071,GA,Colquitt County,36.7,23,13.1
-13073,GA,Columbia County,23.8,32.7,35.3
-13075,GA,Cook County,39.5,22.9,12.9
-13077,GA,Coweta County,31.6,29.2,27.6
-13079,GA,Crawford County,35.6,29.9,12.8
-13081,GA,Crisp County,35.7,27.9,14.6
-13083,GA,Dade County,35.5,30.7,14.1
-13085,GA,Dawson County,29,29.2,27.6
-13087,GA,Decatur County,34.9,29.1,15.8
-13089,GA,DeKalb County,21,26.2,41.1
-13091,GA,Dodge County,42.1,24.2,14.7
-13093,GA,Dooly County,43.4,22.3,9.2
-13095,GA,Dougherty County,29.3,32.8,18.9
-13097,GA,Douglas County,31.2,30.6,26
-13099,GA,Early County,38.1,25.8,15.2
-13101,GA,Echols County,36.2,27,8.3
-13103,GA,Effingham County,38.2,30.8,16.9
-13105,GA,Elbert County,45.7,20.5,10.6
-13107,GA,Emanuel County,40.2,25.5,10.8
-13109,GA,Evans County,37.9,21.1,15.4
-13111,GA,Fannin County,38.8,26,16.2
-13113,GA,Fayette County,21.5,28.6,43.8
-13115,GA,Floyd County,31,29.4,18.6
-13117,GA,Forsyth County,19.3,27.1,45.6
-13119,GA,Franklin County,38.3,23.7,12.6
-13121,GA,Fulton County,18,23.6,49.3
-13123,GA,Gilmer County,35.5,25.9,16.7
-13125,GA,Glascock County,44.6,26.6,8.1
-13127,GA,Glynn County,28.2,31.8,27.3
-13129,GA,Gordon County,35.7,26.6,13.7
-13131,GA,Grady County,36.8,25.6,13.3
-13133,GA,Greene County,35.6,21.6,24.7
-13135,GA,Gwinnett County,23.4,29.2,34.7
-13137,GA,Habersham County,34,26.7,17.5
-13139,GA,Hall County,28.1,27.2,22.7
-13141,GA,Hancock County,40.6,21.7,10.3
-13143,GA,Haralson County,37.7,26.6,14.1
-13145,GA,Harris County,27.4,35.5,26.6
-13147,GA,Hart County,37.9,29,13.6
-13149,GA,Heard County,43.2,23.2,10.1
-13151,GA,Henry County,30.5,32.1,27
-13153,GA,Houston County,30,36.1,23.5
-13155,GA,Irwin County,44.2,30.2,10.6
-13157,GA,Jackson County,34.3,29.2,19.2
-13159,GA,Jasper County,40.2,26.6,11.9
-13161,GA,Jeff Davis County,40.2,28.9,9.7
-13163,GA,Jefferson County,41.2,21.6,10.1
-13165,GA,Jenkins County,36.8,22.2,12.2
-13167,GA,Johnson County,39.3,27.4,8.9
-13169,GA,Jones County,37.3,29.7,19.7
-13171,GA,Lamar County,37.9,29.7,17.1
-13173,GA,Lanier County,30.5,33.2,12.7
-13175,GA,Laurens County,43.6,22.4,15.1
-13177,GA,Lee County,28.6,34.9,23.2
-13179,GA,Liberty County,31.5,39.8,18.7
-13181,GA,Lincoln County,42.2,26.9,12.1
-13183,GA,Long County,36.9,33.2,15
-13185,GA,Lowndes County,28.3,32,23.5
-13187,GA,Lumpkin County,28.6,28.3,28.1
-13189,GA,McDuffie County,38.6,24.1,14.2
-13191,GA,McIntosh County,35.8,32.5,13.1
-13193,GA,Macon County,37.8,26,7.9
-13195,GA,Madison County,39.9,26.1,15.6
-13197,GA,Marion County,37.5,25.9,12.2
-13199,GA,Meriwether County,39,25.3,9.3
-13201,GA,Miller County,40.3,26.4,12.8
-13205,GA,Mitchell County,39.8,23,11.4
-13207,GA,Monroe County,35.4,25,21.3
-13209,GA,Montgomery County,42.3,23.6,14.6
-13211,GA,Morgan County,34.8,25.5,22.1
-13213,GA,Murray County,36.8,22.9,10.3
-13215,GA,Muscogee County,27.7,34.6,24.1
-13217,GA,Newton County,32,32.1,20.2
-13219,GA,Oconee County,21.3,27,44.9
-13221,GA,Oglethorpe County,36.1,25.9,17.2
-13223,GA,Paulding County,35.6,30.2,23.8
-13225,GA,Peach County,30.1,34.1,20.9
-13227,GA,Pickens County,30.8,27.5,25.1
-13229,GA,Pierce County,39.3,26.3,14.2
-13231,GA,Pike County,39.2,31.7,16
-13233,GA,Polk County,38.1,24.1,13.1
-13235,GA,Pulaski County,43.6,25.2,12.1
-13237,GA,Putnam County,39,28,17.5
-13239,GA,Quitman County,40.7,25.7,6.7
-13241,GA,Rabun County,34,26.2,25.9
-13243,GA,Randolph County,35.3,22.9,14.7
-13245,GA,Richmond County,31.1,31.7,20.4
-13247,GA,Rockdale County,31.2,29.4,25.5
-13249,GA,Schley County,34.4,28.1,14.7
-13251,GA,Screven County,42.2,25.5,13.3
-13253,GA,Seminole County,40.3,27.2,15.1
-13255,GA,Spalding County,36.5,26.6,15.9
-13257,GA,Stephens County,38.3,25.6,16.2
-13259,GA,Stewart County,35.6,14.7,10.8
-13261,GA,Sumter County,31.4,26.1,19
-13263,GA,Talbot County,43.3,21.1,13.7
-13265,GA,Taliaferro County,43.9,15.1,9.9
-13267,GA,Tattnall County,38,24.7,11
-13269,GA,Taylor County,36.5,27.9,11.1
-13271,GA,Telfair County,49.3,14.9,9.3
-13273,GA,Terrell County,31.5,27.3,11.2
-13275,GA,Thomas County,32.7,29.2,19.2
-13277,GA,Tift County,33.6,29.3,16.8
-13279,GA,Toombs County,39.2,24.4,15.7
-13281,GA,Towns County,34.9,31.3,22.4
-13283,GA,Treutlen County,41.6,20.8,14.8
-13285,GA,Troup County,35.8,29.5,18.7
-13287,GA,Turner County,35.9,26.5,11.7
-13289,GA,Twiggs County,38.7,19.9,9.7
-13291,GA,Union County,33.4,32.5,21.9
-13293,GA,Upson County,35.4,29.1,12.1
-13295,GA,Walker County,37.2,28.1,14.7
-13297,GA,Walton County,35.6,31.8,17.9
-13299,GA,Ware County,40.8,27.7,12.9
-13301,GA,Warren County,42.3,16.3,12.5
-13303,GA,Washington County,41.5,23.6,12.9
-13305,GA,Wayne County,42.1,26.9,13.1
-13307,GA,Webster County,46.3,21.8,7.6
-13309,GA,Wheeler County,54.8,16.4,5.6
-13311,GA,White County,31.2,33.4,20.7
-13313,GA,Whitfield County,28.9,25.6,14
-13315,GA,Wilcox County,50,19.3,8.5
-13317,GA,Wilkes County,43.4,20.6,15.7
-13319,GA,Wilkinson County,51.2,22.6,7.4
-13321,GA,Worth County,41.1,24.2,9.4
-15000,HI,Hawaii,27.9,32.3,30.8
-15001,HI,Hawaii County,31.9,32.6,26.8
-15003,HI,Honolulu County,26.4,31.8,32.7
-15005,HI,Kalawao County,29.5,24.4,34.6
-15007,HI,Kauai County,30,33.6,28
-15009,HI,Maui County,31.2,34.2,26.1
-16000,ID,Idaho,27.5,36.1,25.9
-16001,ID,Ada County,21.4,35.8,37.1
-16003,ID,Adams County,35.4,31.6,21.5
-16005,ID,Bannock County,26.6,38.6,26.4
-16007,ID,Bear Lake County,39,35.1,19.1
-16009,ID,Benewah County,40.8,31.9,13.3
-16011,ID,Bingham County,29.4,38.3,17.5
-16013,ID,Blaine County,18,29.4,42.9
-16015,ID,Boise County,27.8,41.3,25.1
-16017,ID,Bonner County,31.4,38.9,20.9
-16019,ID,Bonneville County,27.5,36.4,27.2
-16021,ID,Boundary County,36.8,35.7,16
-16023,ID,Butte County,36.5,37.6,15.6
-16025,ID,Camas County,27.8,40.9,18.3
-16027,ID,Canyon County,32,33.4,17.7
-16029,ID,Caribou County,35.5,36.6,19.3
-16031,ID,Cassia County,26.9,35.2,17.8
-16033,ID,Clark County,34.1,23.7,15
-16035,ID,Clearwater County,34,35.5,16.9
-16037,ID,Custer County,34.8,28.9,27.1
-16039,ID,Elmore County,27.9,41.2,16.6
-16041,ID,Franklin County,33.4,38.4,18.4
-16043,ID,Fremont County,34.2,34.5,20.5
-16045,ID,Gem County,37.7,33.2,16
-16047,ID,Gooding County,33.1,28.4,14.3
-16049,ID,Idaho County,37.3,32.7,19.3
-16051,ID,Jefferson County,30.8,36.9,20.2
-16053,ID,Jerome County,28.2,30.1,14
-16055,ID,Kootenai County,28.4,40.5,23.3
-16057,ID,Latah County,19.8,30.1,45.6
-16059,ID,Lemhi County,33.7,36.2,21.5
-16061,ID,Lewis County,34.3,39.1,15.2
-16063,ID,Lincoln County,38.3,28.7,11.6
-16065,ID,Madison County,15.8,44.8,34.8
-16067,ID,Minidoka County,29.2,34.6,12.9
-16069,ID,Nez Perce County,30.7,37.3,23.4
-16071,ID,Oneida County,38.4,41.1,14.1
-16073,ID,Owyhee County,36.9,28.9,8.9
-16075,ID,Payette County,33.1,37.4,15.7
-16077,ID,Power County,39.8,25.4,13
-16079,ID,Shoshone County,36.2,36,14.1
-16081,ID,Teton County,20.1,30.3,39.8
-16083,ID,Twin Falls County,28.9,38.9,17.7
-16085,ID,Valley County,28.6,35,29.8
-16087,ID,Washington County,34.4,34.5,13.9
-17000,IL,Illinois,26.8,28.8,32.3
-17001,IL,Adams County,36.1,34,21.2
-17003,IL,Alexander County,35.8,33.8,8
-17005,IL,Bond County,39.8,29.6,17.6
-17007,IL,Boone County,36,30.6,20.2
-17009,IL,Brown County,41.9,29.9,14
-17011,IL,Bureau County,39.4,32.7,17.9
-17013,IL,Calhoun County,43.5,32.3,15.6
-17015,IL,Carroll County,43.3,31,16.2
-17017,IL,Cass County,46.5,25.2,13.9
-17019,IL,Champaign County,22.8,28.1,43.4
-17021,IL,Christian County,44.1,29.8,14.2
-17023,IL,Clark County,38.2,33.9,18.1
-17025,IL,Clay County,38.6,34.6,14.8
-17027,IL,Clinton County,32.7,36,20.8
-17029,IL,Coles County,32.2,34,24.1
-17031,IL,Cook County,24,25.6,35.8
-17033,IL,Crawford County,33.6,36.6,18.8
-17035,IL,Cumberland County,37.2,37.4,13.6
-17037,IL,DeKalb County,26.3,35.9,30
-17039,IL,De Witt County,38.6,34.5,19.2
-17041,IL,Douglas County,36.2,29.9,17.8
-17043,IL,DuPage County,19,26.6,46.7
-17045,IL,Edgar County,39.2,30.1,18.1
-17047,IL,Edwards County,36.8,40.5,11
-17049,IL,Effingham County,36.4,33.8,20.9
-17051,IL,Fayette County,40,29.5,13.2
-17053,IL,Ford County,38.8,33.7,16.6
-17055,IL,Franklin County,34.4,38.4,14.8
-17057,IL,Fulton County,35.9,35.8,16
-17059,IL,Gallatin County,41.4,35.1,9.5
-17061,IL,Greene County,40.9,32.8,11.9
-17063,IL,Grundy County,37.6,34,20.8
-17065,IL,Hamilton County,35.3,38.4,14
-17067,IL,Hancock County,37.5,34,20.3
-17069,IL,Hardin County,34.3,37.3,11.8
-17071,IL,Henderson County,44,30.1,13.9
-17073,IL,Henry County,35.2,33.8,20.6
-17075,IL,Iroquois County,41.1,32.3,15.3
-17077,IL,Jackson County,25,31.4,35.3
-17079,IL,Jasper County,39.1,32.9,17.6
-17081,IL,Jefferson County,32.8,36.9,16.3
-17083,IL,Jersey County,37.7,35.8,17.4
-17085,IL,Jo Daviess County,38.2,30.4,23.6
-17087,IL,Johnson County,31.4,36,16.7
-17089,IL,Kane County,23.5,27.6,31.6
-17091,IL,Kankakee County,34.1,34.8,18.8
-17093,IL,Kendall County,24.6,34.2,34.8
-17095,IL,Knox County,36.6,32.9,17.7
-17097,IL,Lake County,21.3,24.9,43.2
-17099,IL,La Salle County,37.5,34.5,16.2
-17101,IL,Lawrence County,34.3,33.5,9.4
-17103,IL,Lee County,37.7,33,17.3
-17105,IL,Livingston County,40.5,31.9,15.2
-17107,IL,Logan County,33.3,35.6,17.2
-17109,IL,McDonough County,29.2,29,34.1
-17111,IL,McHenry County,26.5,33.4,32.5
-17113,IL,McLean County,25.7,25.3,44
-17115,IL,Macon County,34.6,31.5,22.9
-17117,IL,Macoupin County,37.3,34.4,18.1
-17119,IL,Madison County,32.3,34.4,25.3
-17121,IL,Marion County,35.4,37.8,14.5
-17123,IL,Marshall County,40.3,34.6,16.8
-17125,IL,Mason County,41.3,31.9,14.1
-17127,IL,Massac County,31.7,35.8,14.7
-17129,IL,Menard County,37.2,32,23.1
-17131,IL,Mercer County,41.9,34.1,15.7
-17133,IL,Monroe County,33.7,32.8,27.5
-17135,IL,Montgomery County,41.7,30.9,13
-17137,IL,Morgan County,41.4,26.8,22.3
-17139,IL,Moultrie County,36.9,31.8,15.7
-17141,IL,Ogle County,33.7,34.7,19.8
-17143,IL,Peoria County,28.6,32.4,29.2
-17145,IL,Perry County,38.3,34.1,13.4
-17147,IL,Piatt County,34.7,32.2,27.6
-17149,IL,Pike County,43,29.3,15.2
-17151,IL,Pope County,32.3,38.3,15.1
-17153,IL,Pulaski County,35.5,33.3,11.6
-17155,IL,Putnam County,42.7,35.1,12.5
-17157,IL,Randolph County,42.4,30.3,12
-17159,IL,Richland County,33.3,34.1,20.9
-17161,IL,Rock Island County,31.8,34.3,22
-17163,IL,St. Clair County,28.1,36.2,26
-17165,IL,Saline County,33.1,38.7,14
-17167,IL,Sangamon County,28.1,30.6,33.4
-17169,IL,Schuyler County,39,32.7,15.9
-17171,IL,Scott County,49.4,29.5,11.9
-17173,IL,Shelby County,45.5,31.3,14.9
-17175,IL,Stark County,38.8,32.1,17.6
-17177,IL,Stephenson County,35.3,37.1,18.1
-17179,IL,Tazewell County,33.1,34.6,25
-17181,IL,Union County,31,32.1,21.6
-17183,IL,Vermilion County,40.6,32.4,13.8
-17185,IL,Wabash County,32.2,41.5,15.6
-17187,IL,Warren County,35,31.9,20.9
-17189,IL,Washington County,35,35.4,20.9
-17191,IL,Wayne County,34.4,38.4,13.8
-17193,IL,White County,35.1,39,13.6
-17195,IL,Whiteside County,35,36.2,16.9
-17197,IL,Will County,27,30.4,33
-17199,IL,Williamson County,30.4,38.3,21
-17201,IL,Winnebago County,33.3,32.1,21.9
-17203,IL,Woodford County,32.7,32.7,28.4
-18000,IN,Indiana,34.6,29.1,24.1
-18001,IN,Adams County,44.1,26.1,15
-18003,IN,Allen County,29.4,32.9,27
-18005,IN,Bartholomew County,34.3,26.6,29.4
-18007,IN,Benton County,45.2,26.8,16.9
-18009,IN,Blackford County,49.5,25.9,10.1
-18011,IN,Boone County,26.7,23.9,42.7
-18013,IN,Brown County,37.9,29.6,22.3
-18015,IN,Carroll County,41.3,29.6,17
-18017,IN,Cass County,40.8,27.9,14.2
-18019,IN,Clark County,34,33.1,20.1
-18021,IN,Clay County,44.9,27.3,15.1
-18023,IN,Clinton County,45.6,25.6,15.1
-18025,IN,Crawford County,49.7,23,9.7
-18027,IN,Daviess County,37.2,23.9,13.7
-18029,IN,Dearborn County,39.6,31.3,19.5
-18031,IN,Decatur County,45.3,27,16.2
-18033,IN,DeKalb County,40.6,30.5,17
-18035,IN,Delaware County,35.5,29.9,23.2
-18037,IN,Dubois County,41.9,27.3,18.7
-18039,IN,Elkhart County,36.9,25.8,18.1
-18041,IN,Fayette County,42.8,27.8,9.8
-18043,IN,Floyd County,32.1,31.2,25.8
-18045,IN,Fountain County,44.2,29.9,13.6
-18047,IN,Franklin County,42.6,25.1,19.3
-18049,IN,Fulton County,43.6,28.4,13.2
-18051,IN,Gibson County,40.3,34.4,15.1
-18053,IN,Grant County,41.5,27.6,17.3
-18055,IN,Greene County,41.1,30.7,13.7
-18057,IN,Hamilton County,15.9,24.3,55.9
-18059,IN,Hancock County,33.3,32.4,28.3
-18061,IN,Harrison County,41.9,29.9,16
-18063,IN,Hendricks County,28.9,31.4,33.4
-18065,IN,Henry County,43.5,27.5,15.6
-18067,IN,Howard County,36.4,32.8,18.9
-18069,IN,Huntington County,43.4,28.3,18
-18071,IN,Jackson County,48.1,24.4,15
-18073,IN,Jasper County,42.8,29.8,15.3
-18075,IN,Jay County,48.6,25.4,10.1
-18077,IN,Jefferson County,39.5,29.6,17.6
-18079,IN,Jennings County,47.4,26,10.4
-18081,IN,Johnson County,33.8,29.7,28.5
-18083,IN,Knox County,37.8,34.9,15.2
-18085,IN,Kosciusko County,37.7,27,20.7
-18087,IN,LaGrange County,33.1,20.1,9.8
-18089,IN,Lake County,35.4,31.4,20.4
-18091,IN,LaPorte County,39.2,30.2,17.2
-18093,IN,Lawrence County,42.9,30.6,13.8
-18095,IN,Madison County,39.1,30.6,17.5
-18097,IN,Marion County,28.5,28.3,28.3
-18099,IN,Marshall County,40.5,25.8,18.3
-18101,IN,Martin County,43.1,27.8,12.1
-18103,IN,Miami County,42.7,30.1,11.9
-18105,IN,Monroe County,22.3,25.1,45
-18107,IN,Montgomery County,44.2,28.2,16
-18109,IN,Morgan County,41.6,31,15.7
-18111,IN,Newton County,49.5,26.8,9.7
-18113,IN,Noble County,41.1,28.9,14.3
-18115,IN,Ohio County,49.4,25,12.9
-18117,IN,Orange County,46.5,25.1,11.4
-18119,IN,Owen County,43.7,29.1,10.5
-18121,IN,Parke County,40.5,31.4,13.5
-18123,IN,Perry County,51.2,23.1,11.5
-18125,IN,Pike County,46.7,28,11.6
-18127,IN,Porter County,35.2,30.4,26.4
-18129,IN,Posey County,39.5,33.3,20.6
-18131,IN,Pulaski County,46.2,28.6,11.4
-18133,IN,Putnam County,42.8,29.9,15.2
-18135,IN,Randolph County,44,29.1,12.3
-18137,IN,Ripley County,44.9,25.9,16.4
-18139,IN,Rush County,47.4,23.5,14.9
-18141,IN,St. Joseph County,31.2,28.9,27.9
-18143,IN,Scott County,42.6,28.2,12.2
-18145,IN,Shelby County,44.1,28.3,14.8
-18147,IN,Spencer County,43.6,30.4,15
-18149,IN,Starke County,42.3,28.3,11.6
-18151,IN,Steuben County,38.1,31.5,20
-18153,IN,Sullivan County,42.1,30.4,13.2
-18155,IN,Switzerland County,46.6,28.7,9.1
-18157,IN,Tippecanoe County,26.6,28.5,35.2
-18159,IN,Tipton County,40.5,28.5,19.4
-18161,IN,Union County,42.6,26.8,18.6
-18163,IN,Vanderburgh County,34.5,31.3,24.2
-18165,IN,Vermillion County,43.9,31.5,13.5
-18167,IN,Vigo County,33.6,31.3,22.5
-18169,IN,Wabash County,42.5,26.9,18.8
-18171,IN,Warren County,43.8,26.3,18.6
-18173,IN,Warrick County,33.8,32.3,27
-18175,IN,Washington County,45.9,25.8,12.4
-18177,IN,Wayne County,38.6,28,17.4
-18179,IN,Wells County,41.8,31.3,17.6
-18181,IN,White County,44.3,29.7,15.5
-18183,IN,Whitley County,42.3,30.1,18.4
-19000,IA,Iowa,32.2,32.6,26.7
-19001,IA,Adair County,44.7,32.5,15.3
-19003,IA,Adams County,39.1,38.5,15.1
-19005,IA,Allamakee County,42.1,30.1,16.3
-19007,IA,Appanoose County,36.3,34.7,17.6
-19009,IA,Audubon County,42.3,33.4,14.3
-19011,IA,Benton County,36.4,34.7,21.6
-19013,IA,Black Hawk County,32.7,30.7,27
-19015,IA,Boone County,34.8,35.9,23.2
-19017,IA,Bremer County,33.4,32.7,28.6
-19019,IA,Buchanan County,42.9,32.6,16.8
-19021,IA,Buena Vista County,31,29,18.9
-19023,IA,Butler County,40.8,36.3,15.2
-19025,IA,Calhoun County,37,37,18.4
-19027,IA,Carroll County,40.6,31.7,20.1
-19029,IA,Cass County,44.3,27.7,19.9
-19031,IA,Cedar County,37,34.1,21.5
-19033,IA,Cerro Gordo County,31.8,39.7,22.2
-19035,IA,Cherokee County,35.6,36.2,18.8
-19037,IA,Chickasaw County,43.2,31.5,15
-19039,IA,Clarke County,44.6,30.2,13.9
-19041,IA,Clay County,36.9,37.1,19.3
-19043,IA,Clayton County,44.5,30.5,16.8
-19045,IA,Clinton County,36.3,35.6,19.6
-19047,IA,Crawford County,35.8,28.2,13.5
-19049,IA,Dallas County,21.1,29.6,44.2
-19051,IA,Davis County,37.4,31.6,16.8
-19053,IA,Decatur County,38.6,28.7,19.8
-19055,IA,Delaware County,44.1,31,14.8
-19057,IA,Des Moines County,35.6,35.8,20
-19059,IA,Dickinson County,29.6,37.8,27.4
-19061,IA,Dubuque County,35.4,28,28.7
-19063,IA,Emmet County,34.6,38.5,16.2
-19065,IA,Fayette County,39.5,31.5,18.5
-19067,IA,Floyd County,35.5,34.3,18.2
-19069,IA,Franklin County,38.1,33.4,16.7
-19071,IA,Fremont County,36.4,34.3,21.5
-19073,IA,Greene County,35.7,37.3,18.6
-19075,IA,Grundy County,35.3,36.8,22.7
-19077,IA,Guthrie County,39.3,33.5,19.2
-19079,IA,Hamilton County,33.2,37.9,19.9
-19081,IA,Hancock County,36.4,37.6,18.1
-19083,IA,Hardin County,34.9,37.6,18.2
-19085,IA,Harrison County,38.1,35.4,17.4
-19087,IA,Henry County,37.3,35.7,18.8
-19089,IA,Howard County,44,31.7,12.8
-19091,IA,Humboldt County,37.1,37.2,17.6
-19093,IA,Ida County,40.1,32.2,19.3
-19095,IA,Iowa County,38.4,33.7,20.7
-19097,IA,Jackson County,44.8,30.6,15.3
-19099,IA,Jasper County,39.7,34.5,18.2
-19101,IA,Jefferson County,30.4,32,31.9
-19103,IA,Johnson County,17.1,26.4,51.3
-19105,IA,Jones County,39.6,35.9,16.6
-19107,IA,Keokuk County,42.8,32.2,15.5
-19109,IA,Kossuth County,38,36.8,19.1
-19111,IA,Lee County,41.7,34.3,15.5
-19113,IA,Linn County,27.2,35.8,31.5
-19115,IA,Louisa County,37.3,31.9,13.2
-19117,IA,Lucas County,44.9,30.9,14.9
-19119,IA,Lyon County,37.1,32.6,20.8
-19121,IA,Madison County,38.9,33.4,21.7
-19123,IA,Mahaska County,37.6,31.1,22.7
-19125,IA,Marion County,35.7,31.5,24.8
-19127,IA,Marshall County,32.9,31,19.7
-19129,IA,Mills County,35.9,33.3,23.8
-19131,IA,Mitchell County,44.2,31.8,14.9
-19133,IA,Monona County,43.3,33.8,14.5
-19135,IA,Monroe County,44.8,27,17.2
-19137,IA,Montgomery County,37.6,35.8,14.9
-19139,IA,Muscatine County,35,32.4,18.8
-19141,IA,O'Brien County,37.7,35.6,18.8
-19143,IA,Osceola County,37.6,30.8,17.4
-19145,IA,Page County,34.7,33.5,20
-19147,IA,Palo Alto County,30.9,41.9,20
-19149,IA,Plymouth County,35.6,36,20.5
-19151,IA,Pocahontas County,38.9,36.3,17.4
-19153,IA,Polk County,25.3,30.7,35.8
-19155,IA,Pottawattamie County,34.9,34.1,20.2
-19157,IA,Poweshiek County,36.8,31.5,24.6
-19159,IA,Ringgold County,35.5,33.6,20.8
-19161,IA,Sac County,39.3,32.9,19.7
-19163,IA,Scott County,28.3,32.2,32.1
-19165,IA,Shelby County,36.8,33.6,21.3
-19167,IA,Sioux County,31.9,31.8,25.5
-19169,IA,Story County,18.8,28.8,48.3
-19171,IA,Tama County,41,34.2,15.7
-19173,IA,Taylor County,42,34.8,14.5
-19175,IA,Union County,40,38,14.7
-19177,IA,Van Buren County,43.5,32.8,12.7
-19179,IA,Wapello County,36.7,32.8,16.8
-19181,IA,Warren County,32.6,34.8,28.2
-19183,IA,Washington County,35.8,33.6,20.9
-19185,IA,Wayne County,43.5,32.1,13.9
-19187,IA,Webster County,32.5,39,18.8
-19189,IA,Winnebago County,35.1,36.5,20.6
-19191,IA,Winneshiek County,35.1,31.3,27.7
-19193,IA,Woodbury County,34.2,30.2,21.1
-19195,IA,Worth County,36.6,40.5,15.4
-19197,IA,Wright County,37.5,35.4,17
-20000,KS,Kansas,27,32.1,31
-20001,KS,Allen County,33.4,39,18.2
-20003,KS,Anderson County,39.1,35.1,16.5
-20005,KS,Atchison County,41,31.9,19.9
-20007,KS,Barber County,36.6,34.8,20.2
-20009,KS,Barton County,33.9,35.3,16.9
-20011,KS,Bourbon County,31.2,36.1,22.1
-20013,KS,Brown County,39.8,33.1,19.8
-20015,KS,Butler County,26.8,38.2,28
-20017,KS,Chase County,33.5,32.3,24.3
-20019,KS,Chautauqua County,36.1,32.4,17.5
-20021,KS,Cherokee County,34.6,35,17.4
-20023,KS,Cheyenne County,31.5,39,22.3
-20025,KS,Clark County,26.1,36.1,29.7
-20027,KS,Clay County,33.7,38.9,23.7
-20029,KS,Cloud County,34.2,39.4,17.5
-20031,KS,Coffey County,36.8,35,21
-20033,KS,Comanche County,28.4,39.3,24
-20035,KS,Cowley County,30.5,40.5,19.2
-20037,KS,Crawford County,28.2,33.2,28.6
-20039,KS,Decatur County,37.6,26.3,26.6
-20041,KS,Dickinson County,36,33.4,20
-20043,KS,Doniphan County,38.7,34.9,16.5
-20045,KS,Douglas County,20,25.8,49.1
-20047,KS,Edwards County,30.7,32.9,18.7
-20049,KS,Elk County,35.3,36.3,17.4
-20051,KS,Ellis County,27.7,33.3,32.3
-20053,KS,Ellsworth County,32.2,36.2,21.2
-20055,KS,Finney County,23.1,30.3,18.6
-20057,KS,Ford County,23,28.4,17.9
-20059,KS,Franklin County,36.1,35.2,21.2
-20061,KS,Geary County,29.8,42.3,20.4
-20063,KS,Gove County,37.7,33.9,21.4
-20065,KS,Graham County,32.7,34.1,26.5
-20067,KS,Grant County,28.9,24.5,18.2
-20069,KS,Gray County,25.6,31.5,19.1
-20071,KS,Greeley County,30.3,32.3,25.5
-20073,KS,Greenwood County,40.1,33.2,16.5
-20075,KS,Hamilton County,34.8,31.6,13.3
-20077,KS,Harper County,36.6,32.2,19.7
-20079,KS,Harvey County,29.6,33.8,26.5
-20081,KS,Haskell County,20.9,32.1,17.7
-20083,KS,Hodgeman County,25.9,43.1,23.7
-20085,KS,Jackson County,40.6,34.7,18.7
-20087,KS,Jefferson County,40.7,32.6,19.5
-20089,KS,Jewell County,39.4,38.6,15.4
-20091,KS,Johnson County,15.2,27.8,52.8
-20093,KS,Kearny County,23.4,37,17.2
-20095,KS,Kingman County,34.8,35.1,20.5
-20097,KS,Kiowa County,26.9,37.2,27.3
-20099,KS,Labette County,33.1,36.1,19.5
-20101,KS,Lane County,29.7,41.7,21.4
-20103,KS,Leavenworth County,30.9,31.5,29
-20105,KS,Lincoln County,32.3,41.5,20.3
-20107,KS,Linn County,37.2,36,15
-20109,KS,Logan County,35.5,38.6,18.2
-20111,KS,Lyon County,33.4,28.9,25.6
-20113,KS,McPherson County,29.1,34.4,27.4
-20115,KS,Marion County,36.4,29.7,22.6
-20117,KS,Marshall County,44.8,32.7,16.6
-20119,KS,Meade County,31.1,32.4,22.2
-20121,KS,Miami County,32.5,38.7,23.3
-20123,KS,Mitchell County,34,35.3,25.7
-20125,KS,Montgomery County,32.1,39.6,17.1
-20127,KS,Morris County,35.7,35.5,17.6
-20129,KS,Morton County,32.5,39.2,13.9
-20131,KS,Nemaha County,41.9,26,22.6
-20133,KS,Neosho County,33.6,39.5,18.6
-20135,KS,Ness County,35.9,35.3,19.8
-20137,KS,Norton County,34.6,34.3,17.4
-20139,KS,Osage County,40.5,30.8,19.5
-20141,KS,Osborne County,36.3,33.4,20.6
-20143,KS,Ottawa County,32.9,38.8,21.4
-20145,KS,Pawnee County,28,39.3,21.7
-20147,KS,Phillips County,35.3,35.3,21.6
-20149,KS,Pottawatomie County,31.2,32.3,32.2
-20151,KS,Pratt County,26.5,37.3,25.9
-20153,KS,Rawlins County,30.8,36.2,25
-20155,KS,Reno County,28.6,39.3,20.2
-20157,KS,Republic County,35.1,37.7,20
-20159,KS,Rice County,30.5,36.3,21.2
-20161,KS,Riley County,17.4,32.7,44.9
-20163,KS,Rooks County,36.8,33.1,22
-20165,KS,Rush County,33,35.7,21.7
-20167,KS,Russell County,32.8,32.9,24
-20169,KS,Saline County,33.5,32.9,23.4
-20171,KS,Scott County,33.4,31,20.5
-20173,KS,Sedgwick County,26.8,32.7,29.4
-20175,KS,Seward County,24.8,27.3,11.8
-20177,KS,Shawnee County,31.1,30.8,29
-20179,KS,Sheridan County,33.8,36.1,21.6
-20181,KS,Sherman County,33.3,41.9,14.1
-20183,KS,Smith County,35.3,37.3,18.1
-20185,KS,Stafford County,28.7,36.9,21.8
-20187,KS,Stanton County,27.4,33.1,22.2
-20189,KS,Stevens County,35.6,31.8,15.4
-20191,KS,Sumner County,35.9,36.2,19.9
-20193,KS,Thomas County,28.9,36,28.3
-20195,KS,Trego County,33.2,35.8,25
-20197,KS,Wabaunsee County,38.9,33.2,23
-20199,KS,Wallace County,32.9,33.4,25.2
-20201,KS,Washington County,38,35.1,17
-20203,KS,Wichita County,29.6,32.1,16.1
-20205,KS,Wilson County,36.8,34.2,14.7
-20207,KS,Woodson County,38.8,35.4,16
-20209,KS,Wyandotte County,32.9,29.8,15.9
-21000,KY,Kentucky,33.6,28.2,22.3
-21001,KY,Adair County,36.3,22.8,15.9
-21003,KY,Allen County,36,28,13.6
-21005,KY,Anderson County,38.8,30.4,18.9
-21007,KY,Ballard County,39.4,32,13.6
-21009,KY,Barren County,41.5,24.1,15.6
-21011,KY,Bath County,39.2,24.3,12.2
-21013,KY,Bell County,35.6,20.8,9.8
-21015,KY,Boone County,28.1,33.1,30.8
-21017,KY,Bourbon County,36.7,30.2,16
-21019,KY,Boyd County,35.9,34.9,17.7
-21021,KY,Boyle County,35,28,22.7
-21023,KY,Bracken County,43.4,25.5,14
-21025,KY,Breathitt County,34.3,23.3,11.2
-21027,KY,Breckinridge County,44,24.6,9.5
-21029,KY,Bullitt County,40.8,31.2,14.3
-21031,KY,Butler County,43.3,23.1,8.7
-21033,KY,Caldwell County,44.9,25.6,16.4
-21035,KY,Calloway County,31.6,28.3,27.5
-21037,KY,Campbell County,31,29.2,29.1
-21039,KY,Carlisle County,38.2,30.6,13.3
-21041,KY,Carroll County,44,22.9,11.2
-21043,KY,Carter County,41.4,25.6,12.8
-21045,KY,Casey County,37.4,24,11.2
-21047,KY,Christian County,32.7,36,16.6
-21049,KY,Clark County,35.2,28.1,20.7
-21051,KY,Clay County,36.9,17.2,9.6
-21053,KY,Clinton County,36.2,23.8,9.6
-21055,KY,Crittenden County,37.9,30.7,11.4
-21057,KY,Cumberland County,39.1,24.6,13.4
-21059,KY,Daviess County,37.8,29.9,20.3
-21061,KY,Edmonson County,42.1,23.4,13.3
-21063,KY,Elliott County,42,25.3,7.5
-21065,KY,Estill County,48.6,17.9,7.8
-21067,KY,Fayette County,20.6,28,41.2
-21069,KY,Fleming County,38.9,26.6,12.8
-21071,KY,Floyd County,34.7,27.6,12.8
-21073,KY,Franklin County,31.8,28,27
-21075,KY,Fulton County,34.8,27.5,13.1
-21077,KY,Gallatin County,44.2,27.8,10.1
-21079,KY,Garrard County,38.8,25.7,15.1
-21081,KY,Grant County,44.8,25.3,12.4
-21083,KY,Graves County,36.7,28.5,17.3
-21085,KY,Grayson County,42.2,25.8,9.1
-21087,KY,Green County,46,22.2,10.2
-21089,KY,Greenup County,37.4,31.5,16.9
-21091,KY,Hancock County,46.8,30.2,11.2
-21093,KY,Hardin County,32.1,33.8,23.2
-21095,KY,Harlan County,35.6,24.4,11.7
-21097,KY,Harrison County,42.5,24.9,14
-21099,KY,Hart County,41.3,21.1,10.3
-21101,KY,Henderson County,36.6,32.6,16.8
-21103,KY,Henry County,44.6,25.5,11.2
-21105,KY,Hickman County,41.2,30.4,9.2
-21107,KY,Hopkins County,39.5,29.7,15.3
-21109,KY,Jackson County,43.4,19,9.7
-21111,KY,Jefferson County,27.5,29.9,31.5
-21113,KY,Jessamine County,28.9,27.3,29
-21115,KY,Johnson County,37.3,29,10.8
-21117,KY,Kenton County,29.4,30.9,28.9
-21119,KY,Knott County,35.1,23.2,12.3
-21121,KY,Knox County,40.7,18.6,11
-21123,KY,Larue County,43.1,29.6,10.3
-21125,KY,Laurel County,37.9,26,12.3
-21127,KY,Lawrence County,41.5,24.1,11.9
-21129,KY,Lee County,42.5,21,7.9
-21131,KY,Leslie County,33.8,22.7,8.6
-21133,KY,Letcher County,36.1,25.6,11.8
-21135,KY,Lewis County,42.2,20.6,10.9
-21137,KY,Lincoln County,44.5,22.9,10.6
-21139,KY,Livingston County,46.9,25.7,10.4
-21141,KY,Logan County,40.3,24.8,13.2
-21143,KY,Lyon County,39,30.8,17.8
-21145,KY,McCracken County,31.3,33.6,23
-21147,KY,McCreary County,40.5,24.9,7
-21149,KY,McLean County,39.9,30.8,10.9
-21151,KY,Madison County,29.5,27.8,28.6
-21153,KY,Magoffin County,37.8,22.6,8.5
-21155,KY,Marion County,44.8,23.4,13.4
-21157,KY,Marshall County,41,29.3,15.8
-21159,KY,Martin County,39.5,25.8,6.5
-21161,KY,Mason County,38.3,28.9,16
-21163,KY,Meade County,39.8,31.8,14.8
-21165,KY,Menifee County,39.1,24.1,10.7
-21167,KY,Mercer County,38.8,27,18.8
-21169,KY,Metcalfe County,40.9,23.3,11.6
-21171,KY,Monroe County,41.8,18.8,14.1
-21173,KY,Montgomery County,39.1,26.2,17.1
-21175,KY,Morgan County,36.2,24.6,11.8
-21177,KY,Muhlenberg County,42.1,25.1,10.4
-21179,KY,Nelson County,42,29,16.2
-21181,KY,Nicholas County,40.7,27.4,11.2
-21183,KY,Ohio County,42.8,25.8,9.7
-21185,KY,Oldham County,23,29.8,39.4
-21187,KY,Owen County,47,24.7,12.2
-21189,KY,Owsley County,34.6,16.8,16.6
-21191,KY,Pendleton County,47.9,25.2,10.8
-21193,KY,Perry County,32.2,26.9,14
-21195,KY,Pike County,36.4,23.8,13.3
-21197,KY,Powell County,40.7,20.4,13
-21199,KY,Pulaski County,41.2,25.3,14.4
-21201,KY,Robertson County,36.1,22.5,16
-21203,KY,Rockcastle County,43.2,22.9,9.8
-21205,KY,Rowan County,31,24.1,26.9
-21207,KY,Russell County,36.6,25.8,12.4
-21209,KY,Scott County,30.7,30.6,27.8
-21211,KY,Shelby County,31.8,30.6,23.8
-21213,KY,Simpson County,42.6,26.8,15.1
-21215,KY,Spencer County,35.6,33.8,18.5
-21217,KY,Taylor County,40.6,26.2,15.8
-21219,KY,Todd County,41.9,24.7,10.8
-21221,KY,Trigg County,30.1,34.9,17.6
-21223,KY,Trimble County,47.2,26.6,10.3
-21225,KY,Union County,40.2,31.7,11.3
-21227,KY,Warren County,30.9,28.4,28.1
-21229,KY,Washington County,41.6,24,14.5
-21231,KY,Wayne County,37,24.1,10
-21233,KY,Webster County,42.3,27.2,9.2
-21235,KY,Whitley County,37.1,22.8,15.9
-21237,KY,Wolfe County,38.5,17,11.9
-21239,KY,Woodford County,28.9,27.3,32.9
-22000,LA,Lousiana,33.9,26.9,22.5
-22001,LA,Acadia Parish,39.2,24.1,10.5
-22003,LA,Allen Parish,44,23.7,11.6
-22005,LA,Ascension Parish,34.6,27.5,26
-22007,LA,Assumption Parish,39.5,22.5,10.7
-22009,LA,Avoyelles Parish,41.3,21.7,9.5
-22011,LA,Beauregard Parish,42.7,26.1,15.1
-22013,LA,Bienville Parish,42.7,28.1,11.2
-22015,LA,Bossier Parish,29.4,33.3,25.7
-22017,LA,Caddo Parish,32.9,29.2,23.8
-22019,LA,Calcasieu Parish,35.8,29.3,20.7
-22021,LA,Caldwell Parish,42.8,21.8,10.2
-22023,LA,Cameron Parish,38.5,28.5,15.8
-22025,LA,Catahoula Parish,42.2,20.3,12.3
-22027,LA,Claiborne Parish,40.7,22.7,12.8
-22029,LA,Concordia Parish,41.3,23.6,11.6
-22031,LA,De Soto Parish,41.2,27.3,12.1
-22033,LA,East Baton Rouge Parish,26.7,28.6,34.1
-22035,LA,East Carroll Parish,38.5,21.5,8.8
-22037,LA,East Feliciana Parish,43.5,26.1,12.3
-22039,LA,Evangeline Parish,34.6,22.2,12.6
-22041,LA,Franklin Parish,40.3,22.1,10.8
-22043,LA,Grant Parish,42.3,27.6,8.6
-22045,LA,Iberia Parish,42.1,22.4,13
-22047,LA,Iberville Parish,38.3,24.9,13.1
-22049,LA,Jackson Parish,41.9,24.1,13
-22051,LA,Jefferson Parish,31.1,28.8,24.6
-22053,LA,Jefferson Davis Parish,41.1,23.7,14
-22055,LA,Lafayette Parish,28.7,27.6,29.9
-22057,LA,Lafourche Parish,39.1,19.9,15.4
-22059,LA,La Salle Parish,43.6,22.8,11.7
-22061,LA,Lincoln Parish,27.7,23.4,35.6
-22063,LA,Livingston Parish,40.2,25.7,18.3
-22065,LA,Madison Parish,39.6,24.7,11.4
-22067,LA,Morehouse Parish,43.5,22.9,12.7
-22069,LA,Natchitoches Parish,33.7,28.6,20.4
-22071,LA,Orleans Parish,23.2,26.7,35.3
-22073,LA,Ouachita Parish,32.9,27.5,24
-22075,LA,Plaquemines Parish,39.3,26.6,14.2
-22077,LA,Pointe Coupee Parish,41.7,25.4,13.4
-22079,LA,Rapides Parish,37,28.1,18.4
-22081,LA,Red River Parish,44.3,21,12
-22083,LA,Richland Parish,41,23.3,14.5
-22085,LA,Sabine Parish,42,26.3,14.1
-22087,LA,St. Bernard Parish,40.9,28.1,12.5
-22089,LA,St. Charles Parish,36.7,30.4,20.3
-22091,LA,St. Helena Parish,45.7,24.1,10
-22093,LA,St. James Parish,44.8,25.2,14.2
-22095,LA,St. John the Baptist Parish,37.5,28.6,16.5
-22097,LA,St. Landry Parish,44.5,18.9,12.8
-22099,LA,St. Martin Parish,42.1,23,13.2
-22101,LA,St. Mary Parish,43.4,20.7,11.1
-22103,LA,St. Tammany Parish,27,30.9,30.6
-22105,LA,Tangipahoa Parish,35.6,26.8,19.3
-22107,LA,Tensas Parish,45.6,23.5,10.3
-22109,LA,Terrebonne Parish,40,23.5,13.7
-22111,LA,Union Parish,44.9,27,11.7
-22113,LA,Vermilion Parish,41,22.9,12.4
-22115,LA,Vernon Parish,35.8,32.5,19.2
-22117,LA,Washington Parish,40.5,24,12.3
-22119,LA,Webster Parish,40.5,25.7,14
-22121,LA,West Baton Rouge Parish,39.2,26,19.7
-22123,LA,West Carroll Parish,44,19.9,11.1
-22125,LA,West Feliciana Parish,33.7,23.2,21.6
-22127,LA,Winn Parish,42,23.9,12.5
-23000,ME,Maine,33.2,29.4,29
-23001,ME,Androscoggin County,37.2,31.1,20.3
-23003,ME,Aroostook County,39,30.4,17.2
-23005,ME,Cumberland County,24.1,27.4,43
-23007,ME,Franklin County,36.9,29.7,25.6
-23009,ME,Hancock County,33.1,27.9,32.7
-23011,ME,Kennebec County,35.6,30.8,25
-23013,ME,Knox County,34.8,27,31.2
-23015,ME,Lincoln County,32.1,29.4,31.2
-23017,ME,Oxford County,45.6,27.4,18.1
-23019,ME,Penobscot County,34.9,31.4,24.5
-23021,ME,Piscataquis County,40.5,30.7,17.4
-23023,ME,Sagadahoc County,31.6,29.8,32.2
-23025,ME,Somerset County,41.3,31.2,15.4
-23027,ME,Waldo County,34,27.8,30.3
-23029,ME,Washington County,38.3,29.3,20.1
-23031,ME,York County,31.6,30.1,30.5
-24000,MD,Maryland,25.5,25.9,37.9
-24001,MD,Allegany County,42,29,17.4
-24003,MD,Anne Arundel County,25,28.3,38.3
-24005,MD,Baltimore County,27.2,26.8,36.6
-24009,MD,Calvert County,31.5,32.6,29.1
-24011,MD,Caroline County,40.7,26.6,15.5
-24013,MD,Carroll County,30.6,28.4,33.1
-24015,MD,Cecil County,37.8,28.1,22
-24017,MD,Charles County,32.2,32.7,27.4
-24019,MD,Dorchester County,38.3,26.4,20.2
-24021,MD,Frederick County,25.2,28.2,39.1
-24023,MD,Garrett County,42.2,27.1,19
-24025,MD,Harford County,28.1,30.9,33.8
-24027,MD,Howard County,14.2,20.3,60.6
-24029,MD,Kent County,33.2,23.9,30
-24031,MD,Montgomery County,14,19.3,57.9
-24033,MD,Prince George's County,26.1,28.5,31.1
-24035,MD,Queen Anne's County,29.9,26.5,34.9
-24037,MD,St. Mary's County,30.6,29.5,30.6
-24039,MD,Somerset County,43.2,22.5,14.8
-24041,MD,Talbot County,27.9,26.7,33.9
-24043,MD,Washington County,38.1,28.7,19.9
-24045,MD,Wicomico County,31.9,27.5,28.5
-24047,MD,Worcester County,31.6,27.4,30.2
-24510,MD,Baltimore city,29.8,24.1,28.7
-25000,MA,Massachusetts,25.4,23.9,40.5
-25001,MA,Barnstable County,24.9,30.1,40.1
-25003,MA,Berkshire County,31.7,27.4,31.6
-25005,MA,Bristol County,30.2,26.7,25.9
-25007,MA,Dukes County,23.1,29.8,40.3
-25009,MA,Essex County,26.2,25.6,37.5
-25011,MA,Franklin County,27.1,29.8,35.2
-25013,MA,Hampden County,30.8,28.3,25.8
-25015,MA,Hampshire County,24.2,25.5,44.2
-25017,MA,Middlesex County,21.1,19.3,52
-25019,MA,Nantucket County,25.4,25.7,43.7
-25021,MA,Norfolk County,21,22.2,50.6
-25023,MA,Plymouth County,29,28.9,34.4
-25025,MA,Suffolk County,23.6,19,41.7
-25027,MA,Worcester County,28.9,26.5,34.4
-26000,MI,Michigan,29.9,32.8,26.9
-26001,MI,Alcona County,39.9,34.4,14.3
-26003,MI,Alger County,43.2,27.1,18.4
-26005,MI,Allegan County,38.3,30,21.5
-26007,MI,Alpena County,33.4,39.8,16.5
-26009,MI,Antrim County,33.7,31.1,25.3
-26011,MI,Arenac County,42.8,30.6,11.7
-26013,MI,Baraga County,44.1,25.2,13.1
-26015,MI,Barry County,36.6,35.5,19.2
-26017,MI,Bay County,35.6,35.4,18.3
-26019,MI,Benzie County,34.2,33,24.2
-26021,MI,Berrien County,30.6,32,26.1
-26023,MI,Branch County,40.8,33.7,13.5
-26025,MI,Calhoun County,35.7,34.3,20.1
-26027,MI,Cass County,36.2,35,16.9
-26029,MI,Charlevoix County,31.8,32.5,27.9
-26031,MI,Cheboygan County,39.4,31.6,18.1
-26033,MI,Chippewa County,37.8,32.1,19.1
-26035,MI,Clare County,39.3,33.2,11.6
-26037,MI,Clinton County,27.9,35.6,29.7
-26039,MI,Crawford County,35.4,34.9,17.2
-26041,MI,Delta County,35.3,37.9,18.9
-26043,MI,Dickinson County,39.9,30.9,22.4
-26045,MI,Eaton County,29.7,39.2,24.7
-26047,MI,Emmet County,26.2,34.2,33.2
-26049,MI,Genesee County,32.8,37.1,19.3
-26051,MI,Gladwin County,40.2,32.5,12.3
-26053,MI,Gogebic County,38.4,35.7,18.3
-26055,MI,Grand Traverse County,26.9,35.4,31.5
-26057,MI,Gratiot County,41.1,33.8,14.1
-26059,MI,Hillsdale County,40.2,31,15.5
-26061,MI,Houghton County,33.8,27.2,31.1
-26063,MI,Huron County,44.3,29.4,14.1
-26065,MI,Ingham County,21.6,32.9,37.2
-26067,MI,Ionia County,38.1,35.2,14.9
-26069,MI,Iosco County,40,32,16.1
-26071,MI,Iron County,45,27,19.3
-26073,MI,Isabella County,31.8,32,27.3
-26075,MI,Jackson County,34.8,35,20
-26077,MI,Kalamazoo County,23.1,35,35.1
-26079,MI,Kalkaska County,42.4,31.5,12.7
-26081,MI,Kent County,25.5,30.8,33.3
-26083,MI,Keweenaw County,32.6,37,22.8
-26085,MI,Lake County,41.5,31,9.4
-26087,MI,Lapeer County,37.1,36.2,17.5
-26089,MI,Leelanau County,22.4,32.7,40
-26091,MI,Lenawee County,36.7,33.8,19.2
-26093,MI,Livingston County,25.6,35.9,33.6
-26095,MI,Luce County,45,31,12.4
-26097,MI,Mackinac County,36.5,33.5,18.3
-26099,MI,Macomb County,30.6,35,23.3
-26101,MI,Manistee County,37.3,32.7,19.7
-26103,MI,Marquette County,33.1,32.6,28.8
-26105,MI,Mason County,34.4,37.1,20.2
-26107,MI,Mecosta County,34.4,32.2,22.7
-26109,MI,Menominee County,42.2,32.9,15.1
-26111,MI,Midland County,29.6,31.4,32.5
-26113,MI,Missaukee County,42.8,30.7,13.1
-26115,MI,Monroe County,36.2,35.4,18.6
-26117,MI,Montcalm County,39,35.2,13.1
-26119,MI,Montmorency County,41.9,32.9,10.7
-26121,MI,Muskegon County,34.8,35.8,18.2
-26123,MI,Newaygo County,41.1,31,13.9
-26125,MI,Oakland County,20.1,28.8,44.4
-26127,MI,Oceana County,34.7,33.8,16.8
-26129,MI,Ogemaw County,40.9,32.5,11.7
-26131,MI,Ontonagon County,40.6,35.7,15.1
-26133,MI,Osceola County,44.7,30.1,13.2
-26135,MI,Oscoda County,40.6,33.4,9.7
-26137,MI,Otsego County,36.6,34.8,20.5
-26139,MI,Ottawa County,28.9,31.3,31.1
-26141,MI,Presque Isle County,40.6,30.5,16.9
-26143,MI,Roscommon County,38.9,34.8,14.4
-26145,MI,Saginaw County,34.2,33.6,20.2
-26147,MI,St. Clair County,35.3,36.9,17.4
-26149,MI,St. Joseph County,38.9,31.6,14.7
-26151,MI,Sanilac County,45.1,30.5,12.3
-26153,MI,Schoolcraft County,46.8,27.3,13.2
-26155,MI,Shiawassee County,36.6,38.6,15.7
-26157,MI,Tuscola County,42,32.9,13.9
-26159,MI,Van Buren County,34,32.8,19.5
-26161,MI,Washtenaw County,15.7,26.1,52.6
-26163,MI,Wayne County,30.3,32.4,22
-26165,MI,Wexford County,38.8,33.2,16.8
-27000,MN,Minnesota,26.1,32.7,33.7
-27001,MN,Aitkin County,39.9,35.2,15.5
-27003,MN,Anoka County,28.4,37.1,27.8
-27005,MN,Becker County,33.5,35.8,22.4
-27007,MN,Beltrami County,26.1,37.9,26.6
-27009,MN,Benton County,32.1,37.9,21.5
-27011,MN,Big Stone County,42.4,30.2,17.4
-27013,MN,Blue Earth County,28.1,34.9,31.3
-27015,MN,Brown County,37.6,31.7,21.3
-27017,MN,Carlton County,36.4,35,22.8
-27019,MN,Carver County,21.2,28.7,45.2
-27021,MN,Cass County,35.4,35.7,20.2
-27023,MN,Chippewa County,36,37.7,15.9
-27025,MN,Chisago County,34.6,37.3,22
-27027,MN,Clay County,27.3,34.9,31.7
-27029,MN,Clearwater County,38.1,33.6,14.9
-27031,MN,Cook County,25.1,31.6,39
-27033,MN,Cottonwood County,36.2,34.8,18.5
-27035,MN,Crow Wing County,31.4,38.5,23.2
-27037,MN,Dakota County,21.6,32.9,40.3
-27039,MN,Dodge County,33.5,36.8,23.7
-27041,MN,Douglas County,29.9,39.4,24.7
-27043,MN,Faribault County,39.9,33.4,16.9
-27045,MN,Fillmore County,35.7,35.7,19.5
-27047,MN,Freeborn County,36.7,36.2,16.1
-27049,MN,Goodhue County,33,36.5,23.4
-27051,MN,Grant County,33.4,40.5,18.9
-27053,MN,Hennepin County,17.8,27.8,47
-27055,MN,Houston County,34.3,37.2,21.4
-27057,MN,Hubbard County,31.8,35.9,25
-27059,MN,Isanti County,37.8,35.2,17.7
-27061,MN,Itasca County,31.8,39.1,21.9
-27063,MN,Jackson County,34.8,37.7,18.8
-27065,MN,Kanabec County,39.7,35,13.5
-27067,MN,Kandiyohi County,27.9,38.6,22.2
-27069,MN,Kittson County,35,34.4,20.9
-27071,MN,Koochiching County,36.5,34.5,18.4
-27073,MN,Lac qui Parle County,38.3,36.2,17.7
-27075,MN,Lake County,36.2,34.3,24.4
-27077,MN,Lake of the Woods County,44.8,31.1,15.5
-27079,MN,Le Sueur County,35.5,33.9,21.2
-27081,MN,Lincoln County,40.5,32.2,19.2
-27083,MN,Lyon County,35.1,31.2,25.8
-27085,MN,McLeod County,38,35.9,18
-27087,MN,Mahnomen County,37.1,35.7,12.9
-27089,MN,Marshall County,37.4,32.7,18.7
-27091,MN,Martin County,38.6,31.5,18.9
-27093,MN,Meeker County,38.3,34.3,18.9
-27095,MN,Mille Lacs County,38.3,36.6,14.7
-27097,MN,Morrison County,38.6,33.9,17
-27099,MN,Mower County,32.6,36.4,19
-27101,MN,Murray County,36.5,34.5,18.1
-27103,MN,Nicollet County,27,34.6,32.5
-27105,MN,Nobles County,34.3,31,13.8
-27107,MN,Norman County,38.5,35.1,15.1
-27109,MN,Olmsted County,20.9,31.9,41.3
-27111,MN,Otter Tail County,30.5,36.3,24.5
-27113,MN,Pennington County,36,39,16.1
-27115,MN,Pine County,42.6,33.2,13.2
-27117,MN,Pipestone County,36,31.5,19
-27119,MN,Polk County,31.1,36.5,23.2
-27121,MN,Pope County,34.1,38.1,22.2
-27123,MN,Ramsey County,21.9,27.7,40.4
-27125,MN,Red Lake County,40.9,35.5,15.4
-27127,MN,Redwood County,37.9,33.4,17
-27129,MN,Renville County,37.5,36.3,15.7
-27131,MN,Rice County,31.8,31,27.6
-27133,MN,Rock County,38.5,30.9,20.4
-27135,MN,Roseau County,37.3,35.6,19
-27137,MN,St. Louis County,29.5,36.7,27
-27139,MN,Scott County,23.4,33.1,38.2
-27141,MN,Sherburne County,26.6,40.6,26.5
-27143,MN,Sibley County,40.8,32.3,16.3
-27145,MN,Stearns County,30.2,35.6,25.9
-27147,MN,Steele County,35.5,31,25.4
-27149,MN,Stevens County,27.2,35.8,28.3
-27151,MN,Swift County,38.6,33.8,16.2
-27153,MN,Todd County,37.1,35.5,15.2
-27155,MN,Traverse County,34.8,37.3,18
-27157,MN,Wabasha County,39.1,33,21.2
-27159,MN,Wadena County,39.3,36.9,12.7
-27161,MN,Waseca County,35.2,36.5,20.4
-27163,MN,Washington County,22,32.4,41.6
-27165,MN,Watonwan County,40,29.5,15.8
-27167,MN,Wilkin County,30.5,43.4,17.5
-27169,MN,Winona County,29.6,33.8,28.2
-27171,MN,Wright County,28.9,37.8,27.3
-27173,MN,Yellow Medicine County,36.8,37.5,16.1
-28000,MS,Mississippi,30.3,31.4,20.7
-28001,MS,Adams County,35.9,27,17.8
-28003,MS,Alcorn County,36.3,28.4,16.2
-28005,MS,Amite County,36.6,26,12.1
-28007,MS,Attala County,31.4,30.6,14.9
-28009,MS,Benton County,38.1,28.2,10.6
-28011,MS,Bolivar County,25,27.4,21.1
-28013,MS,Calhoun County,34.2,27.6,11.2
-28015,MS,Carroll County,37.3,28,13.6
-28017,MS,Chickasaw County,37.3,24.2,10.7
-28019,MS,Choctaw County,33.4,32.1,13.5
-28021,MS,Claiborne County,29.8,32.7,15.6
-28023,MS,Clarke County,34.4,31.4,13.9
-28025,MS,Clay County,32.9,27.9,17.8
-28027,MS,Coahoma County,27.6,31.9,17.6
-28029,MS,Copiah County,31.5,33.8,14.1
-28031,MS,Covington County,36.8,26.5,15.3
-28033,MS,DeSoto County,29.9,36.4,22.4
-28035,MS,Forrest County,28.2,29.9,26.7
-28037,MS,Franklin County,37.3,27.1,17.9
-28039,MS,George County,40.7,27.2,12
-28041,MS,Greene County,36.7,29.4,8.2
-28043,MS,Grenada County,30.2,31.2,15.6
-28045,MS,Hancock County,29.2,34,21
-28047,MS,Harrison County,28.8,35.3,21.3
-28049,MS,Hinds County,24.9,33.3,27.7
-28051,MS,Holmes County,36.9,22.7,12.3
-28053,MS,Humphreys County,27.8,23.6,12.1
-28055,MS,Issaquena County,34.9,18.4,7.2
-28057,MS,Itawamba County,31.8,34.8,13.2
-28059,MS,Jackson County,31.4,36,20.1
-28061,MS,Jasper County,36.4,29.2,13.4
-28063,MS,Jefferson County,36.4,23.7,16.5
-28065,MS,Jefferson Davis County,39.1,26.6,14.2
-28067,MS,Jones County,28.2,32.9,18.4
-28069,MS,Kemper County,31.1,34.2,11.5
-28071,MS,Lafayette County,20.9,29.9,38.3
-28073,MS,Lamar County,23.9,31.3,35.9
-28075,MS,Lauderdale County,30.9,36.1,18.7
-28077,MS,Lawrence County,35.4,31.8,12.1
-28079,MS,Leake County,35.1,28.5,11.8
-28081,MS,Lee County,27.5,34.5,21.8
-28083,MS,Leflore County,33.8,25,17.5
-28085,MS,Lincoln County,35.7,33.4,15.2
-28087,MS,Lowndes County,29,32.2,21.8
-28089,MS,Madison County,16,27.8,46
-28091,MS,Marion County,36.5,27.2,13
-28093,MS,Marshall County,37.7,26.4,13.4
-28095,MS,Monroe County,33.8,28.7,14.6
-28097,MS,Montgomery County,32.1,25.3,15.8
-28099,MS,Neshoba County,32.7,31.6,13.5
-28101,MS,Newton County,30.1,36.6,15.8
-28103,MS,Noxubee County,30.5,22.9,11.9
-28105,MS,Oktibbeha County,19.3,24,43
-28107,MS,Panola County,36.7,28.9,14.9
-28109,MS,Pearl River County,31.4,36.6,13.9
-28111,MS,Perry County,41.3,32.3,8.3
-28113,MS,Pike County,34.5,29.7,16.3
-28115,MS,Pontotoc County,34.7,29.8,13
-28117,MS,Prentiss County,33.9,30.3,11.9
-28119,MS,Quitman County,29.1,25.4,12.9
-28121,MS,Rankin County,26.9,33.8,29
-28123,MS,Scott County,34.4,25.3,11.2
-28125,MS,Sharkey County,30.6,26.8,20
-28127,MS,Simpson County,38.9,28,12.7
-28129,MS,Smith County,42.2,26.3,13
-28131,MS,Stone County,34.4,35.7,13.4
-28133,MS,Sunflower County,28.3,28.8,14.4
-28135,MS,Tallahatchie County,32.1,23.4,8.5
-28137,MS,Tate County,29.6,33.5,16.7
-28139,MS,Tippah County,32,30.2,12.9
-28141,MS,Tishomingo County,38.3,27.5,11.2
-28143,MS,Tunica County,30.6,28.3,17.3
-28145,MS,Union County,33.3,29.1,13.8
-28147,MS,Walthall County,41,26.3,11
-28149,MS,Warren County,30.1,31.6,24.4
-28151,MS,Washington County,30.1,27.8,18.8
-28153,MS,Wayne County,36.4,26.6,13.6
-28155,MS,Webster County,34.5,31,17.2
-28157,MS,Wilkinson County,36.1,20.2,14.5
-28159,MS,Winston County,31.5,29.7,16.5
-28161,MS,Yalobusha County,38.5,27.5,12.4
-28163,MS,Yazoo County,36.2,26,13.3
-29000,MO,Missouri,31.3,30,27.1
-29001,MO,Adair County,33.9,24.6,30
-29003,MO,Andrew County,40.5,26.7,23.3
-29005,MO,Atchison County,42.1,25.1,22.7
-29007,MO,Audrain County,46.9,25.5,11.5
-29009,MO,Barry County,41.3,26.2,14
-29011,MO,Barton County,39.5,30.7,16.7
-29013,MO,Bates County,43.3,28.6,13.1
-29015,MO,Benton County,44.8,28.7,11.3
-29017,MO,Bollinger County,45.4,23.7,10
-29019,MO,Boone County,20.2,25.9,47.3
-29021,MO,Buchanan County,36.8,31,19.5
-29023,MO,Butler County,36.7,30,14.6
-29025,MO,Caldwell County,44,27.1,17.4
-29027,MO,Callaway County,38.3,27,20.4
-29029,MO,Camden County,36,30.7,21
-29031,MO,Cape Girardeau County,32,28.4,28.7
-29033,MO,Carroll County,49.6,22.3,16.7
-29035,MO,Carter County,31.3,35.7,11.4
-29037,MO,Cass County,34.8,32.8,24.7
-29039,MO,Cedar County,42.4,27,14.3
-29041,MO,Chariton County,49.2,21.3,15
-29043,MO,Christian County,31.6,33.7,26
-29045,MO,Clark County,43.3,30.9,12.8
-29047,MO,Clay County,28.9,32.2,31
-29049,MO,Clinton County,38.7,35.7,17.6
-29051,MO,Cole County,31.1,28.7,31.6
-29053,MO,Cooper County,41.4,27.2,19.5
-29055,MO,Crawford County,38.4,26.4,12.2
-29057,MO,Dade County,41.3,29.1,15.3
-29059,MO,Dallas County,41.9,25.2,14.7
-29061,MO,Daviess County,40.5,26.7,15.8
-29063,MO,DeKalb County,48.9,25.1,11.5
-29065,MO,Dent County,39.2,25.5,13
-29067,MO,Douglas County,42.4,27.6,9.2
-29069,MO,Dunklin County,38.6,22.6,11.8
-29071,MO,Franklin County,34.3,33.7,18.6
-29073,MO,Gasconade County,43.2,26.3,15
-29075,MO,Gentry County,43.5,26.8,18.6
-29077,MO,Greene County,27.9,33.1,29.5
-29079,MO,Grundy County,39.3,30.1,17.2
-29081,MO,Harrison County,48.6,22.6,12.3
-29083,MO,Henry County,41.3,31,15.4
-29085,MO,Hickory County,42.7,30.2,10.3
-29087,MO,Holt County,44.4,26.7,19.2
-29089,MO,Howard County,36.2,26.9,24.2
-29091,MO,Howell County,39,30.3,14.9
-29093,MO,Iron County,40.4,28.2,12
-29095,MO,Jackson County,29.1,31.2,28.8
-29097,MO,Jasper County,35.6,28.8,22
-29099,MO,Jefferson County,33.6,35.8,18.2
-29101,MO,Johnson County,30.7,33.8,26.5
-29103,MO,Knox County,41.9,26.7,15.2
-29105,MO,Laclede County,38.9,28.6,13.9
-29107,MO,Lafayette County,42.4,28.4,18.3
-29109,MO,Lawrence County,38.7,28.4,16.8
-29111,MO,Lewis County,47.7,26.4,13.5
-29113,MO,Lincoln County,43.4,28.2,14.8
-29115,MO,Linn County,49.5,24,14.2
-29117,MO,Livingston County,42.6,23.7,20
-29119,MO,McDonald County,34.2,31,12.4
-29121,MO,Macon County,43.8,28.3,15.5
-29123,MO,Madison County,36.4,28.8,11.2
-29125,MO,Maries County,42.8,25.4,15
-29127,MO,Marion County,38.5,26.5,19.4
-29129,MO,Mercer County,50.1,24.2,13.9
-29131,MO,Miller County,42.5,27.3,16.4
-29133,MO,Mississippi County,40.7,21.6,10.8
-29135,MO,Moniteau County,43.4,21.5,18.1
-29137,MO,Monroe County,48.7,27.7,14.1
-29139,MO,Montgomery County,42.3,27.7,12.5
-29141,MO,Morgan County,41.3,24.4,13.4
-29143,MO,New Madrid County,41.3,23.3,11.6
-29145,MO,Newton County,33.1,33.9,18.8
-29147,MO,Nodaway County,41.2,26.3,23.9
-29149,MO,Oregon County,39.6,30.9,11
-29151,MO,Osage County,46.6,25.1,17.5
-29153,MO,Ozark County,44.2,26.4,12.9
-29155,MO,Pemiscot County,37.8,24.2,11.7
-29157,MO,Perry County,44.4,26,15.9
-29159,MO,Pettis County,32.2,33.2,17.5
-29161,MO,Phelps County,33.2,26.2,27.8
-29163,MO,Pike County,43.8,22.6,12.7
-29165,MO,Platte County,22.4,32.4,40.4
-29167,MO,Polk County,38.8,29.4,18.8
-29169,MO,Pulaski County,31.3,34.4,24.1
-29171,MO,Putnam County,41.7,27.8,18.1
-29173,MO,Ralls County,48.5,26.6,12.3
-29175,MO,Randolph County,38.9,33.1,13.7
-29177,MO,Ray County,47.3,27.6,13.8
-29179,MO,Reynolds County,44,24.4,8.1
-29181,MO,Ripley County,39.1,27.1,11.1
-29183,MO,St. Charles County,26.1,32.5,35.5
-29185,MO,St. Clair County,45.7,24.9,10.8
-29186,MO,Ste. Genevieve County,42,31.4,13.3
-29187,MO,St. Francois County,34.2,32.8,14.1
-29189,MO,St. Louis County,22,29.2,41.6
-29195,MO,Saline County,39.4,27.2,18.8
-29197,MO,Schuyler County,45.9,27.6,12.4
-29199,MO,Scotland County,40.7,24.5,14.8
-29201,MO,Scott County,42,26.3,13.2
-29203,MO,Shannon County,37.9,28.4,15.1
-29205,MO,Shelby County,46.4,31,13.1
-29207,MO,Stoddard County,39.9,26.8,13.7
-29209,MO,Stone County,40.1,29.7,16.3
-29211,MO,Sullivan County,47.3,23.8,12.9
-29213,MO,Taney County,35.5,33,18.3
-29215,MO,Texas County,43.8,25.9,13
-29217,MO,Vernon County,41,30.3,16.3
-29219,MO,Warren County,37,31.7,15.8
-29221,MO,Washington County,42,26.1,7.1
-29223,MO,Wayne County,36.6,27.6,10.7
-29225,MO,Webster County,40.5,29.5,15.8
-29227,MO,Worth County,42.3,28.4,17.5
-29229,MO,Wright County,40.8,24.5,12.4
-29510,MO,St. Louis city,23.6,28.6,31.9
-30000,MT,Montana,30.1,33.2,29.5
-30001,MT,Beaverhead County,30.1,33,30.3
-30003,MT,Big Horn County,34.9,35.3,15.6
-30005,MT,Blaine County,28.1,40.7,20.3
-30007,MT,Broadwater County,39.1,29.8,23.9
-30009,MT,Carbon County,28.4,35.5,29.2
-30011,MT,Carter County,38.6,39.1,15.6
-30013,MT,Cascade County,31.8,34.1,25.5
-30015,MT,Chouteau County,34.5,34.6,23.3
-30017,MT,Custer County,29.3,42.1,20
-30019,MT,Daniels County,31.2,40.4,22.2
-30021,MT,Dawson County,35.6,37.6,18.8
-30023,MT,Deer Lodge County,38.7,35.3,16.8
-30025,MT,Fallon County,37.6,40.6,16.1
-30027,MT,Fergus County,35.6,30.1,28.2
-30029,MT,Flathead County,29.9,35.3,29.1
-30031,MT,Gallatin County,20,28.7,48
-30033,MT,Garfield County,44.4,32.9,14.8
-30035,MT,Glacier County,37.8,33,17.7
-30037,MT,Golden Valley County,42.8,29.7,20.3
-30039,MT,Granite County,36,27,25.8
-30041,MT,Hill County,28.3,39,23.2
-30043,MT,Jefferson County,28.6,33.5,32.6
-30045,MT,Judith Basin County,37.7,26.6,29.9
-30047,MT,Lake County,31.4,35,24.4
-30049,MT,Lewis and Clark County,23.7,32.8,38
-30051,MT,Liberty County,22.1,35.2,21.6
-30053,MT,Lincoln County,33.6,36.1,19.4
-30055,MT,McCone County,45.9,30,17.5
-30057,MT,Madison County,35.9,31.8,26.4
-30059,MT,Meagher County,39.7,30,23.3
-30061,MT,Mineral County,41.8,34.5,13.1
-30063,MT,Missoula County,22.7,31.9,40.7
-30065,MT,Musselshell County,40.2,34,16.8
-30067,MT,Park County,33.1,27.6,35
-30069,MT,Petroleum County,52.5,23.8,20.6
-30071,MT,Phillips County,37.3,34.7,19.3
-30073,MT,Pondera County,33,34.2,22.1
-30075,MT,Powder River County,29.4,40,24.4
-30077,MT,Powell County,37,32.6,19.3
-30079,MT,Prairie County,46.4,28.2,15.7
-30081,MT,Ravalli County,33.9,33.6,24.4
-30083,MT,Richland County,38.5,37.4,16.5
-30085,MT,Roosevelt County,38.8,31.1,13.5
-30087,MT,Rosebud County,32.7,34.9,19.8
-30089,MT,Sanders County,41.9,30,16.4
-30091,MT,Sheridan County,30.4,39.7,21.3
-30093,MT,Silver Bow County,34.9,31.4,24.6
-30095,MT,Stillwater County,37.2,33.1,23.7
-30097,MT,Sweet Grass County,38.1,29.2,25.2
-30099,MT,Teton County,34.3,34.9,23.3
-30101,MT,Toole County,36.6,34.6,13.4
-30103,MT,Treasure County,35.1,35.8,18.9
-30105,MT,Valley County,37.8,35.7,19.4
-30107,MT,Wheatland County,36.4,22.8,18
-30109,MT,Wibaux County,37.4,28,20
-30111,MT,Yellowstone County,31.2,32.9,28.5
-30113,MT,Yellowstone National Park,,,
-31000,NE,Nebraska,27.5,33.9,29.3
-31001,NE,Adams County,32,35.7,23
-31003,NE,Antelope County,33.1,40.1,17.7
-31005,NE,Arthur County,24.1,39.8,32.7
-31007,NE,Banner County,29.3,47.8,17.4
-31009,NE,Blaine County,39.6,40.2,18.3
-31011,NE,Boone County,42.3,34.5,16.6
-31013,NE,Box Butte County,33.8,40.9,15.9
-31015,NE,Boyd County,41.5,34.1,18.1
-31017,NE,Brown County,41.2,31.1,16.3
-31019,NE,Buffalo County,25.6,35.2,32.7
-31021,NE,Burt County,39.2,34.5,17
-31023,NE,Butler County,39.9,35.5,15.2
-31025,NE,Cass County,32.1,37.5,25.1
-31027,NE,Cedar County,40.6,34.8,17.7
-31029,NE,Chase County,33.2,37.5,18.2
-31031,NE,Cherry County,31,40.2,19.7
-31033,NE,Cheyenne County,27.1,43.5,23.4
-31035,NE,Clay County,32.6,37.6,19
-31037,NE,Colfax County,33.2,25.4,13.4
-31039,NE,Cuming County,38.9,30.3,18.8
-31041,NE,Custer County,32.8,38.1,21
-31043,NE,Dakota County,34.9,27.5,11.2
-31045,NE,Dawes County,29.1,31.9,33.2
-31047,NE,Dawson County,33.4,27.6,14.9
-31049,NE,Deuel County,36.3,37.1,17.3
-31051,NE,Dixon County,38.6,30.8,18.3
-31053,NE,Dodge County,36.8,32,18.9
-31055,NE,Douglas County,21.9,30.6,37.1
-31057,NE,Dundy County,32.5,41.2,19.6
-31059,NE,Fillmore County,39.1,35.3,18.5
-31061,NE,Franklin County,37.1,36.4,18.7
-31063,NE,Frontier County,34.7,41.8,18.3
-31065,NE,Furnas County,33.7,36.9,17.3
-31067,NE,Gage County,34.6,35.1,19.7
-31069,NE,Garden County,32.5,38.1,23.5
-31071,NE,Garfield County,39.5,38.4,16.2
-31073,NE,Gosper County,34.8,40.5,19.4
-31075,NE,Grant County,42.3,34.5,20.4
-31077,NE,Greeley County,39.8,38.2,14.4
-31079,NE,Hall County,32.5,32,18.3
-31081,NE,Hamilton County,31.8,36.8,25.2
-31083,NE,Harlan County,37.6,37.2,16.1
-31085,NE,Hayes County,26.7,42.7,19.7
-31087,NE,Hitchcock County,37.4,40.8,15.1
-31089,NE,Holt County,34,37.1,20.9
-31091,NE,Hooker County,34.1,36.3,23.1
-31093,NE,Howard County,41.6,31.2,19.2
-31095,NE,Jefferson County,42.6,33.3,13.7
-31097,NE,Johnson County,40.7,32.4,14.7
-31099,NE,Kearney County,32.5,36.4,24.1
-31101,NE,Keith County,34.5,36.7,20.7
-31103,NE,Keya Paha County,42.3,34.2,15.5
-31105,NE,Kimball County,34,36.3,17.4
-31107,NE,Knox County,37.2,34.7,19.1
-31109,NE,Lancaster County,22.6,34.2,36.7
-31111,NE,Lincoln County,31.4,40.2,20
-31113,NE,Logan County,28.7,40.9,22
-31115,NE,Loup County,41.5,35.8,18.6
-31117,NE,McPherson County,28.4,41.9,24.5
-31119,NE,Madison County,29.3,38.8,20.2
-31121,NE,Merrick County,34.5,40.9,16.8
-31123,NE,Morrill County,32.3,37.2,17.8
-31125,NE,Nance County,38.1,34.8,16.5
-31127,NE,Nemaha County,34.9,32.1,27.8
-31129,NE,Nuckolls County,42.1,34.1,17.3
-31131,NE,Otoe County,37.7,31.7,21.5
-31133,NE,Pawnee County,45.3,31.2,16.3
-31135,NE,Perkins County,31.1,36.8,22
-31137,NE,Phelps County,33,37,22.7
-31139,NE,Pierce County,36,37.4,20.5
-31141,NE,Platte County,31,36.9,20.1
-31143,NE,Polk County,32.5,41.4,19.6
-31145,NE,Red Willow County,36.4,39.3,17.7
-31147,NE,Richardson County,39.7,31.3,20.7
-31149,NE,Rock County,41.7,32.7,18
-31151,NE,Saline County,34.7,35.2,14.2
-31153,NE,Sarpy County,22.5,36.1,36.7
-31155,NE,Saunders County,33,35.9,24.6
-31157,NE,Scotts Bluff County,30,35.2,21.5
-31159,NE,Seward County,29.5,37.4,26.1
-31161,NE,Sheridan County,31.1,34.6,24.5
-31163,NE,Sherman County,42.3,33.5,14.7
-31165,NE,Sioux County,33.4,33.6,26.6
-31167,NE,Stanton County,35,38.6,18.3
-31169,NE,Thayer County,37,35.4,19.3
-31171,NE,Thomas County,32.1,34.4,27.5
-31173,NE,Thurston County,35.5,37.4,13.9
-31175,NE,Valley County,42.6,31.7,19.2
-31177,NE,Washington County,31.1,35,29.6
-31179,NE,Wayne County,20.5,36.2,37.8
-31181,NE,Webster County,36.1,34.9,19.8
-31183,NE,Wheeler County,42.1,34.5,18.4
-31185,NE,York County,32.6,35.4,26.1
-32000,NV,Nevada,28.2,33.8,23
-32001,NV,Churchill County,35,38.7,15.9
-32003,NV,Clark County,28.8,33.1,22.6
-32005,NV,Douglas County,24.7,42.9,25.2
-32007,NV,Elko County,26.8,38.5,18.1
-32009,NV,Esmeralda County,43.2,28.1,15.7
-32011,NV,Eureka County,35.8,33.1,22.2
-32013,NV,Humboldt County,37.4,32.8,13.7
-32015,NV,Lander County,37.5,35.9,7.6
-32017,NV,Lincoln County,32.1,37.7,20.3
-32019,NV,Lyon County,30.2,38.2,16.6
-32021,NV,Mineral County,31.2,44.8,11.3
-32023,NV,Nye County,35.6,36.1,13.2
-32027,NV,Pershing County,35.4,30.5,12.4
-32029,NV,Storey County,29.5,41.6,21.4
-32031,NV,Washoe County,24,34,28.7
-32033,NV,White Pine County,34.5,35.2,13.9
-32510,NV,Carson City,28.6,37.5,20.7
-33000,NH,New Hampshire,28.8,28.6,34.9
-33001,NH,Belknap County,31.5,30.6,29.6
-33003,NH,Carroll County,31.4,29.6,32.1
-33005,NH,Cheshire County,33.8,26.9,31.6
-33007,NH,Coos County,39.1,30.4,17.8
-33009,NH,Grafton County,28.6,25.4,38.1
-33011,NH,Hillsborough County,27.2,28.2,35.9
-33013,NH,Merrimack County,28.4,30.1,34.4
-33015,NH,Rockingham County,26.9,29.1,38.8
-33017,NH,Strafford County,28,29.8,34.1
-33019,NH,Sullivan County,37,26,26.5
-34000,NJ,New Jersey,28.6,23.2,36.8
-34001,NJ,Atlantic County,32.9,26.6,25.1
-34003,NJ,Bergen County,24.3,20.4,46.9
-34005,NJ,Burlington County,29.5,27.4,35.7
-34007,NJ,Camden County,31.3,26.4,30.2
-34009,NJ,Cape May County,34.1,25.5,29.9
-34011,NJ,Cumberland County,39.4,23.5,14.6
-34013,NJ,Essex County,28.7,22.8,32.7
-34015,NJ,Gloucester County,34.3,28,29.3
-34017,NJ,Hudson County,26.1,19.3,37.5
-34019,NJ,Hunterdon County,22.7,23,48.7
-34021,NJ,Mercer County,25.6,22.2,39.6
-34023,NJ,Middlesex County,26.3,21.4,41
-34025,NJ,Monmouth County,25.6,24.6,42.5
-34027,NJ,Morris County,22.5,20.3,51
-34029,NJ,Ocean County,36.1,27.5,26.9
-34031,NJ,Passaic County,34.8,21.4,26
-34033,NJ,Salem County,38.6,27.5,20.3
-34035,NJ,Somerset County,21.9,19.8,52.5
-34037,NJ,Sussex County,31,29.1,33.8
-34039,NJ,Union County,29.7,23.3,32.6
-34041,NJ,Warren County,34,26.2,29.9
-35000,NM,New Mexico,26.4,31.4,26.3
-35001,NM,Bernalillo County,23.8,31.5,32.6
-35003,NM,Catron County,36.3,31.8,26
-35005,NM,Chaves County,27,33,18.1
-35006,NM,Cibola County,36.5,33,12
-35007,NM,Colfax County,33.9,33.3,21.5
-35009,NM,Curry County,25.2,36.3,20.8
-35011,NM,De Baca County,42.9,30.6,9.7
-35013,NM,Dona Ana County,22,28.5,27.7
-35015,NM,Eddy County,34,31.4,17.8
-35017,NM,Grant County,26.9,31.6,26.2
-35019,NM,Guadalupe County,40.2,21.2,13.5
-35021,NM,Harding County,39.1,23.9,25.5
-35023,NM,Hidalgo County,31,31.1,14.2
-35025,NM,Lea County,30.5,28.2,13.2
-35027,NM,Lincoln County,26.6,33.3,28.4
-35028,NM,Los Alamos County,10.8,21.9,64.2
-35029,NM,Luna County,31.6,25,12.1
-35031,NM,McKinley County,33.1,29.4,11.1
-35033,NM,Mora County,35.6,34.1,13.9
-35035,NM,Otero County,29.5,37.1,16.4
-35037,NM,Quay County,38.8,29.6,15.5
-35039,NM,Rio Arriba County,31.8,33,16.6
-35041,NM,Roosevelt County,25.3,31.8,23.1
-35043,NM,Sandoval County,25.9,36.1,28.5
-35045,NM,San Juan County,32.1,34.9,15.2
-35047,NM,San Miguel County,28.4,33.2,20
-35049,NM,Santa Fe County,21.4,26.1,40.1
-35051,NM,Sierra County,33.7,31.8,17.6
-35053,NM,Socorro County,33.4,25.9,17.5
-35055,NM,Taos County,25.4,33.4,28.6
-35057,NM,Torrance County,34.2,32.4,16.5
-35059,NM,Union County,35.3,27.7,17.1
-35061,NM,Valencia County,31.9,32.9,16.5
-36000,NY,New York,26.7,24.7,34.2
-36001,NY,Albany County,26.5,27.7,38.6
-36003,NY,Allegany County,38.7,29.8,20
-36005,NY,Bronx County,27.3,24.3,18.9
-36007,NY,Broome County,32.2,30.4,27.2
-36009,NY,Cattaraugus County,40.9,29.1,17.8
-36011,NY,Cayuga County,34.1,32.3,21.4
-36013,NY,Chautauqua County,35.5,31.8,20.9
-36015,NY,Chemung County,35.6,30.6,23.4
-36017,NY,Chenango County,39.2,30.6,17.4
-36019,NY,Clinton County,35.3,28.3,22.1
-36021,NY,Columbia County,30.7,28.4,29.3
-36023,NY,Cortland County,34.7,31.6,23.6
-36025,NY,Delaware County,38.7,28.1,20.2
-36027,NY,Dutchess County,27,29.6,33.4
-36029,NY,Erie County,28.4,30.5,31.6
-36031,NY,Essex County,34.5,30.2,24.2
-36033,NY,Franklin County,36.2,31,17.7
-36035,NY,Fulton County,38.5,31.3,16.2
-36037,NY,Genesee County,37.2,33.5,20
-36039,NY,Greene County,36.3,29.7,20.6
-36041,NY,Hamilton County,32.3,33.9,24.5
-36043,NY,Herkimer County,34.5,32.8,22.4
-36045,NY,Jefferson County,33.5,35.2,20.7
-36047,NY,Kings County,26.2,20.2,32.8
-36049,NY,Lewis County,45.3,28.5,15.2
-36051,NY,Livingston County,33.7,31.3,23.6
-36053,NY,Madison County,33.7,30.5,26.2
-36055,NY,Monroe County,25,29,36.2
-36057,NY,Montgomery County,36.6,31.5,16.2
-36059,NY,Nassau County,24.2,23.7,42.8
-36061,NY,New York County,12.6,14.1,59.9
-36063,NY,Niagara County,35.1,32.1,23.2
-36065,NY,Oneida County,33.4,31.2,23.2
-36067,NY,Onondaga County,26.2,30,34.1
-36069,NY,Ontario County,28.3,32.2,31.7
-36071,NY,Orange County,29.3,30.6,29.2
-36073,NY,Orleans County,39.8,30.2,15.4
-36075,NY,Oswego County,39.9,28.9,17.6
-36077,NY,Otsego County,34.5,27.7,27.7
-36079,NY,Putnam County,27.3,27.2,37.9
-36081,NY,Queens County,27.3,22.7,30.4
-36083,NY,Rensselaer County,29,33.2,28.6
-36085,NY,Richmond County,32,25.9,30.8
-36087,NY,Rockland County,23,24,40.3
-36089,NY,St. Lawrence County,36.1,29.5,22.3
-36091,NY,Saratoga County,25.9,29.3,39
-36093,NY,Schenectady County,30,30,30.5
-36095,NY,Schoharie County,38.5,30.2,19.6
-36097,NY,Schuyler County,38.9,31.6,19.5
-36099,NY,Seneca County,34.6,30.4,20.2
-36101,NY,Steuben County,37.6,30.4,21.3
-36103,NY,Suffolk County,29.3,26.6,34
-36105,NY,Sullivan County,34,29.8,22.2
-36107,NY,Tioga County,35.9,30.6,24.4
-36109,NY,Tompkins County,19.8,23.6,50.8
-36111,NY,Ulster County,30.2,29.4,30.1
-36113,NY,Warren County,33.3,29.4,28.2
-36115,NY,Washington County,41.6,27.5,19.4
-36117,NY,Wayne County,37,31.9,20.6
-36119,NY,Westchester County,20.3,20.5,46.7
-36121,NY,Wyoming County,40.8,31.2,15.2
-36123,NY,Yates County,34.5,27.5,23.7
-37000,NC,North Carolina,26.7,30.8,28.4
-37001,NC,Alamance County,28.5,33.1,21.6
-37003,NC,Alexander County,39.4,28.2,13.2
-37005,NC,Alleghany County,33.7,29.5,17.4
-37007,NC,Anson County,41.6,27.8,9.8
-37009,NC,Ashe County,31.5,32,18.8
-37011,NC,Avery County,30.5,30.2,18.9
-37013,NC,Beaufort County,33.2,32.9,17.3
-37015,NC,Bertie County,40.3,25,10
-37017,NC,Bladen County,33.2,32.3,13.8
-37019,NC,Brunswick County,27.3,33.2,26.1
-37021,NC,Buncombe County,24.7,29.1,35.9
-37023,NC,Burke County,29.8,32.2,17.2
-37025,NC,Cabarrus County,28,33.2,27.2
-37027,NC,Caldwell County,31.6,31.4,13.7
-37029,NC,Camden County,23.2,40.8,22.4
-37031,NC,Carteret County,27.7,36.5,25.3
-37033,NC,Caswell County,35.3,29.2,11.6
-37035,NC,Catawba County,30.3,30.6,21.7
-37037,NC,Chatham County,23.3,26.4,36.8
-37039,NC,Cherokee County,33.2,31.1,18.6
-37041,NC,Chowan County,33.7,28.8,20.1
-37043,NC,Clay County,29.3,37.8,21.2
-37045,NC,Cleveland County,34.6,31.8,16
-37047,NC,Columbus County,31.7,35.8,12.1
-37049,NC,Craven County,27.9,37.1,22.3
-37051,NC,Cumberland County,26,40.7,23.3
-37053,NC,Currituck County,29.3,36.6,20.5
-37055,NC,Dare County,24.4,38.3,29.4
-37057,NC,Davidson County,33.2,30,18.7
-37059,NC,Davie County,31.7,29,24.4
-37061,NC,Duplin County,30.1,31.3,10.7
-37063,NC,Durham County,17.4,24.3,45.8
-37065,NC,Edgecombe County,35.7,30.5,10.6
-37067,NC,Forsyth County,25.6,28.7,32.9
-37069,NC,Franklin County,31.3,32.2,19.4
-37071,NC,Gaston County,30.1,33.7,19
-37073,NC,Gates County,37.5,33.8,13.2
-37075,NC,Graham County,34.9,29.1,14.3
-37077,NC,Granville County,31.1,32.5,17.6
-37079,NC,Greene County,31.5,33.4,10.1
-37081,NC,Guilford County,24.6,29.5,34.1
-37083,NC,Halifax County,35.8,28.1,12.7
-37085,NC,Harnett County,30.8,35.2,19.6
-37087,NC,Haywood County,28.6,34.4,23.9
-37089,NC,Henderson County,26.4,33.1,28.6
-37091,NC,Hertford County,32.9,32.9,14
-37093,NC,Hoke County,27.5,38.1,19.3
-37095,NC,Hyde County,35.2,33.9,10.3
-37097,NC,Iredell County,28.1,33.2,25.9
-37099,NC,Jackson County,27.6,31.1,29.5
-37101,NC,Johnston County,30.4,33.4,20.3
-37103,NC,Jones County,31.2,37.6,13.1
-37105,NC,Lee County,26.4,33.8,20.5
-37107,NC,Lenoir County,31.8,34.9,12.7
-37109,NC,Lincoln County,30.4,32.3,20.2
-37111,NC,McDowell County,36.9,31.3,13.5
-37113,NC,Macon County,29.8,34.7,22.5
-37115,NC,Madison County,31,28,21.7
-37117,NC,Martin County,37.6,31.4,13.7
-37119,NC,Mecklenburg County,19.1,28,42.3
-37121,NC,Mitchell County,33.5,30.5,16.8
-37123,NC,Montgomery County,30,30.5,14.5
-37125,NC,Moore County,25.8,30.9,32.6
-37127,NC,Nash County,33.9,30.9,19.2
-37129,NC,New Hanover County,22.1,32.7,36.9
-37131,NC,Northampton County,35.9,29.1,11.3
-37133,NC,Onslow County,28.9,42.6,19.3
-37135,NC,Orange County,15.6,19.8,56.6
-37137,NC,Pamlico County,32.2,35.4,19.3
-37139,NC,Pasquotank County,29.9,34.5,19.4
-37141,NC,Pender County,31.2,33.3,21.2
-37143,NC,Perquimans County,35,32.6,16.3
-37145,NC,Person County,35.5,32.8,14.7
-37147,NC,Pitt County,25.2,33.2,29.7
-37149,NC,Polk County,27.2,29.7,31.3
-37151,NC,Randolph County,35.1,30.2,14.5
-37153,NC,Richmond County,36.5,31.3,12.8
-37155,NC,Robeson County,33.5,28.8,12.8
-37157,NC,Rockingham County,36.5,30.2,13.8
-37159,NC,Rowan County,32.8,32.1,17.6
-37161,NC,Rutherford County,31.8,33.1,16.2
-37163,NC,Sampson County,33.2,29.6,12.4
-37165,NC,Scotland County,34,28.9,15.8
-37167,NC,Stanly County,34.3,32.2,16.2
-37169,NC,Stokes County,38.1,29.1,13.6
-37171,NC,Surry County,31.1,30.8,14.9
-37173,NC,Swain County,31.2,33.4,15.9
-37175,NC,Transylvania County,28.4,30.3,29.7
-37177,NC,Tyrrell County,37.1,24.6,8
-37179,NC,Union County,25.2,30.4,33.4
-37181,NC,Vance County,37.6,27.8,11.4
-37183,NC,Wake County,16.8,26.1,49
-37185,NC,Warren County,34.8,27.6,15.4
-37187,NC,Washington County,38,31,10.4
-37189,NC,Watauga County,20.4,30.2,38.4
-37191,NC,Wayne County,29.7,34.6,18.4
-37193,NC,Wilkes County,32.2,30.1,12.8
-37195,NC,Wilson County,33,28.8,18
-37197,NC,Yadkin County,34.3,31.3,11.9
-37199,NC,Yancey County,33.2,30,19.3
-38000,ND,North Dakota,27.4,36.7,27.7
-38001,ND,Adams County,35.1,36.1,24.8
-38003,ND,Barnes County,31.3,34.8,25.4
-38005,ND,Benson County,32.5,38,14.6
-38007,ND,Billings County,34,30.4,25.2
-38009,ND,Bottineau County,31.3,37.6,20.9
-38011,ND,Bowman County,30,37.6,22.1
-38013,ND,Burke County,30.8,36.9,19.6
-38015,ND,Burleigh County,24.5,35,34
-38017,ND,Cass County,20.6,37.5,36.8
-38019,ND,Cavalier County,27.6,44.2,17.7
-38021,ND,Dickey County,28.7,31.3,26.6
-38023,ND,Divide County,34.3,34.4,20.6
-38025,ND,Dunn County,34.3,37.1,19.6
-38027,ND,Eddy County,28.7,37.8,22
-38029,ND,Emmons County,36.9,31.6,15.3
-38031,ND,Foster County,31.4,37.5,18.8
-38033,ND,Golden Valley County,24,45,22.7
-38035,ND,Grand Forks County,24.7,35.2,33
-38037,ND,Grant County,38.2,33.5,17.1
-38039,ND,Griggs County,37.6,32.4,18.3
-38041,ND,Hettinger County,37.1,36.9,14.8
-38043,ND,Kidder County,32.6,36.3,19.5
-38045,ND,LaMoure County,31.7,34.1,21.1
-38047,ND,Logan County,39.3,30,12.7
-38049,ND,McHenry County,37,34,18.8
-38051,ND,McIntosh County,31.5,29.5,18.7
-38053,ND,McKenzie County,28.4,40.5,22.8
-38055,ND,McLean County,33.8,38.4,19
-38057,ND,Mercer County,29.7,39.8,20.5
-38059,ND,Morton County,30.2,35.5,25.9
-38061,ND,Mountrail County,29.7,40.3,22
-38063,ND,Nelson County,30.8,40.8,19.2
-38065,ND,Oliver County,30.3,39.2,17.5
-38067,ND,Pembina County,38.6,32,19
-38069,ND,Pierce County,33.2,37.5,15.2
-38071,ND,Ramsey County,30.2,37,23
-38073,ND,Ransom County,36.4,35.4,18.1
-38075,ND,Renville County,30.1,47,15.9
-38077,ND,Richland County,28.5,41.1,21.8
-38079,ND,Rolette County,21.8,40,20.9
-38081,ND,Sargent County,32.8,39.1,19.8
-38083,ND,Sheridan County,36.8,34.2,15.2
-38085,ND,Sioux County,31.8,35.1,17.3
-38087,ND,Slope County,32.4,30.1,25.7
-38089,ND,Stark County,30.5,35.2,24.3
-38091,ND,Steele County,30.9,42.6,19.7
-38093,ND,Stutsman County,35.5,29.9,23.6
-38095,ND,Towner County,33.2,41,17.7
-38097,ND,Traill County,25.2,40.3,26.4
-38099,ND,Walsh County,36,33,17.2
-38101,ND,Ward County,29.3,37.9,25.8
-38103,ND,Wells County,33.8,30,19.8
-38105,ND,Williams County,28.5,41.2,21
-39000,OH,Ohio,34.1,28.9,26.1
-39001,OH,Adams County,43.6,23.9,10.5
-39003,OH,Allen County,39.7,32.3,17.4
-39005,OH,Ashland County,42.8,24.6,20.4
-39007,OH,Ashtabula County,44.9,27.3,13.3
-39009,OH,Athens County,32.3,28.3,29.1
-39011,OH,Auglaize County,43.9,31.2,17.5
-39013,OH,Belmont County,43.5,31,15.1
-39015,OH,Brown County,48.1,23.6,12.1
-39017,OH,Butler County,34,27.2,28.4
-39019,OH,Carroll County,47.5,28.2,11.4
-39021,OH,Champaign County,45.1,27.2,15.5
-39023,OH,Clark County,36.4,32.3,18.1
-39025,OH,Clermont County,34,28.4,27.1
-39027,OH,Clinton County,40.6,31.5,15.8
-39029,OH,Columbiana County,46.5,26.7,13.9
-39031,OH,Coshocton County,50.3,22.6,12.1
-39033,OH,Crawford County,44.9,30.1,12.6
-39035,OH,Cuyahoga County,28.3,29.2,30.5
-39037,OH,Darke County,49.9,26,12.3
-39039,OH,Defiance County,44.2,29.1,16.7
-39041,OH,Delaware County,20.6,24.2,51.8
-39043,OH,Erie County,39.5,29.5,21.2
-39045,OH,Fairfield County,34.4,31.3,26
-39047,OH,Fayette County,46.7,24.6,14.1
-39049,OH,Franklin County,25.1,27.3,37.6
-39051,OH,Fulton County,40.8,32.2,17.2
-39053,OH,Gallia County,40.5,24.2,15.1
-39055,OH,Geauga County,27.3,26.7,37
-39057,OH,Greene County,25.6,29.4,37.1
-39059,OH,Guernsey County,43.1,28.6,13.5
-39061,OH,Hamilton County,27.1,27.5,35
-39063,OH,Hancock County,36.1,29.6,25.8
-39065,OH,Hardin County,49.2,26.4,13.5
-39067,OH,Harrison County,48.7,29.7,8.6
-39069,OH,Henry County,43.9,30.3,16.1
-39071,OH,Highland County,43.1,29.2,12.1
-39073,OH,Hocking County,43.7,29.1,15.1
-39075,OH,Holmes County,35.1,14.8,7.8
-39077,OH,Huron County,48.1,26.7,13.1
-39079,OH,Jackson County,41.8,23.7,17.2
-39081,OH,Jefferson County,42.5,32.5,15.1
-39083,OH,Knox County,41.2,25.9,21.8
-39085,OH,Lake County,33.9,31.5,26.3
-39087,OH,Lawrence County,43.1,28.2,14.7
-39089,OH,Licking County,37.2,29.8,22.8
-39091,OH,Logan County,49.4,23.4,15.7
-39093,OH,Lorain County,33.4,32.9,22.8
-39095,OH,Lucas County,31.2,32.9,24.2
-39097,OH,Madison County,40.7,28.6,17.1
-39099,OH,Mahoning County,38.1,29.2,22.2
-39101,OH,Marion County,42.6,31.3,12.4
-39103,OH,Medina County,32.4,30.3,30.8
-39105,OH,Meigs County,43.5,27.8,12.9
-39107,OH,Mercer County,49.1,26.7,15.7
-39109,OH,Miami County,36.9,31.1,20.6
-39111,OH,Monroe County,51.2,24.9,9.9
-39113,OH,Montgomery County,28.8,34.6,25.7
-39115,OH,Morgan County,47.5,28,11.1
-39117,OH,Morrow County,46.2,27.1,13.9
-39119,OH,Muskingum County,42.9,28.7,15.1
-39121,OH,Noble County,52.1,21.6,9.3
-39123,OH,Ottawa County,38.6,32.3,21.7
-39125,OH,Paulding County,50.1,26.8,12.7
-39127,OH,Perry County,43.9,28.5,11
-39129,OH,Pickaway County,42.9,26.5,17.1
-39131,OH,Pike County,42,24,11.8
-39133,OH,Portage County,37.8,27.6,26
-39135,OH,Preble County,46,30.3,11.8
-39137,OH,Putnam County,42.8,30.5,19.4
-39139,OH,Richland County,41.2,29.9,15.7
-39141,OH,Ross County,42.8,27.2,14.7
-39143,OH,Sandusky County,43,32.4,14.5
-39145,OH,Scioto County,40.5,27.6,14.4
-39147,OH,Seneca County,46,30.3,14.2
-39149,OH,Shelby County,44.1,29.7,16.3
-39151,OH,Stark County,38.3,29.8,21.9
-39153,OH,Summit County,32.3,28.3,30.3
-39155,OH,Trumbull County,45.2,25.9,17.3
-39157,OH,Tuscarawas County,46.9,24.5,14.4
-39159,OH,Union County,36.8,29.2,26.2
-39161,OH,Van Wert County,48.7,27.2,15.7
-39163,OH,Vinton County,45.9,26.8,9.1
-39165,OH,Warren County,26.8,26.6,39.6
-39167,OH,Washington County,41.5,30.6,17.5
-39169,OH,Wayne County,41,22.9,21.2
-39171,OH,Williams County,45.4,29.8,13.9
-39173,OH,Wood County,31.3,31.6,31.1
-39175,OH,Wyandot County,48.2,27.7,14.1
-40000,OK,Oklahoma,31.7,31.1,24.1
-40001,OK,Adair County,42.6,22.6,13.8
-40003,OK,Alfalfa County,40.6,27.4,20.2
-40005,OK,Atoka County,40.8,27,14
-40007,OK,Beaver County,37.7,24.9,20.1
-40009,OK,Beckham County,40.4,25.3,17.6
-40011,OK,Blaine County,39.4,29.7,16.3
-40013,OK,Bryan County,33.4,29.4,21.5
-40015,OK,Caddo County,41.2,27.5,15.8
-40017,OK,Canadian County,29.3,36.8,25.5
-40019,OK,Carter County,39.6,27.4,18.8
-40021,OK,Cherokee County,31.1,30,24.4
-40023,OK,Choctaw County,40.1,26.9,13.2
-40025,OK,Cimarron County,36.3,28.9,19.1
-40027,OK,Cleveland County,26.6,33.6,31
-40029,OK,Coal County,42.8,25.2,14.8
-40031,OK,Comanche County,33.2,35.3,20.8
-40033,OK,Cotton County,40.7,28.6,15.4
-40035,OK,Craig County,40.3,30.4,13.9
-40037,OK,Creek County,40,30.4,15
-40039,OK,Custer County,35.1,24.3,26.9
-40041,OK,Delaware County,37.2,30.9,16.8
-40043,OK,Dewey County,42.3,25.8,21.8
-40045,OK,Ellis County,37.4,28.9,22
-40047,OK,Garfield County,35.6,29.2,21.7
-40049,OK,Garvin County,43.5,25.9,15.2
-40051,OK,Grady County,37.7,31.5,17.6
-40053,OK,Grant County,36,31.5,23.5
-40055,OK,Greer County,37,34.2,13.1
-40057,OK,Harmon County,26.6,29.9,22.8
-40059,OK,Harper County,38.6,24,20.7
-40061,OK,Haskell County,38.7,28.6,11.5
-40063,OK,Hughes County,38,29.3,12.2
-40065,OK,Jackson County,27.2,35.4,19.7
-40067,OK,Jefferson County,44.8,28,11.7
-40069,OK,Johnston County,35.5,30.3,16.1
-40071,OK,Kay County,34,34,18.4
-40073,OK,Kingfisher County,36.1,31.4,19.7
-40075,OK,Kiowa County,34.7,31.2,18.8
-40077,OK,Latimer County,34.4,35.1,14
-40079,OK,Le Flore County,39.8,27.8,13.8
-40081,OK,Lincoln County,39.5,31.7,13.4
-40083,OK,Logan County,34.4,29.8,26.1
-40085,OK,Love County,42.5,27.5,14.2
-40087,OK,McClain County,34.7,30.2,22.4
-40089,OK,McCurtain County,41.6,26,13.4
-40091,OK,McIntosh County,38,31,13.8
-40093,OK,Major County,41.2,29.4,16.7
-40095,OK,Marshall County,35.1,31.2,13.4
-40097,OK,Mayes County,37.5,32.4,16.3
-40099,OK,Murray County,39.2,22.9,20.2
-40101,OK,Muskogee County,35.8,30.9,18.4
-40103,OK,Noble County,35.4,30.6,22.7
-40105,OK,Nowata County,42.1,29.2,13.8
-40107,OK,Okfuskee County,37.3,30.6,12.1
-40109,OK,Oklahoma County,25.3,30.3,30.6
-40111,OK,Okmulgee County,37,34.7,15.2
-40113,OK,Osage County,41.9,29.5,16.1
-40115,OK,Ottawa County,36.4,33.6,13.7
-40117,OK,Pawnee County,42.3,28.4,16.5
-40119,OK,Payne County,27.4,27,36.9
-40121,OK,Pittsburg County,36.4,32.6,16.2
-40123,OK,Pontotoc County,33.5,27.3,27.1
-40125,OK,Pottawatomie County,35.5,33.4,18.1
-40127,OK,Pushmataha County,39.2,28.6,13.2
-40129,OK,Roger Mills County,39.7,30.5,20.4
-40131,OK,Rogers County,33.1,34.6,23.4
-40133,OK,Seminole County,36.2,33.4,13.7
-40135,OK,Sequoyah County,39.5,28.8,13.5
-40137,OK,Stephens County,38.9,29.4,17.3
-40139,OK,Texas County,28.4,22.2,19.1
-40141,OK,Tillman County,35.8,24,16.7
-40143,OK,Tulsa County,25.8,32.6,30.4
-40145,OK,Wagoner County,35.3,32.5,21.8
-40147,OK,Washington County,33.8,29.5,26.9
-40149,OK,Washita County,40,26.9,20
-40151,OK,Woods County,33.5,27.3,27.2
-40153,OK,Woodward County,39.7,28.8,18.1
-41000,OR,Oregon,24.3,34.8,30.8
-41001,OR,Baker County,31.8,37,20.6
-41003,OR,Benton County,14.9,27.2,52.8
-41005,OR,Clackamas County,23.5,36.5,33.1
-41007,OR,Clatsop County,26.3,41.3,23.6
-41009,OR,Columbia County,33.8,37.7,18.2
-41011,OR,Coos County,32.6,38.1,18.3
-41013,OR,Crook County,37.8,33.9,15.5
-41015,OR,Curry County,27.7,38.9,23.5
-41017,OR,Deschutes County,22.9,38.1,32.6
-41019,OR,Douglas County,32.1,40.9,15.7
-41021,OR,Gilliam County,39.3,35.9,16.1
-41023,OR,Grant County,32.3,37.4,19.1
-41025,OR,Harney County,33.9,36.7,17
-41027,OR,Hood River County,25.6,23.8,31.7
-41029,OR,Jackson County,27.4,35.8,25.6
-41031,OR,Jefferson County,29.5,38.5,16
-41033,OR,Josephine County,32.1,40.2,16.7
-41035,OR,Klamath County,29.9,38.4,19.7
-41037,OR,Lake County,33.4,33.3,17.7
-41039,OR,Lane County,25,37.7,28.4
-41041,OR,Lincoln County,28.1,37,23.7
-41043,OR,Linn County,31,41.2,17.3
-41045,OR,Malheur County,29.9,36.5,13.8
-41047,OR,Marion County,27.2,35.1,22
-41049,OR,Morrow County,35.4,30,10.5
-41051,OR,Multnomah County,18.4,30.6,41.3
-41053,OR,Polk County,26.8,35.1,29.4
-41055,OR,Sherman County,36.7,37.9,17.3
-41057,OR,Tillamook County,34.6,33.8,21
-41059,OR,Umatilla County,29.1,38,16.3
-41061,OR,Union County,33.4,35.7,23.2
-41063,OR,Wallowa County,33.1,36,24.3
-41065,OR,Wasco County,28.5,37.7,18.7
-41067,OR,Washington County,19,31,40.7
-41069,OR,Wheeler County,36.1,37.7,15.4
-41071,OR,Yamhill County,29.8,34.4,23.2
-42000,PA,Pennsylvania,36.4,24.2,28.6
-42001,PA,Adams County,42,23.7,21.7
-42003,PA,Allegheny County,29.8,26,37.8
-42005,PA,Armstrong County,49.4,24.5,15
-42007,PA,Beaver County,39.2,29.8,22.8
-42009,PA,Bedford County,50.8,21.7,13.5
-42011,PA,Berks County,38.4,23.5,23.2
-42013,PA,Blair County,48.2,22.8,19.6
-42015,PA,Bradford County,48,22.8,17.6
-42017,PA,Bucks County,30.7,25.4,37.4
-42019,PA,Butler County,34.9,25.8,32.3
-42021,PA,Cambria County,46.3,24.3,19.1
-42023,PA,Cameron County,48.7,25.1,15.7
-42025,PA,Carbon County,46.2,27,15.5
-42027,PA,Centre County,31.6,20.2,41.4
-42029,PA,Chester County,23.2,20.4,49.1
-42031,PA,Clarion County,47,21.6,20.1
-42033,PA,Clearfield County,50.9,23,13.2
-42035,PA,Clinton County,45.6,24.6,16.9
-42037,PA,Columbia County,45.7,21.7,21.1
-42039,PA,Crawford County,45,22.9,19.8
-42041,PA,Cumberland County,35,23.7,32.7
-42043,PA,Dauphin County,34.8,25.6,28.4
-42045,PA,Delaware County,31.8,24.4,36
-42047,PA,Elk County,50.4,24,16.8
-42049,PA,Erie County,40,24.7,26.1
-42051,PA,Fayette County,49.9,22.7,14.2
-42053,PA,Forest County,53.6,18.4,8.5
-42055,PA,Franklin County,43.9,23.1,19
-42057,PA,Fulton County,51.1,20.9,13.1
-42059,PA,Greene County,47.3,21.9,17.7
-42061,PA,Huntingdon County,51.7,22.9,14.3
-42063,PA,Indiana County,43.9,22,22.6
-42065,PA,Jefferson County,51.2,22.8,14.6
-42067,PA,Juniata County,51,17.5,13.1
-42069,PA,Lackawanna County,37.7,26.3,25.9
-42071,PA,Lancaster County,38.2,21.1,25.2
-42073,PA,Lawrence County,45,24.5,19.7
-42075,PA,Lebanon County,43.9,22.1,19.6
-42077,PA,Lehigh County,33.1,25.8,28.5
-42079,PA,Luzerne County,39.5,28,21.4
-42081,PA,Lycoming County,41.1,26.5,20.4
-42083,PA,McKean County,48.2,24.8,16.7
-42085,PA,Mercer County,44.4,23.2,21.5
-42087,PA,Mifflin County,50.2,20.4,11.6
-42089,PA,Monroe County,36.6,30,23
-42091,PA,Montgomery County,24.8,22.1,46.9
-42093,PA,Montour County,39.8,20.8,28.8
-42095,PA,Northampton County,35.3,27.3,27.2
-42097,PA,Northumberland County,50.3,20.7,14.6
-42099,PA,Perry County,46,26.5,16
-42101,PA,Philadelphia County,33.8,22.8,25.4
-42103,PA,Pike County,35.8,31.4,23.7
-42105,PA,Potter County,48.2,23.9,15.7
-42107,PA,Schuylkill County,47.7,24.3,15.4
-42109,PA,Snyder County,46,20,16.5
-42111,PA,Somerset County,49.3,21.9,15.3
-42113,PA,Sullivan County,49.1,24.3,16.1
-42115,PA,Susquehanna County,46.7,25.3,17.1
-42117,PA,Tioga County,44.6,24.2,19.6
-42119,PA,Union County,41.2,22.3,20.5
-42121,PA,Venango County,49.7,23.6,15.8
-42123,PA,Warren County,47.2,25.3,18.1
-42125,PA,Washington County,39.3,24.6,27.4
-42127,PA,Wayne County,44.3,25.4,19.7
-42129,PA,Westmoreland County,38.9,27.4,26.4
-42131,PA,Wyoming County,48.2,24.8,18.2
-42133,PA,York County,41,24.6,22.8
-44000,RI,Rhode Island,27.3,26.9,31.9
-44001,RI,Bristol County,22.4,23.3,45.1
-44003,RI,Kent County,28.6,31.3,30.9
-44005,RI,Newport County,23.1,24.6,45.1
-44007,RI,Providence County,28.8,26.5,26.8
-44009,RI,Washington County,23.3,26.1,44.1
-45000,SC,South Carolina,29.8,30,25.8
-45001,SC,Abbeville County,37.5,28.3,12.3
-45003,SC,Aiken County,31,29.1,25.3
-45005,SC,Allendale County,39.4,22.8,12.6
-45007,SC,Anderson County,31.5,31.8,19.5
-45009,SC,Bamberg County,25.2,33,18.2
-45011,SC,Barnwell County,37.5,29.8,11.9
-45013,SC,Beaufort County,23.4,29.9,38.8
-45015,SC,Berkeley County,31.1,34.5,22.3
-45017,SC,Calhoun County,37.2,30,16.8
-45019,SC,Charleston County,21.6,27.7,40.4
-45021,SC,Cherokee County,36.9,25.5,15.3
-45023,SC,Chester County,36.5,28.4,13.8
-45025,SC,Chesterfield County,39.6,24.9,11.8
-45027,SC,Clarendon County,36.4,28.6,14.3
-45029,SC,Colleton County,37.9,30.3,14
-45031,SC,Darlington County,36.5,27.4,16.9
-45033,SC,Dillon County,38.9,25,9
-45035,SC,Dorchester County,29.2,35.8,25
-45037,SC,Edgefield County,36.3,26.8,18.3
-45039,SC,Fairfield County,39.8,25.9,14.3
-45041,SC,Florence County,33.7,28.8,21.7
-45043,SC,Georgetown County,31.3,29.1,25.8
-45045,SC,Greenville County,26.3,28.4,32.1
-45047,SC,Greenwood County,29.7,28,23
-45049,SC,Hampton County,41.8,25.5,10.6
-45051,SC,Horry County,32.4,33,22.8
-45053,SC,Jasper County,36.9,27,15
-45055,SC,Kershaw County,34.8,30.1,20.3
-45057,SC,Lancaster County,34,28.5,21.9
-45059,SC,Laurens County,35.4,29.3,14.6
-45061,SC,Lee County,39.8,25.2,10.7
-45063,SC,Lexington County,28,31.5,29.2
-45065,SC,McCormick County,30.2,30.6,18
-45067,SC,Marion County,39.1,26.6,15.6
-45069,SC,Marlboro County,41,24.5,8.5
-45071,SC,Newberry County,34.9,26.9,16.6
-45073,SC,Oconee County,31.8,28.6,22.8
-45075,SC,Orangeburg County,34.8,28.2,19.3
-45077,SC,Pickens County,32,29.3,22.4
-45079,SC,Richland County,22.5,31.2,36.4
-45081,SC,Saluda County,39.2,24.1,14
-45083,SC,Spartanburg County,29.8,30.7,22.7
-45085,SC,Sumter County,29.2,33.3,19.2
-45087,SC,Union County,37.8,28,12.2
-45089,SC,Williamsburg County,40.3,27,11.3
-45091,SC,York County,27.8,31.1,29.5
-46000,SD,South Dakota,31.3,32.6,27
-46003,SD,Aurora County,37.1,33,17.9
-46005,SD,Beadle County,33.3,30.8,19.7
-46007,SD,Bennett County,28.8,33.3,17.5
-46009,SD,Bon Homme County,37.5,31.9,18.5
-46011,SD,Brookings County,26.1,27.8,40.8
-46013,SD,Brown County,33.3,31,28.3
-46015,SD,Brule County,30.4,30.4,24.3
-46017,SD,Buffalo County,43.4,29,9.5
-46019,SD,Butte County,35.1,35.4,17.7
-46021,SD,Campbell County,42,26.1,21.8
-46023,SD,Charles Mix County,37.9,32.5,18.3
-46025,SD,Clark County,37.3,31,21.3
-46027,SD,Clay County,27.8,22.9,45
-46029,SD,Codington County,39.7,31.2,20.3
-46031,SD,Corson County,34.4,31.7,16.1
-46033,SD,Custer County,30.9,36.1,26
-46035,SD,Davison County,26.9,36.9,27.2
-46037,SD,Day County,38.8,32.9,17.1
-46039,SD,Deuel County,40.8,28.9,20.3
-46041,SD,Dewey County,35.4,34.5,14
-46043,SD,Douglas County,41.1,25.5,19.3
-46045,SD,Edmunds County,33.9,31.1,24
-46047,SD,Fall River County,31,38.2,23.2
-46049,SD,Faulk County,34.3,33.2,23.2
-46051,SD,Grant County,44.3,30.2,17.1
-46053,SD,Gregory County,38.6,30.9,17.2
-46055,SD,Haakon County,37.6,32.3,20.1
-46057,SD,Hamlin County,43.3,28,20.1
-46059,SD,Hand County,33.6,32.7,22.5
-46061,SD,Hanson County,34.4,33.5,26
-46063,SD,Harding County,30.1,32.8,29.9
-46065,SD,Hughes County,27.2,30.4,32.9
-46067,SD,Hutchinson County,32.9,27.8,26.7
-46069,SD,Hyde County,47.6,28.3,16.1
-46071,SD,Jackson County,32.2,36.3,19.8
-46073,SD,Jerauld County,40.9,32,16
-46075,SD,Jones County,38.8,37,16.6
-46077,SD,Kingsbury County,37.4,32,21.8
-46079,SD,Lake County,32,28.7,32.4
-46081,SD,Lawrence County,33.7,31.5,29.5
-46083,SD,Lincoln County,21.8,33.3,40.4
-46085,SD,Lyman County,36.5,32.8,19.2
-46087,SD,McCook County,33.2,33.5,23.9
-46089,SD,McPherson County,30.2,33.8,15.4
-46091,SD,Marshall County,31.8,34.4,22.3
-46093,SD,Meade County,32.3,37.1,23
-46095,SD,Mellette County,38.7,30.5,15.3
-46097,SD,Miner County,39.1,29.1,23
-46099,SD,Minnehaha County,29.3,32.3,29.4
-46101,SD,Moody County,33.8,31.3,25.6
-46102,SD,Oglala Lakota County,28.2,38.3,11.4
-46103,SD,Pennington County,28.1,36.3,28.2
-46105,SD,Perkins County,37.6,32.6,19.2
-46107,SD,Potter County,40.7,29,20.5
-46109,SD,Roberts County,37.5,32.4,16.7
-46111,SD,Sanborn County,38.8,35.1,17.5
-46115,SD,Spink County,36.4,32.1,22.3
-46117,SD,Stanley County,34.7,28.1,26.9
-46119,SD,Sully County,35.6,32.4,23.8
-46121,SD,Todd County,22.2,40.4,14.4
-46123,SD,Tripp County,34.7,29.9,22.1
-46125,SD,Turner County,36.3,34.7,21
-46127,SD,Union County,30,30.2,31.5
-46129,SD,Walworth County,36.9,30.1,21.7
-46135,SD,Yankton County,35.3,29.8,26.7
-46137,SD,Ziebach County,40.4,32.1,13.9
-47000,TN,Tennessee,33,27.5,24.9
-47001,TN,Anderson County,33.8,27.3,24
-47003,TN,Bedford County,41.2,24.2,13.7
-47005,TN,Benton County,46.1,22.4,10.8
-47007,TN,Bledsoe County,42.8,21.7,10.7
-47009,TN,Blount County,34.9,29.9,22.8
-47011,TN,Bradley County,32.3,30.5,19.9
-47013,TN,Campbell County,41.8,20.2,10.2
-47015,TN,Cannon County,42.2,24.8,13.9
-47017,TN,Carroll County,41.4,22.9,14.2
-47019,TN,Carter County,38.9,25.5,16.1
-47021,TN,Cheatham County,36.6,28.1,19.3
-47023,TN,Chester County,38.5,28.4,15.7
-47025,TN,Claiborne County,42.3,21.8,14.2
-47027,TN,Clay County,44.7,16.2,14.7
-47029,TN,Cocke County,46.6,22.5,10.1
-47031,TN,Coffee County,39.2,26.8,18.3
-47033,TN,Crockett County,40.4,22.9,13
-47035,TN,Cumberland County,38.3,26.7,18.2
-47037,TN,Davidson County,24.1,25.9,37.3
-47039,TN,Decatur County,44.6,24,12.7
-47041,TN,DeKalb County,43.2,20.9,13.8
-47043,TN,Dickson County,43.7,25.3,14.5
-47045,TN,Dyer County,40.2,24.7,19.2
-47047,TN,Fayette County,35.8,28.7,22.9
-47049,TN,Fentress County,44.2,19.6,10.9
-47051,TN,Franklin County,37,26.3,19.5
-47053,TN,Gibson County,38.4,29.4,16
-47055,TN,Giles County,42.3,24.7,14.8
-47057,TN,Grainger County,45.3,21.9,11.1
-47059,TN,Greene County,42.6,23.5,15
-47061,TN,Grundy County,42,18.4,10.8
-47063,TN,Hamblen County,42.1,23.3,15.5
-47065,TN,Hamilton County,27.3,31.4,28.7
-47067,TN,Hancock County,39.4,23.3,10.6
-47069,TN,Hardeman County,44.4,22.2,10.1
-47071,TN,Hardin County,43.6,22.5,12.7
-47073,TN,Hawkins County,44.2,24.2,12.6
-47075,TN,Haywood County,42.1,24.1,12.8
-47077,TN,Henderson County,39.8,27.2,12.8
-47079,TN,Henry County,45.1,22.7,15.5
-47081,TN,Hickman County,43.3,22.4,10.6
-47083,TN,Houston County,46.3,22.7,10.5
-47085,TN,Humphreys County,42.8,27.4,13.4
-47087,TN,Jackson County,47.7,18.7,8.1
-47089,TN,Jefferson County,39.5,27.3,15.6
-47091,TN,Johnson County,40.9,24.7,9.2
-47093,TN,Knox County,26.5,29.2,34.5
-47095,TN,Lake County,44.6,18.3,8.9
-47097,TN,Lauderdale County,44.5,21.9,9.1
-47099,TN,Lawrence County,42.2,24.6,12.4
-47101,TN,Lewis County,43.2,27,12.1
-47103,TN,Lincoln County,41.9,23.9,16.7
-47105,TN,Loudon County,34.2,26.3,25.5
-47107,TN,McMinn County,42.7,24.9,15
-47109,TN,McNairy County,44.2,23.8,11.4
-47111,TN,Macon County,43.9,20.4,9.5
-47113,TN,Madison County,32.9,29.4,25.4
-47115,TN,Marion County,37.2,27.4,13.3
-47117,TN,Marshall County,42,26.6,13.4
-47119,TN,Maury County,36.6,31.7,19.2
-47121,TN,Meigs County,42.7,25.6,8.2
-47123,TN,Monroe County,42,24.7,12.1
-47125,TN,Montgomery County,30.8,36.5,24.6
-47127,TN,Moore County,40.2,29.4,17.6
-47129,TN,Morgan County,51.3,22.3,6.4
-47131,TN,Obion County,41.3,24.1,16.8
-47133,TN,Overton County,43.7,21.8,13.4
-47135,TN,Perry County,41.4,23,11
-47137,TN,Pickett County,38.4,27.6,11.4
-47139,TN,Polk County,43.3,25.3,9.8
-47141,TN,Putnam County,37.8,22.7,23.3
-47143,TN,Rhea County,38.1,24.7,12.9
-47145,TN,Roane County,36.6,29.9,18.4
-47147,TN,Robertson County,38.4,30,17.8
-47149,TN,Rutherford County,29.6,30.6,30.1
-47151,TN,Scott County,47.6,20.8,9
-47153,TN,Sequatchie County,40.2,28.9,13
-47155,TN,Sevier County,37.5,28.5,16.4
-47157,TN,Shelby County,27.1,29.5,30.2
-47159,TN,Smith County,48,23.6,10.2
-47161,TN,Stewart County,42,30.4,14.2
-47163,TN,Sullivan County,34.8,28.7,21.9
-47165,TN,Sumner County,32.8,31.8,24.6
-47167,TN,Tipton County,39,31.6,15
-47169,TN,Trousdale County,42.8,21.6,14.3
-47171,TN,Unicoi County,41.6,25.2,12.4
-47173,TN,Union County,44.2,21,9.1
-47175,TN,Van Buren County,50.1,17,12.6
-47177,TN,Warren County,42.5,22.1,13.5
-47179,TN,Washington County,30.7,26.9,30.6
-47181,TN,Wayne County,43.6,24.1,8.8
-47183,TN,Weakley County,39.8,23.6,20.4
-47185,TN,White County,45.3,23.8,12.1
-47187,TN,Williamson County,16.4,23.2,55.7
-47189,TN,Wilson County,32.1,29,28.3
-48000,TX,Texas,25.2,29.2,27.6
-48001,TX,Anderson County,36.9,31.5,11.3
-48003,TX,Andrews County,33.6,29.2,11.7
-48005,TX,Angelina County,31.6,32.3,15.2
-48007,TX,Aransas County,30.9,33.8,19.5
-48009,TX,Archer County,36.5,31.6,20.6
-48011,TX,Armstrong County,24.3,43.4,23
-48013,TX,Atascosa County,36,25.8,14
-48015,TX,Austin County,30.3,34,20.1
-48017,TX,Bailey County,32.4,28,7.8
-48019,TX,Bandera County,29.2,34,22.6
-48021,TX,Bastrop County,30.4,32.3,17.9
-48023,TX,Baylor County,31.7,30.8,25.8
-48025,TX,Bee County,33.1,29.8,9.7
-48027,TX,Bell County,28.2,38.5,23.1
-48029,TX,Bexar County,25.2,31.4,26.7
-48031,TX,Blanco County,30.7,29.8,28.4
-48033,TX,Borden County,28.9,32.9,31.9
-48035,TX,Bosque County,34.7,30.1,17
-48037,TX,Bowie County,36,33,18.2
-48039,TX,Brazoria County,25.7,31.8,28.6
-48041,TX,Brazos County,20.4,26.1,38.9
-48043,TX,Brewster County,21.4,27.6,39.1
-48045,TX,Briscoe County,25.6,28.4,21.8
-48047,TX,Brooks County,37.6,21.3,11.7
-48049,TX,Brown County,37.9,29.6,17.9
-48051,TX,Burleson County,36.4,26.9,14.9
-48053,TX,Burnet County,31.9,30.4,22.7
-48055,TX,Caldwell County,36,27.6,15.4
-48057,TX,Calhoun County,31.8,31.9,16.2
-48059,TX,Callahan County,38.7,34.5,14.3
-48061,TX,Cameron County,24,24.4,16.4
-48063,TX,Camp County,36.5,27.5,14.3
-48065,TX,Carson County,28.4,37,24.4
-48067,TX,Cass County,44,27.9,13.6
-48069,TX,Castro County,33.1,23.7,13.2
-48071,TX,Chambers County,31.8,32.5,18.7
-48073,TX,Cherokee County,33.4,28.6,16.3
-48075,TX,Childress County,40.1,30.1,16.7
-48077,TX,Clay County,39.5,33.4,15.9
-48079,TX,Cochran County,29.7,23.9,12.2
-48081,TX,Coke County,33.5,34,20.6
-48083,TX,Coleman County,41.1,29.3,11.8
-48085,TX,Collin County,15.5,28.2,49.8
-48087,TX,Collingsworth County,32.7,30.9,15.2
-48089,TX,Colorado County,38.8,25.5,18.2
-48091,TX,Comal County,25.5,31.5,33.4
-48093,TX,Comanche County,37,24.9,16.7
-48095,TX,Concho County,30.1,21.4,11.6
-48097,TX,Cooke County,32.1,34,21
-48099,TX,Coryell County,30.3,43.1,14.8
-48101,TX,Cottle County,30.9,29.2,15.2
-48103,TX,Crane County,30.4,29.1,12.8
-48105,TX,Crockett County,27.2,30.6,13.4
-48107,TX,Crosby County,30.7,27.3,11.7
-48109,TX,Culberson County,32.9,19.3,9.9
-48111,TX,Dallam County,33.3,30.1,11.1
-48113,TX,Dallas County,22.9,25.7,29.1
-48115,TX,Dawson County,37.4,24.1,11
-48117,TX,Deaf Smith County,30.8,26.5,14.8
-48119,TX,Delta County,33.6,33.1,18.8
-48121,TX,Denton County,19.3,31.3,41.3
-48123,TX,DeWitt County,37.5,26.6,14.5
-48125,TX,Dickens County,28.3,32.6,15.5
-48127,TX,Dimmit County,29.8,26.5,11.9
-48129,TX,Donley County,33.5,34.8,15.2
-48131,TX,Duval County,33.3,27.1,8.1
-48133,TX,Eastland County,35.9,32.4,14.4
-48135,TX,Ector County,28.7,30.8,14.6
-48137,TX,Edwards County,28.8,25.2,25.1
-48139,TX,Ellis County,29.7,33.8,21.2
-48141,TX,El Paso County,24.5,29.9,21.3
-48143,TX,Erath County,27.1,30.7,26.6
-48145,TX,Falls County,37.7,26.7,11.8
-48147,TX,Fannin County,35.2,31.3,16
-48149,TX,Fayette County,36.9,26.8,16
-48151,TX,Fisher County,33.4,33.4,16.3
-48153,TX,Floyd County,29.1,28.2,16.6
-48155,TX,Foard County,28.1,29,22.7
-48157,TX,Fort Bend County,17.5,27.7,43.7
-48159,TX,Franklin County,33.5,33.6,18.1
-48161,TX,Freestone County,33.9,35.7,12.3
-48163,TX,Frio County,33.8,23.8,8
-48165,TX,Gaines County,27.9,20.9,11.8
-48167,TX,Galveston County,24.5,33.8,29.3
-48169,TX,Garza County,27.8,22.5,9.4
-48171,TX,Gillespie County,26.6,26.8,33.4
-48173,TX,Glasscock County,25.8,28.9,24.6
-48175,TX,Goliad County,39.5,35.1,13.9
-48177,TX,Gonzales County,33.7,24.6,13.8
-48179,TX,Gray County,33,33.9,13.6
-48181,TX,Grayson County,32,34.8,20.3
-48183,TX,Gregg County,28.2,35.5,20.5
-48185,TX,Grimes County,35.9,31,11.5
-48187,TX,Guadalupe County,29.7,31.7,26.1
-48189,TX,Hale County,32.2,25.4,14.7
-48191,TX,Hall County,27.9,32.8,12.7
-48193,TX,Hamilton County,33.2,26.2,21.3
-48195,TX,Hansford County,29.6,26.3,19.4
-48197,TX,Hardeman County,33.1,28.6,17.7
-48199,TX,Hardin County,38.2,32.7,15.4
-48201,TX,Harris County,23.3,26.8,29.5
-48203,TX,Harrison County,34,30.7,19.1
-48205,TX,Hartley County,34.3,24.2,21.3
-48207,TX,Haskell County,32.6,24.5,14.7
-48209,TX,Hays County,21.4,31.4,36.1
-48211,TX,Hemphill County,25.8,32.2,24.4
-48213,TX,Henderson County,34.3,31.2,16.5
-48215,TX,Hidalgo County,23.2,22.1,16.7
-48217,TX,Hill County,33.1,31.5,14.8
-48219,TX,Hockley County,26.2,35.9,15.7
-48221,TX,Hood County,28.4,34.5,25.5
-48223,TX,Hopkins County,37.3,28.8,16.2
-48225,TX,Houston County,37.3,30.7,14.5
-48227,TX,Howard County,31.3,33.9,12.8
-48229,TX,Hudspeth County,24.5,18.5,8.2
-48231,TX,Hunt County,34.6,31.3,17.5
-48233,TX,Hutchinson County,31.2,37.8,15.1
-48235,TX,Irion County,34.9,39.3,14.7
-48237,TX,Jack County,40.5,28,11.1
-48239,TX,Jackson County,33.9,29.6,17.4
-48241,TX,Jasper County,44,30.5,9.6
-48243,TX,Jeff Davis County,21.1,23.1,36.6
-48245,TX,Jefferson County,33.3,31.3,18.4
-48247,TX,Jim Hogg County,30.2,28.4,12.8
-48249,TX,Jim Wells County,34.1,26,11
-48251,TX,Johnson County,31.7,34.3,17.3
-48253,TX,Jones County,39,25.2,9.7
-48255,TX,Karnes County,36.3,24.5,13
-48257,TX,Kaufman County,31.4,33.2,19
-48259,TX,Kendall County,21.1,28.9,40.8
-48261,TX,Kenedy County,33.4,19.3,15.1
-48263,TX,Kent County,26.1,27.8,24.8
-48265,TX,Kerr County,27.8,31.7,28.1
-48267,TX,Kimble County,35.4,30.6,17.1
-48269,TX,King County,39.5,18.6,21.8
-48271,TX,Kinney County,27.9,26,12.5
-48273,TX,Kleberg County,22.1,27.1,25.4
-48275,TX,Knox County,37,29,15.2
-48277,TX,Lamar County,34.7,34.2,16.2
-48279,TX,Lamb County,30.5,27,16.3
-48281,TX,Lampasas County,25.8,40.8,21
-48283,TX,La Salle County,32.7,13.8,14.9
-48285,TX,Lavaca County,41.6,24.3,15.9
-48287,TX,Lee County,39.1,26.8,17.2
-48289,TX,Leon County,36.2,30.4,17.2
-48291,TX,Liberty County,38,28.6,9.6
-48293,TX,Limestone County,35.7,30.9,13.8
-48295,TX,Lipscomb County,37.2,26.8,18.6
-48297,TX,Live Oak County,36,31.8,12.7
-48299,TX,Llano County,27.2,33,27.6
-48301,TX,Loving County,51.9,26.4,1.9
-48303,TX,Lubbock County,25.9,31.3,27.5
-48305,TX,Lynn County,31.9,29,16.5
-48307,TX,McCulloch County,31.3,30.8,15.6
-48309,TX,McLennan County,27.9,33.2,22.2
-48311,TX,McMullen County,29,31.8,15.4
-48313,TX,Madison County,36.8,29.1,10.6
-48315,TX,Marion County,37.6,31.6,14.3
-48317,TX,Martin County,35.5,26.5,17.5
-48319,TX,Mason County,34.7,27.9,22.4
-48321,TX,Matagorda County,35.4,26.6,15.3
-48323,TX,Maverick County,22.4,25.9,10.7
-48325,TX,Medina County,31.9,30.9,18.9
-48327,TX,Menard County,30.3,29.5,17.4
-48329,TX,Midland County,23.6,33.8,25.6
-48331,TX,Milam County,37.5,27.3,16.7
-48333,TX,Mills County,26.8,34,22.1
-48335,TX,Mitchell County,33.4,29.5,11
-48337,TX,Montague County,34.1,32.5,15.8
-48339,TX,Montgomery County,24.3,29.8,32.2
-48341,TX,Moore County,26.1,25.9,12
-48343,TX,Morris County,34.7,34,14.5
-48345,TX,Motley County,31.8,34.9,17.2
-48347,TX,Nacogdoches County,28.1,28.8,25.1
-48349,TX,Navarro County,30.5,31.2,15.7
-48351,TX,Newton County,50.1,31.1,6.4
-48353,TX,Nolan County,34.8,31.8,12.1
-48355,TX,Nueces County,28.2,32.4,20.2
-48357,TX,Ochiltree County,29.3,30.3,15.2
-48359,TX,Oldham County,19.6,36.2,27.8
-48361,TX,Orange County,40,34.2,14.6
-48363,TX,Palo Pinto County,37,28.8,15.8
-48365,TX,Panola County,32.5,37.6,12.8
-48367,TX,Parker County,26.9,35.6,26.5
-48369,TX,Parmer County,30.4,22,15.3
-48371,TX,Pecos County,35.2,24.1,10
-48373,TX,Polk County,37.7,29.7,12.3
-48375,TX,Potter County,27.8,33.4,14.9
-48377,TX,Presidio County,17.3,14.1,25.9
-48379,TX,Rains County,39.5,32.9,10.6
-48381,TX,Randall County,22.1,39.3,30.4
-48383,TX,Reagan County,37.1,21.2,10.5
-48385,TX,Real County,28.6,30.7,22
-48387,TX,Red River County,39,27.2,13.1
-48389,TX,Reeves County,25.8,23.2,10.8
-48391,TX,Refugio County,35.9,34.3,9.7
-48393,TX,Roberts County,30.2,34.6,31.8
-48395,TX,Robertson County,37.5,26,16.5
-48397,TX,Rockwall County,22.2,32.4,36.9
-48399,TX,Runnels County,38.8,23.2,17.5
-48401,TX,Rusk County,33.7,32.9,13.7
-48403,TX,Sabine County,44.8,28.6,12
-48405,TX,San Augustine County,42.9,26.2,10.8
-48407,TX,San Jacinto County,45,25.1,11.4
-48409,TX,San Patricio County,31.1,31.4,15.1
-48411,TX,San Saba County,30.7,32.7,14.5
-48413,TX,Schleicher County,23.6,33,19.5
-48415,TX,Scurry County,30.7,35.2,15.3
-48417,TX,Shackelford County,33.9,29.4,22.6
-48419,TX,Shelby County,35.7,26.6,14.8
-48421,TX,Sherman County,27.9,24.9,20.6
-48423,TX,Smith County,25.6,33.9,24.9
-48425,TX,Somervell County,26.3,32.9,22.7
-48427,TX,Starr County,22.2,15,9.1
-48429,TX,Stephens County,35,27.2,19.1
-48431,TX,Sterling County,32.1,24.2,22.3
-48433,TX,Stonewall County,37.5,27.3,15.6
-48435,TX,Sutton County,28.2,26.2,20.2
-48437,TX,Swisher County,35,27.3,15.9
-48439,TX,Tarrant County,23.8,31.1,30.3
-48441,TX,Taylor County,29.1,32.6,24.6
-48443,TX,Terrell County,36,27.5,17.3
-48445,TX,Terry County,29.5,27.1,12.6
-48447,TX,Throckmorton County,31.3,32.6,21.9
-48449,TX,Titus County,29.4,28.3,15
-48451,TX,Tom Green County,30.3,30.8,22.1
-48453,TX,Travis County,17.1,24.8,46
-48455,TX,Trinity County,41.9,30.4,11.1
-48457,TX,Tyler County,41.8,31.3,11.2
-48459,TX,Upshur County,32.6,35.7,14.5
-48461,TX,Upton County,39.4,26.5,10.1
-48463,TX,Uvalde County,23.2,32,15.3
-48465,TX,Val Verde County,26.6,22.5,17
-48467,TX,Van Zandt County,35.4,30.8,15.5
-48469,TX,Victoria County,31.3,33,18.2
-48471,TX,Walker County,35.8,27.2,18.9
-48473,TX,Waller County,31.4,27.9,18.8
-48475,TX,Ward County,35,29,11.4
-48477,TX,Washington County,31.3,29.8,21.6
-48479,TX,Webb County,24.4,23.8,17.1
-48481,TX,Wharton County,33.6,28.8,14.1
-48483,TX,Wheeler County,31.3,33.2,16.9
-48485,TX,Wichita County,32.4,32.1,21.6
-48487,TX,Wilbarger County,29.9,32.5,16.5
-48489,TX,Willacy County,35.5,19.1,8.3
-48491,TX,Williamson County,20.7,32.6,39.3
-48493,TX,Wilson County,34.8,30.8,19.5
-48495,TX,Winkler County,31.2,29.1,11.1
-48497,TX,Wise County,36.8,30.8,16.5
-48499,TX,Wood County,34.7,32.8,17
-48501,TX,Yoakum County,29.7,26.5,14.7
-48503,TX,Young County,35.9,27.6,17.6
-48505,TX,Zapata County,26,18.9,8.4
-48507,TX,Zavala County,27,24.2,9
-49000,UT,Utah,23.2,36.9,31.1
-49001,UT,Beaver County,37.2,35,20
-49003,UT,Box Elder County,32.5,38.1,21.5
-49005,UT,Cache County,21.9,34.4,36.1
-49007,UT,Carbon County,26.9,46,15.1
-49009,UT,Daggett County,34.7,42.8,15.9
-49011,UT,Davis County,21.2,39.2,34.8
-49013,UT,Duchesne County,36,36.7,15
-49015,UT,Emery County,32.9,44.7,12.6
-49017,UT,Garfield County,34.5,37.1,19.7
-49019,UT,Grand County,24.1,42.3,23.7
-49021,UT,Iron County,24.7,38.3,28.6
-49023,UT,Juab County,35,40.3,15.8
-49025,UT,Kane County,28.8,41.6,24.8
-49027,UT,Millard County,29.1,38.9,20
-49029,UT,Morgan County,24.4,39.4,34.6
-49031,UT,Piute County,39.8,26.2,17.5
-49033,UT,Rich County,37.6,40.3,19.1
-49035,UT,Salt Lake County,22.8,34.6,32.1
-49037,UT,San Juan County,31.5,33.2,18.9
-49039,UT,Sanpete County,27,41.3,20.5
-49041,UT,Sevier County,33.7,40.4,16.4
-49043,UT,Summit County,15.5,27.1,50.8
-49045,UT,Tooele County,32.1,37.9,22.4
-49047,UT,Uintah County,34.7,36.2,15.9
-49049,UT,Utah County,16.8,39.2,37.3
-49051,UT,Wasatch County,20.7,37.4,33.5
-49053,UT,Washington County,24.6,40.9,27.1
-49055,UT,Wayne County,25.3,40.6,26.8
-49057,UT,Weber County,29.1,37.4,23
-50000,VT,Vermont,30.1,25.8,36
-50001,VT,Addison County,32,24.6,35.5
-50003,VT,Bennington County,30.7,26.6,33.5
-50005,VT,Caledonia County,36.1,26.9,27
-50007,VT,Chittenden County,20.6,24.5,48.7
-50009,VT,Essex County,43.3,25.2,16
-50011,VT,Franklin County,37.6,28.3,23.6
-50013,VT,Grand Isle County,29.7,29.1,35.1
-50015,VT,Lamoille County,28.6,27.2,36.2
-50017,VT,Orange County,34.9,25.8,30.8
-50019,VT,Orleans County,38.7,25.5,22.1
-50021,VT,Rutland County,34.2,27.4,29.1
-50023,VT,Washington County,29.2,24.8,39.9
-50025,VT,Windham County,30.7,25.1,35.8
-50027,VT,Windsor County,31.7,25.6,35.1
-51000,VA,Virginia,24.8,27.2,36.3
-51001,VA,Accomack County,39.9,21.7,18.8
-51003,VA,Albemarle County,18.2,21.5,51.7
-51005,VA,Alleghany County,36.9,30.9,15.7
-51007,VA,Amelia County,34.1,31.1,14.5
-51009,VA,Amherst County,35.7,28.8,18.3
-51011,VA,Appomattox County,36.1,30.2,17.7
-51013,VA,Arlington County,8.3,12.3,72.9
-51015,VA,Augusta County,40.1,23.8,22
-51017,VA,Bath County,38.9,27.2,21.8
-51019,VA,Bedford County,31,30.4,26.7
-51021,VA,Bland County,39.5,31.6,14.1
-51023,VA,Botetourt County,35,29.9,26.2
-51025,VA,Brunswick County,35.7,27.1,13.1
-51027,VA,Buchanan County,34.4,25.6,9.9
-51029,VA,Buckingham County,43.5,23.3,10.4
-51031,VA,Campbell County,36.1,29.5,19.3
-51033,VA,Caroline County,36.7,26.4,19.2
-51035,VA,Carroll County,34.5,30.8,14.5
-51036,VA,Charles City County,39.3,23.3,13
-51037,VA,Charlotte County,37.6,26.4,14
-51041,VA,Chesterfield County,24.1,30,36.9
-51043,VA,Clarke County,28,28.7,31
-51045,VA,Craig County,48.4,26.5,14.7
-51047,VA,Culpeper County,34.1,27.8,21.9
-51049,VA,Cumberland County,36.5,26.4,14.5
-51051,VA,Dickenson County,35.6,28.5,11
-51053,VA,Dinwiddie County,39.7,26.8,15.3
-51057,VA,Essex County,38.5,28.6,15.2
-51059,VA,Fairfax County,13,19.1,59.9
-51061,VA,Fauquier County,28.5,29.2,33.5
-51063,VA,Floyd County,35.6,29.4,18.2
-51065,VA,Fluvanna County,28.4,28.7,31.5
-51067,VA,Franklin County,32,31.5,20.5
-51069,VA,Frederick County,30.5,27.8,29.1
-51071,VA,Giles County,40,28.1,15.8
-51073,VA,Gloucester County,33.9,34.3,22.1
-51075,VA,Goochland County,26.9,25.8,37.4
-51077,VA,Grayson County,41.1,27.5,10
-51079,VA,Greene County,34.9,26.1,23.7
-51081,VA,Greensville County,42.3,25.3,8.6
-51083,VA,Halifax County,36.5,27.8,15.5
-51085,VA,Hanover County,27.6,28.8,35.7
-51087,VA,Henrico County,22.8,27.1,40.7
-51089,VA,Henry County,34.1,32.9,11.4
-51091,VA,Highland County,38.6,23.4,21.6
-51093,VA,Isle of Wight County,27.7,31.7,26.9
-51095,VA,James City County,21.1,25.7,47
-51097,VA,King and Queen County,41.1,25.6,18.1
-51099,VA,King George County,30.3,30,32.3
-51101,VA,King William County,39.4,29.9,18.4
-51103,VA,Lancaster County,32.8,29.2,27.9
-51105,VA,Lee County,33.6,28.8,12
-51107,VA,Loudoun County,13.8,21.6,58.2
-51109,VA,Louisa County,37,25.2,20.6
-51111,VA,Lunenburg County,34.9,27.4,12.2
-51113,VA,Madison County,36.4,23.5,23.2
-51115,VA,Mathews County,33.3,29.7,29.2
-51117,VA,Mecklenburg County,32.5,30.8,15.6
-51119,VA,Middlesex County,32.5,31,24.2
-51121,VA,Montgomery County,21.8,23.8,45.7
-51125,VA,Nelson County,33.6,22.2,28.2
-51127,VA,New Kent County,33,32.5,24.6
-51131,VA,Northampton County,34.2,25,20.6
-51133,VA,Northumberland County,31.1,31.7,25.4
-51135,VA,Nottoway County,37.1,25.4,15.2
-51137,VA,Orange County,34.7,28.1,25.1
-51139,VA,Page County,42.9,21.4,12.8
-51141,VA,Patrick County,36,30.1,12.6
-51143,VA,Pittsylvania County,35.3,31.2,14.1
-51145,VA,Powhatan County,28.6,32.6,27.9
-51147,VA,Prince Edward County,34.6,23,24.4
-51149,VA,Prince George County,33.4,32.9,21.3
-51153,VA,Prince William County,21.7,29.2,38.8
-51155,VA,Pulaski County,34.2,31.9,17.8
-51157,VA,Rappahannock County,25.6,25.8,35.1
-51159,VA,Richmond County,40.2,26.2,12.7
-51161,VA,Roanoke County,26.4,31.4,34.2
-51163,VA,Rockbridge County,36.3,24,25.5
-51165,VA,Rockingham County,35.5,22,23.8
-51167,VA,Russell County,36.7,27.5,12.4
-51169,VA,Scott County,36.2,28.5,11.7
-51171,VA,Shenandoah County,39.5,26,19
-51173,VA,Smyth County,38.8,27.9,15
-51175,VA,Southampton County,34.8,30.7,15
-51177,VA,Spotsylvania County,31.7,28.6,29.3
-51179,VA,Stafford County,23.7,32.8,36.8
-51181,VA,Surry County,29.2,31.3,21.2
-51183,VA,Sussex County,40.3,20.8,9.6
-51185,VA,Tazewell County,35.8,29.9,13.5
-51187,VA,Warren County,36.6,28.2,20.7
-51191,VA,Washington County,32.9,27.8,23.3
-51193,VA,Westmoreland County,36.3,26.4,18.3
-51195,VA,Wise County,32.4,27.6,14
-51197,VA,Wythe County,36.4,28.8,16
-51199,VA,York County,19.6,32.3,42.2
-51510,VA,Alexandria city,12.1,18,61.4
-51515,VA,Bedford city,,,
-51520,VA,Bristol city,32.8,26.3,23.3
-51530,VA,Buena Vista city,40.5,24.9,16.4
-51540,VA,Charlottesville city,22.2,18.2,49.8
-51550,VA,Chesapeake city,26.5,35,29.6
-51560,VA,Clifton Forge city,,,
-51570,VA,Colonial Heights city,35.2,31,21.7
-51580,VA,Covington city,43.5,30.5,9.3
-51590,VA,Danville city,28.1,32.7,17.9
-51595,VA,Emporia city,32.6,24,18.1
-51600,VA,Fairfax city,15.2,22.4,54.9
-51610,VA,Falls Church city,7.5,11.4,78.8
-51620,VA,Franklin city,24.9,29.1,26.2
-51630,VA,Fredericksburg city,26.9,26.7,37.3
-51640,VA,Galax city,33.7,27.1,11.6
-51650,VA,Hampton city,27.3,39.3,23.2
-51660,VA,Harrisonburg city,26.5,21.8,35.8
-51670,VA,Hopewell city,38.3,30.3,12.3
-51678,VA,Lexington city,18.1,18.1,43.8
-51680,VA,Lynchburg city,25.1,30.1,33.1
-51683,VA,Manassas city,26,26.6,28.8
-51685,VA,Manassas Park city,26,28,28.3
-51690,VA,Martinsville city,29.7,30.6,17.8
-51700,VA,Newport News city,28.2,36.8,24
-51710,VA,Norfolk city,26.9,34,26.1
-51720,VA,Norton city,19.4,43,19.6
-51730,VA,Petersburg city,34,28,15.9
-51735,VA,Poquoson city,27,29.5,37.1
-51740,VA,Portsmouth city,28.9,34,20.8
-51750,VA,Radford city,22.6,31.3,35.5
-51760,VA,Richmond city,23,24.1,36
-51770,VA,Roanoke city,30.4,30.4,23.6
-51775,VA,Salem city,29.8,31.8,28.4
-51790,VA,Staunton city,30.9,25,31.3
-51800,VA,Suffolk city,28.3,32.9,26.4
-51810,VA,Virginia Beach city,22.4,37.1,33.8
-51820,VA,Waynesboro city,38.5,28,18.4
-51830,VA,Williamsburg city,15.5,23.7,52.4
-51840,VA,Winchester city,30.4,25.6,28.3
-53000,WA,Washington,23.3,34.3,32.9
-53001,WA,Adams County,25.9,27,13.6
-53003,WA,Asotin County,30.5,40.7,18.2
-53005,WA,Benton County,24.4,35.1,29.4
-53007,WA,Chelan County,30.1,28.8,24.5
-53009,WA,Clallam County,27.9,39.7,24.7
-53011,WA,Clark County,25.3,38.9,27.2
-53013,WA,Columbia County,27.5,39.5,23
-53015,WA,Cowlitz County,30.9,40.9,16
-53017,WA,Douglas County,27.7,35.7,17.4
-53019,WA,Ferry County,31.2,39.4,16.7
-53021,WA,Franklin County,27.3,30.5,15.9
-53023,WA,Garfield County,29.4,41.7,24.5
-53025,WA,Grant County,26.8,32.3,16.4
-53027,WA,Grays Harbor County,32.1,41.1,14.7
-53029,WA,Island County,23.3,39.5,31.7
-53031,WA,Jefferson County,23.2,33.9,37
-53033,WA,King County,16.5,28,47.9
-53035,WA,Kitsap County,23.2,41,30.3
-53037,WA,Kittitas County,26,31.2,33.6
-53039,WA,Klickitat County,29,36.2,23.5
-53041,WA,Lewis County,31.6,40.1,15.4
-53043,WA,Lincoln County,33.4,37.3,20.6
-53045,WA,Mason County,30.4,39.5,17.7
-53047,WA,Okanogan County,29.8,34.6,18.5
-53049,WA,Pacific County,31.6,39,16.8
-53051,WA,Pend Oreille County,32.2,41.6,17.1
-53053,WA,Pierce County,28.8,37.4,24.7
-53055,WA,San Juan County,17.2,31.6,46.6
-53057,WA,Skagit County,26.7,36.9,24.8
-53059,WA,Skamania County,29.2,39.6,22
-53061,WA,Snohomish County,24.3,37.4,29.9
-53063,WA,Spokane County,25.7,38.6,28.6
-53065,WA,Stevens County,34.4,39.2,16.7
-53067,WA,Thurston County,22.7,37.4,33.4
-53069,WA,Wahkiakum County,33.1,44.8,14.5
-53071,WA,Walla Walla County,22.6,38.9,27.2
-53073,WA,Whatcom County,23,35.7,32.5
-53075,WA,Whitman County,17.4,29.3,48.9
-53077,WA,Yakima County,27.8,28.3,15.7
-54000,WV,West Virginia,40.7,25.1,19.2
-54001,WV,Barbour County,47.1,22.1,11.9
-54003,WV,Berkeley County,38.2,29.1,19.7
-54005,WV,Boone County,49.4,20.2,8.8
-54007,WV,Braxton County,49.1,19.4,12
-54009,WV,Brooke County,43.7,28.6,18.5
-54011,WV,Cabell County,31.9,28.1,26.9
-54013,WV,Calhoun County,48.9,17.6,10.4
-54015,WV,Clay County,49.1,14.7,9.8
-54017,WV,Doddridge County,44.3,24.1,13.5
-54019,WV,Fayette County,44.4,23.5,12.4
-54021,WV,Gilmer County,36.6,25.1,16.6
-54023,WV,Grant County,50.2,19.3,12.3
-54025,WV,Greenbrier County,44,22.8,18.1
-54027,WV,Hampshire County,50,18.1,10.1
-54029,WV,Hancock County,42.8,26.3,17.8
-54031,WV,Hardy County,47.7,17.7,14
-54033,WV,Harrison County,39.5,27.7,20.4
-54035,WV,Jackson County,41.1,27.7,17.6
-54037,WV,Jefferson County,32.1,27.6,28.4
-54039,WV,Kanawha County,37.3,25.8,25.1
-54041,WV,Lewis County,49.7,22.9,14.1
-54043,WV,Lincoln County,43.4,25.5,9.5
-54045,WV,Logan County,41.6,26.7,8.1
-54047,WV,McDowell County,43.9,15.5,5.1
-54049,WV,Marion County,40.9,26,21.4
-54051,WV,Marshall County,45.1,27.3,16.8
-54053,WV,Mason County,47.5,26.3,10.4
-54055,WV,Mercer County,37.9,25.7,18.8
-54057,WV,Mineral County,50.2,24.9,12.9
-54059,WV,Mingo County,41,22.4,10.2
-54061,WV,Monongalia County,29.9,21.9,39.7
-54063,WV,Monroe County,49.4,19.2,13.3
-54065,WV,Morgan County,41.2,23.4,18.6
-54067,WV,Nicholas County,48,21.9,13.9
-54069,WV,Ohio County,34.5,26.8,29.8
-54071,WV,Pendleton County,46,18.8,15.3
-54073,WV,Pleasants County,50.1,25.3,13
-54075,WV,Pocahontas County,47.4,20.6,16.7
-54077,WV,Preston County,46.4,21.2,14.6
-54079,WV,Putnam County,37.8,28,25.4
-54081,WV,Raleigh County,39.5,24.8,18.3
-54083,WV,Randolph County,46.3,18.2,19.3
-54085,WV,Ritchie County,47.9,23.1,10.5
-54087,WV,Roane County,46.5,20.7,11.3
-54089,WV,Summers County,40.5,27.8,13.6
-54091,WV,Taylor County,43.6,25,16.6
-54093,WV,Tucker County,52.7,20.6,14.2
-54095,WV,Tyler County,49.2,25.9,11.3
-54097,WV,Upshur County,48.4,19.4,16.3
-54099,WV,Wayne County,40.9,25.5,12.3
-54101,WV,Webster County,43,18.7,9.3
-54103,WV,Wetzel County,48.7,24.8,10.4
-54105,WV,Wirt County,47.6,26.3,12
-54107,WV,Wood County,38.1,32.3,18.8
-54109,WV,Wyoming County,46,21.3,7.9
-55000,WI,Wisconsin,32,31.2,27.8
-55001,WI,Adams County,43.7,30.7,12.8
-55003,WI,Ashland County,35,34.1,23.2
-55005,WI,Barron County,39.8,33.1,16.6
-55007,WI,Bayfield County,30.2,34.5,29.3
-55009,WI,Brown County,31.3,31.4,27.9
-55011,WI,Buffalo County,42.5,30.8,18
-55013,WI,Burnett County,40,33.7,17.7
-55015,WI,Calumet County,33.8,30.7,28.4
-55017,WI,Chippewa County,38.5,34.1,19.2
-55019,WI,Clark County,43.3,26.6,11.5
-55021,WI,Columbia County,34.9,35.5,22.1
-55023,WI,Crawford County,42.7,32.1,15.1
-55025,WI,Dane County,19,28.1,47.9
-55027,WI,Dodge County,40.2,31.6,16.4
-55029,WI,Door County,32.9,31,29.7
-55031,WI,Douglas County,33.2,37.6,22.5
-55033,WI,Dunn County,34.6,32.6,25.6
-55035,WI,Eau Claire County,26.9,35.2,31.1
-55037,WI,Florence County,39.2,34.8,17.1
-55039,WI,Fond du Lac County,38.5,31.3,21.5
-55041,WI,Forest County,40.7,32.4,13.8
-55043,WI,Grant County,38.7,31.4,21.3
-55045,WI,Green County,39,31.3,21.9
-55047,WI,Green Lake County,42.3,28.8,16.9
-55049,WI,Iowa County,36.3,33.9,22.9
-55051,WI,Iron County,35.8,36.1,21
-55053,WI,Jackson County,42.2,31,13.8
-55055,WI,Jefferson County,36.5,32.1,22.6
-55057,WI,Juneau County,42.2,30.9,12.3
-55059,WI,Kenosha County,32.8,33,24.5
-55061,WI,Kewaunee County,44.2,31.9,15.8
-55063,WI,La Crosse County,27.7,35.8,30.9
-55065,WI,Lafayette County,41.5,30.7,17.5
-55067,WI,Langlade County,42.4,31.8,14.9
-55069,WI,Lincoln County,40.5,34.1,15.3
-55071,WI,Manitowoc County,39.9,30.7,19.7
-55073,WI,Marathon County,37.1,30.2,23.7
-55075,WI,Marinette County,42.6,34,14.4
-55077,WI,Marquette County,43.8,31.3,12.8
-55078,WI,Menominee County,43.8,29.9,16.1
-55079,WI,Milwaukee County,28.1,29.3,29.1
-55081,WI,Monroe County,39.4,32.8,17.1
-55083,WI,Oconto County,43.7,31.1,15.4
-55085,WI,Oneida County,34.3,33.2,25
-55087,WI,Outagamie County,34.2,31.6,27.7
-55089,WI,Ozaukee County,22.5,27.8,46.1
-55091,WI,Pepin County,43,30.5,17.4
-55093,WI,Pierce County,32.6,34.4,27.5
-55095,WI,Polk County,39,33.7,19.5
-55097,WI,Portage County,33.7,29.6,29.2
-55099,WI,Price County,41.6,31.8,16.6
-55101,WI,Racine County,30.7,33.8,23.7
-55103,WI,Richland County,41,31.5,16.7
-55105,WI,Rock County,36.8,31.7,20.4
-55107,WI,Rusk County,43.2,29.8,15
-55109,WI,St. Croix County,27.7,35.1,32.3
-55111,WI,Sauk County,36.6,31.2,22.2
-55113,WI,Sawyer County,34.5,34,22.6
-55115,WI,Shawano County,45.3,29.5,15.5
-55117,WI,Sheboygan County,36.7,30.9,23.4
-55119,WI,Taylor County,46.3,28,13.3
-55121,WI,Trempealeau County,38.8,30.6,19.2
-55123,WI,Vernon County,38.1,29.7,20.5
-55125,WI,Vilas County,31.4,35.1,26
-55127,WI,Walworth County,31.8,31.5,26.8
-55129,WI,Washburn County,38.8,31.9,20.7
-55131,WI,Washington County,30,34.4,28.9
-55133,WI,Waukesha County,24.3,30.2,41.2
-55135,WI,Waupaca County,43.7,29.6,16.9
-55137,WI,Waushara County,42.3,29.9,14.6
-55139,WI,Winnebago County,34,31.4,26.6
-55141,WI,Wood County,39.2,33.2,19.6
-56000,WY,Wyoming,29.4,37.2,25.7
-56001,WY,Albany County,17,30.2,49.3
-56003,WY,Big Horn County,31.3,37.9,19.6
-56005,WY,Campbell County,34.4,37.6,19.3
-56007,WY,Carbon County,35.6,35.7,19.5
-56009,WY,Converse County,38,35.8,17.5
-56011,WY,Crook County,34.7,39.5,18.8
-56013,WY,Fremont County,31.7,38.7,21.3
-56015,WY,Goshen County,29.9,38.1,22.8
-56017,WY,Hot Springs County,30.8,39.5,20.6
-56019,WY,Johnson County,36.1,33,25.3
-56021,WY,Laramie County,26.3,38.9,27.8
-56023,WY,Lincoln County,31.5,40.4,21.5
-56025,WY,Natrona County,27.5,41.9,21.9
-56027,WY,Niobrara County,28.1,41.1,21.3
-56029,WY,Park County,28.5,36.3,28.4
-56031,WY,Platte County,30.8,39.8,21.7
-56033,WY,Sheridan County,27.2,38,29.4
-56035,WY,Sublette County,35.2,37.3,22.9
-56037,WY,Sweetwater County,35.4,35.5,19.6
-56039,WY,Teton County,17.9,24.1,53.9
-56041,WY,Uinta County,36.2,34.2,19.3
-56043,WY,Washakie County,29.3,37,21.1
-56045,WY,Weston County,32.2,37.7,18.1
-72000,PR,Puerto Rico,27.1,21.8,24.2
-72001,PR,Adjuntas Municipio,26.5,18.4,17.1
-72003,PR,Aguada Municipio,21.1,21.1,21.4
-72005,PR,Aguadilla Municipio,26.5,19,24.2
-72007,PR,Aguas Buenas Municipio,31.4,19.7,14.3
-72009,PR,Aibonito Municipio,32.5,20.4,20.6
-72011,PR,Añasco Municipio,33.5,18.2,15.7
-72013,PR,Arecibo Municipio,29.3,21.6,21.8
-72015,PR,Arroyo Municipio,33.9,23.9,16.7
-72017,PR,Barceloneta Municipio,33.5,21.9,15.8
-72019,PR,Barranquitas Municipio,30.3,20.8,18.9
-72021,PR,Bayamón Municipio,23.3,27.1,27.9
-72023,PR,Cabo Rojo Municipio,25.4,20.3,24.5
-72025,PR,Caguas Municipio,26.2,22.6,29.4
-72027,PR,Camuy Municipio,26.4,21.7,20.5
-72029,PR,Canóvanas Municipio,29.8,21.5,20.5
-72031,PR,Carolina Municipio,25.5,27.2,29.6
-72033,PR,Cataño Municipio,29.2,22.9,21
-72035,PR,Cayey Municipio,31.9,17.5,22.7
-72037,PR,Ceiba Municipio,32.7,23.7,18.7
-72039,PR,Ciales Municipio,30.6,20.2,13
-72041,PR,Cidra Municipio,32.7,20.8,22.6
-72043,PR,Coamo Municipio,32.3,17.9,21
-72045,PR,Comerío Municipio,31.4,18.5,12.3
-72047,PR,Corozal Municipio,29.7,23.9,14.9
-72049,PR,Culebra Municipio,32.5,17.7,10.3
-72051,PR,Dorado Municipio,25.7,20.5,29.9
-72053,PR,Fajardo Municipio,33,23.9,21.2
-72054,PR,Florida Municipio,42.2,23.4,10.3
-72055,PR,Guánica Municipio,35.5,15.2,15.6
-72057,PR,Guayama Municipio,35.4,19.5,18.7
-72059,PR,Guayanilla Municipio,30.1,21.3,18.9
-72061,PR,Guaynabo Municipio,17.5,20.2,45.1
-72063,PR,Gurabo Municipio,23.2,21.7,33.1
-72065,PR,Hatillo Municipio,21.6,22.3,22.8
-72067,PR,Hormigueros Municipio,31.7,17.9,22.4
-72069,PR,Humacao Municipio,30.6,21.4,22.2
-72071,PR,Isabela Municipio,30.2,20,19.4
-72073,PR,Jayuya Municipio,36.6,18.5,15.7
-72075,PR,Juana Díaz Municipio,29.6,20.7,21.7
-72077,PR,Juncos Municipio,29.6,23.9,22.5
-72079,PR,Lajas Municipio,24.8,20.2,15.2
-72081,PR,Lares Municipio,22.9,19.1,18.2
-72083,PR,Las Marías Municipio,26.7,10.9,15.2
-72085,PR,Las Piedras Municipio,32.9,24.1,18.1
-72087,PR,Loíza Municipio,38,22.4,13.4
-72089,PR,Luquillo Municipio,34.1,22.1,18.6
-72091,PR,Manatí Municipio,26.5,22.5,22.4
-72093,PR,Maricao Municipio,35.6,9.2,10.7
-72095,PR,Maunabo Municipio,25.7,21.4,16.6
-72097,PR,Mayagüez Municipio,30.6,17.5,21.5
-72099,PR,Moca Municipio,30,17.2,19.1
-72101,PR,Morovis Municipio,28.5,22.1,16.3
-72103,PR,Naguabo Municipio,28.2,20.6,19.9
-72105,PR,Naranjito Municipio,26.3,26.7,16
-72107,PR,Orocovis Municipio,31.8,14.7,15.4
-72109,PR,Patillas Municipio,31.1,21.8,14.5
-72111,PR,Peñuelas Municipio,31.2,20.2,17.2
-72113,PR,Ponce Municipio,29.6,19.6,25.2
-72115,PR,Quebradillas Municipio,26.2,24.1,19.7
-72117,PR,Rincón Municipio,21.7,22.2,20.7
-72119,PR,Río Grande Municipio,31.3,23.8,19
-72121,PR,Sabana Grande Municipio,33.4,17.6,20.1
-72123,PR,Salinas Municipio,33.7,19.6,17.6
-72125,PR,San Germán Municipio,30.2,17,22.4
-72127,PR,San Juan Municipio,21.3,22.5,34
-72129,PR,San Lorenzo Municipio,28.9,19.6,18.4
-72131,PR,San Sebastián Municipio,23,18.4,18
-72133,PR,Santa Isabel Municipio,31.3,19.7,24.2
-72135,PR,Toa Alta Municipio,24.5,23.8,30
-72137,PR,Toa Baja Municipio,29.3,26.6,22.3
-72139,PR,Trujillo Alto Municipio,23.5,23.7,34.9
-72141,PR,Utuado Municipio,27.9,21.5,17.6
-72143,PR,Vega Alta Municipio,22.8,23.8,18.4
-72145,PR,Vega Baja Municipio,12.2,23.8,20
-72147,PR,Vieques Municipio,33,15.6,17.5
-72149,PR,Villalba Municipio,34.4,16.9,17
-72151,PR,Yabucoa Municipio,27.4,23.4,15.1
-72153,PR,Yauco Municipio,29,18.7,19.6
+State,"Percent of adults with a high school diploma only, 2011-2015","Percent of adults completing some college or associate's degree, 2011-2015","Percent of adults with a bachelor's degree or higher, 2011-2015"
+US,27.8,29.1,29.8
+AL,31,29.7,23.5
+AL,33.5,30.4,23.2
+AL,28.8,31.8,29
+AL,34.5,26.3,12.5
+AL,42.1,27.9,10.6
+AL,33.4,32.2,12.9
+AL,33.3,17.7,13.9
+AL,37.7,25.6,14.5
+AL,31.8,31.5,17.6
+AL,38.4,29,11.6
+AL,36.4,29.3,13.8
+AL,39.2,25.1,14.1
+AL,36.8,27.8,11.8
+AL,43.9,23.7,12.9
+AL,36.3,29.2,9.6
+AL,38.3,24.8,12.1
+AL,29.5,31.3,23.9
+AL,34.5,30.7,18.6
+AL,44.5,25.4,8.2
+AL,37.6,28,8.5
+AL,33.6,31.9,14.3
+AL,38,25.7,14.3
+AL,34.7,32.6,14.6
+AL,32.2,36.8,16.4
+AL,34.6,29.4,14
+AL,35.2,26,11.2
+AL,35.4,29.8,21.4
+AL,42.1,25.2,12.5
+AL,31.9,34.5,16
+AL,38.8,24.6,14.1
+AL,37.5,25.7,11.4
+AL,37.1,29.6,12.3
+AL,38.9,26,10.9
+AL,42.9,23.9,13.9
+AL,35.5,26.8,16.5
+AL,33.1,31,20.6
+AL,39.8,24.6,12.4
+AL,26.5,31.2,30.8
+AL,37.1,28.8,11.5
+AL,34.1,28.4,21.8
+AL,40.6,27.1,11.1
+AL,25.5,29.1,34
+AL,32.1,27.8,23.2
+AL,35.3,24.7,14.1
+AL,30.9,31.2,19.3
+AL,21.3,30,39.4
+AL,42,27.4,15.3
+AL,34.5,32.1,11.5
+AL,31.9,29,16.6
+AL,32.8,30.5,22
+AL,44.7,23.9,12.2
+AL,26,28.2,31.1
+AL,31,30.5,21.3
+AL,38.6,22.7,13.2
+AL,42.2,26.6,9.9
+AL,33.9,22.5,23.4
+AL,35.6,25.1,15.1
+AL,31.4,33.8,17.1
+AL,35.5,32,15.6
+AL,21.4,29.2,40.8
+AL,40.5,21.5,16.3
+AL,36.3,29.9,13.1
+AL,34.4,28.1,17.3
+AL,30.5,28,28.5
+AL,36.5,31,10.8
+AL,46.1,24.5,9.9
+AL,41.3,23.5,12.5
+AL,33.7,29.3,11.4
+AK,27.8,36.3,28
+AK,,,
+AK,39.4,28.2,14
+AK,37,32.2,14.7
+AK,24.1,35.6,33.2
+AK,43.6,23.7,11.6
+AK,30.7,41.3,20
+AK,23.9,38,33.3
+AK,38.1,32.2,16.2
+AK,23.4,39.2,31.7
+AK,27.7,32.1,35.6
+AK,31.3,32.4,26.6
+AK,21.1,35.2,38.5
+AK,33.1,37.5,22.8
+AK,32.8,35.3,23.8
+AK,27.3,38.4,24.7
+AK,49,23.5,5
+AK,,,
+AK,42.9,31.5,12.9
+AK,31.6,39.9,20.7
+AK,41.3,29.2,14.1
+AK,36.8,38,13.9
+AK,43.6,24.5,10.6
+AK,31.2,37.4,25.3
+AK,40.9,34.1,15.5
+AK,,,
+AK,22.1,39.5,31.2
+AK,29,32.4,35.9
+AK,,,
+AK,,,
+AK,33.2,41,17.9
+AK,,,
+AK,27.2,36.6,28.7
+AK,35.6,34.7,19.9
+AK,,,
+AK,44.7,34.5,15.3
+AK,40.1,31,11.2
+AZ,24.4,34.1,27.5
+AZ,33.4,32.6,10.8
+AZ,23.4,40.4,22.9
+AZ,21.3,33.5,33.6
+AZ,30,37.3,16.7
+AZ,32.9,38.7,13.2
+AZ,37.5,37.4,10.8
+AZ,36.6,29.4,9.9
+AZ,23,33.3,30.4
+AZ,35.7,36.5,11.8
+AZ,29.5,37.2,14.7
+AZ,22.8,34.5,30.3
+AZ,30.1,36.9,18
+AZ,25.3,25.9,22
+AZ,25.6,38.4,25.6
+AZ,25,31.7,14.4
+AR,34.9,28.7,21.1
+AR,42.5,27.2,12.4
+AR,41.4,30.3,13.2
+AR,35.6,34,17.9
+AR,30.8,25.8,30.2
+AR,35.9,35.2,14.7
+AR,42.1,24.5,13
+AR,49.3,21,10.4
+AR,35,31.5,16.7
+AR,44.6,23.3,11.1
+AR,33.6,29.4,23.9
+AR,43.8,23.9,11
+AR,39.2,29,16.8
+AR,44.8,26.1,15.4
+AR,38.2,25.9,20
+AR,42.1,25.7,16.5
+AR,32.8,29.3,25.4
+AR,38.7,32.3,14.5
+AR,36.3,28.3,16.4
+AR,45.8,20.6,13.7
+AR,50.5,19.5,13.1
+AR,40.4,25.1,11.9
+AR,35.5,26.6,20.5
+AR,30.6,31.9,28.3
+AR,40.4,29.4,12.3
+AR,43,31.9,10.6
+AR,32.2,34.6,21.4
+AR,43.1,28.7,17.1
+AR,43.1,25.5,15.4
+AR,38,27.9,12.2
+AR,42.1,29.6,13
+AR,33.5,29.4,15.1
+AR,38.9,28.2,15.9
+AR,40,29.4,12.7
+AR,45.3,22.8,8.8
+AR,38.7,28.6,17.5
+AR,41.1,21.1,17.1
+AR,43.3,23.3,11.8
+AR,42.7,26.5,12.9
+AR,39.5,21.4,7.9
+AR,48,21.5,8.9
+AR,40.6,34.3,10
+AR,43.7,26.2,12.6
+AR,34,34.1,19.1
+AR,46,21.7,10.7
+AR,43.4,28.8,13.2
+AR,39.3,31.7,14.3
+AR,36.6,29.9,13.2
+AR,41.2,26.3,9.4
+AR,37.6,30.4,12.3
+AR,42.8,26.4,14.1
+AR,42.4,25,14.6
+AR,43.2,26.8,16.1
+AR,42.1,27.7,11.5
+AR,31.7,33,10.8
+AR,35.6,31.4,14.6
+AR,42.6,26,8.4
+AR,39,34.1,12
+AR,33.2,28.6,20.9
+AR,41.8,27.1,10.3
+AR,27,29.8,32.9
+AR,39.3,29.8,13.4
+AR,39.7,27.4,11.4
+AR,33.9,31.7,23
+AR,39.6,26.1,11.6
+AR,40.2,27.8,13.9
+AR,31.9,31.1,19.2
+AR,34.9,26.4,7.9
+AR,45.9,27.4,9.9
+AR,35.4,27.8,15.9
+AR,37.7,28.2,17.5
+AR,42.7,27,12.3
+AR,27.9,25.2,30.5
+AR,37.6,26.2,19.5
+AR,44.5,18.6,10.4
+AR,40.6,22.6,12.6
+CA,20.7,29.6,31.4
+CA,18.5,25.5,43
+CA,30.6,31.4,27.5
+CA,27,40.1,21.3
+CA,22.6,39.5,25.9
+CA,27.6,43.2,20.9
+CA,21.7,31.9,14.6
+CA,18.7,30.6,39.6
+CA,29.1,35.7,15.1
+CA,21.8,38.4,32.1
+CA,22.8,31.3,19.4
+CA,29.6,30.6,14.9
+CA,25.2,36.6,28
+CA,21.9,30.4,14.1
+CA,30.9,32.9,23.9
+CA,27.3,30.8,15.4
+CA,24.8,34,13.4
+CA,28.3,40.1,16
+CA,28.8,38.9,12.3
+CA,20.7,26.3,30.3
+CA,25.1,32.4,13.3
+CA,11.8,25.3,55.8
+CA,28.5,38.9,22.1
+CA,26.5,36.6,23.7
+CA,24.8,29.9,13.1
+CA,26.1,42.7,18
+CA,16.8,35.8,32.3
+CA,20.8,26.8,23.1
+CA,19.3,31.5,32.4
+CA,20.2,40,33.7
+CA,17.7,28.8,37.7
+CA,19.4,38.2,36.4
+CA,23.9,44.7,22
+CA,25.8,33.3,20.9
+CA,22.3,35.6,28.8
+CA,24.4,34.6,19
+CA,26.2,33.4,19
+CA,19,31.3,35.7
+CA,12.7,20.5,53.8
+CA,26.4,33.2,18.4
+CA,19.7,37,33
+CA,16.5,26.2,45.6
+CA,17.7,29.7,32.2
+CA,15.2,23.9,47.9
+CA,15.5,31.9,38.2
+CA,25.8,43.8,19.6
+CA,34.5,39.3,18.9
+CA,24.9,40.9,22.7
+CA,23.8,38.7,24.9
+CA,19.9,34.4,32.9
+CA,28.3,32.4,16.5
+CA,24.8,36,17.6
+CA,30.5,37.4,14.4
+CA,31,39.8,20
+CA,25.2,29.3,13.8
+CA,29.7,40.2,20.4
+CA,19,32.4,31.7
+CA,19.7,26.8,39
+CA,25,41.5,14.3
+CO,21.8,30.8,38.1
+CO,28.8,31.3,22.2
+CO,25.9,33.5,25.5
+CO,20.4,31.5,40.1
+CO,26,30.5,35
+CO,31.6,36.6,19
+CO,44.5,24.7,7
+CO,12.7,22.5,58.9
+CO,14.7,29.1,51.9
+CO,26.7,30.3,34.1
+CO,33.6,34.9,22.5
+CO,22,33.3,41.5
+CO,32.8,32.4,19.5
+CO,27.4,30.6,17.9
+CO,39.1,33.2,11.1
+CO,18.7,39.3,35.5
+CO,37.5,31.4,20
+CO,17.7,23.5,45
+CO,37.8,30.5,21
+CO,12.9,28.2,56.6
+CO,17.9,24.5,46.7
+CO,27,38.3,30.6
+CO,21,36.9,35.9
+CO,39.2,32.3,15.2
+CO,26.1,30.1,29.7
+CO,24.4,39.3,32.1
+CO,25.5,32.5,36.4
+CO,17,23.6,54.4
+CO,21.5,33.2,40.4
+CO,27,34.3,27.1
+CO,41.5,28,18.1
+CO,21.3,31.1,41.6
+CO,34.3,36.5,20.3
+CO,38.5,31.7,13.3
+CO,35.5,29.1,27.4
+CO,19.4,31.9,43.3
+CO,19,32.1,44.3
+CO,28.3,39,17
+CO,42.2,22.4,15.1
+CO,31.3,39.7,15.8
+CO,29.1,34.5,26.3
+CO,21.4,34.1,42.3
+CO,40.3,34.4,15.3
+CO,29,34,26.7
+CO,31.6,31.3,24.5
+CO,32.1,33.2,14.9
+CO,28.9,40.3,15.6
+CO,19.4,26.7,52
+CO,25.5,41,29.2
+CO,29.1,37.8,21.2
+CO,11.5,24.6,59.1
+CO,27.8,40,13.5
+CO,29,37.3,21.6
+CO,33.7,35.4,22
+CO,29.5,31.8,22
+CO,20.5,26,50.4
+CO,24.7,26.9,27
+CO,33.5,29.7,29.1
+CO,18,22.7,53.9
+CO,35.1,35.1,20.6
+CO,17.2,28.8,48.8
+CO,24.8,36.4,31.8
+CO,35.1,39.5,16.3
+CO,27,33.7,26.1
+CO,31.7,35.2,21.5
+CT,27.4,24.9,37.6
+CT,22.6,21.3,45.8
+CT,27.1,25.4,36.3
+CT,29.3,28.5,33.6
+CT,26.8,26.4,40.6
+CT,30.2,24.9,34
+CT,31.2,27.9,32.1
+CT,27.4,28,38
+CT,34.3,30.8,23.1
+DE,31.1,27.3,30
+DE,33.5,30.3,22.5
+DE,28.6,26.5,35
+DE,35.3,27,23.2
+DC,18,16.8,54.6
+DC,18,16.8,54.6
+FL,29.5,30.1,27.3
+FL,21.5,29.5,41.6
+FL,43.8,26.3,11.5
+FL,30.6,35.1,22.2
+FL,37,28.7,10.9
+FL,28.8,34.6,27.3
+FL,27.6,29.8,30.8
+FL,37.5,27.3,10.5
+FL,34.9,33.6,20.8
+FL,38.2,31.5,16.9
+FL,30.7,35.9,23.8
+FL,26.7,26.1,33.2
+FL,36.1,34.4,15.1
+FL,40.9,20.2,9.7
+FL,41,29.9,7.9
+FL,28.6,32.7,27.3
+FL,28.9,36.2,24.5
+FL,34.7,33.3,23
+FL,35.4,27.9,15.5
+FL,34.6,26.5,17
+FL,38.8,32.7,11.4
+FL,44.5,24,8.4
+FL,34.7,31.4,16
+FL,37.4,26.3,9.9
+FL,41.1,17.5,10.7
+FL,32.2,21,9.8
+FL,37.5,33.9,15.6
+FL,36.3,29.6,16.7
+FL,27.3,29.6,30.6
+FL,36.9,27.6,11.3
+FL,30.3,31.2,26.8
+FL,36.5,29.1,13.7
+FL,31.5,29.9,18.5
+FL,36.7,27.1,11.6
+FL,33.5,32.4,21.5
+FL,31.6,29.4,26
+FL,19,28.3,45
+FL,40.9,29.7,10.9
+FL,43.5,22.6,11.2
+FL,39,31.7,11.3
+FL,30.7,29.5,27.7
+FL,36.6,31.6,17.8
+FL,26.1,32.1,31.6
+FL,28.5,24.7,26.9
+FL,27.9,31.7,31.3
+FL,35.5,31,23
+FL,26.2,36.2,28.8
+FL,37,22.7,10.6
+FL,26.1,30.4,31.1
+FL,34.3,33,18
+FL,25.5,28.7,33.6
+FL,33.7,32.9,21.4
+FL,29.5,31.7,28.9
+FL,36.2,28.5,18.9
+FL,38.8,27.8,11.8
+FL,21.2,30.5,42.1
+FL,33.4,32.2,19.9
+FL,28,35.8,26.6
+FL,30.2,29.7,32.4
+FL,24.1,33.6,35.3
+FL,30.6,30.9,28
+FL,40.8,26.4,11.6
+FL,39.2,28.1,9
+FL,37.4,28.9,7.8
+FL,33.8,33.3,21.6
+FL,39.4,33.4,16.1
+FL,28.1,31.2,25.9
+FL,41.3,27.9,11.1
+GA,28.4,28.2,28.8
+GA,42.8,20.3,13.1
+GA,39.2,22.5,7.8
+GA,40.5,24.3,12.8
+GA,42.2,29.5,8.6
+GA,39,25.8,17.7
+GA,45.5,21.4,11.2
+GA,35,30.4,16.5
+GA,35,28.9,17.8
+GA,41.7,27.1,10.9
+GA,38,30.8,12.5
+GA,32.6,26.8,23.8
+GA,44.8,22.8,16.5
+GA,45.6,25,8.4
+GA,38,28.3,11.7
+GA,27.6,30.9,31.1
+GA,28,29.8,29
+GA,39.9,28.1,9.6
+GA,43.8,22.2,10.1
+GA,38.6,24.3,9.9
+GA,31.4,38.7,21.1
+GA,34.9,23.6,15.4
+GA,35.8,26.6,17.9
+GA,31.7,33.9,18.6
+GA,41.8,22.8,10
+GA,25.5,30.9,32.6
+GA,27,39.1,25.7
+GA,39.7,22.2,8.8
+GA,24.8,30,34.7
+GA,21.8,24.3,40.2
+GA,44.8,27.1,7.8
+GA,32,32.1,18.3
+GA,35.4,24.3,13.5
+GA,19.5,27.4,44.1
+GA,39.1,24.7,13.7
+GA,36.7,23,13.1
+GA,23.8,32.7,35.3
+GA,39.5,22.9,12.9
+GA,31.6,29.2,27.6
+GA,35.6,29.9,12.8
+GA,35.7,27.9,14.6
+GA,35.5,30.7,14.1
+GA,29,29.2,27.6
+GA,34.9,29.1,15.8
+GA,21,26.2,41.1
+GA,42.1,24.2,14.7
+GA,43.4,22.3,9.2
+GA,29.3,32.8,18.9
+GA,31.2,30.6,26
+GA,38.1,25.8,15.2
+GA,36.2,27,8.3
+GA,38.2,30.8,16.9
+GA,45.7,20.5,10.6
+GA,40.2,25.5,10.8
+GA,37.9,21.1,15.4
+GA,38.8,26,16.2
+GA,21.5,28.6,43.8
+GA,31,29.4,18.6
+GA,19.3,27.1,45.6
+GA,38.3,23.7,12.6
+GA,18,23.6,49.3
+GA,35.5,25.9,16.7
+GA,44.6,26.6,8.1
+GA,28.2,31.8,27.3
+GA,35.7,26.6,13.7
+GA,36.8,25.6,13.3
+GA,35.6,21.6,24.7
+GA,23.4,29.2,34.7
+GA,34,26.7,17.5
+GA,28.1,27.2,22.7
+GA,40.6,21.7,10.3
+GA,37.7,26.6,14.1
+GA,27.4,35.5,26.6
+GA,37.9,29,13.6
+GA,43.2,23.2,10.1
+GA,30.5,32.1,27
+GA,30,36.1,23.5
+GA,44.2,30.2,10.6
+GA,34.3,29.2,19.2
+GA,40.2,26.6,11.9
+GA,40.2,28.9,9.7
+GA,41.2,21.6,10.1
+GA,36.8,22.2,12.2
+GA,39.3,27.4,8.9
+GA,37.3,29.7,19.7
+GA,37.9,29.7,17.1
+GA,30.5,33.2,12.7
+GA,43.6,22.4,15.1
+GA,28.6,34.9,23.2
+GA,31.5,39.8,18.7
+GA,42.2,26.9,12.1
+GA,36.9,33.2,15
+GA,28.3,32,23.5
+GA,28.6,28.3,28.1
+GA,38.6,24.1,14.2
+GA,35.8,32.5,13.1
+GA,37.8,26,7.9
+GA,39.9,26.1,15.6
+GA,37.5,25.9,12.2
+GA,39,25.3,9.3
+GA,40.3,26.4,12.8
+GA,39.8,23,11.4
+GA,35.4,25,21.3
+GA,42.3,23.6,14.6
+GA,34.8,25.5,22.1
+GA,36.8,22.9,10.3
+GA,27.7,34.6,24.1
+GA,32,32.1,20.2
+GA,21.3,27,44.9
+GA,36.1,25.9,17.2
+GA,35.6,30.2,23.8
+GA,30.1,34.1,20.9
+GA,30.8,27.5,25.1
+GA,39.3,26.3,14.2
+GA,39.2,31.7,16
+GA,38.1,24.1,13.1
+GA,43.6,25.2,12.1
+GA,39,28,17.5
+GA,40.7,25.7,6.7
+GA,34,26.2,25.9
+GA,35.3,22.9,14.7
+GA,31.1,31.7,20.4
+GA,31.2,29.4,25.5
+GA,34.4,28.1,14.7
+GA,42.2,25.5,13.3
+GA,40.3,27.2,15.1
+GA,36.5,26.6,15.9
+GA,38.3,25.6,16.2
+GA,35.6,14.7,10.8
+GA,31.4,26.1,19
+GA,43.3,21.1,13.7
+GA,43.9,15.1,9.9
+GA,38,24.7,11
+GA,36.5,27.9,11.1
+GA,49.3,14.9,9.3
+GA,31.5,27.3,11.2
+GA,32.7,29.2,19.2
+GA,33.6,29.3,16.8
+GA,39.2,24.4,15.7
+GA,34.9,31.3,22.4
+GA,41.6,20.8,14.8
+GA,35.8,29.5,18.7
+GA,35.9,26.5,11.7
+GA,38.7,19.9,9.7
+GA,33.4,32.5,21.9
+GA,35.4,29.1,12.1
+GA,37.2,28.1,14.7
+GA,35.6,31.8,17.9
+GA,40.8,27.7,12.9
+GA,42.3,16.3,12.5
+GA,41.5,23.6,12.9
+GA,42.1,26.9,13.1
+GA,46.3,21.8,7.6
+GA,54.8,16.4,5.6
+GA,31.2,33.4,20.7
+GA,28.9,25.6,14
+GA,50,19.3,8.5
+GA,43.4,20.6,15.7
+GA,51.2,22.6,7.4
+GA,41.1,24.2,9.4
+HI,27.9,32.3,30.8
+HI,31.9,32.6,26.8
+HI,26.4,31.8,32.7
+HI,29.5,24.4,34.6
+HI,30,33.6,28
+HI,31.2,34.2,26.1
+ID,27.5,36.1,25.9
+ID,21.4,35.8,37.1
+ID,35.4,31.6,21.5
+ID,26.6,38.6,26.4
+ID,39,35.1,19.1
+ID,40.8,31.9,13.3
+ID,29.4,38.3,17.5
+ID,18,29.4,42.9
+ID,27.8,41.3,25.1
+ID,31.4,38.9,20.9
+ID,27.5,36.4,27.2
+ID,36.8,35.7,16
+ID,36.5,37.6,15.6
+ID,27.8,40.9,18.3
+ID,32,33.4,17.7
+ID,35.5,36.6,19.3
+ID,26.9,35.2,17.8
+ID,34.1,23.7,15
+ID,34,35.5,16.9
+ID,34.8,28.9,27.1
+ID,27.9,41.2,16.6
+ID,33.4,38.4,18.4
+ID,34.2,34.5,20.5
+ID,37.7,33.2,16
+ID,33.1,28.4,14.3
+ID,37.3,32.7,19.3
+ID,30.8,36.9,20.2
+ID,28.2,30.1,14
+ID,28.4,40.5,23.3
+ID,19.8,30.1,45.6
+ID,33.7,36.2,21.5
+ID,34.3,39.1,15.2
+ID,38.3,28.7,11.6
+ID,15.8,44.8,34.8
+ID,29.2,34.6,12.9
+ID,30.7,37.3,23.4
+ID,38.4,41.1,14.1
+ID,36.9,28.9,8.9
+ID,33.1,37.4,15.7
+ID,39.8,25.4,13
+ID,36.2,36,14.1
+ID,20.1,30.3,39.8
+ID,28.9,38.9,17.7
+ID,28.6,35,29.8
+ID,34.4,34.5,13.9
+IL,26.8,28.8,32.3
+IL,36.1,34,21.2
+IL,35.8,33.8,8
+IL,39.8,29.6,17.6
+IL,36,30.6,20.2
+IL,41.9,29.9,14
+IL,39.4,32.7,17.9
+IL,43.5,32.3,15.6
+IL,43.3,31,16.2
+IL,46.5,25.2,13.9
+IL,22.8,28.1,43.4
+IL,44.1,29.8,14.2
+IL,38.2,33.9,18.1
+IL,38.6,34.6,14.8
+IL,32.7,36,20.8
+IL,32.2,34,24.1
+IL,24,25.6,35.8
+IL,33.6,36.6,18.8
+IL,37.2,37.4,13.6
+IL,26.3,35.9,30
+IL,38.6,34.5,19.2
+IL,36.2,29.9,17.8
+IL,19,26.6,46.7
+IL,39.2,30.1,18.1
+IL,36.8,40.5,11
+IL,36.4,33.8,20.9
+IL,40,29.5,13.2
+IL,38.8,33.7,16.6
+IL,34.4,38.4,14.8
+IL,35.9,35.8,16
+IL,41.4,35.1,9.5
+IL,40.9,32.8,11.9
+IL,37.6,34,20.8
+IL,35.3,38.4,14
+IL,37.5,34,20.3
+IL,34.3,37.3,11.8
+IL,44,30.1,13.9
+IL,35.2,33.8,20.6
+IL,41.1,32.3,15.3
+IL,25,31.4,35.3
+IL,39.1,32.9,17.6
+IL,32.8,36.9,16.3
+IL,37.7,35.8,17.4
+IL,38.2,30.4,23.6
+IL,31.4,36,16.7
+IL,23.5,27.6,31.6
+IL,34.1,34.8,18.8
+IL,24.6,34.2,34.8
+IL,36.6,32.9,17.7
+IL,21.3,24.9,43.2
+IL,37.5,34.5,16.2
+IL,34.3,33.5,9.4
+IL,37.7,33,17.3
+IL,40.5,31.9,15.2
+IL,33.3,35.6,17.2
+IL,29.2,29,34.1
+IL,26.5,33.4,32.5
+IL,25.7,25.3,44
+IL,34.6,31.5,22.9
+IL,37.3,34.4,18.1
+IL,32.3,34.4,25.3
+IL,35.4,37.8,14.5
+IL,40.3,34.6,16.8
+IL,41.3,31.9,14.1
+IL,31.7,35.8,14.7
+IL,37.2,32,23.1
+IL,41.9,34.1,15.7
+IL,33.7,32.8,27.5
+IL,41.7,30.9,13
+IL,41.4,26.8,22.3
+IL,36.9,31.8,15.7
+IL,33.7,34.7,19.8
+IL,28.6,32.4,29.2
+IL,38.3,34.1,13.4
+IL,34.7,32.2,27.6
+IL,43,29.3,15.2
+IL,32.3,38.3,15.1
+IL,35.5,33.3,11.6
+IL,42.7,35.1,12.5
+IL,42.4,30.3,12
+IL,33.3,34.1,20.9
+IL,31.8,34.3,22
+IL,28.1,36.2,26
+IL,33.1,38.7,14
+IL,28.1,30.6,33.4
+IL,39,32.7,15.9
+IL,49.4,29.5,11.9
+IL,45.5,31.3,14.9
+IL,38.8,32.1,17.6
+IL,35.3,37.1,18.1
+IL,33.1,34.6,25
+IL,31,32.1,21.6
+IL,40.6,32.4,13.8
+IL,32.2,41.5,15.6
+IL,35,31.9,20.9
+IL,35,35.4,20.9
+IL,34.4,38.4,13.8
+IL,35.1,39,13.6
+IL,35,36.2,16.9
+IL,27,30.4,33
+IL,30.4,38.3,21
+IL,33.3,32.1,21.9
+IL,32.7,32.7,28.4
+IN,34.6,29.1,24.1
+IN,44.1,26.1,15
+IN,29.4,32.9,27
+IN,34.3,26.6,29.4
+IN,45.2,26.8,16.9
+IN,49.5,25.9,10.1
+IN,26.7,23.9,42.7
+IN,37.9,29.6,22.3
+IN,41.3,29.6,17
+IN,40.8,27.9,14.2
+IN,34,33.1,20.1
+IN,44.9,27.3,15.1
+IN,45.6,25.6,15.1
+IN,49.7,23,9.7
+IN,37.2,23.9,13.7
+IN,39.6,31.3,19.5
+IN,45.3,27,16.2
+IN,40.6,30.5,17
+IN,35.5,29.9,23.2
+IN,41.9,27.3,18.7
+IN,36.9,25.8,18.1
+IN,42.8,27.8,9.8
+IN,32.1,31.2,25.8
+IN,44.2,29.9,13.6
+IN,42.6,25.1,19.3
+IN,43.6,28.4,13.2
+IN,40.3,34.4,15.1
+IN,41.5,27.6,17.3
+IN,41.1,30.7,13.7
+IN,15.9,24.3,55.9
+IN,33.3,32.4,28.3
+IN,41.9,29.9,16
+IN,28.9,31.4,33.4
+IN,43.5,27.5,15.6
+IN,36.4,32.8,18.9
+IN,43.4,28.3,18
+IN,48.1,24.4,15
+IN,42.8,29.8,15.3
+IN,48.6,25.4,10.1
+IN,39.5,29.6,17.6
+IN,47.4,26,10.4
+IN,33.8,29.7,28.5
+IN,37.8,34.9,15.2
+IN,37.7,27,20.7
+IN,33.1,20.1,9.8
+IN,35.4,31.4,20.4
+IN,39.2,30.2,17.2
+IN,42.9,30.6,13.8
+IN,39.1,30.6,17.5
+IN,28.5,28.3,28.3
+IN,40.5,25.8,18.3
+IN,43.1,27.8,12.1
+IN,42.7,30.1,11.9
+IN,22.3,25.1,45
+IN,44.2,28.2,16
+IN,41.6,31,15.7
+IN,49.5,26.8,9.7
+IN,41.1,28.9,14.3
+IN,49.4,25,12.9
+IN,46.5,25.1,11.4
+IN,43.7,29.1,10.5
+IN,40.5,31.4,13.5
+IN,51.2,23.1,11.5
+IN,46.7,28,11.6
+IN,35.2,30.4,26.4
+IN,39.5,33.3,20.6
+IN,46.2,28.6,11.4
+IN,42.8,29.9,15.2
+IN,44,29.1,12.3
+IN,44.9,25.9,16.4
+IN,47.4,23.5,14.9
+IN,31.2,28.9,27.9
+IN,42.6,28.2,12.2
+IN,44.1,28.3,14.8
+IN,43.6,30.4,15
+IN,42.3,28.3,11.6
+IN,38.1,31.5,20
+IN,42.1,30.4,13.2
+IN,46.6,28.7,9.1
+IN,26.6,28.5,35.2
+IN,40.5,28.5,19.4
+IN,42.6,26.8,18.6
+IN,34.5,31.3,24.2
+IN,43.9,31.5,13.5
+IN,33.6,31.3,22.5
+IN,42.5,26.9,18.8
+IN,43.8,26.3,18.6
+IN,33.8,32.3,27
+IN,45.9,25.8,12.4
+IN,38.6,28,17.4
+IN,41.8,31.3,17.6
+IN,44.3,29.7,15.5
+IN,42.3,30.1,18.4
+IA,32.2,32.6,26.7
+IA,44.7,32.5,15.3
+IA,39.1,38.5,15.1
+IA,42.1,30.1,16.3
+IA,36.3,34.7,17.6
+IA,42.3,33.4,14.3
+IA,36.4,34.7,21.6
+IA,32.7,30.7,27
+IA,34.8,35.9,23.2
+IA,33.4,32.7,28.6
+IA,42.9,32.6,16.8
+IA,31,29,18.9
+IA,40.8,36.3,15.2
+IA,37,37,18.4
+IA,40.6,31.7,20.1
+IA,44.3,27.7,19.9
+IA,37,34.1,21.5
+IA,31.8,39.7,22.2
+IA,35.6,36.2,18.8
+IA,43.2,31.5,15
+IA,44.6,30.2,13.9
+IA,36.9,37.1,19.3
+IA,44.5,30.5,16.8
+IA,36.3,35.6,19.6
+IA,35.8,28.2,13.5
+IA,21.1,29.6,44.2
+IA,37.4,31.6,16.8
+IA,38.6,28.7,19.8
+IA,44.1,31,14.8
+IA,35.6,35.8,20
+IA,29.6,37.8,27.4
+IA,35.4,28,28.7
+IA,34.6,38.5,16.2
+IA,39.5,31.5,18.5
+IA,35.5,34.3,18.2
+IA,38.1,33.4,16.7
+IA,36.4,34.3,21.5
+IA,35.7,37.3,18.6
+IA,35.3,36.8,22.7
+IA,39.3,33.5,19.2
+IA,33.2,37.9,19.9
+IA,36.4,37.6,18.1
+IA,34.9,37.6,18.2
+IA,38.1,35.4,17.4
+IA,37.3,35.7,18.8
+IA,44,31.7,12.8
+IA,37.1,37.2,17.6
+IA,40.1,32.2,19.3
+IA,38.4,33.7,20.7
+IA,44.8,30.6,15.3
+IA,39.7,34.5,18.2
+IA,30.4,32,31.9
+IA,17.1,26.4,51.3
+IA,39.6,35.9,16.6
+IA,42.8,32.2,15.5
+IA,38,36.8,19.1
+IA,41.7,34.3,15.5
+IA,27.2,35.8,31.5
+IA,37.3,31.9,13.2
+IA,44.9,30.9,14.9
+IA,37.1,32.6,20.8
+IA,38.9,33.4,21.7
+IA,37.6,31.1,22.7
+IA,35.7,31.5,24.8
+IA,32.9,31,19.7
+IA,35.9,33.3,23.8
+IA,44.2,31.8,14.9
+IA,43.3,33.8,14.5
+IA,44.8,27,17.2
+IA,37.6,35.8,14.9
+IA,35,32.4,18.8
+IA,37.7,35.6,18.8
+IA,37.6,30.8,17.4
+IA,34.7,33.5,20
+IA,30.9,41.9,20
+IA,35.6,36,20.5
+IA,38.9,36.3,17.4
+IA,25.3,30.7,35.8
+IA,34.9,34.1,20.2
+IA,36.8,31.5,24.6
+IA,35.5,33.6,20.8
+IA,39.3,32.9,19.7
+IA,28.3,32.2,32.1
+IA,36.8,33.6,21.3
+IA,31.9,31.8,25.5
+IA,18.8,28.8,48.3
+IA,41,34.2,15.7
+IA,42,34.8,14.5
+IA,40,38,14.7
+IA,43.5,32.8,12.7
+IA,36.7,32.8,16.8
+IA,32.6,34.8,28.2
+IA,35.8,33.6,20.9
+IA,43.5,32.1,13.9
+IA,32.5,39,18.8
+IA,35.1,36.5,20.6
+IA,35.1,31.3,27.7
+IA,34.2,30.2,21.1
+IA,36.6,40.5,15.4
+IA,37.5,35.4,17
+KS,27,32.1,31
+KS,33.4,39,18.2
+KS,39.1,35.1,16.5
+KS,41,31.9,19.9
+KS,36.6,34.8,20.2
+KS,33.9,35.3,16.9
+KS,31.2,36.1,22.1
+KS,39.8,33.1,19.8
+KS,26.8,38.2,28
+KS,33.5,32.3,24.3
+KS,36.1,32.4,17.5
+KS,34.6,35,17.4
+KS,31.5,39,22.3
+KS,26.1,36.1,29.7
+KS,33.7,38.9,23.7
+KS,34.2,39.4,17.5
+KS,36.8,35,21
+KS,28.4,39.3,24
+KS,30.5,40.5,19.2
+KS,28.2,33.2,28.6
+KS,37.6,26.3,26.6
+KS,36,33.4,20
+KS,38.7,34.9,16.5
+KS,20,25.8,49.1
+KS,30.7,32.9,18.7
+KS,35.3,36.3,17.4
+KS,27.7,33.3,32.3
+KS,32.2,36.2,21.2
+KS,23.1,30.3,18.6
+KS,23,28.4,17.9
+KS,36.1,35.2,21.2
+KS,29.8,42.3,20.4
+KS,37.7,33.9,21.4
+KS,32.7,34.1,26.5
+KS,28.9,24.5,18.2
+KS,25.6,31.5,19.1
+KS,30.3,32.3,25.5
+KS,40.1,33.2,16.5
+KS,34.8,31.6,13.3
+KS,36.6,32.2,19.7
+KS,29.6,33.8,26.5
+KS,20.9,32.1,17.7
+KS,25.9,43.1,23.7
+KS,40.6,34.7,18.7
+KS,40.7,32.6,19.5
+KS,39.4,38.6,15.4
+KS,15.2,27.8,52.8
+KS,23.4,37,17.2
+KS,34.8,35.1,20.5
+KS,26.9,37.2,27.3
+KS,33.1,36.1,19.5
+KS,29.7,41.7,21.4
+KS,30.9,31.5,29
+KS,32.3,41.5,20.3
+KS,37.2,36,15
+KS,35.5,38.6,18.2
+KS,33.4,28.9,25.6
+KS,29.1,34.4,27.4
+KS,36.4,29.7,22.6
+KS,44.8,32.7,16.6
+KS,31.1,32.4,22.2
+KS,32.5,38.7,23.3
+KS,34,35.3,25.7
+KS,32.1,39.6,17.1
+KS,35.7,35.5,17.6
+KS,32.5,39.2,13.9
+KS,41.9,26,22.6
+KS,33.6,39.5,18.6
+KS,35.9,35.3,19.8
+KS,34.6,34.3,17.4
+KS,40.5,30.8,19.5
+KS,36.3,33.4,20.6
+KS,32.9,38.8,21.4
+KS,28,39.3,21.7
+KS,35.3,35.3,21.6
+KS,31.2,32.3,32.2
+KS,26.5,37.3,25.9
+KS,30.8,36.2,25
+KS,28.6,39.3,20.2
+KS,35.1,37.7,20
+KS,30.5,36.3,21.2
+KS,17.4,32.7,44.9
+KS,36.8,33.1,22
+KS,33,35.7,21.7
+KS,32.8,32.9,24
+KS,33.5,32.9,23.4
+KS,33.4,31,20.5
+KS,26.8,32.7,29.4
+KS,24.8,27.3,11.8
+KS,31.1,30.8,29
+KS,33.8,36.1,21.6
+KS,33.3,41.9,14.1
+KS,35.3,37.3,18.1
+KS,28.7,36.9,21.8
+KS,27.4,33.1,22.2
+KS,35.6,31.8,15.4
+KS,35.9,36.2,19.9
+KS,28.9,36,28.3
+KS,33.2,35.8,25
+KS,38.9,33.2,23
+KS,32.9,33.4,25.2
+KS,38,35.1,17
+KS,29.6,32.1,16.1
+KS,36.8,34.2,14.7
+KS,38.8,35.4,16
+KS,32.9,29.8,15.9
+KY,33.6,28.2,22.3
+KY,36.3,22.8,15.9
+KY,36,28,13.6
+KY,38.8,30.4,18.9
+KY,39.4,32,13.6
+KY,41.5,24.1,15.6
+KY,39.2,24.3,12.2
+KY,35.6,20.8,9.8
+KY,28.1,33.1,30.8
+KY,36.7,30.2,16
+KY,35.9,34.9,17.7
+KY,35,28,22.7
+KY,43.4,25.5,14
+KY,34.3,23.3,11.2
+KY,44,24.6,9.5
+KY,40.8,31.2,14.3
+KY,43.3,23.1,8.7
+KY,44.9,25.6,16.4
+KY,31.6,28.3,27.5
+KY,31,29.2,29.1
+KY,38.2,30.6,13.3
+KY,44,22.9,11.2
+KY,41.4,25.6,12.8
+KY,37.4,24,11.2
+KY,32.7,36,16.6
+KY,35.2,28.1,20.7
+KY,36.9,17.2,9.6
+KY,36.2,23.8,9.6
+KY,37.9,30.7,11.4
+KY,39.1,24.6,13.4
+KY,37.8,29.9,20.3
+KY,42.1,23.4,13.3
+KY,42,25.3,7.5
+KY,48.6,17.9,7.8
+KY,20.6,28,41.2
+KY,38.9,26.6,12.8
+KY,34.7,27.6,12.8
+KY,31.8,28,27
+KY,34.8,27.5,13.1
+KY,44.2,27.8,10.1
+KY,38.8,25.7,15.1
+KY,44.8,25.3,12.4
+KY,36.7,28.5,17.3
+KY,42.2,25.8,9.1
+KY,46,22.2,10.2
+KY,37.4,31.5,16.9
+KY,46.8,30.2,11.2
+KY,32.1,33.8,23.2
+KY,35.6,24.4,11.7
+KY,42.5,24.9,14
+KY,41.3,21.1,10.3
+KY,36.6,32.6,16.8
+KY,44.6,25.5,11.2
+KY,41.2,30.4,9.2
+KY,39.5,29.7,15.3
+KY,43.4,19,9.7
+KY,27.5,29.9,31.5
+KY,28.9,27.3,29
+KY,37.3,29,10.8
+KY,29.4,30.9,28.9
+KY,35.1,23.2,12.3
+KY,40.7,18.6,11
+KY,43.1,29.6,10.3
+KY,37.9,26,12.3
+KY,41.5,24.1,11.9
+KY,42.5,21,7.9
+KY,33.8,22.7,8.6
+KY,36.1,25.6,11.8
+KY,42.2,20.6,10.9
+KY,44.5,22.9,10.6
+KY,46.9,25.7,10.4
+KY,40.3,24.8,13.2
+KY,39,30.8,17.8
+KY,31.3,33.6,23
+KY,40.5,24.9,7
+KY,39.9,30.8,10.9
+KY,29.5,27.8,28.6
+KY,37.8,22.6,8.5
+KY,44.8,23.4,13.4
+KY,41,29.3,15.8
+KY,39.5,25.8,6.5
+KY,38.3,28.9,16
+KY,39.8,31.8,14.8
+KY,39.1,24.1,10.7
+KY,38.8,27,18.8
+KY,40.9,23.3,11.6
+KY,41.8,18.8,14.1
+KY,39.1,26.2,17.1
+KY,36.2,24.6,11.8
+KY,42.1,25.1,10.4
+KY,42,29,16.2
+KY,40.7,27.4,11.2
+KY,42.8,25.8,9.7
+KY,23,29.8,39.4
+KY,47,24.7,12.2
+KY,34.6,16.8,16.6
+KY,47.9,25.2,10.8
+KY,32.2,26.9,14
+KY,36.4,23.8,13.3
+KY,40.7,20.4,13
+KY,41.2,25.3,14.4
+KY,36.1,22.5,16
+KY,43.2,22.9,9.8
+KY,31,24.1,26.9
+KY,36.6,25.8,12.4
+KY,30.7,30.6,27.8
+KY,31.8,30.6,23.8
+KY,42.6,26.8,15.1
+KY,35.6,33.8,18.5
+KY,40.6,26.2,15.8
+KY,41.9,24.7,10.8
+KY,30.1,34.9,17.6
+KY,47.2,26.6,10.3
+KY,40.2,31.7,11.3
+KY,30.9,28.4,28.1
+KY,41.6,24,14.5
+KY,37,24.1,10
+KY,42.3,27.2,9.2
+KY,37.1,22.8,15.9
+KY,38.5,17,11.9
+KY,28.9,27.3,32.9
+LA,33.9,26.9,22.5
+LA,39.2,24.1,10.5
+LA,44,23.7,11.6
+LA,34.6,27.5,26
+LA,39.5,22.5,10.7
+LA,41.3,21.7,9.5
+LA,42.7,26.1,15.1
+LA,42.7,28.1,11.2
+LA,29.4,33.3,25.7
+LA,32.9,29.2,23.8
+LA,35.8,29.3,20.7
+LA,42.8,21.8,10.2
+LA,38.5,28.5,15.8
+LA,42.2,20.3,12.3
+LA,40.7,22.7,12.8
+LA,41.3,23.6,11.6
+LA,41.2,27.3,12.1
+LA,26.7,28.6,34.1
+LA,38.5,21.5,8.8
+LA,43.5,26.1,12.3
+LA,34.6,22.2,12.6
+LA,40.3,22.1,10.8
+LA,42.3,27.6,8.6
+LA,42.1,22.4,13
+LA,38.3,24.9,13.1
+LA,41.9,24.1,13
+LA,31.1,28.8,24.6
+LA,41.1,23.7,14
+LA,28.7,27.6,29.9
+LA,39.1,19.9,15.4
+LA,43.6,22.8,11.7
+LA,27.7,23.4,35.6
+LA,40.2,25.7,18.3
+LA,39.6,24.7,11.4
+LA,43.5,22.9,12.7
+LA,33.7,28.6,20.4
+LA,23.2,26.7,35.3
+LA,32.9,27.5,24
+LA,39.3,26.6,14.2
+LA,41.7,25.4,13.4
+LA,37,28.1,18.4
+LA,44.3,21,12
+LA,41,23.3,14.5
+LA,42,26.3,14.1
+LA,40.9,28.1,12.5
+LA,36.7,30.4,20.3
+LA,45.7,24.1,10
+LA,44.8,25.2,14.2
+LA,37.5,28.6,16.5
+LA,44.5,18.9,12.8
+LA,42.1,23,13.2
+LA,43.4,20.7,11.1
+LA,27,30.9,30.6
+LA,35.6,26.8,19.3
+LA,45.6,23.5,10.3
+LA,40,23.5,13.7
+LA,44.9,27,11.7
+LA,41,22.9,12.4
+LA,35.8,32.5,19.2
+LA,40.5,24,12.3
+LA,40.5,25.7,14
+LA,39.2,26,19.7
+LA,44,19.9,11.1
+LA,33.7,23.2,21.6
+LA,42,23.9,12.5
+ME,33.2,29.4,29
+ME,37.2,31.1,20.3
+ME,39,30.4,17.2
+ME,24.1,27.4,43
+ME,36.9,29.7,25.6
+ME,33.1,27.9,32.7
+ME,35.6,30.8,25
+ME,34.8,27,31.2
+ME,32.1,29.4,31.2
+ME,45.6,27.4,18.1
+ME,34.9,31.4,24.5
+ME,40.5,30.7,17.4
+ME,31.6,29.8,32.2
+ME,41.3,31.2,15.4
+ME,34,27.8,30.3
+ME,38.3,29.3,20.1
+ME,31.6,30.1,30.5
+MD,25.5,25.9,37.9
+MD,42,29,17.4
+MD,25,28.3,38.3
+MD,27.2,26.8,36.6
+MD,31.5,32.6,29.1
+MD,40.7,26.6,15.5
+MD,30.6,28.4,33.1
+MD,37.8,28.1,22
+MD,32.2,32.7,27.4
+MD,38.3,26.4,20.2
+MD,25.2,28.2,39.1
+MD,42.2,27.1,19
+MD,28.1,30.9,33.8
+MD,14.2,20.3,60.6
+MD,33.2,23.9,30
+MD,14,19.3,57.9
+MD,26.1,28.5,31.1
+MD,29.9,26.5,34.9
+MD,30.6,29.5,30.6
+MD,43.2,22.5,14.8
+MD,27.9,26.7,33.9
+MD,38.1,28.7,19.9
+MD,31.9,27.5,28.5
+MD,31.6,27.4,30.2
+MD,29.8,24.1,28.7
+MA,25.4,23.9,40.5
+MA,24.9,30.1,40.1
+MA,31.7,27.4,31.6
+MA,30.2,26.7,25.9
+MA,23.1,29.8,40.3
+MA,26.2,25.6,37.5
+MA,27.1,29.8,35.2
+MA,30.8,28.3,25.8
+MA,24.2,25.5,44.2
+MA,21.1,19.3,52
+MA,25.4,25.7,43.7
+MA,21,22.2,50.6
+MA,29,28.9,34.4
+MA,23.6,19,41.7
+MA,28.9,26.5,34.4
+MI,29.9,32.8,26.9
+MI,39.9,34.4,14.3
+MI,43.2,27.1,18.4
+MI,38.3,30,21.5
+MI,33.4,39.8,16.5
+MI,33.7,31.1,25.3
+MI,42.8,30.6,11.7
+MI,44.1,25.2,13.1
+MI,36.6,35.5,19.2
+MI,35.6,35.4,18.3
+MI,34.2,33,24.2
+MI,30.6,32,26.1
+MI,40.8,33.7,13.5
+MI,35.7,34.3,20.1
+MI,36.2,35,16.9
+MI,31.8,32.5,27.9
+MI,39.4,31.6,18.1
+MI,37.8,32.1,19.1
+MI,39.3,33.2,11.6
+MI,27.9,35.6,29.7
+MI,35.4,34.9,17.2
+MI,35.3,37.9,18.9
+MI,39.9,30.9,22.4
+MI,29.7,39.2,24.7
+MI,26.2,34.2,33.2
+MI,32.8,37.1,19.3
+MI,40.2,32.5,12.3
+MI,38.4,35.7,18.3
+MI,26.9,35.4,31.5
+MI,41.1,33.8,14.1
+MI,40.2,31,15.5
+MI,33.8,27.2,31.1
+MI,44.3,29.4,14.1
+MI,21.6,32.9,37.2
+MI,38.1,35.2,14.9
+MI,40,32,16.1
+MI,45,27,19.3
+MI,31.8,32,27.3
+MI,34.8,35,20
+MI,23.1,35,35.1
+MI,42.4,31.5,12.7
+MI,25.5,30.8,33.3
+MI,32.6,37,22.8
+MI,41.5,31,9.4
+MI,37.1,36.2,17.5
+MI,22.4,32.7,40
+MI,36.7,33.8,19.2
+MI,25.6,35.9,33.6
+MI,45,31,12.4
+MI,36.5,33.5,18.3
+MI,30.6,35,23.3
+MI,37.3,32.7,19.7
+MI,33.1,32.6,28.8
+MI,34.4,37.1,20.2
+MI,34.4,32.2,22.7
+MI,42.2,32.9,15.1
+MI,29.6,31.4,32.5
+MI,42.8,30.7,13.1
+MI,36.2,35.4,18.6
+MI,39,35.2,13.1
+MI,41.9,32.9,10.7
+MI,34.8,35.8,18.2
+MI,41.1,31,13.9
+MI,20.1,28.8,44.4
+MI,34.7,33.8,16.8
+MI,40.9,32.5,11.7
+MI,40.6,35.7,15.1
+MI,44.7,30.1,13.2
+MI,40.6,33.4,9.7
+MI,36.6,34.8,20.5
+MI,28.9,31.3,31.1
+MI,40.6,30.5,16.9
+MI,38.9,34.8,14.4
+MI,34.2,33.6,20.2
+MI,35.3,36.9,17.4
+MI,38.9,31.6,14.7
+MI,45.1,30.5,12.3
+MI,46.8,27.3,13.2
+MI,36.6,38.6,15.7
+MI,42,32.9,13.9
+MI,34,32.8,19.5
+MI,15.7,26.1,52.6
+MI,30.3,32.4,22
+MI,38.8,33.2,16.8
+MN,26.1,32.7,33.7
+MN,39.9,35.2,15.5
+MN,28.4,37.1,27.8
+MN,33.5,35.8,22.4
+MN,26.1,37.9,26.6
+MN,32.1,37.9,21.5
+MN,42.4,30.2,17.4
+MN,28.1,34.9,31.3
+MN,37.6,31.7,21.3
+MN,36.4,35,22.8
+MN,21.2,28.7,45.2
+MN,35.4,35.7,20.2
+MN,36,37.7,15.9
+MN,34.6,37.3,22
+MN,27.3,34.9,31.7
+MN,38.1,33.6,14.9
+MN,25.1,31.6,39
+MN,36.2,34.8,18.5
+MN,31.4,38.5,23.2
+MN,21.6,32.9,40.3
+MN,33.5,36.8,23.7
+MN,29.9,39.4,24.7
+MN,39.9,33.4,16.9
+MN,35.7,35.7,19.5
+MN,36.7,36.2,16.1
+MN,33,36.5,23.4
+MN,33.4,40.5,18.9
+MN,17.8,27.8,47
+MN,34.3,37.2,21.4
+MN,31.8,35.9,25
+MN,37.8,35.2,17.7
+MN,31.8,39.1,21.9
+MN,34.8,37.7,18.8
+MN,39.7,35,13.5
+MN,27.9,38.6,22.2
+MN,35,34.4,20.9
+MN,36.5,34.5,18.4
+MN,38.3,36.2,17.7
+MN,36.2,34.3,24.4
+MN,44.8,31.1,15.5
+MN,35.5,33.9,21.2
+MN,40.5,32.2,19.2
+MN,35.1,31.2,25.8
+MN,38,35.9,18
+MN,37.1,35.7,12.9
+MN,37.4,32.7,18.7
+MN,38.6,31.5,18.9
+MN,38.3,34.3,18.9
+MN,38.3,36.6,14.7
+MN,38.6,33.9,17
+MN,32.6,36.4,19
+MN,36.5,34.5,18.1
+MN,27,34.6,32.5
+MN,34.3,31,13.8
+MN,38.5,35.1,15.1
+MN,20.9,31.9,41.3
+MN,30.5,36.3,24.5
+MN,36,39,16.1
+MN,42.6,33.2,13.2
+MN,36,31.5,19
+MN,31.1,36.5,23.2
+MN,34.1,38.1,22.2
+MN,21.9,27.7,40.4
+MN,40.9,35.5,15.4
+MN,37.9,33.4,17
+MN,37.5,36.3,15.7
+MN,31.8,31,27.6
+MN,38.5,30.9,20.4
+MN,37.3,35.6,19
+MN,29.5,36.7,27
+MN,23.4,33.1,38.2
+MN,26.6,40.6,26.5
+MN,40.8,32.3,16.3
+MN,30.2,35.6,25.9
+MN,35.5,31,25.4
+MN,27.2,35.8,28.3
+MN,38.6,33.8,16.2
+MN,37.1,35.5,15.2
+MN,34.8,37.3,18
+MN,39.1,33,21.2
+MN,39.3,36.9,12.7
+MN,35.2,36.5,20.4
+MN,22,32.4,41.6
+MN,40,29.5,15.8
+MN,30.5,43.4,17.5
+MN,29.6,33.8,28.2
+MN,28.9,37.8,27.3
+MN,36.8,37.5,16.1
+MS,30.3,31.4,20.7
+MS,35.9,27,17.8
+MS,36.3,28.4,16.2
+MS,36.6,26,12.1
+MS,31.4,30.6,14.9
+MS,38.1,28.2,10.6
+MS,25,27.4,21.1
+MS,34.2,27.6,11.2
+MS,37.3,28,13.6
+MS,37.3,24.2,10.7
+MS,33.4,32.1,13.5
+MS,29.8,32.7,15.6
+MS,34.4,31.4,13.9
+MS,32.9,27.9,17.8
+MS,27.6,31.9,17.6
+MS,31.5,33.8,14.1
+MS,36.8,26.5,15.3
+MS,29.9,36.4,22.4
+MS,28.2,29.9,26.7
+MS,37.3,27.1,17.9
+MS,40.7,27.2,12
+MS,36.7,29.4,8.2
+MS,30.2,31.2,15.6
+MS,29.2,34,21
+MS,28.8,35.3,21.3
+MS,24.9,33.3,27.7
+MS,36.9,22.7,12.3
+MS,27.8,23.6,12.1
+MS,34.9,18.4,7.2
+MS,31.8,34.8,13.2
+MS,31.4,36,20.1
+MS,36.4,29.2,13.4
+MS,36.4,23.7,16.5
+MS,39.1,26.6,14.2
+MS,28.2,32.9,18.4
+MS,31.1,34.2,11.5
+MS,20.9,29.9,38.3
+MS,23.9,31.3,35.9
+MS,30.9,36.1,18.7
+MS,35.4,31.8,12.1
+MS,35.1,28.5,11.8
+MS,27.5,34.5,21.8
+MS,33.8,25,17.5
+MS,35.7,33.4,15.2
+MS,29,32.2,21.8
+MS,16,27.8,46
+MS,36.5,27.2,13
+MS,37.7,26.4,13.4
+MS,33.8,28.7,14.6
+MS,32.1,25.3,15.8
+MS,32.7,31.6,13.5
+MS,30.1,36.6,15.8
+MS,30.5,22.9,11.9
+MS,19.3,24,43
+MS,36.7,28.9,14.9
+MS,31.4,36.6,13.9
+MS,41.3,32.3,8.3
+MS,34.5,29.7,16.3
+MS,34.7,29.8,13
+MS,33.9,30.3,11.9
+MS,29.1,25.4,12.9
+MS,26.9,33.8,29
+MS,34.4,25.3,11.2
+MS,30.6,26.8,20
+MS,38.9,28,12.7
+MS,42.2,26.3,13
+MS,34.4,35.7,13.4
+MS,28.3,28.8,14.4
+MS,32.1,23.4,8.5
+MS,29.6,33.5,16.7
+MS,32,30.2,12.9
+MS,38.3,27.5,11.2
+MS,30.6,28.3,17.3
+MS,33.3,29.1,13.8
+MS,41,26.3,11
+MS,30.1,31.6,24.4
+MS,30.1,27.8,18.8
+MS,36.4,26.6,13.6
+MS,34.5,31,17.2
+MS,36.1,20.2,14.5
+MS,31.5,29.7,16.5
+MS,38.5,27.5,12.4
+MS,36.2,26,13.3
+MO,31.3,30,27.1
+MO,33.9,24.6,30
+MO,40.5,26.7,23.3
+MO,42.1,25.1,22.7
+MO,46.9,25.5,11.5
+MO,41.3,26.2,14
+MO,39.5,30.7,16.7
+MO,43.3,28.6,13.1
+MO,44.8,28.7,11.3
+MO,45.4,23.7,10
+MO,20.2,25.9,47.3
+MO,36.8,31,19.5
+MO,36.7,30,14.6
+MO,44,27.1,17.4
+MO,38.3,27,20.4
+MO,36,30.7,21
+MO,32,28.4,28.7
+MO,49.6,22.3,16.7
+MO,31.3,35.7,11.4
+MO,34.8,32.8,24.7
+MO,42.4,27,14.3
+MO,49.2,21.3,15
+MO,31.6,33.7,26
+MO,43.3,30.9,12.8
+MO,28.9,32.2,31
+MO,38.7,35.7,17.6
+MO,31.1,28.7,31.6
+MO,41.4,27.2,19.5
+MO,38.4,26.4,12.2
+MO,41.3,29.1,15.3
+MO,41.9,25.2,14.7
+MO,40.5,26.7,15.8
+MO,48.9,25.1,11.5
+MO,39.2,25.5,13
+MO,42.4,27.6,9.2
+MO,38.6,22.6,11.8
+MO,34.3,33.7,18.6
+MO,43.2,26.3,15
+MO,43.5,26.8,18.6
+MO,27.9,33.1,29.5
+MO,39.3,30.1,17.2
+MO,48.6,22.6,12.3
+MO,41.3,31,15.4
+MO,42.7,30.2,10.3
+MO,44.4,26.7,19.2
+MO,36.2,26.9,24.2
+MO,39,30.3,14.9
+MO,40.4,28.2,12
+MO,29.1,31.2,28.8
+MO,35.6,28.8,22
+MO,33.6,35.8,18.2
+MO,30.7,33.8,26.5
+MO,41.9,26.7,15.2
+MO,38.9,28.6,13.9
+MO,42.4,28.4,18.3
+MO,38.7,28.4,16.8
+MO,47.7,26.4,13.5
+MO,43.4,28.2,14.8
+MO,49.5,24,14.2
+MO,42.6,23.7,20
+MO,34.2,31,12.4
+MO,43.8,28.3,15.5
+MO,36.4,28.8,11.2
+MO,42.8,25.4,15
+MO,38.5,26.5,19.4
+MO,50.1,24.2,13.9
+MO,42.5,27.3,16.4
+MO,40.7,21.6,10.8
+MO,43.4,21.5,18.1
+MO,48.7,27.7,14.1
+MO,42.3,27.7,12.5
+MO,41.3,24.4,13.4
+MO,41.3,23.3,11.6
+MO,33.1,33.9,18.8
+MO,41.2,26.3,23.9
+MO,39.6,30.9,11
+MO,46.6,25.1,17.5
+MO,44.2,26.4,12.9
+MO,37.8,24.2,11.7
+MO,44.4,26,15.9
+MO,32.2,33.2,17.5
+MO,33.2,26.2,27.8
+MO,43.8,22.6,12.7
+MO,22.4,32.4,40.4
+MO,38.8,29.4,18.8
+MO,31.3,34.4,24.1
+MO,41.7,27.8,18.1
+MO,48.5,26.6,12.3
+MO,38.9,33.1,13.7
+MO,47.3,27.6,13.8
+MO,44,24.4,8.1
+MO,39.1,27.1,11.1
+MO,26.1,32.5,35.5
+MO,45.7,24.9,10.8
+MO,42,31.4,13.3
+MO,34.2,32.8,14.1
+MO,22,29.2,41.6
+MO,39.4,27.2,18.8
+MO,45.9,27.6,12.4
+MO,40.7,24.5,14.8
+MO,42,26.3,13.2
+MO,37.9,28.4,15.1
+MO,46.4,31,13.1
+MO,39.9,26.8,13.7
+MO,40.1,29.7,16.3
+MO,47.3,23.8,12.9
+MO,35.5,33,18.3
+MO,43.8,25.9,13
+MO,41,30.3,16.3
+MO,37,31.7,15.8
+MO,42,26.1,7.1
+MO,36.6,27.6,10.7
+MO,40.5,29.5,15.8
+MO,42.3,28.4,17.5
+MO,40.8,24.5,12.4
+MO,23.6,28.6,31.9
+MT,30.1,33.2,29.5
+MT,30.1,33,30.3
+MT,34.9,35.3,15.6
+MT,28.1,40.7,20.3
+MT,39.1,29.8,23.9
+MT,28.4,35.5,29.2
+MT,38.6,39.1,15.6
+MT,31.8,34.1,25.5
+MT,34.5,34.6,23.3
+MT,29.3,42.1,20
+MT,31.2,40.4,22.2
+MT,35.6,37.6,18.8
+MT,38.7,35.3,16.8
+MT,37.6,40.6,16.1
+MT,35.6,30.1,28.2
+MT,29.9,35.3,29.1
+MT,20,28.7,48
+MT,44.4,32.9,14.8
+MT,37.8,33,17.7
+MT,42.8,29.7,20.3
+MT,36,27,25.8
+MT,28.3,39,23.2
+MT,28.6,33.5,32.6
+MT,37.7,26.6,29.9
+MT,31.4,35,24.4
+MT,23.7,32.8,38
+MT,22.1,35.2,21.6
+MT,33.6,36.1,19.4
+MT,45.9,30,17.5
+MT,35.9,31.8,26.4
+MT,39.7,30,23.3
+MT,41.8,34.5,13.1
+MT,22.7,31.9,40.7
+MT,40.2,34,16.8
+MT,33.1,27.6,35
+MT,52.5,23.8,20.6
+MT,37.3,34.7,19.3
+MT,33,34.2,22.1
+MT,29.4,40,24.4
+MT,37,32.6,19.3
+MT,46.4,28.2,15.7
+MT,33.9,33.6,24.4
+MT,38.5,37.4,16.5
+MT,38.8,31.1,13.5
+MT,32.7,34.9,19.8
+MT,41.9,30,16.4
+MT,30.4,39.7,21.3
+MT,34.9,31.4,24.6
+MT,37.2,33.1,23.7
+MT,38.1,29.2,25.2
+MT,34.3,34.9,23.3
+MT,36.6,34.6,13.4
+MT,35.1,35.8,18.9
+MT,37.8,35.7,19.4
+MT,36.4,22.8,18
+MT,37.4,28,20
+MT,31.2,32.9,28.5
+MT,,,
+NE,27.5,33.9,29.3
+NE,32,35.7,23
+NE,33.1,40.1,17.7
+NE,24.1,39.8,32.7
+NE,29.3,47.8,17.4
+NE,39.6,40.2,18.3
+NE,42.3,34.5,16.6
+NE,33.8,40.9,15.9
+NE,41.5,34.1,18.1
+NE,41.2,31.1,16.3
+NE,25.6,35.2,32.7
+NE,39.2,34.5,17
+NE,39.9,35.5,15.2
+NE,32.1,37.5,25.1
+NE,40.6,34.8,17.7
+NE,33.2,37.5,18.2
+NE,31,40.2,19.7
+NE,27.1,43.5,23.4
+NE,32.6,37.6,19
+NE,33.2,25.4,13.4
+NE,38.9,30.3,18.8
+NE,32.8,38.1,21
+NE,34.9,27.5,11.2
+NE,29.1,31.9,33.2
+NE,33.4,27.6,14.9
+NE,36.3,37.1,17.3
+NE,38.6,30.8,18.3
+NE,36.8,32,18.9
+NE,21.9,30.6,37.1
+NE,32.5,41.2,19.6
+NE,39.1,35.3,18.5
+NE,37.1,36.4,18.7
+NE,34.7,41.8,18.3
+NE,33.7,36.9,17.3
+NE,34.6,35.1,19.7
+NE,32.5,38.1,23.5
+NE,39.5,38.4,16.2
+NE,34.8,40.5,19.4
+NE,42.3,34.5,20.4
+NE,39.8,38.2,14.4
+NE,32.5,32,18.3
+NE,31.8,36.8,25.2
+NE,37.6,37.2,16.1
+NE,26.7,42.7,19.7
+NE,37.4,40.8,15.1
+NE,34,37.1,20.9
+NE,34.1,36.3,23.1
+NE,41.6,31.2,19.2
+NE,42.6,33.3,13.7
+NE,40.7,32.4,14.7
+NE,32.5,36.4,24.1
+NE,34.5,36.7,20.7
+NE,42.3,34.2,15.5
+NE,34,36.3,17.4
+NE,37.2,34.7,19.1
+NE,22.6,34.2,36.7
+NE,31.4,40.2,20
+NE,28.7,40.9,22
+NE,41.5,35.8,18.6
+NE,28.4,41.9,24.5
+NE,29.3,38.8,20.2
+NE,34.5,40.9,16.8
+NE,32.3,37.2,17.8
+NE,38.1,34.8,16.5
+NE,34.9,32.1,27.8
+NE,42.1,34.1,17.3
+NE,37.7,31.7,21.5
+NE,45.3,31.2,16.3
+NE,31.1,36.8,22
+NE,33,37,22.7
+NE,36,37.4,20.5
+NE,31,36.9,20.1
+NE,32.5,41.4,19.6
+NE,36.4,39.3,17.7
+NE,39.7,31.3,20.7
+NE,41.7,32.7,18
+NE,34.7,35.2,14.2
+NE,22.5,36.1,36.7
+NE,33,35.9,24.6
+NE,30,35.2,21.5
+NE,29.5,37.4,26.1
+NE,31.1,34.6,24.5
+NE,42.3,33.5,14.7
+NE,33.4,33.6,26.6
+NE,35,38.6,18.3
+NE,37,35.4,19.3
+NE,32.1,34.4,27.5
+NE,35.5,37.4,13.9
+NE,42.6,31.7,19.2
+NE,31.1,35,29.6
+NE,20.5,36.2,37.8
+NE,36.1,34.9,19.8
+NE,42.1,34.5,18.4
+NE,32.6,35.4,26.1
+NV,28.2,33.8,23
+NV,35,38.7,15.9
+NV,28.8,33.1,22.6
+NV,24.7,42.9,25.2
+NV,26.8,38.5,18.1
+NV,43.2,28.1,15.7
+NV,35.8,33.1,22.2
+NV,37.4,32.8,13.7
+NV,37.5,35.9,7.6
+NV,32.1,37.7,20.3
+NV,30.2,38.2,16.6
+NV,31.2,44.8,11.3
+NV,35.6,36.1,13.2
+NV,35.4,30.5,12.4
+NV,29.5,41.6,21.4
+NV,24,34,28.7
+NV,34.5,35.2,13.9
+NV,28.6,37.5,20.7
+NH,28.8,28.6,34.9
+NH,31.5,30.6,29.6
+NH,31.4,29.6,32.1
+NH,33.8,26.9,31.6
+NH,39.1,30.4,17.8
+NH,28.6,25.4,38.1
+NH,27.2,28.2,35.9
+NH,28.4,30.1,34.4
+NH,26.9,29.1,38.8
+NH,28,29.8,34.1
+NH,37,26,26.5
+NJ,28.6,23.2,36.8
+NJ,32.9,26.6,25.1
+NJ,24.3,20.4,46.9
+NJ,29.5,27.4,35.7
+NJ,31.3,26.4,30.2
+NJ,34.1,25.5,29.9
+NJ,39.4,23.5,14.6
+NJ,28.7,22.8,32.7
+NJ,34.3,28,29.3
+NJ,26.1,19.3,37.5
+NJ,22.7,23,48.7
+NJ,25.6,22.2,39.6
+NJ,26.3,21.4,41
+NJ,25.6,24.6,42.5
+NJ,22.5,20.3,51
+NJ,36.1,27.5,26.9
+NJ,34.8,21.4,26
+NJ,38.6,27.5,20.3
+NJ,21.9,19.8,52.5
+NJ,31,29.1,33.8
+NJ,29.7,23.3,32.6
+NJ,34,26.2,29.9
+NM,26.4,31.4,26.3
+NM,23.8,31.5,32.6
+NM,36.3,31.8,26
+NM,27,33,18.1
+NM,36.5,33,12
+NM,33.9,33.3,21.5
+NM,25.2,36.3,20.8
+NM,42.9,30.6,9.7
+NM,22,28.5,27.7
+NM,34,31.4,17.8
+NM,26.9,31.6,26.2
+NM,40.2,21.2,13.5
+NM,39.1,23.9,25.5
+NM,31,31.1,14.2
+NM,30.5,28.2,13.2
+NM,26.6,33.3,28.4
+NM,10.8,21.9,64.2
+NM,31.6,25,12.1
+NM,33.1,29.4,11.1
+NM,35.6,34.1,13.9
+NM,29.5,37.1,16.4
+NM,38.8,29.6,15.5
+NM,31.8,33,16.6
+NM,25.3,31.8,23.1
+NM,25.9,36.1,28.5
+NM,32.1,34.9,15.2
+NM,28.4,33.2,20
+NM,21.4,26.1,40.1
+NM,33.7,31.8,17.6
+NM,33.4,25.9,17.5
+NM,25.4,33.4,28.6
+NM,34.2,32.4,16.5
+NM,35.3,27.7,17.1
+NM,31.9,32.9,16.5
+NY,26.7,24.7,34.2
+NY,26.5,27.7,38.6
+NY,38.7,29.8,20
+NY,27.3,24.3,18.9
+NY,32.2,30.4,27.2
+NY,40.9,29.1,17.8
+NY,34.1,32.3,21.4
+NY,35.5,31.8,20.9
+NY,35.6,30.6,23.4
+NY,39.2,30.6,17.4
+NY,35.3,28.3,22.1
+NY,30.7,28.4,29.3
+NY,34.7,31.6,23.6
+NY,38.7,28.1,20.2
+NY,27,29.6,33.4
+NY,28.4,30.5,31.6
+NY,34.5,30.2,24.2
+NY,36.2,31,17.7
+NY,38.5,31.3,16.2
+NY,37.2,33.5,20
+NY,36.3,29.7,20.6
+NY,32.3,33.9,24.5
+NY,34.5,32.8,22.4
+NY,33.5,35.2,20.7
+NY,26.2,20.2,32.8
+NY,45.3,28.5,15.2
+NY,33.7,31.3,23.6
+NY,33.7,30.5,26.2
+NY,25,29,36.2
+NY,36.6,31.5,16.2
+NY,24.2,23.7,42.8
+NY,12.6,14.1,59.9
+NY,35.1,32.1,23.2
+NY,33.4,31.2,23.2
+NY,26.2,30,34.1
+NY,28.3,32.2,31.7
+NY,29.3,30.6,29.2
+NY,39.8,30.2,15.4
+NY,39.9,28.9,17.6
+NY,34.5,27.7,27.7
+NY,27.3,27.2,37.9
+NY,27.3,22.7,30.4
+NY,29,33.2,28.6
+NY,32,25.9,30.8
+NY,23,24,40.3
+NY,36.1,29.5,22.3
+NY,25.9,29.3,39
+NY,30,30,30.5
+NY,38.5,30.2,19.6
+NY,38.9,31.6,19.5
+NY,34.6,30.4,20.2
+NY,37.6,30.4,21.3
+NY,29.3,26.6,34
+NY,34,29.8,22.2
+NY,35.9,30.6,24.4
+NY,19.8,23.6,50.8
+NY,30.2,29.4,30.1
+NY,33.3,29.4,28.2
+NY,41.6,27.5,19.4
+NY,37,31.9,20.6
+NY,20.3,20.5,46.7
+NY,40.8,31.2,15.2
+NY,34.5,27.5,23.7
+NC,26.7,30.8,28.4
+NC,28.5,33.1,21.6
+NC,39.4,28.2,13.2
+NC,33.7,29.5,17.4
+NC,41.6,27.8,9.8
+NC,31.5,32,18.8
+NC,30.5,30.2,18.9
+NC,33.2,32.9,17.3
+NC,40.3,25,10
+NC,33.2,32.3,13.8
+NC,27.3,33.2,26.1
+NC,24.7,29.1,35.9
+NC,29.8,32.2,17.2
+NC,28,33.2,27.2
+NC,31.6,31.4,13.7
+NC,23.2,40.8,22.4
+NC,27.7,36.5,25.3
+NC,35.3,29.2,11.6
+NC,30.3,30.6,21.7
+NC,23.3,26.4,36.8
+NC,33.2,31.1,18.6
+NC,33.7,28.8,20.1
+NC,29.3,37.8,21.2
+NC,34.6,31.8,16
+NC,31.7,35.8,12.1
+NC,27.9,37.1,22.3
+NC,26,40.7,23.3
+NC,29.3,36.6,20.5
+NC,24.4,38.3,29.4
+NC,33.2,30,18.7
+NC,31.7,29,24.4
+NC,30.1,31.3,10.7
+NC,17.4,24.3,45.8
+NC,35.7,30.5,10.6
+NC,25.6,28.7,32.9
+NC,31.3,32.2,19.4
+NC,30.1,33.7,19
+NC,37.5,33.8,13.2
+NC,34.9,29.1,14.3
+NC,31.1,32.5,17.6
+NC,31.5,33.4,10.1
+NC,24.6,29.5,34.1
+NC,35.8,28.1,12.7
+NC,30.8,35.2,19.6
+NC,28.6,34.4,23.9
+NC,26.4,33.1,28.6
+NC,32.9,32.9,14
+NC,27.5,38.1,19.3
+NC,35.2,33.9,10.3
+NC,28.1,33.2,25.9
+NC,27.6,31.1,29.5
+NC,30.4,33.4,20.3
+NC,31.2,37.6,13.1
+NC,26.4,33.8,20.5
+NC,31.8,34.9,12.7
+NC,30.4,32.3,20.2
+NC,36.9,31.3,13.5
+NC,29.8,34.7,22.5
+NC,31,28,21.7
+NC,37.6,31.4,13.7
+NC,19.1,28,42.3
+NC,33.5,30.5,16.8
+NC,30,30.5,14.5
+NC,25.8,30.9,32.6
+NC,33.9,30.9,19.2
+NC,22.1,32.7,36.9
+NC,35.9,29.1,11.3
+NC,28.9,42.6,19.3
+NC,15.6,19.8,56.6
+NC,32.2,35.4,19.3
+NC,29.9,34.5,19.4
+NC,31.2,33.3,21.2
+NC,35,32.6,16.3
+NC,35.5,32.8,14.7
+NC,25.2,33.2,29.7
+NC,27.2,29.7,31.3
+NC,35.1,30.2,14.5
+NC,36.5,31.3,12.8
+NC,33.5,28.8,12.8
+NC,36.5,30.2,13.8
+NC,32.8,32.1,17.6
+NC,31.8,33.1,16.2
+NC,33.2,29.6,12.4
+NC,34,28.9,15.8
+NC,34.3,32.2,16.2
+NC,38.1,29.1,13.6
+NC,31.1,30.8,14.9
+NC,31.2,33.4,15.9
+NC,28.4,30.3,29.7
+NC,37.1,24.6,8
+NC,25.2,30.4,33.4
+NC,37.6,27.8,11.4
+NC,16.8,26.1,49
+NC,34.8,27.6,15.4
+NC,38,31,10.4
+NC,20.4,30.2,38.4
+NC,29.7,34.6,18.4
+NC,32.2,30.1,12.8
+NC,33,28.8,18
+NC,34.3,31.3,11.9
+NC,33.2,30,19.3
+ND,27.4,36.7,27.7
+ND,35.1,36.1,24.8
+ND,31.3,34.8,25.4
+ND,32.5,38,14.6
+ND,34,30.4,25.2
+ND,31.3,37.6,20.9
+ND,30,37.6,22.1
+ND,30.8,36.9,19.6
+ND,24.5,35,34
+ND,20.6,37.5,36.8
+ND,27.6,44.2,17.7
+ND,28.7,31.3,26.6
+ND,34.3,34.4,20.6
+ND,34.3,37.1,19.6
+ND,28.7,37.8,22
+ND,36.9,31.6,15.3
+ND,31.4,37.5,18.8
+ND,24,45,22.7
+ND,24.7,35.2,33
+ND,38.2,33.5,17.1
+ND,37.6,32.4,18.3
+ND,37.1,36.9,14.8
+ND,32.6,36.3,19.5
+ND,31.7,34.1,21.1
+ND,39.3,30,12.7
+ND,37,34,18.8
+ND,31.5,29.5,18.7
+ND,28.4,40.5,22.8
+ND,33.8,38.4,19
+ND,29.7,39.8,20.5
+ND,30.2,35.5,25.9
+ND,29.7,40.3,22
+ND,30.8,40.8,19.2
+ND,30.3,39.2,17.5
+ND,38.6,32,19
+ND,33.2,37.5,15.2
+ND,30.2,37,23
+ND,36.4,35.4,18.1
+ND,30.1,47,15.9
+ND,28.5,41.1,21.8
+ND,21.8,40,20.9
+ND,32.8,39.1,19.8
+ND,36.8,34.2,15.2
+ND,31.8,35.1,17.3
+ND,32.4,30.1,25.7
+ND,30.5,35.2,24.3
+ND,30.9,42.6,19.7
+ND,35.5,29.9,23.6
+ND,33.2,41,17.7
+ND,25.2,40.3,26.4
+ND,36,33,17.2
+ND,29.3,37.9,25.8
+ND,33.8,30,19.8
+ND,28.5,41.2,21
+OH,34.1,28.9,26.1
+OH,43.6,23.9,10.5
+OH,39.7,32.3,17.4
+OH,42.8,24.6,20.4
+OH,44.9,27.3,13.3
+OH,32.3,28.3,29.1
+OH,43.9,31.2,17.5
+OH,43.5,31,15.1
+OH,48.1,23.6,12.1
+OH,34,27.2,28.4
+OH,47.5,28.2,11.4
+OH,45.1,27.2,15.5
+OH,36.4,32.3,18.1
+OH,34,28.4,27.1
+OH,40.6,31.5,15.8
+OH,46.5,26.7,13.9
+OH,50.3,22.6,12.1
+OH,44.9,30.1,12.6
+OH,28.3,29.2,30.5
+OH,49.9,26,12.3
+OH,44.2,29.1,16.7
+OH,20.6,24.2,51.8
+OH,39.5,29.5,21.2
+OH,34.4,31.3,26
+OH,46.7,24.6,14.1
+OH,25.1,27.3,37.6
+OH,40.8,32.2,17.2
+OH,40.5,24.2,15.1
+OH,27.3,26.7,37
+OH,25.6,29.4,37.1
+OH,43.1,28.6,13.5
+OH,27.1,27.5,35
+OH,36.1,29.6,25.8
+OH,49.2,26.4,13.5
+OH,48.7,29.7,8.6
+OH,43.9,30.3,16.1
+OH,43.1,29.2,12.1
+OH,43.7,29.1,15.1
+OH,35.1,14.8,7.8
+OH,48.1,26.7,13.1
+OH,41.8,23.7,17.2
+OH,42.5,32.5,15.1
+OH,41.2,25.9,21.8
+OH,33.9,31.5,26.3
+OH,43.1,28.2,14.7
+OH,37.2,29.8,22.8
+OH,49.4,23.4,15.7
+OH,33.4,32.9,22.8
+OH,31.2,32.9,24.2
+OH,40.7,28.6,17.1
+OH,38.1,29.2,22.2
+OH,42.6,31.3,12.4
+OH,32.4,30.3,30.8
+OH,43.5,27.8,12.9
+OH,49.1,26.7,15.7
+OH,36.9,31.1,20.6
+OH,51.2,24.9,9.9
+OH,28.8,34.6,25.7
+OH,47.5,28,11.1
+OH,46.2,27.1,13.9
+OH,42.9,28.7,15.1
+OH,52.1,21.6,9.3
+OH,38.6,32.3,21.7
+OH,50.1,26.8,12.7
+OH,43.9,28.5,11
+OH,42.9,26.5,17.1
+OH,42,24,11.8
+OH,37.8,27.6,26
+OH,46,30.3,11.8
+OH,42.8,30.5,19.4
+OH,41.2,29.9,15.7
+OH,42.8,27.2,14.7
+OH,43,32.4,14.5
+OH,40.5,27.6,14.4
+OH,46,30.3,14.2
+OH,44.1,29.7,16.3
+OH,38.3,29.8,21.9
+OH,32.3,28.3,30.3
+OH,45.2,25.9,17.3
+OH,46.9,24.5,14.4
+OH,36.8,29.2,26.2
+OH,48.7,27.2,15.7
+OH,45.9,26.8,9.1
+OH,26.8,26.6,39.6
+OH,41.5,30.6,17.5
+OH,41,22.9,21.2
+OH,45.4,29.8,13.9
+OH,31.3,31.6,31.1
+OH,48.2,27.7,14.1
+OK,31.7,31.1,24.1
+OK,42.6,22.6,13.8
+OK,40.6,27.4,20.2
+OK,40.8,27,14
+OK,37.7,24.9,20.1
+OK,40.4,25.3,17.6
+OK,39.4,29.7,16.3
+OK,33.4,29.4,21.5
+OK,41.2,27.5,15.8
+OK,29.3,36.8,25.5
+OK,39.6,27.4,18.8
+OK,31.1,30,24.4
+OK,40.1,26.9,13.2
+OK,36.3,28.9,19.1
+OK,26.6,33.6,31
+OK,42.8,25.2,14.8
+OK,33.2,35.3,20.8
+OK,40.7,28.6,15.4
+OK,40.3,30.4,13.9
+OK,40,30.4,15
+OK,35.1,24.3,26.9
+OK,37.2,30.9,16.8
+OK,42.3,25.8,21.8
+OK,37.4,28.9,22
+OK,35.6,29.2,21.7
+OK,43.5,25.9,15.2
+OK,37.7,31.5,17.6
+OK,36,31.5,23.5
+OK,37,34.2,13.1
+OK,26.6,29.9,22.8
+OK,38.6,24,20.7
+OK,38.7,28.6,11.5
+OK,38,29.3,12.2
+OK,27.2,35.4,19.7
+OK,44.8,28,11.7
+OK,35.5,30.3,16.1
+OK,34,34,18.4
+OK,36.1,31.4,19.7
+OK,34.7,31.2,18.8
+OK,34.4,35.1,14
+OK,39.8,27.8,13.8
+OK,39.5,31.7,13.4
+OK,34.4,29.8,26.1
+OK,42.5,27.5,14.2
+OK,34.7,30.2,22.4
+OK,41.6,26,13.4
+OK,38,31,13.8
+OK,41.2,29.4,16.7
+OK,35.1,31.2,13.4
+OK,37.5,32.4,16.3
+OK,39.2,22.9,20.2
+OK,35.8,30.9,18.4
+OK,35.4,30.6,22.7
+OK,42.1,29.2,13.8
+OK,37.3,30.6,12.1
+OK,25.3,30.3,30.6
+OK,37,34.7,15.2
+OK,41.9,29.5,16.1
+OK,36.4,33.6,13.7
+OK,42.3,28.4,16.5
+OK,27.4,27,36.9
+OK,36.4,32.6,16.2
+OK,33.5,27.3,27.1
+OK,35.5,33.4,18.1
+OK,39.2,28.6,13.2
+OK,39.7,30.5,20.4
+OK,33.1,34.6,23.4
+OK,36.2,33.4,13.7
+OK,39.5,28.8,13.5
+OK,38.9,29.4,17.3
+OK,28.4,22.2,19.1
+OK,35.8,24,16.7
+OK,25.8,32.6,30.4
+OK,35.3,32.5,21.8
+OK,33.8,29.5,26.9
+OK,40,26.9,20
+OK,33.5,27.3,27.2
+OK,39.7,28.8,18.1
+OR,24.3,34.8,30.8
+OR,31.8,37,20.6
+OR,14.9,27.2,52.8
+OR,23.5,36.5,33.1
+OR,26.3,41.3,23.6
+OR,33.8,37.7,18.2
+OR,32.6,38.1,18.3
+OR,37.8,33.9,15.5
+OR,27.7,38.9,23.5
+OR,22.9,38.1,32.6
+OR,32.1,40.9,15.7
+OR,39.3,35.9,16.1
+OR,32.3,37.4,19.1
+OR,33.9,36.7,17
+OR,25.6,23.8,31.7
+OR,27.4,35.8,25.6
+OR,29.5,38.5,16
+OR,32.1,40.2,16.7
+OR,29.9,38.4,19.7
+OR,33.4,33.3,17.7
+OR,25,37.7,28.4
+OR,28.1,37,23.7
+OR,31,41.2,17.3
+OR,29.9,36.5,13.8
+OR,27.2,35.1,22
+OR,35.4,30,10.5
+OR,18.4,30.6,41.3
+OR,26.8,35.1,29.4
+OR,36.7,37.9,17.3
+OR,34.6,33.8,21
+OR,29.1,38,16.3
+OR,33.4,35.7,23.2
+OR,33.1,36,24.3
+OR,28.5,37.7,18.7
+OR,19,31,40.7
+OR,36.1,37.7,15.4
+OR,29.8,34.4,23.2
+PA,36.4,24.2,28.6
+PA,42,23.7,21.7
+PA,29.8,26,37.8
+PA,49.4,24.5,15
+PA,39.2,29.8,22.8
+PA,50.8,21.7,13.5
+PA,38.4,23.5,23.2
+PA,48.2,22.8,19.6
+PA,48,22.8,17.6
+PA,30.7,25.4,37.4
+PA,34.9,25.8,32.3
+PA,46.3,24.3,19.1
+PA,48.7,25.1,15.7
+PA,46.2,27,15.5
+PA,31.6,20.2,41.4
+PA,23.2,20.4,49.1
+PA,47,21.6,20.1
+PA,50.9,23,13.2
+PA,45.6,24.6,16.9
+PA,45.7,21.7,21.1
+PA,45,22.9,19.8
+PA,35,23.7,32.7
+PA,34.8,25.6,28.4
+PA,31.8,24.4,36
+PA,50.4,24,16.8
+PA,40,24.7,26.1
+PA,49.9,22.7,14.2
+PA,53.6,18.4,8.5
+PA,43.9,23.1,19
+PA,51.1,20.9,13.1
+PA,47.3,21.9,17.7
+PA,51.7,22.9,14.3
+PA,43.9,22,22.6
+PA,51.2,22.8,14.6
+PA,51,17.5,13.1
+PA,37.7,26.3,25.9
+PA,38.2,21.1,25.2
+PA,45,24.5,19.7
+PA,43.9,22.1,19.6
+PA,33.1,25.8,28.5
+PA,39.5,28,21.4
+PA,41.1,26.5,20.4
+PA,48.2,24.8,16.7
+PA,44.4,23.2,21.5
+PA,50.2,20.4,11.6
+PA,36.6,30,23
+PA,24.8,22.1,46.9
+PA,39.8,20.8,28.8
+PA,35.3,27.3,27.2
+PA,50.3,20.7,14.6
+PA,46,26.5,16
+PA,33.8,22.8,25.4
+PA,35.8,31.4,23.7
+PA,48.2,23.9,15.7
+PA,47.7,24.3,15.4
+PA,46,20,16.5
+PA,49.3,21.9,15.3
+PA,49.1,24.3,16.1
+PA,46.7,25.3,17.1
+PA,44.6,24.2,19.6
+PA,41.2,22.3,20.5
+PA,49.7,23.6,15.8
+PA,47.2,25.3,18.1
+PA,39.3,24.6,27.4
+PA,44.3,25.4,19.7
+PA,38.9,27.4,26.4
+PA,48.2,24.8,18.2
+PA,41,24.6,22.8
+RI,27.3,26.9,31.9
+RI,22.4,23.3,45.1
+RI,28.6,31.3,30.9
+RI,23.1,24.6,45.1
+RI,28.8,26.5,26.8
+RI,23.3,26.1,44.1
+SC,29.8,30,25.8
+SC,37.5,28.3,12.3
+SC,31,29.1,25.3
+SC,39.4,22.8,12.6
+SC,31.5,31.8,19.5
+SC,25.2,33,18.2
+SC,37.5,29.8,11.9
+SC,23.4,29.9,38.8
+SC,31.1,34.5,22.3
+SC,37.2,30,16.8
+SC,21.6,27.7,40.4
+SC,36.9,25.5,15.3
+SC,36.5,28.4,13.8
+SC,39.6,24.9,11.8
+SC,36.4,28.6,14.3
+SC,37.9,30.3,14
+SC,36.5,27.4,16.9
+SC,38.9,25,9
+SC,29.2,35.8,25
+SC,36.3,26.8,18.3
+SC,39.8,25.9,14.3
+SC,33.7,28.8,21.7
+SC,31.3,29.1,25.8
+SC,26.3,28.4,32.1
+SC,29.7,28,23
+SC,41.8,25.5,10.6
+SC,32.4,33,22.8
+SC,36.9,27,15
+SC,34.8,30.1,20.3
+SC,34,28.5,21.9
+SC,35.4,29.3,14.6
+SC,39.8,25.2,10.7
+SC,28,31.5,29.2
+SC,30.2,30.6,18
+SC,39.1,26.6,15.6
+SC,41,24.5,8.5
+SC,34.9,26.9,16.6
+SC,31.8,28.6,22.8
+SC,34.8,28.2,19.3
+SC,32,29.3,22.4
+SC,22.5,31.2,36.4
+SC,39.2,24.1,14
+SC,29.8,30.7,22.7
+SC,29.2,33.3,19.2
+SC,37.8,28,12.2
+SC,40.3,27,11.3
+SC,27.8,31.1,29.5
+SD,31.3,32.6,27
+SD,37.1,33,17.9
+SD,33.3,30.8,19.7
+SD,28.8,33.3,17.5
+SD,37.5,31.9,18.5
+SD,26.1,27.8,40.8
+SD,33.3,31,28.3
+SD,30.4,30.4,24.3
+SD,43.4,29,9.5
+SD,35.1,35.4,17.7
+SD,42,26.1,21.8
+SD,37.9,32.5,18.3
+SD,37.3,31,21.3
+SD,27.8,22.9,45
+SD,39.7,31.2,20.3
+SD,34.4,31.7,16.1
+SD,30.9,36.1,26
+SD,26.9,36.9,27.2
+SD,38.8,32.9,17.1
+SD,40.8,28.9,20.3
+SD,35.4,34.5,14
+SD,41.1,25.5,19.3
+SD,33.9,31.1,24
+SD,31,38.2,23.2
+SD,34.3,33.2,23.2
+SD,44.3,30.2,17.1
+SD,38.6,30.9,17.2
+SD,37.6,32.3,20.1
+SD,43.3,28,20.1
+SD,33.6,32.7,22.5
+SD,34.4,33.5,26
+SD,30.1,32.8,29.9
+SD,27.2,30.4,32.9
+SD,32.9,27.8,26.7
+SD,47.6,28.3,16.1
+SD,32.2,36.3,19.8
+SD,40.9,32,16
+SD,38.8,37,16.6
+SD,37.4,32,21.8
+SD,32,28.7,32.4
+SD,33.7,31.5,29.5
+SD,21.8,33.3,40.4
+SD,36.5,32.8,19.2
+SD,33.2,33.5,23.9
+SD,30.2,33.8,15.4
+SD,31.8,34.4,22.3
+SD,32.3,37.1,23
+SD,38.7,30.5,15.3
+SD,39.1,29.1,23
+SD,29.3,32.3,29.4
+SD,33.8,31.3,25.6
+SD,28.2,38.3,11.4
+SD,28.1,36.3,28.2
+SD,37.6,32.6,19.2
+SD,40.7,29,20.5
+SD,37.5,32.4,16.7
+SD,38.8,35.1,17.5
+SD,36.4,32.1,22.3
+SD,34.7,28.1,26.9
+SD,35.6,32.4,23.8
+SD,22.2,40.4,14.4
+SD,34.7,29.9,22.1
+SD,36.3,34.7,21
+SD,30,30.2,31.5
+SD,36.9,30.1,21.7
+SD,35.3,29.8,26.7
+SD,40.4,32.1,13.9
+TN,33,27.5,24.9
+TN,33.8,27.3,24
+TN,41.2,24.2,13.7
+TN,46.1,22.4,10.8
+TN,42.8,21.7,10.7
+TN,34.9,29.9,22.8
+TN,32.3,30.5,19.9
+TN,41.8,20.2,10.2
+TN,42.2,24.8,13.9
+TN,41.4,22.9,14.2
+TN,38.9,25.5,16.1
+TN,36.6,28.1,19.3
+TN,38.5,28.4,15.7
+TN,42.3,21.8,14.2
+TN,44.7,16.2,14.7
+TN,46.6,22.5,10.1
+TN,39.2,26.8,18.3
+TN,40.4,22.9,13
+TN,38.3,26.7,18.2
+TN,24.1,25.9,37.3
+TN,44.6,24,12.7
+TN,43.2,20.9,13.8
+TN,43.7,25.3,14.5
+TN,40.2,24.7,19.2
+TN,35.8,28.7,22.9
+TN,44.2,19.6,10.9
+TN,37,26.3,19.5
+TN,38.4,29.4,16
+TN,42.3,24.7,14.8
+TN,45.3,21.9,11.1
+TN,42.6,23.5,15
+TN,42,18.4,10.8
+TN,42.1,23.3,15.5
+TN,27.3,31.4,28.7
+TN,39.4,23.3,10.6
+TN,44.4,22.2,10.1
+TN,43.6,22.5,12.7
+TN,44.2,24.2,12.6
+TN,42.1,24.1,12.8
+TN,39.8,27.2,12.8
+TN,45.1,22.7,15.5
+TN,43.3,22.4,10.6
+TN,46.3,22.7,10.5
+TN,42.8,27.4,13.4
+TN,47.7,18.7,8.1
+TN,39.5,27.3,15.6
+TN,40.9,24.7,9.2
+TN,26.5,29.2,34.5
+TN,44.6,18.3,8.9
+TN,44.5,21.9,9.1
+TN,42.2,24.6,12.4
+TN,43.2,27,12.1
+TN,41.9,23.9,16.7
+TN,34.2,26.3,25.5
+TN,42.7,24.9,15
+TN,44.2,23.8,11.4
+TN,43.9,20.4,9.5
+TN,32.9,29.4,25.4
+TN,37.2,27.4,13.3
+TN,42,26.6,13.4
+TN,36.6,31.7,19.2
+TN,42.7,25.6,8.2
+TN,42,24.7,12.1
+TN,30.8,36.5,24.6
+TN,40.2,29.4,17.6
+TN,51.3,22.3,6.4
+TN,41.3,24.1,16.8
+TN,43.7,21.8,13.4
+TN,41.4,23,11
+TN,38.4,27.6,11.4
+TN,43.3,25.3,9.8
+TN,37.8,22.7,23.3
+TN,38.1,24.7,12.9
+TN,36.6,29.9,18.4
+TN,38.4,30,17.8
+TN,29.6,30.6,30.1
+TN,47.6,20.8,9
+TN,40.2,28.9,13
+TN,37.5,28.5,16.4
+TN,27.1,29.5,30.2
+TN,48,23.6,10.2
+TN,42,30.4,14.2
+TN,34.8,28.7,21.9
+TN,32.8,31.8,24.6
+TN,39,31.6,15
+TN,42.8,21.6,14.3
+TN,41.6,25.2,12.4
+TN,44.2,21,9.1
+TN,50.1,17,12.6
+TN,42.5,22.1,13.5
+TN,30.7,26.9,30.6
+TN,43.6,24.1,8.8
+TN,39.8,23.6,20.4
+TN,45.3,23.8,12.1
+TN,16.4,23.2,55.7
+TN,32.1,29,28.3
+TX,25.2,29.2,27.6
+TX,36.9,31.5,11.3
+TX,33.6,29.2,11.7
+TX,31.6,32.3,15.2
+TX,30.9,33.8,19.5
+TX,36.5,31.6,20.6
+TX,24.3,43.4,23
+TX,36,25.8,14
+TX,30.3,34,20.1
+TX,32.4,28,7.8
+TX,29.2,34,22.6
+TX,30.4,32.3,17.9
+TX,31.7,30.8,25.8
+TX,33.1,29.8,9.7
+TX,28.2,38.5,23.1
+TX,25.2,31.4,26.7
+TX,30.7,29.8,28.4
+TX,28.9,32.9,31.9
+TX,34.7,30.1,17
+TX,36,33,18.2
+TX,25.7,31.8,28.6
+TX,20.4,26.1,38.9
+TX,21.4,27.6,39.1
+TX,25.6,28.4,21.8
+TX,37.6,21.3,11.7
+TX,37.9,29.6,17.9
+TX,36.4,26.9,14.9
+TX,31.9,30.4,22.7
+TX,36,27.6,15.4
+TX,31.8,31.9,16.2
+TX,38.7,34.5,14.3
+TX,24,24.4,16.4
+TX,36.5,27.5,14.3
+TX,28.4,37,24.4
+TX,44,27.9,13.6
+TX,33.1,23.7,13.2
+TX,31.8,32.5,18.7
+TX,33.4,28.6,16.3
+TX,40.1,30.1,16.7
+TX,39.5,33.4,15.9
+TX,29.7,23.9,12.2
+TX,33.5,34,20.6
+TX,41.1,29.3,11.8
+TX,15.5,28.2,49.8
+TX,32.7,30.9,15.2
+TX,38.8,25.5,18.2
+TX,25.5,31.5,33.4
+TX,37,24.9,16.7
+TX,30.1,21.4,11.6
+TX,32.1,34,21
+TX,30.3,43.1,14.8
+TX,30.9,29.2,15.2
+TX,30.4,29.1,12.8
+TX,27.2,30.6,13.4
+TX,30.7,27.3,11.7
+TX,32.9,19.3,9.9
+TX,33.3,30.1,11.1
+TX,22.9,25.7,29.1
+TX,37.4,24.1,11
+TX,30.8,26.5,14.8
+TX,33.6,33.1,18.8
+TX,19.3,31.3,41.3
+TX,37.5,26.6,14.5
+TX,28.3,32.6,15.5
+TX,29.8,26.5,11.9
+TX,33.5,34.8,15.2
+TX,33.3,27.1,8.1
+TX,35.9,32.4,14.4
+TX,28.7,30.8,14.6
+TX,28.8,25.2,25.1
+TX,29.7,33.8,21.2
+TX,24.5,29.9,21.3
+TX,27.1,30.7,26.6
+TX,37.7,26.7,11.8
+TX,35.2,31.3,16
+TX,36.9,26.8,16
+TX,33.4,33.4,16.3
+TX,29.1,28.2,16.6
+TX,28.1,29,22.7
+TX,17.5,27.7,43.7
+TX,33.5,33.6,18.1
+TX,33.9,35.7,12.3
+TX,33.8,23.8,8
+TX,27.9,20.9,11.8
+TX,24.5,33.8,29.3
+TX,27.8,22.5,9.4
+TX,26.6,26.8,33.4
+TX,25.8,28.9,24.6
+TX,39.5,35.1,13.9
+TX,33.7,24.6,13.8
+TX,33,33.9,13.6
+TX,32,34.8,20.3
+TX,28.2,35.5,20.5
+TX,35.9,31,11.5
+TX,29.7,31.7,26.1
+TX,32.2,25.4,14.7
+TX,27.9,32.8,12.7
+TX,33.2,26.2,21.3
+TX,29.6,26.3,19.4
+TX,33.1,28.6,17.7
+TX,38.2,32.7,15.4
+TX,23.3,26.8,29.5
+TX,34,30.7,19.1
+TX,34.3,24.2,21.3
+TX,32.6,24.5,14.7
+TX,21.4,31.4,36.1
+TX,25.8,32.2,24.4
+TX,34.3,31.2,16.5
+TX,23.2,22.1,16.7
+TX,33.1,31.5,14.8
+TX,26.2,35.9,15.7
+TX,28.4,34.5,25.5
+TX,37.3,28.8,16.2
+TX,37.3,30.7,14.5
+TX,31.3,33.9,12.8
+TX,24.5,18.5,8.2
+TX,34.6,31.3,17.5
+TX,31.2,37.8,15.1
+TX,34.9,39.3,14.7
+TX,40.5,28,11.1
+TX,33.9,29.6,17.4
+TX,44,30.5,9.6
+TX,21.1,23.1,36.6
+TX,33.3,31.3,18.4
+TX,30.2,28.4,12.8
+TX,34.1,26,11
+TX,31.7,34.3,17.3
+TX,39,25.2,9.7
+TX,36.3,24.5,13
+TX,31.4,33.2,19
+TX,21.1,28.9,40.8
+TX,33.4,19.3,15.1
+TX,26.1,27.8,24.8
+TX,27.8,31.7,28.1
+TX,35.4,30.6,17.1
+TX,39.5,18.6,21.8
+TX,27.9,26,12.5
+TX,22.1,27.1,25.4
+TX,37,29,15.2
+TX,34.7,34.2,16.2
+TX,30.5,27,16.3
+TX,25.8,40.8,21
+TX,32.7,13.8,14.9
+TX,41.6,24.3,15.9
+TX,39.1,26.8,17.2
+TX,36.2,30.4,17.2
+TX,38,28.6,9.6
+TX,35.7,30.9,13.8
+TX,37.2,26.8,18.6
+TX,36,31.8,12.7
+TX,27.2,33,27.6
+TX,51.9,26.4,1.9
+TX,25.9,31.3,27.5
+TX,31.9,29,16.5
+TX,31.3,30.8,15.6
+TX,27.9,33.2,22.2
+TX,29,31.8,15.4
+TX,36.8,29.1,10.6
+TX,37.6,31.6,14.3
+TX,35.5,26.5,17.5
+TX,34.7,27.9,22.4
+TX,35.4,26.6,15.3
+TX,22.4,25.9,10.7
+TX,31.9,30.9,18.9
+TX,30.3,29.5,17.4
+TX,23.6,33.8,25.6
+TX,37.5,27.3,16.7
+TX,26.8,34,22.1
+TX,33.4,29.5,11
+TX,34.1,32.5,15.8
+TX,24.3,29.8,32.2
+TX,26.1,25.9,12
+TX,34.7,34,14.5
+TX,31.8,34.9,17.2
+TX,28.1,28.8,25.1
+TX,30.5,31.2,15.7
+TX,50.1,31.1,6.4
+TX,34.8,31.8,12.1
+TX,28.2,32.4,20.2
+TX,29.3,30.3,15.2
+TX,19.6,36.2,27.8
+TX,40,34.2,14.6
+TX,37,28.8,15.8
+TX,32.5,37.6,12.8
+TX,26.9,35.6,26.5
+TX,30.4,22,15.3
+TX,35.2,24.1,10
+TX,37.7,29.7,12.3
+TX,27.8,33.4,14.9
+TX,17.3,14.1,25.9
+TX,39.5,32.9,10.6
+TX,22.1,39.3,30.4
+TX,37.1,21.2,10.5
+TX,28.6,30.7,22
+TX,39,27.2,13.1
+TX,25.8,23.2,10.8
+TX,35.9,34.3,9.7
+TX,30.2,34.6,31.8
+TX,37.5,26,16.5
+TX,22.2,32.4,36.9
+TX,38.8,23.2,17.5
+TX,33.7,32.9,13.7
+TX,44.8,28.6,12
+TX,42.9,26.2,10.8
+TX,45,25.1,11.4
+TX,31.1,31.4,15.1
+TX,30.7,32.7,14.5
+TX,23.6,33,19.5
+TX,30.7,35.2,15.3
+TX,33.9,29.4,22.6
+TX,35.7,26.6,14.8
+TX,27.9,24.9,20.6
+TX,25.6,33.9,24.9
+TX,26.3,32.9,22.7
+TX,22.2,15,9.1
+TX,35,27.2,19.1
+TX,32.1,24.2,22.3
+TX,37.5,27.3,15.6
+TX,28.2,26.2,20.2
+TX,35,27.3,15.9
+TX,23.8,31.1,30.3
+TX,29.1,32.6,24.6
+TX,36,27.5,17.3
+TX,29.5,27.1,12.6
+TX,31.3,32.6,21.9
+TX,29.4,28.3,15
+TX,30.3,30.8,22.1
+TX,17.1,24.8,46
+TX,41.9,30.4,11.1
+TX,41.8,31.3,11.2
+TX,32.6,35.7,14.5
+TX,39.4,26.5,10.1
+TX,23.2,32,15.3
+TX,26.6,22.5,17
+TX,35.4,30.8,15.5
+TX,31.3,33,18.2
+TX,35.8,27.2,18.9
+TX,31.4,27.9,18.8
+TX,35,29,11.4
+TX,31.3,29.8,21.6
+TX,24.4,23.8,17.1
+TX,33.6,28.8,14.1
+TX,31.3,33.2,16.9
+TX,32.4,32.1,21.6
+TX,29.9,32.5,16.5
+TX,35.5,19.1,8.3
+TX,20.7,32.6,39.3
+TX,34.8,30.8,19.5
+TX,31.2,29.1,11.1
+TX,36.8,30.8,16.5
+TX,34.7,32.8,17
+TX,29.7,26.5,14.7
+TX,35.9,27.6,17.6
+TX,26,18.9,8.4
+TX,27,24.2,9
+UT,23.2,36.9,31.1
+UT,37.2,35,20
+UT,32.5,38.1,21.5
+UT,21.9,34.4,36.1
+UT,26.9,46,15.1
+UT,34.7,42.8,15.9
+UT,21.2,39.2,34.8
+UT,36,36.7,15
+UT,32.9,44.7,12.6
+UT,34.5,37.1,19.7
+UT,24.1,42.3,23.7
+UT,24.7,38.3,28.6
+UT,35,40.3,15.8
+UT,28.8,41.6,24.8
+UT,29.1,38.9,20
+UT,24.4,39.4,34.6
+UT,39.8,26.2,17.5
+UT,37.6,40.3,19.1
+UT,22.8,34.6,32.1
+UT,31.5,33.2,18.9
+UT,27,41.3,20.5
+UT,33.7,40.4,16.4
+UT,15.5,27.1,50.8
+UT,32.1,37.9,22.4
+UT,34.7,36.2,15.9
+UT,16.8,39.2,37.3
+UT,20.7,37.4,33.5
+UT,24.6,40.9,27.1
+UT,25.3,40.6,26.8
+UT,29.1,37.4,23
+VT,30.1,25.8,36
+VT,32,24.6,35.5
+VT,30.7,26.6,33.5
+VT,36.1,26.9,27
+VT,20.6,24.5,48.7
+VT,43.3,25.2,16
+VT,37.6,28.3,23.6
+VT,29.7,29.1,35.1
+VT,28.6,27.2,36.2
+VT,34.9,25.8,30.8
+VT,38.7,25.5,22.1
+VT,34.2,27.4,29.1
+VT,29.2,24.8,39.9
+VT,30.7,25.1,35.8
+VT,31.7,25.6,35.1
+VA,24.8,27.2,36.3
+VA,39.9,21.7,18.8
+VA,18.2,21.5,51.7
+VA,36.9,30.9,15.7
+VA,34.1,31.1,14.5
+VA,35.7,28.8,18.3
+VA,36.1,30.2,17.7
+VA,8.3,12.3,72.9
+VA,40.1,23.8,22
+VA,38.9,27.2,21.8
+VA,31,30.4,26.7
+VA,39.5,31.6,14.1
+VA,35,29.9,26.2
+VA,35.7,27.1,13.1
+VA,34.4,25.6,9.9
+VA,43.5,23.3,10.4
+VA,36.1,29.5,19.3
+VA,36.7,26.4,19.2
+VA,34.5,30.8,14.5
+VA,39.3,23.3,13
+VA,37.6,26.4,14
+VA,24.1,30,36.9
+VA,28,28.7,31
+VA,48.4,26.5,14.7
+VA,34.1,27.8,21.9
+VA,36.5,26.4,14.5
+VA,35.6,28.5,11
+VA,39.7,26.8,15.3
+VA,38.5,28.6,15.2
+VA,13,19.1,59.9
+VA,28.5,29.2,33.5
+VA,35.6,29.4,18.2
+VA,28.4,28.7,31.5
+VA,32,31.5,20.5
+VA,30.5,27.8,29.1
+VA,40,28.1,15.8
+VA,33.9,34.3,22.1
+VA,26.9,25.8,37.4
+VA,41.1,27.5,10
+VA,34.9,26.1,23.7
+VA,42.3,25.3,8.6
+VA,36.5,27.8,15.5
+VA,27.6,28.8,35.7
+VA,22.8,27.1,40.7
+VA,34.1,32.9,11.4
+VA,38.6,23.4,21.6
+VA,27.7,31.7,26.9
+VA,21.1,25.7,47
+VA,41.1,25.6,18.1
+VA,30.3,30,32.3
+VA,39.4,29.9,18.4
+VA,32.8,29.2,27.9
+VA,33.6,28.8,12
+VA,13.8,21.6,58.2
+VA,37,25.2,20.6
+VA,34.9,27.4,12.2
+VA,36.4,23.5,23.2
+VA,33.3,29.7,29.2
+VA,32.5,30.8,15.6
+VA,32.5,31,24.2
+VA,21.8,23.8,45.7
+VA,33.6,22.2,28.2
+VA,33,32.5,24.6
+VA,34.2,25,20.6
+VA,31.1,31.7,25.4
+VA,37.1,25.4,15.2
+VA,34.7,28.1,25.1
+VA,42.9,21.4,12.8
+VA,36,30.1,12.6
+VA,35.3,31.2,14.1
+VA,28.6,32.6,27.9
+VA,34.6,23,24.4
+VA,33.4,32.9,21.3
+VA,21.7,29.2,38.8
+VA,34.2,31.9,17.8
+VA,25.6,25.8,35.1
+VA,40.2,26.2,12.7
+VA,26.4,31.4,34.2
+VA,36.3,24,25.5
+VA,35.5,22,23.8
+VA,36.7,27.5,12.4
+VA,36.2,28.5,11.7
+VA,39.5,26,19
+VA,38.8,27.9,15
+VA,34.8,30.7,15
+VA,31.7,28.6,29.3
+VA,23.7,32.8,36.8
+VA,29.2,31.3,21.2
+VA,40.3,20.8,9.6
+VA,35.8,29.9,13.5
+VA,36.6,28.2,20.7
+VA,32.9,27.8,23.3
+VA,36.3,26.4,18.3
+VA,32.4,27.6,14
+VA,36.4,28.8,16
+VA,19.6,32.3,42.2
+VA,12.1,18,61.4
+VA,,,
+VA,32.8,26.3,23.3
+VA,40.5,24.9,16.4
+VA,22.2,18.2,49.8
+VA,26.5,35,29.6
+VA,,,
+VA,35.2,31,21.7
+VA,43.5,30.5,9.3
+VA,28.1,32.7,17.9
+VA,32.6,24,18.1
+VA,15.2,22.4,54.9
+VA,7.5,11.4,78.8
+VA,24.9,29.1,26.2
+VA,26.9,26.7,37.3
+VA,33.7,27.1,11.6
+VA,27.3,39.3,23.2
+VA,26.5,21.8,35.8
+VA,38.3,30.3,12.3
+VA,18.1,18.1,43.8
+VA,25.1,30.1,33.1
+VA,26,26.6,28.8
+VA,26,28,28.3
+VA,29.7,30.6,17.8
+VA,28.2,36.8,24
+VA,26.9,34,26.1
+VA,19.4,43,19.6
+VA,34,28,15.9
+VA,27,29.5,37.1
+VA,28.9,34,20.8
+VA,22.6,31.3,35.5
+VA,23,24.1,36
+VA,30.4,30.4,23.6
+VA,29.8,31.8,28.4
+VA,30.9,25,31.3
+VA,28.3,32.9,26.4
+VA,22.4,37.1,33.8
+VA,38.5,28,18.4
+VA,15.5,23.7,52.4
+VA,30.4,25.6,28.3
+WA,23.3,34.3,32.9
+WA,25.9,27,13.6
+WA,30.5,40.7,18.2
+WA,24.4,35.1,29.4
+WA,30.1,28.8,24.5
+WA,27.9,39.7,24.7
+WA,25.3,38.9,27.2
+WA,27.5,39.5,23
+WA,30.9,40.9,16
+WA,27.7,35.7,17.4
+WA,31.2,39.4,16.7
+WA,27.3,30.5,15.9
+WA,29.4,41.7,24.5
+WA,26.8,32.3,16.4
+WA,32.1,41.1,14.7
+WA,23.3,39.5,31.7
+WA,23.2,33.9,37
+WA,16.5,28,47.9
+WA,23.2,41,30.3
+WA,26,31.2,33.6
+WA,29,36.2,23.5
+WA,31.6,40.1,15.4
+WA,33.4,37.3,20.6
+WA,30.4,39.5,17.7
+WA,29.8,34.6,18.5
+WA,31.6,39,16.8
+WA,32.2,41.6,17.1
+WA,28.8,37.4,24.7
+WA,17.2,31.6,46.6
+WA,26.7,36.9,24.8
+WA,29.2,39.6,22
+WA,24.3,37.4,29.9
+WA,25.7,38.6,28.6
+WA,34.4,39.2,16.7
+WA,22.7,37.4,33.4
+WA,33.1,44.8,14.5
+WA,22.6,38.9,27.2
+WA,23,35.7,32.5
+WA,17.4,29.3,48.9
+WA,27.8,28.3,15.7
+WV,40.7,25.1,19.2
+WV,47.1,22.1,11.9
+WV,38.2,29.1,19.7
+WV,49.4,20.2,8.8
+WV,49.1,19.4,12
+WV,43.7,28.6,18.5
+WV,31.9,28.1,26.9
+WV,48.9,17.6,10.4
+WV,49.1,14.7,9.8
+WV,44.3,24.1,13.5
+WV,44.4,23.5,12.4
+WV,36.6,25.1,16.6
+WV,50.2,19.3,12.3
+WV,44,22.8,18.1
+WV,50,18.1,10.1
+WV,42.8,26.3,17.8
+WV,47.7,17.7,14
+WV,39.5,27.7,20.4
+WV,41.1,27.7,17.6
+WV,32.1,27.6,28.4
+WV,37.3,25.8,25.1
+WV,49.7,22.9,14.1
+WV,43.4,25.5,9.5
+WV,41.6,26.7,8.1
+WV,43.9,15.5,5.1
+WV,40.9,26,21.4
+WV,45.1,27.3,16.8
+WV,47.5,26.3,10.4
+WV,37.9,25.7,18.8
+WV,50.2,24.9,12.9
+WV,41,22.4,10.2
+WV,29.9,21.9,39.7
+WV,49.4,19.2,13.3
+WV,41.2,23.4,18.6
+WV,48,21.9,13.9
+WV,34.5,26.8,29.8
+WV,46,18.8,15.3
+WV,50.1,25.3,13
+WV,47.4,20.6,16.7
+WV,46.4,21.2,14.6
+WV,37.8,28,25.4
+WV,39.5,24.8,18.3
+WV,46.3,18.2,19.3
+WV,47.9,23.1,10.5
+WV,46.5,20.7,11.3
+WV,40.5,27.8,13.6
+WV,43.6,25,16.6
+WV,52.7,20.6,14.2
+WV,49.2,25.9,11.3
+WV,48.4,19.4,16.3
+WV,40.9,25.5,12.3
+WV,43,18.7,9.3
+WV,48.7,24.8,10.4
+WV,47.6,26.3,12
+WV,38.1,32.3,18.8
+WV,46,21.3,7.9
+WI,32,31.2,27.8
+WI,43.7,30.7,12.8
+WI,35,34.1,23.2
+WI,39.8,33.1,16.6
+WI,30.2,34.5,29.3
+WI,31.3,31.4,27.9
+WI,42.5,30.8,18
+WI,40,33.7,17.7
+WI,33.8,30.7,28.4
+WI,38.5,34.1,19.2
+WI,43.3,26.6,11.5
+WI,34.9,35.5,22.1
+WI,42.7,32.1,15.1
+WI,19,28.1,47.9
+WI,40.2,31.6,16.4
+WI,32.9,31,29.7
+WI,33.2,37.6,22.5
+WI,34.6,32.6,25.6
+WI,26.9,35.2,31.1
+WI,39.2,34.8,17.1
+WI,38.5,31.3,21.5
+WI,40.7,32.4,13.8
+WI,38.7,31.4,21.3
+WI,39,31.3,21.9
+WI,42.3,28.8,16.9
+WI,36.3,33.9,22.9
+WI,35.8,36.1,21
+WI,42.2,31,13.8
+WI,36.5,32.1,22.6
+WI,42.2,30.9,12.3
+WI,32.8,33,24.5
+WI,44.2,31.9,15.8
+WI,27.7,35.8,30.9
+WI,41.5,30.7,17.5
+WI,42.4,31.8,14.9
+WI,40.5,34.1,15.3
+WI,39.9,30.7,19.7
+WI,37.1,30.2,23.7
+WI,42.6,34,14.4
+WI,43.8,31.3,12.8
+WI,43.8,29.9,16.1
+WI,28.1,29.3,29.1
+WI,39.4,32.8,17.1
+WI,43.7,31.1,15.4
+WI,34.3,33.2,25
+WI,34.2,31.6,27.7
+WI,22.5,27.8,46.1
+WI,43,30.5,17.4
+WI,32.6,34.4,27.5
+WI,39,33.7,19.5
+WI,33.7,29.6,29.2
+WI,41.6,31.8,16.6
+WI,30.7,33.8,23.7
+WI,41,31.5,16.7
+WI,36.8,31.7,20.4
+WI,43.2,29.8,15
+WI,27.7,35.1,32.3
+WI,36.6,31.2,22.2
+WI,34.5,34,22.6
+WI,45.3,29.5,15.5
+WI,36.7,30.9,23.4
+WI,46.3,28,13.3
+WI,38.8,30.6,19.2
+WI,38.1,29.7,20.5
+WI,31.4,35.1,26
+WI,31.8,31.5,26.8
+WI,38.8,31.9,20.7
+WI,30,34.4,28.9
+WI,24.3,30.2,41.2
+WI,43.7,29.6,16.9
+WI,42.3,29.9,14.6
+WI,34,31.4,26.6
+WI,39.2,33.2,19.6
+WY,29.4,37.2,25.7
+WY,17,30.2,49.3
+WY,31.3,37.9,19.6
+WY,34.4,37.6,19.3
+WY,35.6,35.7,19.5
+WY,38,35.8,17.5
+WY,34.7,39.5,18.8
+WY,31.7,38.7,21.3
+WY,29.9,38.1,22.8
+WY,30.8,39.5,20.6
+WY,36.1,33,25.3
+WY,26.3,38.9,27.8
+WY,31.5,40.4,21.5
+WY,27.5,41.9,21.9
+WY,28.1,41.1,21.3
+WY,28.5,36.3,28.4
+WY,30.8,39.8,21.7
+WY,27.2,38,29.4
+WY,35.2,37.3,22.9
+WY,35.4,35.5,19.6
+WY,17.9,24.1,53.9
+WY,36.2,34.2,19.3
+WY,29.3,37,21.1
+WY,32.2,37.7,18.1
+PR,27.1,21.8,24.2
+PR,26.5,18.4,17.1
+PR,21.1,21.1,21.4
+PR,26.5,19,24.2
+PR,31.4,19.7,14.3
+PR,32.5,20.4,20.6
+PR,33.5,18.2,15.7
+PR,29.3,21.6,21.8
+PR,33.9,23.9,16.7
+PR,33.5,21.9,15.8
+PR,30.3,20.8,18.9
+PR,23.3,27.1,27.9
+PR,25.4,20.3,24.5
+PR,26.2,22.6,29.4
+PR,26.4,21.7,20.5
+PR,29.8,21.5,20.5
+PR,25.5,27.2,29.6
+PR,29.2,22.9,21
+PR,31.9,17.5,22.7
+PR,32.7,23.7,18.7
+PR,30.6,20.2,13
+PR,32.7,20.8,22.6
+PR,32.3,17.9,21
+PR,31.4,18.5,12.3
+PR,29.7,23.9,14.9
+PR,32.5,17.7,10.3
+PR,25.7,20.5,29.9
+PR,33,23.9,21.2
+PR,42.2,23.4,10.3
+PR,35.5,15.2,15.6
+PR,35.4,19.5,18.7
+PR,30.1,21.3,18.9
+PR,17.5,20.2,45.1
+PR,23.2,21.7,33.1
+PR,21.6,22.3,22.8
+PR,31.7,17.9,22.4
+PR,30.6,21.4,22.2
+PR,30.2,20,19.4
+PR,36.6,18.5,15.7
+PR,29.6,20.7,21.7
+PR,29.6,23.9,22.5
+PR,24.8,20.2,15.2
+PR,22.9,19.1,18.2
+PR,26.7,10.9,15.2
+PR,32.9,24.1,18.1
+PR,38,22.4,13.4
+PR,34.1,22.1,18.6
+PR,26.5,22.5,22.4
+PR,35.6,9.2,10.7
+PR,25.7,21.4,16.6
+PR,30.6,17.5,21.5
+PR,30,17.2,19.1
+PR,28.5,22.1,16.3
+PR,28.2,20.6,19.9
+PR,26.3,26.7,16
+PR,31.8,14.7,15.4
+PR,31.1,21.8,14.5
+PR,31.2,20.2,17.2
+PR,29.6,19.6,25.2
+PR,26.2,24.1,19.7
+PR,21.7,22.2,20.7
+PR,31.3,23.8,19
+PR,33.4,17.6,20.1
+PR,33.7,19.6,17.6
+PR,30.2,17,22.4
+PR,21.3,22.5,34
+PR,28.9,19.6,18.4
+PR,23,18.4,18
+PR,31.3,19.7,24.2
+PR,24.5,23.8,30
+PR,29.3,26.6,22.3
+PR,23.5,23.7,34.9
+PR,27.9,21.5,17.6
+PR,22.8,23.8,18.4
+PR,12.2,23.8,20
+PR,33,15.6,17.5
+PR,34.4,16.9,17
+PR,27.4,23.4,15.1
+PR,29,18.7,19.6
