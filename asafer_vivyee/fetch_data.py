@@ -4,6 +4,7 @@ import dml
 import prov.model
 import datetime
 import uuid
+import requests
 
 class FetchData(dml.Algorithm):
     contributor = 'asafer_vivyee'
@@ -20,9 +21,9 @@ class FetchData(dml.Algorithm):
 
     @staticmethod
     def store(repo, url, collection):
-        response = urllib.request.urlopen(url).read().decode("utf-8")
+        response = requests.get(url)
         if response.status_code == 200:
-            data = json.loads(response)
+            data = [response.json()]
             repo.dropPermanent(collection)
             repo.createPermanent(collection)
             repo[collection].insert_many(data)
@@ -34,12 +35,16 @@ class FetchData(dml.Algorithm):
 
         repo = FetchData.setup()
 
+        mbta_key = dml.auth['services']['mbtadeveloperportal']['key']
+        cityofboston_token = dml.auth['services']['cityofbostondataportal']['token']
+        cdc_token = dml.auth['services']['cdcdataportal']['token']
+
         datasets = {
-            'asafer_vivyee.orchards': 'https://data.cityofboston.gov/resource/8tmm-wjbw.json',
-            'asafer_vivyee.corner_stores': 'https://data.cityofboston.gov/resource/ybm6-m5qd.json',
-            'asafer_vivyee.obesity': 'https://chronicdata.cdc.gov/resource/a2ye-t2pa.json',
-            'asafer_vivyee.nutrition_prog': 'https://data.cityofboston.gov/resource/ahjc-pw5e.json',
-            'asafer_vivyee.mbta': ???
+            'asafer_vivyee.orchards': 'https://data.cityofboston.gov/resource/8tmm-wjbw.json$$app_token=' + cityofboston_token,
+            'asafer_vivyee.corner_stores': 'https://data.cityofboston.gov/resource/ybm6-m5qd.json??app_token=' + cityofboston_token,
+            'asafer_vivyee.obesity': 'https://chronicdata.cdc.gov/resource/a2ye-t2pa.json??app_token=' + cdc_token,
+            'asafer_vivyee.nutrition_prog': 'https://data.cityofboston.gov/resource/ahjc-pw5e.json??app_token=' + cityofboston_token,
+            'asafer_vivyee.mbta': 'http://realtime.mbta.com/developer/api/v2/routes?api_key=' + mbta_key + '&format=json'
         }
 
         for collection, url in datasets.items():
@@ -51,4 +56,26 @@ class FetchData(dml.Algorithm):
 
         return {"start":startTime, "end":endTime}
 
+    @staticmethod
+    def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
+        # IDK WHAT ANY OF THIS DOES LOLLLLLLL
+        # Set up the database connection.
+        client = dml.pymongo.MongoClient()
+        repo = client.repo
+        repo.authenticate('asafer_vivyee', 'asafer_vivyee')
+        doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
+        doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
+        doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
+        doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
+        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+
+        repo.logout()
+
+        return doc
+
 FetchData.execute()
+doc = FetchData.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
+
+## eof
