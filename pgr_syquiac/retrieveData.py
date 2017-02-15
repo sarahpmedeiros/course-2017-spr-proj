@@ -15,7 +15,7 @@ import sodapy
 class retrieveData(dml.Algorithm):
     contributor = 'pgr_syquiac'
     reads = []
-    writes = ['pgr_syquiac.hospitals', 'pgr_syquiac.cdc', 'pgr_syquiac.openspaces', 'pgr_syquiac.schools', 'pgr_syquiac.events', 'pgr_syquiac.pools']
+    writes = ['pgr_syquiac.hospitals', 'pgr_syquiac.cdc', 'pgr_syquiac.camopenspaces', 'pgr_syquiac.schools', 'pgr_syquiac.events', 'pgr_syquiac.pools', 'pgr_syquiac.bosopenspaces']
 
     @staticmethod
     def execute(trial = False):
@@ -30,33 +30,56 @@ class retrieveData(dml.Algorithm):
         # Get data for hospitals
         client = sodapy.Socrata("data.cityofboston.gov", None)
         response = client.get("u6fv-m8v4", limit=10)
-        s = json.dumps(response, sort_keys=True, indent=2)
-        print(s)
-        print(type(s))
         repo.dropCollection("hospitals")
         repo.createCollection("hospitals")
-        repo['pgr_syquiac.hospitals'].insert_many(s)
+        repo['pgr_syquiac.hospitals'].insert_many(response)
 
-       
-
-        client = sodapy.Socrata("chronicedata.cdc.gov", None)
+        # Get data for CDC 500 cities
+        client = sodapy.Socrata("chronicdata.cdc.gov", None)
         response = client.get("csmm-fdhi", limit=10)
-        s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("cdc")
         repo.createCollection("cdc")
-        repo['pgr_syquiac.cdc'].insert_many(r)
+        repo['pgr_syquiac.cdc'].insert_many(response)
+
+        # Get data for all universities in the US
+        url = 'http://datamechanics.io/data/pgr_syquiac/universities.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("schools")
+        repo.createCollection("schools")
+        repo['pgr_syquiac.schools'].insert_many(r)
 
 
         #Get data of Open Spaces in Cambridge
         client = sodapy.Socrata("data.cambridgema.gov", None)
         response = client.get("5ctr-ccas", limit=10)
-        s = json.dumps(response, sort_keys=True, indent=2)
-        print(s)
-        repo.dropCollection("openspaces")
-        repo.createCollection("openspaces")
-        repo['pgr_syquiac.openspaces'].insert_many(s)
+        repo.dropCollection("camopenspaces")
+        repo.createCollection("camopenspaces")
+        repo['pgr_syquiac.camopenspaces'].insert_many(response)
 
+        # Get data for Cambridge events
+        client = sodapy.Socrata("data.cambridgema.gov", None)
+        response = client.get("x4ex-qvpn", limit=10)
+        repo.dropCollection("events")
+        repo.createCollection("events")
+        repo['pgr_syquiac.events'].insert_many(response)
 
+        # Get data for Open Swimming Pools in Boston
+        client = sodapy.Socrata("data.cityofboston.gov", None)
+        response = client.get("5jxx-wfpr", limit=10)
+        repo.dropCollection("pools")
+        repo.createCollection("pools")
+        repo['pgr_syquiac.pools'].insert_many(response)
+
+        # Get data for all Open Spaces in Boston
+        url = 'http://datamechanics.io/data/pgr_syquiac/bostonopenspaces.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("bosopenspaces")
+        repo.createCollection("bosopenspaces")
+        repo['pgr_syquiac.bosopenspaces'].insert_many(r)
 
 
         repo.logout()
