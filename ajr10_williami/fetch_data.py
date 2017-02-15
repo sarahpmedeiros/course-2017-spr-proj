@@ -99,7 +99,6 @@ class fetch_data(dml.Algorithm):
 
         print("inserting data into target: ", "energy_boston")
         repo["ajr10_williami.energy_boston"].insert_many(r)
-        repo.logout()
         
         # energy_cambridge
 
@@ -114,10 +113,10 @@ class fetch_data(dml.Algorithm):
 
         print("inserting data into target: ", "energy_cambridge")
         repo["ajr10_williami.energy_cambridge"].insert_many(r)
+
+        # logout and return start and end times
         repo.logout()
-
         endTime = datetime.datetime.now()
-
         return {"start":startTime, "end":endTime}
     
     @staticmethod
