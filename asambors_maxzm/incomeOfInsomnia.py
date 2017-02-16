@@ -13,6 +13,33 @@ class incomeOfInsomnia(dml.Algorithm):
 
         def select(R, s):
                 return [t for t in R if s(t)]
+
+        def aggregate(R, f):
+                keys = {r[0] for r in R}
+                return [(key, f([v for (k,v) in R if k == key])) for key in keys]
+
+        def project(R, p):
+                return [p(t) for t in R]
+
+        def product(R, S):
+                return [(t,u) for t in R for u in S]
+
+        def zipIsNearBoston(locationpoint):
+                lowestBostonZip = 1840
+                highestBostonZip = 2299
+                return int(locationpoint['zip_code'])>lowestBostonZip and int(locationpoint['zip_code'])<highestBostonZip
+
+        def pickCloserZip(attemptAtZip):
+                closestDist = -1
+                closestZip = -1
+                closestLatLong = -1
+                for combo in attemptAtZip:
+                        if closestDist == -1 :
+
+                
+
+
+
         @staticmethod
         def execute(trial=False):
                 startTime = datetime.datetime.now()
@@ -30,17 +57,23 @@ class incomeOfInsomnia(dml.Algorithm):
 
                 
                 #run select on the zip lat long dataset so that its only zip codes that are near boston
-                selectedZipToIncomes = []
+                selectedZipToIncomes = incomeOfInsomnia.select(zipcodetolatlong.find({},{'_id': False}), incomeOfInsomnia.zipIsNearBoston) 
 
-                lowestBostonZip = 1840
-                highestBostonZip = 2299
-                for locationpoint in zipcodetolatlong.find():
-                        if(int(locationpoint['zip_code'])>lowestBostonZip and int(locationpoint['zip_code'])<highestBostonZip):
-                                selectedZipToIncomes.append(locationpoint)
-                
 
                 #map each no sleep person to corosponding zip based on lat long
+                
+                #product
 
+                allCombos = incomeOfInsomnia.product(nosleep.find({},{'_id': False}),selectedZipToIncomes)
+
+                #agregate
+
+
+
+
+
+
+                print(selectedZipToIncomes)
 
 
                 endTime = datetime.datetime.now
