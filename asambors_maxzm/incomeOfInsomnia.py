@@ -27,8 +27,14 @@ class incomeOfInsomnia(dml.Algorithm):
                 zipcodetolatlong = repo['asambors_maxzm.zipcodetolatlong']
 
                 
-                #run select on the zip lat long dataset 
+                #run select on the zip lat long dataset so that its only zip codes that are near boston
+                selectedZipToIncomes = []
 
+                lowestBostonZip = 1840
+                highestBostonZip = 2299
+                for locationpoint in zipcodetolatlong.find():
+                        if(int(locationpoint['zip_code'])>lowestBostonZip and int(locationpoint['zip_code'])<highestBostonZip):
+                                selectedZipToIncomes.append(locationpoint)
                 
 
                 #map each no sleep person to corosponding zip based on lat long
@@ -36,12 +42,17 @@ class incomeOfInsomnia(dml.Algorithm):
 
 
 
+                return {"start":startTime,"end":endTime}
 
-    @staticmethod
+
+
+
+
+
+
+        @staticmethod
         def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
-        ''' Create the provenance document describing everything happening
-        in this script. Each run of the script will generate a new
-        document describing that invocation event '''
+
 
         # Set up the database connection.
             client = dml.pymongo.MongoClient()
