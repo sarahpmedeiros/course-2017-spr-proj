@@ -4,6 +4,7 @@ import dml
 import prov.model
 import datetime
 import uuid
+import math
 
 class incomeOfInsomnia(dml.Algorithm):
         contributor = 'asambors_maxzm'
@@ -77,13 +78,11 @@ class incomeOfInsomnia(dml.Algorithm):
 
 
                 #project each keys lat and long to be coppied as part of the value
-                projectedCombos = incomeOfInsomnia.project(allCombos, lambda t: (t[0],(t[0],t[1])))
+                projectedCombos = incomeOfInsomnia.project(allCombos, lambda t: (t[0]['uniqueid'],(t[0],t[1])))
 
 
                 #agregate
-                print(projectedCombos[0][0])
-#                print({r[0] for r in projectedCombos})
-#                incomeOfInsomnia.aggregate(projectedCombos,incomeOfInsomnia.pickCloserZip)
+                incomeOfInsomnia.aggregate(projectedCombos,incomeOfInsomnia.pickCloserZip)
 
 
 
