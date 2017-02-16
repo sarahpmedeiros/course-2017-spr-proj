@@ -5,12 +5,15 @@ import dml
 import prov.model
 import datetime
 import uuid
+import bson.code
+from bson.json_util import dumps
 
-class clean_trees_cambridge(dml.Algorithm):
+class clean_trees(dml.Algorithm):
     contributor = 'ajr10_williami'
     reads = ['ajr10_williami.trees_cambridge',\
              'ajr10_williami.trees_boston']
-    writes = ['cleaned_trees_cambridge']
+    writes = ['ajr10_williami.cleaned_trees_cambridge',\
+              'ajr10_williami.cleaned_trees_boston']
 
     @staticmethod
     def execute(trial = False):
@@ -22,7 +25,15 @@ class clean_trees_cambridge(dml.Algorithm):
         repo = client.repo
         repo.authenticate('ajr10_williami', 'ajr10_williami')
 
-        # Clean out unneccesary data from trees_cambridge here. Write to cleaned_trees_cambridge
+        # Perform cleaning transformation here
+        
+        repo.dropCollection('ajr10_williami.cleaned_trees_cambridge')
+        repo.createCollection('ajr10_williami.cleaned_trees_cambridge')
+
+        # go through all of boston and cambridge and comb out the trees
+        # info we don't care about, save to separate collections.
+
+        repo["ajr10_williami.cleaned_trees_cambridge"].find()
         
         # logout and return start and end times
         repo.logout()
@@ -140,9 +151,9 @@ class clean_trees_cambridge(dml.Algorithm):
 
         return doc
 
-clean_trees_cambridge.execute()
+clean_trees.execute()
 
-doc = clean_trees_cambridge.provenance()
+doc = clean_trees.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
