@@ -33,11 +33,13 @@ class incomeOfInsomnia(dml.Algorithm):
         def pickCloserZip(attemptAtZip):
                 closestDist = -1
                 closestObj = None
+                if attemptAtZip[0][0]['uniqueid']=='59':
+                    return None #handles the first 2 bs data entries in the dataset
                 for combo in attemptAtZip:
-                        lat1 = combo[0]['geolocation']['latitude']
-                        lat2 = combo[1]['lat']
-                        long1 = combo[0]['geolocation']['longitude']
-                        long2 = combo[1]['long']
+                        lat1 = float(combo[0]['geolocation']['latitude'])
+                        lat2 = float(combo[1]['lat'])
+                        long1 = float(combo[0]['geolocation']['longitude'])
+                        long2 = float(combo[1]['long'])
                         distApart = math.sqrt((lat2-lat1)**2+(long2-long1)**2)
                         #distance formula
                         if closestDist == -1 or distApart<closestDist:
@@ -82,7 +84,10 @@ class incomeOfInsomnia(dml.Algorithm):
 
 
                 #agregate
-                incomeOfInsomnia.aggregate(projectedCombos,incomeOfInsomnia.pickCloserZip)
+                aggregatedData = incomeOfInsomnia.aggregate(projectedCombos,incomeOfInsomnia.pickCloserZip)
+
+
+                print(aggregatedData)
 
 
 
