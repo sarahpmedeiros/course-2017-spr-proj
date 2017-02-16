@@ -7,10 +7,12 @@ import uuid
 
 class incomeOfInsomnia(dml.Algorithm):
         contributor = 'asambors_maxzm'
-        read = ['asambors_maxzm.nosleep','asambors_maxzm.ziptoincome','asambors_maxzm.zipcodetolatlong']
+        reads = ['asambors_maxzm.nosleep','asambors_maxzm.ziptoincome','asambors_maxzm.zipcodetolatlong']
         writes = ['asambors_maxzm.incomeofinsomnia']
 
 
+        def select(R, s):
+                return [t for t in R if s(t)]
         @staticmethod
         def execute(trial=False):
                 startTime = datetime.datetime.now()
@@ -41,6 +43,7 @@ class incomeOfInsomnia(dml.Algorithm):
 
 
 
+                endTime = datetime.datetime.now
 
                 return {"start":startTime,"end":endTime}
 
