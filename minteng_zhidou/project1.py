@@ -47,7 +47,7 @@ class project1(dml.Algorithm):
                 temp['address']=f['address']
                 temp['businessname']=f['businessname']
                 temp['city']=f['city']
-                temp['location']=(f['location']['coordinates'],"food")
+                temp['location']=(f['location']['coordinates'][::-1],"food")
                 temp['zip']=f['zip']
                 food_info.append(temp)
             except KeyError:
@@ -75,7 +75,7 @@ class project1(dml.Algorithm):
         for c in crime_info:
             try:
                 temp={}
-                temp['location']=(c['location']['coordinates'],"crime")
+                temp['location']=(c['location']['coordinates'][::-1],"crime")
                 temp['street']=c['street']
                 crime.append(temp)
             except KeyError:
@@ -87,7 +87,7 @@ class project1(dml.Algorithm):
         for c in crime_info:
             try:
                 temp={}
-                temp['location']=(c['location']['coordinates'],"crime")
+                temp['location']=(c['location']['coordinates'][::-1],"crime")
                 temp['street']=c['street']
                 crime.append(temp)
             except KeyError:
@@ -99,7 +99,7 @@ class project1(dml.Algorithm):
         for c in crime_info:
             try:
                 temp={}
-                temp['location']=(c['location']['coordinates'],"crime")
+                temp['location']=(c['location']['coordinates'][::-1],"crime")
                 temp['street']=c['street']
                 crime.append(temp)
             except KeyError:
@@ -120,7 +120,7 @@ class project1(dml.Algorithm):
         for s in salary_info:
             temp={}
             temp['name']=s['department_name']
-            temp['job']=s['title']
+            temp['job']=s['title'].replace(".","_")
             temp['salary']=s['total_earnings']
             temp['year']=2015
             salary.append(temp)
@@ -131,14 +131,37 @@ class project1(dml.Algorithm):
         for s in salary_info:
             temp={}
             temp['name']=s['department_name']
-            temp['job']=s['title']
+            temp['job']=s['title'].replace(".","_")
             temp['salary']=s['total_earnings']
             temp['year']=2014
             salary.append(temp)
             
+        from collections import defaultdict
+        def aggregate_salary(R):
+            res=defaultdict(list)
+            for r in R:
+                temp={}
+                temp['name']=r['name']
+                temp['salary']=r['salary']
+                temp['year']=r['year']
+                res[r['job']].append(temp)
+    
+            res1=[]
+            for key in res:
+                temp={}
+                salarys=[float(values['salary'])for values in res[key]]
+                avg=sum(salarys)/len(salarys)
+                t={}
+                t['avg_salary']=avg
+                t['data']=res[key]
+                temp[key]=t
+                res1.append(temp)
+            return res1
+
+        salary1=aggregate_salary(salary)
         repo.dropCollection("salary")
         repo.createCollection("salary")
-        repo['minteng_zhidou.salary'].insert_many(salary)
+        repo['minteng_zhidou.salary'].insert_many(salary1)
         repo['minteng_zhidou.salary'].metadata({'complete':True})
         print(repo['minteng_zhidou.salary'].metadata())
         
@@ -240,8 +263,8 @@ class project1(dml.Algorithm):
                   
         return doc
 
-project1.execute()
-doc = project1.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#project1.execute()
+#doc = project1.provenance()
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
 
