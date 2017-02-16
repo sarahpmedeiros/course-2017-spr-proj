@@ -38,8 +38,10 @@ class combineAllSwimmingPools(dml.Algorithm):
 
 
         for tuple in allPools_list:
-            if(tuple.get('value').get('neighborhood') == 'allston' or tuple.get('value').get('neighborhood') == 'brighton'):
-                tuple.update({'value':{'neighborhood':'allston / brighton'}})
+            if(tuple.get('value').get('neighborhood') == 'allston'
+               or tuple.get('value').get('neighborhood') == 'brighton'
+               or tuple.get('value').get('neighborhood') == 'allston / brighton'):
+                tuple.update({'value':{'neighborhood':'allston/brighton'}})
 
 
 

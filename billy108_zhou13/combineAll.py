@@ -8,11 +8,11 @@ import sodapy
 from bson.code import Code
 from bson.json_util import dumps
 
-class combineAllOpenSpaces(dml.Algorithm):
+class combineAll(dml.Algorithm):
 
     contributor = 'billy108_zhou13'
-    reads = ['billy108_zhou13.communityGardens','billy108_zhou13.openSpaceCambridge','billy108_zhou13.openSpaceBoston']
-    writes = ['billy108_zhou13.allOpenSpacesInBoston']
+    reads = ['billy108_zhou13.waterplayCambridge','billy108_zhou13.allOpenSpacesInBoston','billy108_zhou13.allPoolsInBoston']
+    writes = ['billy108_zhou13.allRecreationalPlaces']
 
     @staticmethod
     def execute(trial = False):
@@ -93,4 +93,4 @@ class combineAllOpenSpaces(dml.Algorithm):
     def provenance(doc=prov.model.ProvDocument(), startTime=None, endTime=None):
         return
 
-combineAllOpenSpaces.execute()
+combineAll.execute()
