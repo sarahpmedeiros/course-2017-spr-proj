@@ -31,10 +31,19 @@ class incomeOfInsomnia(dml.Algorithm):
 
         def pickCloserZip(attemptAtZip):
                 closestDist = -1
-                closestZip = -1
-                closestLatLong = -1
+                closestObj = None
                 for combo in attemptAtZip:
-                        if closestDist == -1 :
+                        lat1 = combo[0]['geolocation']['latitude']
+                        lat2 = combo[1]['lat']
+                        long1 = combo[0]['geolocation']['longitude']
+                        long2 = combo[1]['long']
+                        distApart = math.sqrt((lat2-lat1)**2+(long2-long1)**2)
+                        #distance formula
+                        if closestDist == -1 or distApart<closestDist:
+                                closestDist = distApart
+                                closestObj = combo
+                return combo
+
 
                 
 
@@ -66,14 +75,20 @@ class incomeOfInsomnia(dml.Algorithm):
 
                 allCombos = incomeOfInsomnia.product(nosleep.find({},{'_id': False}),selectedZipToIncomes)
 
+
+                #project each keys lat and long to be coppied as part of the value
+                projectedCombos = incomeOfInsomnia.project(allCombos, lambda t: (t[0],(t[0],t[1])))
+
+
                 #agregate
+                print(projectedCombos[0][0])
+#                print({r[0] for r in projectedCombos})
+#                incomeOfInsomnia.aggregate(projectedCombos,incomeOfInsomnia.pickCloserZip)
 
 
 
 
 
-
-                print(selectedZipToIncomes)
 
 
                 endTime = datetime.datetime.now
