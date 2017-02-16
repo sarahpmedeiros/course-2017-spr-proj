@@ -28,7 +28,7 @@ class fetch_data_cambridge(dml.Algorithm):
         print("retrieving open spaces data from data.cambridgema.gov")
 
         client = sodapy.Socrata("data.cambridgema.gov", None)
-        response = client.get("5ctr-ccas", limit=10)
+        response = client.get("5ctr-ccas", limit=50)
         r = json.loads(json.dumps(response, sort_keys=True, indent=2))
         
         repo.dropCollection("ajr10_williami.open_spaces_cambridge")
@@ -42,7 +42,7 @@ class fetch_data_cambridge(dml.Algorithm):
         print("retrieving tree data from data.cambridgema.gov")
 
         client = sodapy.Socrata("data.cambridgema.gov", None)
-        response = client.get("q83f-7quz", limit=10)
+        response = client.get("q83f-7quz", limit=50)
         r = json.loads(json.dumps(response, sort_keys=True, indent=2))
         
         repo.dropCollection("ajr10_williami.trees_cambridge")
@@ -56,7 +56,7 @@ class fetch_data_cambridge(dml.Algorithm):
         print("retrieving energy data from data.cambridgema.gov")
 
         client = sodapy.Socrata("data.cambridgema.gov", None)
-        response = client.get("es2i-g3p6", limit=10)
+        response = client.get("es2i-g3p6", limit=50)
         r = json.loads(json.dumps(response, sort_keys=True, indent=2))
         
         repo.dropCollection("ajr10_williami.energy_cambridge")
