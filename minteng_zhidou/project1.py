@@ -5,9 +5,9 @@ import prov.model
 import datetime
 import uuid
 class project1(dml.Algorithm):
-    contributor = 'minteng_zhido'
+    contributor = 'minteng_zhidou'
     reads = []
-    writes = ['minteng_zhido.rent', 'minteng_zhido.location','minteng_zhido.salary']
+    writes = ['minteng_zhidou.rent', 'minteng_zhidou.location','minteng_zhidou.salary']
 
     @staticmethod
     def execute(trial = False):
