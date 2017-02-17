@@ -51,7 +51,7 @@ class example(dml.Algorithm):
         repo['houset_karamy.crimeReportsCambridge'].insert_many(r)
         
         # Data for Police Car Routes in Cambridge
-        url = 'https://data.cambridgema.gov/api/views/svjm-6war/rows.json?accessType=DOWNLOAD'
+        url = 'https://data.cambridgema.gov/api/views/svjm-6war/rows.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
@@ -60,7 +60,7 @@ class example(dml.Algorithm):
         repo['houset_karamy.policeCarRoutesCambridge'].insert_many(r)
         
         # Data for Police Walking Routes in Cambridge
-        url = 'https://data.cambridgema.gov/api/views/aaqv-qhr2/rows.json?accessType=DOWNLOAD'
+        url = 'https://data.cambridgema.gov/api/views/aaqv-qhr2/rows.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
@@ -102,13 +102,21 @@ class example(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
-
+         
+        doc.add_namespace('mbta', 'http://realtime.mbta.com/developer/api/v2/r') # MBTA API
+        doc.add_namespace('cma', 'https://data.cambridgema.gov/browse') # Data from Cambridge
         
       writes = ['houset_karamy.policeStations','houset_karamy.crimeReportsBoston', 'houset_karamy.crimeReportsCambridge', 'houset_karamy.policeCarRoutesCambridge', 'houset_karamy.policeWalkingRoutesCambridge','houset_karamy.realTimeTravelMassdot']
 
             
         this_script = doc.agent('alg:houset_karamy#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        
+        resource1 = doc.entity('bdp:pyxn-r3i2', {'prov:label':'Police Stations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource2 = doc.entity('bdp:crime', {'prov:label':'Crime Reports Boston', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource3 = doc.entity('cma:dypy-nwuz', {'prov:label':'Crime Reports Cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource4 = doc.entity('cma:svjm-6war', {'prov:label':'Police Car Routes Cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource5 = doc.entity('bdp:pyxn-r3i2', {'prov:label':'Police Walking Routes Cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+                        
         get_policeStations = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_crimeReportsBoston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_crimeReportsCambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
@@ -123,27 +131,27 @@ class example(dml.Algorithm):
         doc.wasAssociatedWith(get_policeWalkingRoutesCambridge, this_script)
         doc.wasAssociatedWith(get_realTimeTravelMassDot, this_script)
         
-        doc.usage(get_policeStations, resource, startTime, None,
+        doc.usage(get_policeStations, resource1, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
 #                   'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
                   }
                   )
-        doc.usage(get_crimeReportsBoston, resource, startTime, None,
+        doc.usage(get_crimeReportsBoston, resource2, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
 #                   'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
                   }
                   )
-        doc.usage(get_crimeReportsCambridge, resource, startTime, None,
+        doc.usage(get_crimeReportsCambridge, resource3, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
 #                   'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
                   }
                   )
-        doc.usage(get_policeCarRoutesCambridge, resource, startTime, None,
+        doc.usage(get_policeCarRoutesCambridge, resource4, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
 #                   'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
                   }
                   )
-        doc.usage(get_policeWalkingRoutesCambridge, resource, startTime, None,
+        doc.usage(get_policeWalkingRoutesCambridge, resource5, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
 #                   'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
                   }
