@@ -50,8 +50,8 @@ class calculate_energy_ratio(dml.Algorithm):
         # Known Data
         total_area_cambridge = #7.131 square miles
         total_area_boston = #89.63 square miles
-        population_cambridge = 107289
-        population_boston = 645966
+        population_cambridge = 107289 # as of 2013 census
+        population_boston = 645966 # as of 2013 census
 
         for cambridge_open_space in open_spaces_cambridge:
             total_open_space_cambridge += eval(cambridge_open_space['area'])
@@ -68,10 +68,10 @@ class calculate_energy_ratio(dml.Algorithm):
             total_CO2_boston += eval(boston_energy['CO2'])
             total_mmbtu_boston += eval(boston_energy['mmbtu'])
 
-        print(total_open_space_cambridge)
+        print(total_open_space_cambridge) #probably in square feet
         print(total_CO2_cambridge)
         print(total_mmbtu_cambridge)
-        print(total_open_space_boston)
+        print(total_open_space_boston) #probably in square feet
         print(total_CO2_boston)
         print(total_mmbtu_boston)
 
