@@ -8,7 +8,7 @@ import uuid
 import bson.code
 from bson.json_util import dumps
 
-class clean_trees(dml.Algorithm):
+class clean_energy(dml.Algorithm):
     contributor = 'ajr10_williami'
     reads = ['ajr10_williami.energy_cambridge',\
              'ajr10_williami.energy_boston']
@@ -170,9 +170,9 @@ class clean_trees(dml.Algorithm):
 
         return doc
 
-clean_trees.execute()
+clean_energy.execute()
 
-doc = clean_trees.provenance()
+doc = clean_energy.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
