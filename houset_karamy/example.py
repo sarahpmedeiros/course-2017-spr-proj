@@ -21,12 +21,12 @@ class example(dml.Algorithm):
         repo = client.repo
         repo.authenticate('houset_karamy', 'houset_karamy')
 
-        url = 'http://cs-people.bu.edu/lapets/591/examples/lost.json'
+        url = 'https://data.cityofboston.gov/resource/pyxn-r3i2.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("lost")
-        repo.createCollection("lost")
+        repo.dropCollection("police-stations")
+        repo.createCollection("police-stations")
         repo['houset_karamy'].insert_many(r)
         repo['houset_karamy'].metadata({'complete':True})
         print(repo['houset_karamy.lost'].metadata())
