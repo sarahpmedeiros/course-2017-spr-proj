@@ -51,7 +51,7 @@ class example(dml.Algorithm):
         repo['houset_karamy.crimeReportsCambridge'].insert_many(r)
         
         # Data for Police Car Routes in Cambridge
-        url = 'https://data.cambridgema.gov/api/views/svjm-6war/rows.json'
+        url = 'https://data.cambridgema.gov/api/views/svjm-6war.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
@@ -60,7 +60,7 @@ class example(dml.Algorithm):
         repo['houset_karamy.policeCarRoutesCambridge'].insert_many(r)
         
         # Data for Police Walking Routes in Cambridge
-        url = 'https://data.cambridgema.gov/api/views/aaqv-qhr2/rows.json'
+        url = 'https://data.cambridgema.gov/api/views/aaqv-qhr2.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
