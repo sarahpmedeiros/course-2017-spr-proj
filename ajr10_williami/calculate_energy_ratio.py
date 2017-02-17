@@ -8,12 +8,14 @@ import uuid
 import bson.code
 from bson.json_util import dumps
 
-class clean_energy(dml.Algorithm):
+class calculate_energy_ratio(dml.Algorithm):
     contributor = 'ajr10_williami'
-    reads = ['ajr10_williami.energy_cambridge',\
-             'ajr10_williami.energy_boston']
-    writes = ['ajr10_williami.cleaned_energy_cambridge',\
-              'ajr10_williami.cleaned_energy_boston']
+    reads = ['ajr10_williami.area_spaces_cambridge',\
+              'ajr10_williami.area_spaces_boston',\
+              'ajr10_williami.clean_energy_cambridge',\
+             'ajr10_williami.clean_energy_boston']
+    writes = ['ajr10_williami.energy_ratio_cambridge',\
+              'ajr10_williami.energy_ratio_boston']
 
     @staticmethod
     def execute(trial = False):
@@ -27,32 +29,51 @@ class clean_energy(dml.Algorithm):
 
         # Perform cleaning transformation here
         
-        repo.dropCollection('ajr10_williami.cleaned_energy_cambridge')
-        repo.createCollection('ajr10_williami.cleaned_energy_cambridge')
+        repo.dropCollection('ajr10_williami.energy_ratio_cambridge')
+        repo.createCollection('ajr10_williami.energy_ratio_cambridge')
 
-        repo.dropCollection('ajr10_williami.cleaned_energy_boston')
-        repo.createCollection('ajr10_williami.cleaned_energy_boston')
+        repo.dropCollection('ajr10_williami.energy_ratio_boston')
+        repo.createCollection('ajr10_williami.energy_ratio_boston')
 
-        energy_cambridge = repo["ajr10_williami.energy_cambridge"].find()
-        energy_boston = repo["ajr10_williami.energy_boston"].find()
+        open_spaces_cambridge = repo["ajr10_williami.area_spaces_cambridge"].find()
+        open_spaces_boston = repo["ajr10_williami.area_spaces_boston"].find()
+        energy_cambridge = repo["ajr10_williami.cleaned_energy_cambridge"].find()
+        energy_boston = repo["ajr10_williami.cleaned_energy_boston"].find()
+
+        total_open_space_cambridge = 0
+        total_open_space_boston = 0
+        total_CO2_cambridge = 0
+        total_CO2_boston = 0
+        total_mmbtu_cambridge = 0
+        total_mmbtu_boston = 0
+
+        # Known Data
+        total_area_cambridge = #7.131 square miles
+        total_area_boston = #89.63 square miles
+        population_cambridge = 107289
+        population_boston = 645966
+
+        for cambridge_open_space in open_spaces_cambridge:
+            total_open_space_cambridge += eval(cambridge_open_space['area'])
+
 
         for cambridge_energy in energy_cambridge:
-            CO2 = cambridge_energy['co2_kg']
-            mmbtu = cambridge_energy['use_mmbtu']
+            total_CO2_cambridge += eval(cambridge_energy['CO2'])
+            total_mmbtu_cambridge += eval(cambridge_energy['mmbtu'])
 
-            new_energy = {}
-            new_energy["CO2"] = CO2
-            new_energy["mmbtu"] = mmbtu
-            repo['ajr10_williami.cleaned_energy_cambridge'].insert(new_energy)
+        for boston_open_space in open_spaces_boston:
+            total_open_space_boston += boston_open_space['area']
 
         for boston_energy in energy_boston:
-            CO2 = boston_energy['emission_co2']
-            mmbtu = boston_energy['use_mmbtu']
+            total_CO2_boston += eval(boston_energy['CO2'])
+            total_mmbtu_boston += eval(boston_energy['mmbtu'])
 
-            new_energy = {}
-            new_energy["CO2"] = CO2
-            new_energy["mmbtu"] = mmbtu
-            repo['ajr10_williami.cleaned_energy_boston'].insert(new_energy)
+        print(total_open_space_cambridge)
+        print(total_CO2_cambridge)
+        print(total_mmbtu_cambridge)
+        print(total_open_space_boston)
+        print(total_CO2_boston)
+        print(total_mmbtu_boston)
 
         # logout and return start and end times
         repo.logout()
@@ -170,9 +191,9 @@ class clean_energy(dml.Algorithm):
 
         return doc
 
-clean_energy.execute()
+calculate_energy_ratio.execute()
 
-doc = clean_energy.provenance()
+doc = calculate_energy_ratio.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
