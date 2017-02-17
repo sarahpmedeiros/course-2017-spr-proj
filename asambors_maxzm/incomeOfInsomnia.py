@@ -69,14 +69,30 @@ class incomeOfInsomnia(dml.Algorithm):
 
                 
                 #run select on the zip lat long dataset so that its only zip codes that are near boston
-                selectedZipToIncomes = incomeOfInsomnia.select(zipcodetolatlong.find({},{'_id': False}), incomeOfInsomnia.zipIsNearBoston) 
+                selectedZipToLatLong = incomeOfInsomnia.select(zipcodetolatlong.find({},{'_id': False}), incomeOfInsomnia.zipIsNearBoston) 
+
+
+                #run the same select on zip code to income
+                selectedZipToIncome = incomeOfInsomnia.select(ziptoincome.find({},{'_id': False}), incomeOfInsomnia.zipIsNearBoston) 
+
+
+                #now it is time to map the lat long zip codes to money
+
+                #map all together
+                allIncomeLatLongPairs = incomeOfInsomnia.product(selectedZipToLatLong,selectedZipToIncome)
+
+                #now select right ones in a reduce style fashion
+                onlyRealIncomeLatLongPairs = incomeOfInsomnia.select(allIncomeLatLongPairs,lambda t: int(t[0]['zip_code'])==int(t[1]['zip_code']))
+
+                zipLatLongIncome = incomeOfInsomnia.project(onlyRealIncomeLatLongPairs, lambda t: {**t[0],**t[1]})
+                
 
 
                 #map each no sleep person to corosponding zip based on lat long
                 
                 #product
 
-                allCombos = incomeOfInsomnia.product(nosleep.find({},{'_id': False}),selectedZipToIncomes)
+                allCombos = incomeOfInsomnia.product(nosleep.find({},{'_id': False}),zipLatLongIncome)
 
 
                 #project each keys lat and long to be coppied as part of the value
@@ -85,6 +101,9 @@ class incomeOfInsomnia(dml.Algorithm):
 
                 #agregate
                 aggregatedData = incomeOfInsomnia.aggregate(projectedCombos,incomeOfInsomnia.pickCloserZip)
+
+
+
 
 
                 print(aggregatedData)
