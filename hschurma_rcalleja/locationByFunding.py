@@ -45,18 +45,51 @@ class locationByFunding(dml.Algorithm):
         repo.dropPermanent("location_funding")
         repo.createPermanent("location_funding")
 
+        #size of location data set
         size = list(repo.hschurma_rcalleja.location.aggregate([{"$project": { "item":1, "numberOfSchools": { "$size": "$data"}}}]))
         s = size[0]['numberOfSchools']
 
+        #list of schools
         schools = []
         for i in range(s):
             schools.append(list(repo.hschurma_rcalleja.location.aggregate([{"$project": { "school": { "$arrayElemAt": ["$data", i]}}}])))
 
-        print(schools)
-        
 
-        #11th column is name
-        #13th column is location
+        #print(schools[0][0]['school'][12][0]['zip'])
+        #filter just name and location of schools
+        nameLoc = []
+        for j in range(s):
+            if schools[j][0]['school'][11] =="HS":
+                sch = json.loads(schools[0][0]['school'][12][0])
+                nameLoc.append((schools[j][0]['school'][10], (sch['zip'], schools[j][0]['school'][12][1:3])))
+
+
+
+        #print(nameLoc)
+        
+        #Dict of School name and Funding
+        funding = list(repo.hschurma_rcalleja.funding.aggregate([{"$project":{"_id":0, "FIELD2":1, "FIELD13":1}}]))
+
+        
+        nameFund = []
+        for i in range(len(funding)):
+            n = funding[i]["FIELD2"].strip()
+            nameFund.append((n, funding[i]["FIELD13"]))
+
+
+        #print(nameFund)
+        #print(nameLoc)
+        #print(nameFund)
+
+
+        P = product(nameLoc, nameFund)
+        S = select(P, lambda t: t[0][0] == t[1][0])
+        PR = project(S, lambda t: (t[0][0], t[0][1], t[1][1]))
+        print(PR)
+
+    
+        #Trim white spaces
+   
 
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):

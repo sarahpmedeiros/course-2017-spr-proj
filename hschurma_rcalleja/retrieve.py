@@ -8,7 +8,7 @@ import uuid
 class retrieve(dml.Algorithm):
     contributor = 'hschurma_rcalleja'
     reads = []
-    writes = ['hschurma_rcalleja.funding', 'hschurma_rcalleja.location', 'hschurma_rcalleja.graduation', 'hschurma_rcalleja.SAT']
+    writes = ['hschurma_rcalleja.funding', 'hschurma_rcalleja.location', 'hschurma_rcalleja.graduation', 'hschurma_rcalleja.SAT', 'hschurma_rcalleja.gradrates']
 
     @staticmethod
     def execute(trial = False):
@@ -53,6 +53,15 @@ class retrieve(dml.Algorithm):
         repo.dropCollection("SAT")
         repo.createCollection("SAT")
         repo['hschurma_rcalleja.SAT'].insert_many(r)
+
+
+        url = 'http://datamechanics.io/data/hshurma_rcalleja/gradrates.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("gradrates")
+        repo.createCollection("gradrated")
+        repo['hschurma_rcalleja.gradrated'].insert_many(r)
 
         
 
