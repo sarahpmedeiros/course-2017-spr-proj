@@ -88,7 +88,7 @@ class incomeOfInsomnia(dml.Algorithm):
                 
 
 
-                #map each no sleep person to corosponding zip based on lat long
+                #map each no sleep person to corosponding zip based on lat long  (this will also map to income because we mapped income to zip)
                 
                 #product
 
@@ -104,13 +104,18 @@ class incomeOfInsomnia(dml.Algorithm):
 
 
 
+                #last project to proper form
+
+                incomeOfInsomniaData = incomeOfInsomnia.project(aggregatedData, lambda t: {**t[0],**t[1]})
 
 
-                print(aggregatedData)
 
 
 
-
+                repo.dropCollection("incomeofinsomnia")
+                repo.createCollection("incomeofinsomnia")
+                repo['asambors_maxzm.incomeofinsomnia'].insert_many(incomeOfInsomniaData)
+                repo['asambors_maxzm.incomeofinsomnia'].metadata({'complete':True})
 
 
 
