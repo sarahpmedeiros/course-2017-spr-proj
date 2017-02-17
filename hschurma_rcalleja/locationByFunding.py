@@ -73,8 +73,7 @@ class locationByFunding(dml.Algorithm):
         
         nameFund = []
         for i in range(len(funding)):
-            n = funding[i]["FIELD2"].strip()
-            nameFund.append((n, funding[i]["FIELD13"]))
+            nameFund.append((funding[i]["FIELD2"].strip(), funding[i]["FIELD13"].strip()))
 
 
         #print(nameFund)

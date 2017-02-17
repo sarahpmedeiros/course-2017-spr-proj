@@ -5,14 +5,36 @@ import prov.model
 import datetime
 import uuid
 
-class retrieve(dml.Algorithm):
+def union(R, S):
+    return R + S
+
+def difference(R, S):
+    return [t for t in R if t not in S]
+
+def intersect(R, S):
+    return [t for t in R if t in S]
+
+def project(R, p):
+    return [p(t) for t in R]
+
+def select(R, s):
+    return [t for t in R if s(t)]
+ 
+def product(R, S):
+    return [(t,u) for t in R for u in S]
+
+def aggregate(R, f):
+    keys = {r[0] for r in R}
+    return [(key, f([v for (k,v) in R if k == key])) for key in keys]
+
+class funding_gradrates(dml.Algorithm):
     contributor = 'hschurma_rcalleja'
-    reads = []
-    writes = ['hschurma_rcalleja.funding', 'hschurma_rcalleja.location', 'hschurma_rcalleja.graduation', 'hschurma_rcalleja.SAT', 'hschurma_rcalleja.gradrates']
+    reads = ['hschurma_rcalleja.funding', 'hschurma_rcalleja.gradrates']
+    writes = ['hschurma_rcalleja.funding_gradrates']
+
 
     @staticmethod
     def execute(trial = False):
-        '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
         startTime = datetime.datetime.now()
 
         # Set up the database connection.
@@ -20,57 +42,39 @@ class retrieve(dml.Algorithm):
         repo = client.repo
         repo.authenticate('hschurma_rcalleja', 'hschurma_rcalleja')
 
-        url = 'https://data.cityofboston.gov/api/views/e29s-ympv/rows.json?accessType=DOWNLOAD'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("location")
-        repo.createCollection("location")
-        repo['hschurma_rcalleja.location'].insert_one(r)
-        '''repo['alice_bob.lost'].metadata({'complete':True})
-        print(repo['alice_bob.lost'].metadata())'''
-
-        url = 'http://datamechanics.io/data/hshurma_rcalleja/graduationdata.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("graduation")
-        repo.createCollection("graduation")
-        repo['hschurma_rcalleja.graduation'].insert_one(r)
-
-        url = 'http://datamechanics.io/data/hshurma_rcalleja/funding.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("funding")
-        repo.createCollection("funding")
-        repo['hschurma_rcalleja.funding'].insert_many(r)
-
-        url = 'http://datamechanics.io/data/hshurma_rcalleja/SAT2008.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("SAT")
-        repo.createCollection("SAT")
-        repo['hschurma_rcalleja.SAT'].insert_many(r)
-
-
-        url = 'http://datamechanics.io/data/hshurma_rcalleja/gradrates.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("gradrates")
-        repo.createCollection("gradrates")
-        repo['hschurma_rcalleja.gradrates'].insert_many(r)
-
+        repo.dropPermanent("funding_gradrates")
+        repo.createPermanent("funding_gradrates")
         
+        #Dict of School name and Funding
+        funding = list(repo.hschurma_rcalleja.funding.aggregate([{"$project":{"_id":0, "FIELD2":1, "FIELD13":1}}]))
+        
+        nameFund = []
+        for i in range(len(funding)):
+            nameFund.append((funding[i]["FIELD2"].strip(), funding[i]["FIELD13"].strip()))
 
-        repo.logout()
-
-        endTime = datetime.datetime.now()
-
-        return {"start":startTime, "end":endTime}
     
+        #print(nameFund)
+        #print(nameLoc)
+        #print(nameFund)
+
+        gradrates = list(repo.hschurma_rcalleja.gradrates.aggregate([{"$project":{"_id":0, "FIELD1":1, "FIELD10":1}}]))
+
+
+        name_grad = []
+
+        for i in gradrates:
+            name_grad.append((i['FIELD1'],i['FIELD10']))
+
+
+        P = product(name_grad, nameFund)
+        S = select(P, lambda t: t[0][0] == t[1][0])
+        PR = project(S, lambda t: (t[0][0], t[0][1], t[1][1]))
+        print(PR)
+
+    
+        #Trim white spaces
+   
+
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''Create the provenance document describing everything happening
@@ -126,10 +130,6 @@ class retrieve(dml.Algorithm):
         repo.logout()
                   
         return doc
-
-retrieve.execute()
-doc = retrieve.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
-
-## eof
+        
+funding_gradrates.execute()
+doc = funding_gradrates.provenance()
