@@ -48,8 +48,8 @@ class calculate_energy_ratio(dml.Algorithm):
         total_mmbtu_boston = 0
 
         # Known Data
-        total_area_cambridge = #7.131 square miles
-        total_area_boston = #89.63 square miles
+        total_area_cambridge = 1.988 * pow(10,8) #7.131 square miles
+        total_area_boston = 2.4225 * pow(10,9)#89.63 square miles
         population_cambridge = 107289 # as of 2013 census
         population_boston = 645966 # as of 2013 census
 
