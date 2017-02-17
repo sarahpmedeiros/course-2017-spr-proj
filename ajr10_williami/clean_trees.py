@@ -30,11 +30,28 @@ class clean_trees(dml.Algorithm):
         repo.dropCollection('ajr10_williami.cleaned_trees_cambridge')
         repo.createCollection('ajr10_williami.cleaned_trees_cambridge')
 
-        # go through all of boston and cambridge and comb out the trees
-        # info we don't care about, save to separate collections.
+        repo.dropCollection('ajr10_williami.cleaned_trees_boston')
+        repo.createCollection('ajr10_williami.cleaned_trees_boston')
 
-        repo["ajr10_williami.cleaned_trees_cambridge"].find()
-        
+        trees_cambridge = repo["ajr10_williami.trees_cambridge"].find()
+        trees_boston = repo["ajr10_williami.trees_boston"].find().limit(50)
+
+        for cambridge_tree in trees_cambridge:
+            coords = cambridge_tree['the_geom']['coordinates']
+
+            new_tree = {}
+            new_tree["longitude"] = coords[0]
+            new_tree["latitude"] = coords[1]
+            repo['ajr10_williami.cleaned_trees_cambridge'].insert(new_tree)
+
+        for boston_tree in trees_boston:
+            coords = boston_tree['geometry']['coordinates']
+
+            new_tree = {}
+            new_tree["longitude"] = coords[0]
+            new_tree["latitude"] = coords[1]
+            repo['ajr10_williami.cleaned_trees_boston'].insert(new_tree)
+
         # logout and return start and end times
         repo.logout()
         endTime = datetime.datetime.now()
