@@ -9,7 +9,7 @@ import uuid
 class example(dml.Algorithm):
     contributor = 'houset_karamy'
     reads = []
-    writes = ['houset_karamy.lost', 'houset_karamy.found']
+    writes = ['houset_karamy.police-stations','houset_karamy.crimeReportsBoston', 'houset_karamy.crimeReportsCambridge', 'houset_karamy.policeCarRoutesCambridge', 'houset_karamy.policeWalkingRoutesCambridge','houset_karamy.realTimeTravelMassdot']
 
     @staticmethod
     def execute(trial = False):
@@ -20,7 +20,8 @@ class example(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('houset_karamy', 'houset_karamy')
-
+        
+        # Data for Police Stations in Boston
         url = 'https://data.cityofboston.gov/resource/pyxn-r3i2.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
@@ -29,15 +30,54 @@ class example(dml.Algorithm):
         repo.createCollection("police-stations")
         repo['houset_karamy'].insert_many(r)
         repo['houset_karamy'].metadata({'complete':True})
-        print(repo['houset_karamy.lost'].metadata())
-
-        url = 'http://cs-people.bu.edu/lapets/591/examples/found.json'
+        print(repo['houset_karamy.police-stations'].metadata())
+        
+        # Data for Crime Reports in Boston
+        url = 'https://data.cityofboston.gov/resource/crime.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("found")
-        repo.createCollection("found")
-        repo['houset_karamy.found'].insert_many(r)
+        repo.dropCollection("crimeReportsBoston")
+        repo.createCollection("crimeReportsBoston")
+        repo['houset_karamy.crimeReportsBoston'].insert_many(r)
+        
+        # Data for Crime Reports in Cambridge
+        url = 'https://data.cambridgema.gov/resource/dypy-nwuz.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("crimeReportsCambridge")
+        repo.createCollection("crimeReportsCambridge")
+        repo['houset_karamy.crimeReportsCambridge'].insert_many(r)
+        
+        # Data for Police Car Routes in Cambridge
+        url = 'https://data.cambridgema.gov/api/views/svjm-6war/rows.json?accessType=DOWNLOAD'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("policeCarRoutesCambridge")
+        repo.createCollection("policeCarRoutesCambridge")
+        repo['houset_karamy.policeCarRoutesCambridge'].insert_many(r)
+        
+        # Data for Police Walking Routes in Cambridge
+        url = 'https://data.cambridgema.gov/api/views/aaqv-qhr2/rows.json?accessType=DOWNLOAD'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("policeWalkingRoutesCambridge")
+        repo.createCollection("policeWalkingRoutesCambridge")
+        repo['houset_karamy.policeWalkingRoutesCambridge'].insert_many(r)
+       #******* I PUT IN THE LINKS FOR A FEW DATA SETS I FOUND RELEVANT*******
+       #******* JUST TO KEEP IT SIMPLER FOR US I DIDNT USE ALL THE ONES WE TALKED ABOUT********
+       #******* NEED HELP INSERTING MBTA ONE THOUGH. NOT SURE IF IT WORKS. NEED TO INCORPORATE PROVENANCE. IDEK ANYMORE*******
+    
+       # url = 'http://cs-people.bu.edu/lapets/591/examples/found.json'
+        #response = urllib.request.urlopen(url).read().decode("utf-8")
+        #r = json.loads(response)
+        #s = json.dumps(r, sort_keys=True, indent=2)
+        #repo.dropCollection("found")
+        #repo.createCollection("found")
+        #repo['houset_karamy.found'].insert_many(r)
 
         repo.logout()
 
