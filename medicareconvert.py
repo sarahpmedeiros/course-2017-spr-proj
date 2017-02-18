@@ -1,10 +1,10 @@
 import csv
 import json
 
-csvfile = open('education.csv', 'r')
-jsonfile = open('education.json', 'w')
+csvfile = open('medicare.csv', 'r')
+jsonfile = open('medicare.json', 'w')
 
-fieldnames = ("state", "highschool", "bachelor")
+fieldnames = ("hospital", "city", "state", "county", "score", "measurestart", "measureend")
 
 reader = csv.DictReader(csvfile, fieldnames, delimiter=',')
 for row in reader:

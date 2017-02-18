@@ -5,7 +5,7 @@ import prov.model
 import datetime
 import uuid
 import sodapy
-import csv
+
 
 class getData(dml.Algorithm):
     contributor = 'jw0208'
@@ -22,12 +22,12 @@ class getData(dml.Algorithm):
         repo = client.repo
         repo.authenticate('jw0208',"jw0208") #username, password
 ## done----------------------------------------------------------
-        with open('tax.json') as r:
+        with open('medicare.json') as r:
             s= json.loads(r.read())
-        repo.dropCollection("tax")
-        repo.createCollection("tax")
-        repo['jw0208.tax'].insert_many(s)
-        repo['jw0208.tax'].metadata({'complete':True})
+        repo.dropCollection("medicare")
+        repo.createCollection("medicare")
+        repo['jw0208.medicare'].insert_many(s)
+        repo['jw0208.medicare'].metadata({'complete':True})
         #print(json.dumps(s, sort_keys=True, indent=2))
 
 ## done----------------------------------------------------------
@@ -47,6 +47,16 @@ class getData(dml.Algorithm):
         repo['jw0208.education'].insert_many(s)
         repo['jw0208.education'].metadata({'complete': True})
         # print(json.dumps(s, sort_keys=True, indent=2))
+
+## done----------------------------------------------------------
+        with open('income.json') as r:
+            s = json.loads(r.read())
+        repo.dropCollection("income")
+        repo.createCollection("income")
+        repo['jw0208.income'].insert_many(s)
+        repo['jw0208.income'].metadata({'complete': True})
+        # print(json.dumps(s, sort_keys=True, indent=2))
+
 ## ----------------------------------------------------------
         client = sodapy.Socrata("chronicdata.cdc.gov", None)
         response = client.get("fq5d-abxc", limit=10)
@@ -82,7 +92,7 @@ class getData(dml.Algorithm):
         doc.add_namespace('mdg', 'https://data.mass.gov/resource/')
         doc.add_namespace('cdg', 'https://chronicdata.cdc.gov/resource/')
 
-        this_script = doc.agent('alg:getData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:jw0208#getData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         this_tax = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         this_health = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
@@ -114,8 +124,8 @@ class getData(dml.Algorithm):
         return doc
 
 getData.execute()
-doc = getData.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#doc = getData.provenance()
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4)) #a nicer format to see
 
 ## eof
