@@ -52,18 +52,18 @@ class calculate_energy_ratio(dml.Algorithm):
         population_boston = 645966 # as of 2013 census
 
         for cambridge_open_space in open_spaces_cambridge:
-            energy_ratio_cambridge["total_open_space_cambridge"] += eval(cambridge_open_space['area'])
+            energy_ratio_cambridge["total_open_space_cambridge"] += int(cambridge_open_space['area'])
 
         for cambridge_energy in energy_cambridge:
-            energy_ratio_cambridge["total_CO2_cambridge"] += eval(cambridge_energy['CO2'])
-            energy_ratio_cambridge["total_mmbtu_cambridge"] += eval(cambridge_energy['mmbtu'])
+            energy_ratio_cambridge["total_CO2_cambridge"] += int(cambridge_energy['CO2'])
+            energy_ratio_cambridge["total_mmbtu_cambridge"] += int(cambridge_energy['mmbtu'])
 
         for boston_open_space in open_spaces_boston:
             energy_ratio_boston["total_open_space_boston"] += boston_open_space['area']
 
         for boston_energy in energy_boston:
-            energy_ratio_boston["total_CO2_boston"] += eval(boston_energy['CO2'])
-            energy_ratio_boston["total_mmbtu_boston"] += eval(boston_energy['mmbtu'])
+            energy_ratio_boston["total_CO2_boston"] += int(boston_energy['CO2'])
+            energy_ratio_boston["total_mmbtu_boston"] += int(boston_energy['mmbtu'])
 
         # Calculate ratios and weights
         energy_ratio_cambridge["open_space_ratio_cambridge"] = energy_ratio_cambridge["total_open_space_cambridge"] / total_area_cambridge
