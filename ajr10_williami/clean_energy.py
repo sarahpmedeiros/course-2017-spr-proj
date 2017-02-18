@@ -113,11 +113,11 @@ class clean_energy(dml.Algorithm):
 
         return doc
 
-
+'''
 clean_energy.execute()
 
 doc = clean_energy.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
-
+'''
 ## eof

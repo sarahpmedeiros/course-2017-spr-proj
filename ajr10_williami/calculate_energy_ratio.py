@@ -151,11 +151,11 @@ class calculate_energy_ratio(dml.Algorithm):
         repo.logout()
 
         return doc
-
+'''
 calculate_energy_ratio.execute()
 
 doc = calculate_energy_ratio.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
-
+'''
 ## eof

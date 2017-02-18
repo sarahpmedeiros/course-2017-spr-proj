@@ -110,11 +110,11 @@ class get_area(dml.Algorithm):
 
         return doc
 
-
+'''
 get_area.execute()
 
 doc = get_area.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
-
+'''
 ## eof

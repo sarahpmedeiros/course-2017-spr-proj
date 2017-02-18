@@ -6,7 +6,7 @@ import prov.model
 import datetime
 import uuid
 
-class fetch_data(dml.Algorithm):
+class fetch_data_boston(dml.Algorithm):
     contributor = 'ajr10_williami'
     reads = []
     writes = ['ajr10_williami.open_spaces_boston',\
@@ -140,11 +140,11 @@ class fetch_data(dml.Algorithm):
         repo.logout()
                   
         return doc
+'''
+fetch_data_boston.execute()
 
-fetch_data.execute()
-
-doc = fetch_data.provenance()
+doc = fetch_data_boston.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
-
+'''
 ## eof
