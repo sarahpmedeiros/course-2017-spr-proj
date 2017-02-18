@@ -6,10 +6,13 @@ import datetime
 import uuid
 import sodapy
 
-class data1(dml.Algorithm):
+# https://data.cityofboston.gov/Permitting/Property-Assessment-2015/yv8c-t43q
+# https://data.cityofboston.gov/resource/n7za-nsjh.json
+
+class property_2015(dml.Algorithm):
     contributor = 'pt0713_silnuext'
     reads = []
-    writes = ['pt0713_silnuext.lost', 'pt0713_silnuext.found']
+    writes = ['pt0713_silnuext.property_2015']
 
     @staticmethod
     def execute(trial = False):
@@ -22,15 +25,15 @@ class data1(dml.Algorithm):
         repo.authenticate('pt0713_silnuext', 'pt0713_silnuext')
 
         client = sodapy.Socrata("data.cityofboston.gov", None)
-        response = client.get("crime")
+        response = client.get("n7za-nsjh")
         #r = json.loads(response)
         s = json.dumps(response, sort_keys=True, indent=2)
         print(s)
-        repo.dropCollection("lost")
-        repo.createCollection("lost")
-        repo['pt0713_silnuext.lost'].insert_many(response)
-        repo['pt0713_silnuext.lost'].metadata({'complete':True})
-        print(repo['pt0713_silnuext.lost'].metadata())
+        repo.dropCollection("property_2015")
+        repo.createCollection("property_2015")
+        repo['pt0713_silnuext.property_2015'].insert_many(response)
+        repo['pt0713_silnuext.property_2015'].metadata({'complete':True})
+        print(repo['pt0713_silnuext.property_2015'].metadata())
 
         repo.logout()
 
@@ -58,38 +61,31 @@ class data1(dml.Algorithm):
 
         this_script = doc.agent('alg:pt0713_silnuext#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_found = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_lost = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_found, this_script)
-        doc.wasAssociatedWith(get_lost, this_script)
-        doc.usage(get_found, resource, startTime, None,
+        get_property_2015 = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+        doc.wasAssociatedWith(get_property_2015, this_script)
+
+        doc.usage(get_property_2015, resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-        doc.usage(get_lost, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
+                  'ont:Query':'?type=Animal+property_2015&$select=type,latitude,longitude,OPEN_DT'
                   }
                   )
 
-        lost = doc.entity('dat:pt0713_silnuext#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
+        property_2015 = doc.entity('dat:pt0713_silnuext#property_2015', {prov.model.PROV_LABEL:'Animals property_2015', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(property_2015, this_script)
+        doc.wasGeneratedBy(property_2015, get_property_2015, endTime)
+        doc.wasDerivedFrom(property_2015, resource, get_property_2015, get_property_2015, get_property_2015)
 
-        found = doc.entity('dat:pt0713_silnuext#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(found, this_script)
-        doc.wasGeneratedBy(found, get_found, endTime)
-        doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
 
         repo.logout()
                   
         return doc
 
-data1.execute()
-doc = data1.provenance()
+property_2015.execute()
+doc = property_2015.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
+
+
