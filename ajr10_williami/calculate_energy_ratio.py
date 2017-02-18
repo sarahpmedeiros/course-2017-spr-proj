@@ -14,8 +14,7 @@ class calculate_energy_ratio(dml.Algorithm):
               'ajr10_williami.area_spaces_boston',\
               'ajr10_williami.clean_energy_cambridge',\
              'ajr10_williami.clean_energy_boston']
-    writes = ['ajr10_williami.energy_ratio_cambridge',\
-              'ajr10_williami.energy_ratio_boston']
+    writes = ['ajr10_williami.energy_ratio']
 
     @staticmethod
     def execute(trial = False):
@@ -29,51 +28,53 @@ class calculate_energy_ratio(dml.Algorithm):
 
         # Perform cleaning transformation here
         
-        repo.dropCollection('ajr10_williami.energy_ratio_cambridge')
-        repo.createCollection('ajr10_williami.energy_ratio_cambridge')
-
-        repo.dropCollection('ajr10_williami.energy_ratio_boston')
-        repo.createCollection('ajr10_williami.energy_ratio_boston')
+        repo.dropCollection('ajr10_williami.energy_ratio')
+        repo.createCollection('ajr10_williami.energy_ratio')
 
         open_spaces_cambridge = repo["ajr10_williami.area_spaces_cambridge"].find()
         open_spaces_boston = repo["ajr10_williami.area_spaces_boston"].find()
         energy_cambridge = repo["ajr10_williami.cleaned_energy_cambridge"].find()
         energy_boston = repo["ajr10_williami.cleaned_energy_boston"].find()
 
-        total_open_space_cambridge = 0
-        total_open_space_boston = 0
-        total_CO2_cambridge = 0
-        total_CO2_boston = 0
-        total_mmbtu_cambridge = 0
-        total_mmbtu_boston = 0
+        energy_ratio_cambridge = {}
+        energy_ratio_boston = {}
+        energy_ratio_cambridge["total_open_space_cambridge"] = 0
+        energy_ratio_boston["total_open_space_boston"] = 0
+        energy_ratio_cambridge["total_CO2_cambridge"] = 0
+        energy_ratio_boston["total_CO2_boston"] = 0
+        energy_ratio_cambridge["total_mmbtu_cambridge"] = 0
+        energy_ratio_boston["total_mmbtu_boston"] = 0
 
         # Known Data
-        total_area_cambridge = 1.988 * pow(10,8) #7.131 square miles
-        total_area_boston = 2.4225 * pow(10,9)#89.63 square miles
+        total_area_cambridge = 1.988 * pow(10,8) # 7.131 square miles
+        total_area_boston = 2.4225 * pow(10,9) # 89.63 square miles
         population_cambridge = 107289 # as of 2013 census
         population_boston = 645966 # as of 2013 census
 
         for cambridge_open_space in open_spaces_cambridge:
-            total_open_space_cambridge += eval(cambridge_open_space['area'])
-
+            energy_ratio_cambridge["total_open_space_cambridge"] += eval(cambridge_open_space['area'])
 
         for cambridge_energy in energy_cambridge:
-            total_CO2_cambridge += eval(cambridge_energy['CO2'])
-            total_mmbtu_cambridge += eval(cambridge_energy['mmbtu'])
+            energy_ratio_cambridge["total_CO2_cambridge"] += eval(cambridge_energy['CO2'])
+            energy_ratio_cambridge["total_mmbtu_cambridge"] += eval(cambridge_energy['mmbtu'])
 
         for boston_open_space in open_spaces_boston:
-            total_open_space_boston += boston_open_space['area']
+            energy_ratio_boston["total_open_space_boston"] += boston_open_space['area']
 
         for boston_energy in energy_boston:
-            total_CO2_boston += eval(boston_energy['CO2'])
-            total_mmbtu_boston += eval(boston_energy['mmbtu'])
+            energy_ratio_boston["total_CO2_boston"] += eval(boston_energy['CO2'])
+            energy_ratio_boston["total_mmbtu_boston"] += eval(boston_energy['mmbtu'])
 
-        print(total_open_space_cambridge) #probably in square feet
-        print(total_CO2_cambridge)
-        print(total_mmbtu_cambridge)
-        print(total_open_space_boston) #probably in square feet
-        print(total_CO2_boston)
-        print(total_mmbtu_boston)
+        # Calculate ratios and weights
+        energy_ratio_cambridge["open_space_ratio_cambridge"] = energy_ratio_cambridge["total_open_space_cambridge"] / total_area_cambridge
+        energy_ratio_boston["open_space_ratio_boston"] = energy_ratio_boston["total_open_space_boston"] / total_area_boston
+        energy_ratio_cambridge["CO2_per_resident_cambridge"] = energy_ratio_cambridge["total_CO2_cambridge"] / population_cambridge
+        energy_ratio_boston["CO2_per_resident_boston"] = energy_ratio_boston["total_CO2_boston"] / population_boston
+        energy_ratio_cambridge["mmbtu_per_resident_cambridge"] = energy_ratio_cambridge["total_mmbtu_cambridge"] / population_cambridge
+        energy_ratio_boston["mmbtu_per_resident_boston"] = energy_ratio_boston["total_mmbtu_boston"] / population_boston
+
+        repo['ajr10_williami.energy_ratio'].insert(energy_ratio_cambridge)
+        repo['ajr10_williami.energy_ratio'].insert(energy_ratio_boston)
 
         # logout and return start and end times
         repo.logout()
@@ -193,8 +194,8 @@ class calculate_energy_ratio(dml.Algorithm):
 
 calculate_energy_ratio.execute()
 
-doc = calculate_energy_ratio.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# doc = calculate_energy_ratio.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
