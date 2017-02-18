@@ -7,9 +7,9 @@ Datasets we want to use
 4. Public Swimming Pools in Boston – https://data.cityofboston.gov/Public-Property/Year-Round-Swimming-Pools/rtqb-8pht/data
 5. Cambridge Medical Events – https://data.cambridgema.gov/Public-Safety/Medical-Events/4hgq-4f2b/data
 
-Other Potential Datasets
-- "Public Gardens" in Boston - https://data.cityofboston.gov/Health/Community-Gardens/cr3i-jj7v
+Transformations we are doing
+1. combine open spaces boston and cambridge, then see a correlation between obesity rates and how far people are from open spaces
 
+2. sleep rates and correlation to university locations
 
-Why we are using these Datasets
-Research the correlation between medical ailments and the location of hospitals, universities, medical events, parks and swimming pools in Boston/Cambridge
+3. health insurance rates and correlation to hospital locations
