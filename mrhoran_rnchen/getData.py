@@ -1,16 +1,20 @@
-import urllib.request
 import json
 import dml
 import prov.model
 import datetime
 import uuid
+import ast
 import sodapy
 
 class getData(dml.Algorithm):
-    
+
     contributor = 'mrhoran_rnchen'
     reads = []
-    writes = ['mrhoran_rnchen.community_gardens', 'mrhoran_rnchen.cornerstores','mrhoran_rnchen.demographics','mrhoran_rnchen.medical_events']
+    writes = ['mrhoran_rnchen.community_gardens',
+              'mrhoran_rnchen.cornerstores',
+              'mrhoran_rnchen.demographics',
+              'mrhoran_rnchen.medical_events',
+              'mrhoran_rnchen.farmers_markets']
 
     @staticmethod
     def execute(trial = False):
@@ -18,7 +22,7 @@ class getData(dml.Algorithm):
         startTime = datetime.datetime.now()
 
         client = dml.pymongo.MongoClient()
-        
+
         repo = client.repo
         
         repo.authenticate('mrhoran_rnchen', 'mrhoran_rnchen')
@@ -27,7 +31,7 @@ class getData(dml.Algorithm):
             #credentials = json.load(json_data)
 
         cred = dml.auth
-            
+        
         city_of_boston_datasets = {
 
             "community_gardens": "rdqf-ter7",#'https://data.cityofboston.gov/resource/rdqf-ter7.json',
@@ -44,55 +48,61 @@ class getData(dml.Algorithm):
 
 	### DATASETS FROM CITY OF BOSTON DATA PORTAL #################################
         
-        token = "?$$app_token="+cred['services']['cityofbostondataportal']['token']
-              
+        token = cred['services']['cityofbostondataportal']['token']
+        
         for dataset in city_of_boston_datasets:
 
-            #url = "https://data.cityofboston.gov/resource/rdqf-ter7.json"+token#city_of_boston_datasets[dataset]+token
-            #response = urllib.request.urlopen(url).read().decode("utf-8") ###
+            client = sodapy.Socrata("data.cityofboston.gov", None)
+            response = (client.get(city_of_boston_datasets[dataset], limit=10))
             
-            client = sodapy.Socrata("data.cityofboston.gov", token)
-            response = client.get(city_of_boston_datasets[dataset], limit=10)
             print(json.dumps(response, sort_keys=True, indent=2))
-            
-            r = json.loads(response)
-            s = json.dumps(r, sort_keys=True, indent=2)
-
+            s = json.dumps(response, sort_keys=True, indent=2)
         
             repo.dropCollection(dataset)
             repo.createCollection(dataset)
-            repo['mrhoran_rnchen' + dataset].insert_many(r)
-            repo['mrhoran_rnchen'+dataset].metadata({'complete':True})
-            print(repo['mrhoran_rnchen'+dataset].metadata())
+            repo['mrhoran_rnchen.' + dataset].insert_many(response)
+            repo['mrhoran_rnchen.'+dataset].metadata({'complete':True})
+            print(type(repo['mrhoran_rnchen.'+dataset].metadata()))
 
 
         ### DATASETS FROM CAMBRIDE DATA PORTAL ########################################
 
            
-        token = "?$$app_token="+cred['services']['cityofcambridgedataportal']['token']
+        #token2 = cred['services']['cityofcambridgedataportal']['token']
 
 
-        #for dataset in city_of_cambrige_datasets:
+        for dataset in city_of_cambrige_datasets:
 
-            #url = city_of_cambrige_datasets[dataset]+token
-
-            #response = urllib.request.urlopen(url).read().decode("utf-8")
-
-            #client = Socrata("data.cambridgema.gov", token)
-            #response = client.get(city_of_cambrige_datasets[dataset], limit=10)
-            #print(json.dumps(response, sort_keys=True, indent=2))
+            client = sodapy.Socrata("data.cambridgema.gov", token)
+            response = client.get(city_of_cambrige_datasets[dataset], limit=10)
+            print(json.dumps(response, sort_keys=True, indent=2))
             
-            #r = json.loads(response)
-            #s = json.dumps(r, sort_keys=True, indent=2)
+            s = json.dumps(response, sort_keys=True, indent=2)
             
-            #repo.dropCollection(dataset)
-            #repo.createCollection(dataset)
-            #repo['mrhoran_rnchen' + dataset].insert_many(r)
-            #repo['mrhoran_rnchen'+dataset].metadata({'complete':True})
-            #print(repo['mrhoran_rnchen'+dataset].metadata())
+            repo.dropCollection(dataset)
+            repo.createCollection(dataset)
+            repo['mrhoran_rnchen.'+dataset].insert_many(response)
+            repo['mrhoran_rnchen.'+dataset].metadata({'complete':True})
+            print(repo['mrhoran_rnchen.'+dataset].metadata())
 
 
-        
+        ## DATASETS FROM MASSDATA PORTAL ###############################################
+
+        #if you need the url for any reason : "https://data.mass.gov/resource/66t5-f563.json"
+
+        client = sodapy.Socrata("data.mass.gov", token)
+        response = client.get('66t5-f563', limit=10)
+        print(json.dumps(response, sort_keys=True, indent=2))
+            
+        s = json.dumps(response, sort_keys=True, indent=2)
+            
+        repo.dropCollection('farmers_market')
+        repo.createCollection('farmers_market')
+        repo['mrhoran_rnchen.farmers_market'].insert_many(response)
+        repo['mrhoran_rnchen.farmers_market'].metadata({'complete':True})
+
+        print(repo['mrhoran_rnchenfarmers_market'].metadata())
+
         repo.logout()
 
         endTime = datetime.datetime.now()
@@ -168,6 +178,18 @@ class getData(dml.Algorithm):
                   #'ont:Query':'location, area, coordinates, zip_code' #?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
                   }
                   )
+
+        resource5 = doc.entity('bdp:66t5-f563', {'prov:label':'Farmers Markets', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+
+        get_farmers_markets = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+        doc.wasAssociatedWith(get_farmers_markets, this_script)
+
+        doc.usage(get_farmers_markets, resource5, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'
+                  #'ont:Query':'location, area, coordinates, zip_code' #?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
+                  }
+                  )
     
         community_gardens = doc.entity('dat:mrhoran_rnchen#community_gardens', {prov.model.PROV_LABEL:'Community Gardens', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
         doc.wasAttributedTo(community_gardens, this_script)
@@ -188,6 +210,11 @@ class getData(dml.Algorithm):
         doc.wasAttributedTo(medical_events, this_script)
         doc.wasGeneratedBy(medical_events, get_medical_events, endTime)
         doc.wasDerivedFrom(medical_events, resource4, get_medical_events, get_medical_events, get_medical_events)
+
+        farmers_markets = doc.entity('dat:mrhoran_rnchen#farmers_markets', {prov.model.PROV_LABEL:'Farmers Markets', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
+        doc.wasAttributedTo(farmers_markets, this_script)
+        doc.wasGeneratedBy(farmers_markets, get_medical_events, endTime)
+        doc.wasDerivedFrom(farmers_markets, resource4, get_farmers_markets, get_farmers_markets, get_farmers_markets)
 
         repo.logout()
                   
