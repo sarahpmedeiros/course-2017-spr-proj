@@ -48,7 +48,6 @@ class get_area(dml.Algorithm):
 
             new_area = {}
             new_area["area"] = area
-            print(new_area)
             repo['ajr10_williami.area_spaces_boston'].insert(new_area)
 
         # logout and return start and end times
