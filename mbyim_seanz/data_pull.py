@@ -8,7 +8,7 @@ import uuid
 class datapull(dml.Algorithm):
     contributor = 'mbyim_seanz'
     reads = []
-    writes = ['mbyim_seanz.vehicle_tax', 'mbyim_seanz.parking_tickets', 'mbyim_seanz.mbta_stops']
+    writes = ['mbyim_seanz.vehicle_tax', 'mbyim_seanz.parking_tickets', 'mbyim_seanz.mbta_stops', 'mbyim_seanz.property_assessments', 'mbyim_seanz.snow_parking']
 
     @staticmethod
     def execute(trial = False):
@@ -42,13 +42,12 @@ class datapull(dml.Algorithm):
         repo['mbyim_seanz.vehicle_tax'].metadata({'complete':True})
         print(repo['mbyim_seanz.vehicle_tax'].metadata())
 
+        #mbta Info------------------------------------------------------------------------------------------------------------------------------------------
         #MBTA API key Info
         with open('../auth.json') as auth_file:
             auth_key = json.load(auth_file)
 
         api_key = auth_key['mbtadeveloperportal']['key']
-
-        #mbta Info------------------------------------------------------------------------------------------------------------------------------------------
         url = 'http://realtime.mbta.com/developer/api/v2/routes?api_key=' + api_key + '&format=json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         mbta_route_data = json.loads(response)
@@ -89,6 +88,29 @@ class datapull(dml.Algorithm):
         repo['mbyim_seanz.mbta_stops'].metadata({'complete':True})
         print(repo['mbyim_seanz.mbta_stops'].metadata())
 
+        #Property assessment data------------------------------------------------------------------------------------------------------------------------------------------
+        url = 'https://data.cityofboston.gov/resource/jsri-cpsq.json?%24select=full_address,ZIPCODE,AV_LAND,AV_BLDG,AV_TOTAL,Location'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("property_assessments")
+        repo.createCollection("property_assessments")
+        repo['mbyim_seanz.property_assessments'].insert_many(r)
+        repo['mbyim_seanz.property_assessments'].metadata({'complete':True})
+        print(repo['mbyim_seanz.property_assessments'].metadata())
+
+        #Snow parking data------------------------------------------------------------------------------------------------------------------------------------------
+        url = 'http://datamechanics.io/data/mbyim_seanz/SnowParking.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("snow_parking")
+        repo.createCollection("snow_parking")
+        repo['mbyim_seanz.snow_parking'].insert_many(r)
+        repo['mbyim_seanz.snow_parking'].metadata({'complete':True})
+        print(repo['mbyim_seanz.snow_parking'].metadata())
+
+        #end------------------------------------------------------------------------------------------------------------------------------------------
         repo.logout()
         endTime = datetime.datetime.now()
 
@@ -117,14 +139,20 @@ class datapull(dml.Algorithm):
         resource_vehicle_tax = doc.entity('bdp:ww9y-x77a', {'prov:label':'Vehicle Tax', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_parking_tickets = doc.entity('bdp:cpdb-ie6e', {'prov:label':'Parking Tickets', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_mbta_stops = doc.entity('mbta:filler', {'prov:label':'MBTA Stops', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        
+        resource_property_assessments = doc.entity('bdp:jsri-cpsq', {'prov:label':'Property Assessments 2014', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource_snow_parking = doc.entity('dat:mbyim_seanz/SnowParking.json', {'prov:label':'Snow Parking', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+
         get_vehicle_tax = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_parking_tickets = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_mbta_stops = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_property_assessments = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_snow_parking = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_vehicle_tax, this_script)
         doc.wasAssociatedWith(get_parking_tickets, this_script)
         doc.wasAssociatedWith(get_mbta_stops, this_script)
+        doc.wasAssociatedWith(get_property_assessments, this_script)
+        doc.wasAssociatedWith(get_snow_parking, this_script)
 
         doc.usage(get_vehicle_tax, resource_vehicle_tax, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
@@ -137,6 +165,17 @@ class datapull(dml.Algorithm):
                   }
         )
         doc.usage(get_mbta_stops, resource_mbta_stops, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',
+                  'ont:Query':'?format=json'
+                  }
+        )
+        doc.usage(get_property_assessments, resource_property_assessments, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',
+                  'ont:Query':'?$select=full_address,ZIPCODE,AV_LAND,AV_BLDG,AV_TOTAL,Location'
+                  }
+        )
+
+        doc.usage(get_snow_parking, resource_snow_parking, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
                   'ont:Query':'?format=json'
                   }
@@ -157,8 +196,17 @@ class datapull(dml.Algorithm):
         doc.wasGeneratedBy(mbta_stops, get_mbta_stops, endTime)
         #doc.wasDerivedFrom(vehicle_tax, resource, get_vehicle_tax, get_vehicle_tax, get_vehicle_tax)
 
+        property_assessments = doc.entity('dat:mbyim_seanz#property_assessments', {prov.model.PROV_LABEL:'Property Assessments 2014', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(property_assessments, this_script)
+        doc.wasGeneratedBy(property_assessments, get_property_assessments, endTime)
+        #doc.wasDerivedFrom(vehicle_tax, resource, get_vehicle_tax, get_vehicle_tax, get_vehicle_tax)
+
+        snow_parking = doc.entity('dat:mbyim_seanz#snow_parking', {prov.model.PROV_LABEL:'Snow Parking', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(snow_parking, this_script)
+        doc.wasGeneratedBy(snow_parking, get_snow_parking, endTime)
+
+        #end---
         repo.logout()
-                  
         return doc
 
 datapull.execute()
