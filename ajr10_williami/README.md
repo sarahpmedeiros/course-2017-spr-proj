@@ -1,12 +1,11 @@
 # Project Purporse/Narrative:
-Studies show that there is a correlation between access to public spaces, and the populations general level of happiness. Our project 1 has two objectives regarding this. 
 
-Our primary objective is we want to see if this correlation holds true for the greater Boston area by observing and analysing available data. 
+Cities are a very efficient way of storing humans. What is the efficiency cost of having trees and open spaces in a city? The scripts in this project take steps to draw correlations detailing this relationship.
 
-Our secondary objective is to use what we learn from the initial analysis to propose location for new parks/public spaces to maximimize happiness gain. 
+We have collected data about how many open spaces and trees there are in Cambridge and Boston. Additionally, we have also collected data about the energy usage of each location.
 
-We will do this by observing three datasets: 1) Transportation Data, 2) Parks and Public Spaces data, and 3) Citizen Contentment/Reported happiness.
-
-### Setting up
+We calculate the ratio of open space area to total area of the location, the CO2 usage per person, and the MMBTU usage per person. We then draw a connection between how much open space there is and how much extra energy is used in each location.
 
 ### Running our code
+
+Run execute.py. There is nothing unique about the scripts in this project that require special steps.
