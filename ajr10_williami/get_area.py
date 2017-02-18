@@ -76,8 +76,8 @@ class get_area(dml.Algorithm):
 
         this_script = doc.agent('alg:ajr10_williami#get_area', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
-        areas_cambridge_resource = doc.entity('awc:area_spaces_cambridge', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        areas_boston_resource = doc.entity('awc:area_spaces_boston', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        areas_cambridge_resource = doc.entity('awc:open_spaces_cambridge', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        areas_boston_resource = doc.entity('awc:open_spaces_boston', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_areas_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_areas_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
