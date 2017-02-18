@@ -73,15 +73,12 @@ class clean_trees(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('cdp', 'https://data.cambridgema.gov/resource/')
-        doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
-        doc.add_namespace('cob', 'data.cityofboston.gov/')
+        doc.add_namespace('awc', 'ajr10_williami')
 
-        '''
         this_script = doc.agent('alg:ajr10_williami#clean_trees', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
-        trees_cambridge_resource = doc.entity('cdp:q83f-7quz', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        trees_boston_resource = doc.entity('bod:ce863d38db284efe83555caf8a832e2a_1.geojson', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        trees_cambridge_resource = doc.entity('awc:trees_cambridge', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        trees_boston_resource = doc.entity('awc:trees_boston', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_trees_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_trees_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
@@ -91,26 +88,25 @@ class clean_trees(dml.Algorithm):
 
         doc.usage(get_trees_cambridge, trees_cambridge_resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Trees+Cambridge'
+                  'ont:Query':'?type=Clean+Trees+Cambridge'
                   }
                   )
         doc.usage(get_trees_boston, trees_boston_resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Trees+Boston'
+                  'ont:Query':'?type=Clean+Trees+Boston'
                   }
                   )
 
-        trees_cambridge = doc.entity('dat:ajr10_williami#trees_cambridge', {prov.model.PROV_LABEL:'Trees Cambridge', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(trees_cambridge, this_script)
-        doc.wasGeneratedBy(trees_cambridge, get_trees_cambridge, endTime)
-        doc.wasDerivedFrom(trees_cambridge, trees_cambridge_resource, get_trees_cambridge, get_trees_cambridge, get_trees_cambridge)
+        clean_trees_cambridge = doc.entity('dat:ajr10_williami#cleaned_trees_cambridge', {prov.model.PROV_LABEL:'Cleaned Trees Cambridge', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(clean_trees_cambridge, this_script)
+        doc.wasGeneratedBy(clean_trees_cambridge, get_trees_cambridge, endTime)
+        doc.wasDerivedFrom(clean_trees_cambridge, trees_cambridge_resource, get_trees_cambridge, get_trees_cambridge, get_trees_cambridge)
 
-        trees_boston = doc.entity('dat:ajr10_williami#trees_boston', {prov.model.PROV_LABEL:'Trees Boston', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(trees_boston, this_script)
-        doc.wasGeneratedBy(trees_boston, get_trees_boston, endTime)
-        doc.wasDerivedFrom(trees_boston, trees_boston_resource, get_trees_boston, get_trees_boston, get_trees_boston)
+        clean_trees_boston = doc.entity('dat:ajr10_williami#cleaned_trees_boston', {prov.model.PROV_LABEL:'Cleaned Trees Boston', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(clean_trees_boston, this_script)
+        doc.wasGeneratedBy(clean_trees_boston, get_trees_boston, endTime)
+        doc.wasDerivedFrom(clean_trees_boston, trees_boston_resource, get_trees_boston, get_trees_boston, get_trees_boston)
 
-        '''
         repo.logout()
 
         return doc
