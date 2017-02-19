@@ -29,14 +29,16 @@ class retrieveData(dml.Algorithm):
 
         # Get data for hospitals
         client = sodapy.Socrata("data.cityofboston.gov", None)
-        response = client.get("u6fv-m8v4", limit=10)
+        response = client.get("u6fv-m8v4", limit=30)
         repo.dropCollection("hospitals")
         repo.createCollection("hospitals")
         repo['pgr_syquiac.hospitals'].insert_many(response)
 
         # Get data for CDC 500 cities
         client = sodapy.Socrata("chronicdata.cdc.gov", None)
-        response = client.get("csmm-fdhi", limit=10)
+        response = client.get("csmm-fdhi", CityName="Boston",
+         GeographicLevel="Census Tract", limit=5000)
+        print(len(response))
         repo.dropCollection("cdc")
         repo.createCollection("cdc")
         repo['pgr_syquiac.cdc'].insert_many(response)
@@ -67,7 +69,8 @@ class retrieveData(dml.Algorithm):
 
         # Get data for Open Swimming Pools in Boston
         client = sodapy.Socrata("data.cityofboston.gov", None)
-        response = client.get("5jxx-wfpr", limit=10)
+        response = client.get("5jxx-wfpr", limit=1)
+        #print(response)
         repo.dropCollection("pools")
         repo.createCollection("pools")
         repo['pgr_syquiac.pools'].insert_many(response)
