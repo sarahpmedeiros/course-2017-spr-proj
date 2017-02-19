@@ -33,7 +33,7 @@ class fld_crime(dml.Algorithm):
         #r = json.loads(response)
         s = json.dumps(response, sort_keys=True, indent=2)
         print(s)
-        repo['pt0713_silnuext.fld_cirme'].insert_many(response)
+        repo['pt0713_silnuext.fld_crime'].insert_many(response)
         repo['pt0713_silnuext.fld_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.fld_crime'].metadata())
 
