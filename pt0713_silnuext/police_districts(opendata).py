@@ -27,7 +27,7 @@ class police_districts(dml.Algorithm):
         url = "http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5.geojson"
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
-        r = [r['features'][i]['properties'] for i in range(len(r))]
+        r = [r['features'][i]['properties'] for i in range(11)]
         print(len(r))
         print(json.dumps(r))
   
