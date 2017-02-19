@@ -26,13 +26,15 @@ class police_districts(dml.Algorithm):
 
         url = "http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5.geojson"
         response = urllib.request.urlopen(url).read().decode("utf-8")
-        response = json.loads(response)
-        print(json.dumps(response, sort_keys=True, indent=2))
+        r = json.loads(response)
+        r = [r['features'][i]['properties'] for i in range(len(r))]
+        print(len(r))
+        print(json.dumps(r))
   
      
         repo.dropCollection("police_districts")
         repo.createCollection("police_districts")
-        repo['pt0713_silnuext.police_districts'].insert_many(response)
+        repo['pt0713_silnuext.police_districts'].insert_many(r)
         repo['pt0713_silnuext.police_districts'].metadata({'complete':True})
         print(repo['pt0713_silnuext.police_districts'].metadata())
 

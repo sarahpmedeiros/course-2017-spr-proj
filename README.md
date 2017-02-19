@@ -94,3 +94,7 @@ To execute all the algorithms for a particular contributor (e.g., `alice_bob`) i
 ```
 python execute.py alice_bob
 ```
+
+## Short Narrative of How our datasets are going to be used and What our project will be focus on
+
+We are interested at “Boston crime incidents” in relation to “property assessment”, “police district”, and  “labor complaints”. Our main dataset will be Crime Incident Reports and we have come out three assumptions: First, there will be less crime incidents when “the total assessed value for property” rises. To do so, we look at data of Property Assessments from year 2014 and 2015 and compare if there are any correlations between the total assessed value for property and the number of crime incidents. Second, there will be less crime incidents within police districts. To do so, we look at the “district” column from Police Districts and check the proportion that the number of the districts where the crime incident equals to police district out of the total number of crimes. Last but not least, while there are many researches indicate that unemployment causes crime, we want to look that whether employees’ happiness also influences on crime rate. We assume that there will be less crime rate when Fair Labor Division receives less complaints because people are happier and will not tend to behave silly. In this case, we compare data of FLD Complaints from 2015 and 2016 in Boston area.
