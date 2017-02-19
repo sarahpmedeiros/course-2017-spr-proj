@@ -15,7 +15,7 @@ import sodapy
 class retrieveData(dml.Algorithm):
     contributor = 'pgr_syquiac'
     reads = []
-    writes = ['pgr_syquiac.hospitals', 'pgr_syquiac.cdc', 'pgr_syquiac.schools','pgr_syquiac.pools']
+    writes = ['pgr_syquiac.hospitals', 'pgr_syquiac.cdc', 'pgr_syquiac.schools','pgr_syquiac.pools','pgr_syquiac.stores']
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
@@ -36,8 +36,8 @@ class retrieveData(dml.Algorithm):
         # Get data for CDC 500 cities
         client = sodapy.Socrata("chronicdata.cdc.gov", None)
         response = client.get("csmm-fdhi", CityName="Boston",
-         GeographicLevel="Census Tract", limit=5000)
-        print(len(response))
+        GeographicLevel="Census Tract", limit=5000)
+        #print(len(response))
         repo.dropCollection("cdc")
         repo.createCollection("cdc")
         repo['pgr_syquiac.cdc'].insert_many(response)
@@ -60,8 +60,13 @@ class retrieveData(dml.Algorithm):
         repo.createCollection("pools")
         repo['pgr_syquiac.pools'].insert_many(response)
 
-        # Need to add the healthy corner stores, this will be combined with pools for the obesity rates
-
+        # Get data for healthy corner stores
+        client = sodapy.Socrata("data.cityofboston.gov", None)
+        response = client.get("ybm6-m5qd", limit=16)
+        #print(response)
+        repo.dropCollection("stores")
+        repo.createCollection("stores")
+        repo['pgr_syquiac.stores'].insert_many(response)
 
 
         repo.logout()
@@ -69,7 +74,7 @@ class retrieveData(dml.Algorithm):
         endTime = datetime.datetime.now()
 
         return {"start":startTime, "end":endTime}
-    
+
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''
@@ -82,16 +87,20 @@ class retrieveData(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('pgr_syquiac', 'pgr_syquiac')
+
+
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
-        doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/')
+        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/') #Boston Data Portal
+        doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/') #CDC data portal
         doc.add_namespace('cdp', 'https://data.cambridgema.gov/resource/')
+        doc.add_namespace('datm', 'https://datamechanics.io/data') # datamechanics.io, hosts the university data
 
         this_script = doc.agent('alg:pgr_syquiac#retrieveData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        
+
+        #hospitals
         hospitalsResource = doc.entity('bdp:u6fv-m8v4', {'prov:label':'Hospital Locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         getHospitals = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(getHospitals, this_script)
@@ -100,6 +109,7 @@ class retrieveData(dml.Algorithm):
         	}
         )
 
+        #cdc Data
         cdcResource = doc.entity('cdc:csmm-fdhi', {'prov:label':'500 Cities: Local Data for Better Health', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         getCDC = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(getCDC, this_script)
@@ -108,30 +118,34 @@ class retrieveData(dml.Algorithm):
         	}
         )
 
-        openspacesResource = doc.entity('cdp:5ctr-ccas', {'prov:label':'Open Space', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        getOpenSpaces = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(getOpenSpaces, this_script)
-        doc.usage(getOpenSpaces, openspacesResource, resource, startTime, None,
+        #university data
+        schoolsResource = doc.entity('datm:pgr_syquia/universities', {'prov:label':'Schools', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        getSchools = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        doc.wasAssociatedWith(getSchools, this_script)
+        doc.usage(getSchools, schoolsResource, resource, startTime, None,
         	{prov.model.PROV_TYPE:'ont:Retrieval'
         	}
         )
-        '''
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_found = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_lost = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_found, this_script)
-        doc.wasAssociatedWith(get_lost, this_script)
-        doc.usage(get_found, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-        doc.usage(get_lost, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
 
+        #Open Swimming Pools data
+        poolsResource = doc.entity('bdp:5jxx-wfpr', {'prov:label':'Pools', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        getPools = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        doc.wasAssociatedWith(getPools, this_script)
+        doc.usage(getPools, poolsResource, resource, startTime, None,
+        	{prov.model.PROV_TYPE:'ont:Retrieval'
+        	}
+        )
+
+        #healthy corner stores data
+        storesResource = doc.entity('bdp:ybm6-m5qd', {'prov:label':'Healthy Corner Stores', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        getStores = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        doc.wasAssociatedWith(getStores, this_script)
+        doc.usage(getStores, storesResource, resource, startTime, None,
+        	{prov.model.PROV_TYPE:'ont:Retrieval'
+        	}
+        )
+
+        '''
         # This is for when u create new data
 
         lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
@@ -146,7 +160,7 @@ class retrieveData(dml.Algorithm):
 
         '''
         repo.logout()
-                  
+
         return doc
 
 retrieveData.execute()
