@@ -59,7 +59,7 @@ class getData(dml.Algorithm):
 
 ## ----------------------------------------------------------
         client = sodapy.Socrata("chronicdata.cdc.gov", None)
-        response = client.get("fq5d-abxc", limit=10)
+        response = client.get("fq5d-abxc", limit=52)
         r = json.loads(json.dumps(response)) #load twice to convert list to str
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("health")

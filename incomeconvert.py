@@ -4,7 +4,7 @@ import json
 csvfile = open('income.csv', 'r')
 jsonfile = open('income.json', 'w')
 
-fieldnames = ("ID", "state", "statename", "HHincome", "percentage")
+fieldnames = ("state", "HHincome")
 
 reader = csv.DictReader(csvfile, fieldnames, delimiter=',')
 for row in reader:

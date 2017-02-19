@@ -7,10 +7,10 @@ import uuid
 
 
 
-class healthEducation(dml.Algorithm):
+class healthIncome(dml.Algorithm):
     contributor = 'jw0208'
-    reads = ['jw0208.education', 'jw0208.health']
-    writes = ['jw0208.healthEducation']
+    reads = ['jw0208.income', 'jw0208.health']
+    writes = ['jw0208.healthIncome']
 
 
 
@@ -37,7 +37,7 @@ class healthEducation(dml.Algorithm):
 
 
 
-        education = repo['jw0208.education']
+        income = repo['jw0208.income']
         health = repo['jw0208.health']
 
         health_array = []
@@ -47,36 +47,27 @@ class healthEducation(dml.Algorithm):
 
         #print (health_array);
 
-        # X = [(state, highschool,bachelor)]
-        state = []
 
-        for document in education.find():
-            state.append((document['state'], document['highschool'], document['bachelor'], 1))
+        income_array = []
 
-        state_education_average = []
-        keys = {r[0] for r in state}
-
-        for key in keys:
-            state_education_average.append((key, str(sum([float(v) for (k, v, s, x) in state if k == key])/ sum([x for (k, v, s, x) in state if k == key])), str(sum([float(s) for (k, v, s, x) in state if k == key])/ sum([x for (k, v, s, x) in state if k == key]))))
+        for document in income.find():
+            income_array.append((document['state'], document['HHincome']))
 
 
-        education_array = []
-        for i in state_education_average:
-            education_array.append((i[0], i[1], i[2]))
-
-
-        x = project(select(product(education_array, health_array), lambda t: t[0][0] == t[1][0]), lambda t: (t[0][0], t[0][1], t[0][2], t[1][1]))
+        x = project(select(product(income_array, health_array), lambda t: t[0][0] == t[1][0]), lambda t: (t[0][0], t[0][1], t[1][1]))
+        #print(x)
 
         y = []
         for i in range(0,51):
-            y.append({'state':x[i][0], 'highschool': x[i][1], 'bachelor':x[i][2], 'unhealthydays': x[i][3]})
+            y.append({'state':x[i][0], 'income': x[i][1], 'unhealthydays':x[i][2]})
 
         #print (y)
 
 
-        #repo.dropPermanent('jw0208.healthEducation')
-        #repo.createPermanent('jw0208.healthEducation')
-        repo['jw0208.healthEducation'].insert_many(y)
+
+        repo.dropPermanent('jw0208.healthIncome')
+        repo.createPermanent('jw0208.healthIncome')
+        repo['jw0208.healthIncome'].insert_many(y)
 
 
 
@@ -109,23 +100,23 @@ class healthEducation(dml.Algorithm):
 
         this_script = doc.agent('alg:jw0208#healthEducation', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         resource = doc.entity('bdp:t85d-b449', {'prov:label':'State physically and mentally unhealthy days vs. state education level', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        this_healthEducation = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(this_healthEducation, this_script)
-        doc.usage(this_healthEducation, resource, startTime, None,
+        this_healthIncome = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        doc.wasAssociatedWith(this_healthIncome, this_script)
+        doc.usage(this_healthIncome, resource, startTime, None,
                 {prov.model.PROV_TYPE:'ont:Retrieval'}
             )
 
         healthEducation = doc.entity('dat:jw0208#healthEducation', {prov.model.PROV_LABEL:'State physically and mentally unhealthy days vs. state education level', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(healthEducation, this_script)
-        doc.wasGeneratedBy(healthEducation, this_healthEducation, endTime)
-        doc.wasDerivedFrom(healthEducation, resource, this_healthEducation, this_healthEducation, this_healthEducation)
+        doc.wasGeneratedBy(healthEducation, this_healthIncome, endTime)
+        doc.wasDerivedFrom(healthEducation, resource, this_healthIncome, this_healthIncome, this_healthIncome)
 
         repo.record(doc.serialize()) # Record the provenance document.
         repo.logout()
 
         return doc
 
-healthEducation.execute()
+healthIncome.execute()
 #doc = healthEducation.provenance()
 #print(doc.get_provn())
 #print(json.dumps(json.loads(doc.serialize()), indent=4))
