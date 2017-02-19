@@ -1,8 +1,0 @@
-python3 2014property\(citygov\).py 
-python3 2015property(citygov).py
-python3 crimeIncident(citygov).py
-python3 fld_crime.py
-python3 fld(massdata).py
-python3 police_crime.py
-python3 policeDistricts(opendata).py
-python3 property_crime.py
