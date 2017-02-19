@@ -1,0 +1,3697 @@
+[
+ {
+   "FIELD1": "OBJECTID",
+   "FIELD2": "FULL_NAME",
+   "FIELD3": "Responsibility"
+ },
+ {
+   "FIELD1": "1",
+   "FIELD2": "C St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "2",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "3",
+   "FIELD2": "B St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "4",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "5",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "6",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "7",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "8",
+   "FIELD2": "Arlington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "9",
+   "FIELD2": "Columbia Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "10",
+   "FIELD2": "Boston Wharf Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "11",
+   "FIELD2": "Blue Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "12",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "13",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "14",
+   "FIELD2": "Beacon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "15",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "16",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "17",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "18",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "19",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "20",
+   "FIELD2": "Charles St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "21",
+   "FIELD2": "Columbia Road Rotary",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "22",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "23",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "24",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "25",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "26",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "27",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "28",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "29",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "30",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "31",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "32",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "33",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "34",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "35",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "36",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "37",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "38",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "39",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "40",
+   "FIELD2": "Arlington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "41",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "42",
+   "FIELD2": "Boylston St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "43",
+   "FIELD2": "Albany St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "44",
+   "FIELD2": "Chestnut Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "45",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "46",
+   "FIELD2": "Avenue Louis Pasteur",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "47",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "48",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "49",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "50",
+   "FIELD2": "Adams St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "51",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "52",
+   "FIELD2": "Brighton Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "53",
+   "FIELD2": "Charles St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "54",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "55",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "56",
+   "FIELD2": "Charles St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "57",
+   "FIELD2": " ",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "58",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "59",
+   "FIELD2": "Blue Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "60",
+   "FIELD2": "Blue Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "61",
+   "FIELD2": "Blue Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "62",
+   "FIELD2": "Blue Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "63",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "64",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "65",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "66",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "67",
+   "FIELD2": "Blue Hills Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "68",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "69",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "70",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "71",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "72",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "73",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "74",
+   "FIELD2": " ",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "75",
+   "FIELD2": " ",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "76",
+   "FIELD2": " ",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "77",
+   "FIELD2": "A St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "78",
+   "FIELD2": "Adams St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "79",
+   "FIELD2": "Adams St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "80",
+   "FIELD2": "Adams St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "81",
+   "FIELD2": "Adams St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "82",
+   "FIELD2": "Albany St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "83",
+   "FIELD2": "Albany St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "84",
+   "FIELD2": "Albany St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "85",
+   "FIELD2": "Albany St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "86",
+   "FIELD2": "Alford St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "87",
+   "FIELD2": "Alford St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "88",
+   "FIELD2": "Allandale St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "89",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "90",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "91",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "92",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "93",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "94",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "95",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "96",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "97",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "98",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "99",
+   "FIELD2": "American Legion Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "100",
+   "FIELD2": "Arlington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "101",
+   "FIELD2": "Arlington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "102",
+   "FIELD2": "Ashmont St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "103",
+   "FIELD2": "Atlantic Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "104",
+   "FIELD2": "Austin St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "105",
+   "FIELD2": "Austin St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "106",
+   "FIELD2": "Austin St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "107",
+   "FIELD2": "Avenue Louis Pasteur",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "108",
+   "FIELD2": "Baker St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "109",
+   "FIELD2": "Beach St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "110",
+   "FIELD2": "Beacon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "111",
+   "FIELD2": "Beacon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "112",
+   "FIELD2": "Beacon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "113",
+   "FIELD2": "Beacon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "114",
+   "FIELD2": "Beacon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "115",
+   "FIELD2": "Beacon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "116",
+   "FIELD2": "Belgrade Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "117",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "118",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "119",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "120",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "121",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "122",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "123",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "124",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "125",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "126",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "127",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "128",
+   "FIELD2": "Bennington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "129",
+   "FIELD2": "Berkeley St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "130",
+   "FIELD2": "Blue Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "131",
+   "FIELD2": "Blue Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "132",
+   "FIELD2": "Blue Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "133",
+   "FIELD2": "Blue Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "134",
+   "FIELD2": "Blue Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "135",
+   "FIELD2": "Blue Hills Pkwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "136",
+   "FIELD2": "Blue Hills Pkwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "137",
+   "FIELD2": "Boardman St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "138",
+   "FIELD2": "Boston St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "139",
+   "FIELD2": "Bowdoin St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "140",
+   "FIELD2": "Bowdoin St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "141",
+   "FIELD2": "Bowdoin St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "142",
+   "FIELD2": "Bowdoin St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "143",
+   "FIELD2": "Bowdoin St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "144",
+   "FIELD2": "Boylston St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "145",
+   "FIELD2": "Boylston St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "146",
+   "FIELD2": "Boylston St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "147",
+   "FIELD2": "Boylston St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "148",
+   "FIELD2": "Boylston St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "149",
+   "FIELD2": "Boylston St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "150",
+   "FIELD2": "Boylston St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "151",
+   "FIELD2": "Brighton Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "152",
+   "FIELD2": "Brighton Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "153",
+   "FIELD2": "Brighton Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "154",
+   "FIELD2": "Broadway Brg",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "155",
+   "FIELD2": "Broadway Brg",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "156",
+   "FIELD2": "Broadway Brg",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "157",
+   "FIELD2": "Brookline Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "158",
+   "FIELD2": "Brookline Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "159",
+   "FIELD2": "Brookline Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "160",
+   "FIELD2": "Brookline Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "161",
+   "FIELD2": "Brookline Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "162",
+   "FIELD2": "Brookline Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "163",
+   "FIELD2": "Bunker Hill St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "164",
+   "FIELD2": "Bussey St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "165",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "166",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "167",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "168",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "169",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "170",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "171",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "172",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "173",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "174",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "175",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "176",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "177",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "178",
+   "FIELD2": "Cambridge St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "179",
+   "FIELD2": "Canterbury St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "180",
+   "FIELD2": "Causeway St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "181",
+   "FIELD2": "Causeway St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "182",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "183",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "184",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "185",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "186",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "187",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "188",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "189",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "190",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "191",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "192",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "193",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "194",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "195",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "196",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "197",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "198",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "199",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "200",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "201",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "202",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "203",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "204",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "205",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "206",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "207",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "208",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "209",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "210",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "211",
+   "FIELD2": "Centre St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "212",
+   "FIELD2": "Charles St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "213",
+   "FIELD2": "Charles St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "214",
+   "FIELD2": "Charles St S",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "215",
+   "FIELD2": "Charlesgate East",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "216",
+   "FIELD2": "Charlesgate East",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "217",
+   "FIELD2": "Charlesgate West",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "218",
+   "FIELD2": "Chelsea St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "219",
+   "FIELD2": "Chelsea St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "220",
+   "FIELD2": "Chelsea St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "221",
+   "FIELD2": "Chestnut Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "222",
+   "FIELD2": "Chestnut Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "223",
+   "FIELD2": "Chestnut Hill Dr",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "224",
+   "FIELD2": "Chestnut Hill Dr",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "225",
+   "FIELD2": "City Sq",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "226",
+   "FIELD2": "Clarendon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "227",
+   "FIELD2": "Columbia Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "228",
+   "FIELD2": "Columbia Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "229",
+   "FIELD2": "Columbia Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "230",
+   "FIELD2": "Columbia Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "231",
+   "FIELD2": "Columbia Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "232",
+   "FIELD2": "Columbia Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "233",
+   "FIELD2": "Columbia Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "234",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "235",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "236",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "237",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "238",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "239",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "240",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "241",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "242",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "243",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "244",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "245",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "246",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "247",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "248",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "249",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "250",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "251",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "252",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "253",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "254",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "255",
+   "FIELD2": "Columbus Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "256",
+   "FIELD2": "Gibson St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "257",
+   "FIELD2": "Fifth St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "258",
+   "FIELD2": "Cummins Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "259",
+   "FIELD2": "Evans Way",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "260",
+   "FIELD2": "Cummins Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "261",
+   "FIELD2": "Hyde Park Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "262",
+   "FIELD2": "Jewish War Veterans Dr",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "263",
+   "FIELD2": "Jewish War Veterans Dr",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "264",
+   "FIELD2": "Constitution Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "265",
+   "FIELD2": "Commercial St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "266",
+   "FIELD2": "Commercial St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "267",
+   "FIELD2": "Jamaicaway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "268",
+   "FIELD2": "Gallivan Blvd",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "269",
+   "FIELD2": "Jewish War Veterans Dr",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "270",
+   "FIELD2": "Commonwealth Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "271",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "272",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "273",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "274",
+   "FIELD2": "Hyde Park Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "275",
+   "FIELD2": "Hancock St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "276",
+   "FIELD2": "Hancock St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "277",
+   "FIELD2": "Commonwealth Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "278",
+   "FIELD2": "Commonwealth Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "279",
+   "FIELD2": "Hancock St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "280",
+   "FIELD2": "Freeport St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "281",
+   "FIELD2": "Gallivan Blvd",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "282",
+   "FIELD2": "Heath St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "283",
+   "FIELD2": "Commonwealth Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "284",
+   "FIELD2": "Commonwealth Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "285",
+   "FIELD2": "Hyde Park Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "286",
+   "FIELD2": "Heath St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "287",
+   "FIELD2": "Fenway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "288",
+   "FIELD2": "Fenway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "289",
+   "FIELD2": "Jewish War Veterans Dr",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "290",
+   "FIELD2": "Dudley St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "291",
+   "FIELD2": "Commercial St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "292",
+   "FIELD2": "Commonwealth Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "293",
+   "FIELD2": "Commonwealth Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "294",
+   "FIELD2": "Commonwealth Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "295",
+   "FIELD2": "Commonwealth Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "296",
+   "FIELD2": "Commonwealth Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "297",
+   "FIELD2": "Commonwealth Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "298",
+   "FIELD2": "Commonwealth Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "299",
+   "FIELD2": "Commonwealth Ave. Underpass",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "300",
+   "FIELD2": "Condor St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "301",
+   "FIELD2": "Congress St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "302",
+   "FIELD2": "Congress St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "303",
+   "FIELD2": "Congress St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "304",
+   "FIELD2": "Congress St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "305",
+   "FIELD2": "Congress St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "306",
+   "FIELD2": "Constitution Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "307",
+   "FIELD2": "Constitution Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "308",
+   "FIELD2": "Constitution Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "309",
+   "FIELD2": "Constitution Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "310",
+   "FIELD2": "Corey St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "311",
+   "FIELD2": "Corinth St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "312",
+   "FIELD2": "Court St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "313",
+   "FIELD2": "Cross St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "314",
+   "FIELD2": "Cross St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "315",
+   "FIELD2": "Cross St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "316",
+   "FIELD2": "Cummins Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "317",
+   "FIELD2": "Cummins Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "318",
+   "FIELD2": "Cummins Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "319",
+   "FIELD2": "Cummins Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "320",
+   "FIELD2": "Cummins Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "321",
+   "FIELD2": "Cummins Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "322",
+   "FIELD2": "Cummins Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "323",
+   "FIELD2": "Cummins Hwy",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "324",
+   "FIELD2": "D St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "325",
+   "FIELD2": "D St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "326",
+   "FIELD2": "D St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "327",
+   "FIELD2": "D St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "328",
+   "FIELD2": "D St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "329",
+   "FIELD2": "D St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "330",
+   "FIELD2": "D St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "331",
+   "FIELD2": "Dana Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "332",
+   "FIELD2": "Dartmouth St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "333",
+   "FIELD2": "Dartmouth St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "334",
+   "FIELD2": "Dartmouth St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "335",
+   "FIELD2": "Dartmouth St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "336",
+   "FIELD2": "Devonshire St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "337",
+   "FIELD2": "Dorchester Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "338",
+   "FIELD2": "Dorchester Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "339",
+   "FIELD2": "Dorchester Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "340",
+   "FIELD2": "Dorchester Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "341",
+   "FIELD2": "Dorchester St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "342",
+   "FIELD2": "Dorchester St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "343",
+   "FIELD2": "Dorchester St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "344",
+   "FIELD2": "Dorchester St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "345",
+   "FIELD2": "Dorchester St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "346",
+   "FIELD2": "Dudley St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "347",
+   "FIELD2": "Dudley St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "348",
+   "FIELD2": "Dudley St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "349",
+   "FIELD2": "Dudley St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "350",
+   "FIELD2": "Dudley St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "351",
+   "FIELD2": "Dudley St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "352",
+   "FIELD2": "Dudley St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "353",
+   "FIELD2": "E Berkeley St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "354",
+   "FIELD2": "E Broadway",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "355",
+   "FIELD2": "E First St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "356",
+   "FIELD2": "Essex St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "357",
+   "FIELD2": "Evans Way",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "358",
+   "FIELD2": "Evans Way",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "359",
+   "FIELD2": "Evans Way",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "360",
+   "FIELD2": "Everett St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "361",
+   "FIELD2": "Everett St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "362",
+   "FIELD2": "Everett St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "363",
+   "FIELD2": "Everett St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "364",
+   "FIELD2": "Exeter St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "365",
+   "FIELD2": "Fairmount Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "366",
+   "FIELD2": "Faneuil St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "367",
+   "FIELD2": "Federal St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "368",
+   "FIELD2": "Fenway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "369",
+   "FIELD2": "Fenway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "370",
+   "FIELD2": "Fenway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "371",
+   "FIELD2": "First Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "372",
+   "FIELD2": "Francis St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "373",
+   "FIELD2": "Franklin St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "374",
+   "FIELD2": "Freeport St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "375",
+   "FIELD2": "Freeport St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "376",
+   "FIELD2": "Freeport St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "377",
+   "FIELD2": "Freeport St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "378",
+   "FIELD2": "Gallivan Blvd",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "379",
+   "FIELD2": "Gallivan Blvd",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "380",
+   "FIELD2": "Gallivan Blvd",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "381",
+   "FIELD2": "Gallivan Blvd",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "382",
+   "FIELD2": "Gallivan Blvd",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "383",
+   "FIELD2": "Gallivan Blvd",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "384",
+   "FIELD2": "Gallivan Blvd",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "385",
+   "FIELD2": "Gallivan Blvd",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "386",
+   "FIELD2": "Geneva Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "387",
+   "FIELD2": "Glen Ln",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "388",
+   "FIELD2": "Glen Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "389",
+   "FIELD2": "Gordon Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "390",
+   "FIELD2": "Gordon Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "391",
+   "FIELD2": "Granite Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "392",
+   "FIELD2": "Green St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "393",
+   "FIELD2": "Grove St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "394",
+   "FIELD2": "Guild Row",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "395",
+   "FIELD2": "Hampden St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "396",
+   "FIELD2": "Hancock St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "397",
+   "FIELD2": "Hancock St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "398",
+   "FIELD2": "Hancock St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "399",
+   "FIELD2": "Hancock St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "400",
+   "FIELD2": "Hancock St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "401",
+   "FIELD2": "Hancock St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "402",
+   "FIELD2": "Hancock St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "403",
+   "FIELD2": "Hancock St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "404",
+   "FIELD2": "Hanover St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "405",
+   "FIELD2": "Harrison Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "406",
+   "FIELD2": "Harrison Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "407",
+   "FIELD2": "Harrison Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "408",
+   "FIELD2": "Harrison Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "409",
+   "FIELD2": "Harrison Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "410",
+   "FIELD2": "Harrison Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "411",
+   "FIELD2": "Harrison Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "412",
+   "FIELD2": "Harrison Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "413",
+   "FIELD2": "Harrison Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "414",
+   "FIELD2": "Harvard Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "415",
+   "FIELD2": "Harvard Brg",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "416",
+   "FIELD2": "Harvard St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "417",
+   "FIELD2": "Harvard St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "418",
+   "FIELD2": "Heath St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "419",
+   "FIELD2": "Heath St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "420",
+   "FIELD2": "Heath St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "421",
+   "FIELD2": "Heath St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "422",
+   "FIELD2": "Hemenway St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "423",
+   "FIELD2": "Herald St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "424",
+   "FIELD2": "High St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "425",
+   "FIELD2": "Humboldt Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "426",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "427",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "428",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "429",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "430",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "431",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "432",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "433",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "434",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "435",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "436",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "437",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "438",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "439",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "440",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "441",
+   "FIELD2": "Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "442",
+   "FIELD2": "Hyde Park Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "443",
+   "FIELD2": "Hyde Park Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "444",
+   "FIELD2": "Hyde Park Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "445",
+   "FIELD2": "Hyde Park Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "446",
+   "FIELD2": "Hyde Park Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "447",
+   "FIELD2": "Hyde Park Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "448",
+   "FIELD2": "Hyde Park Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "449",
+   "FIELD2": "Independence Dr",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "450",
+   "FIELD2": "Jamaicaway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "451",
+   "FIELD2": "Jamaicaway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "452",
+   "FIELD2": "Jamaicaway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "453",
+   "FIELD2": "Jamaicaway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "454",
+   "FIELD2": "Jamaicaway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "455",
+   "FIELD2": "Jamaicaway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "456",
+   "FIELD2": "Jewish War Veterans Dr",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "457",
+   "FIELD2": "Jewish War Veterans Dr",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "458",
+   "FIELD2": "Jewish War Veterans Dr",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "459",
+   "FIELD2": "Jewish War Veterans Dr",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "460",
+   "FIELD2": "Jewish War Veterans Dr",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "461",
+   "FIELD2": "Jewish War Veterans Dr",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "462",
+   "FIELD2": "Jewish War Veterans Dr",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "463",
+   "FIELD2": "Jewish War Veterans Dr",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "464",
+   "FIELD2": "Parsons St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "465",
+   "FIELD2": "Spring St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "466",
+   "FIELD2": "Riverway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "467",
+   "FIELD2": "Saratoga St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "468",
+   "FIELD2": "Nashua St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "469",
+   "FIELD2": "Seaport Blvd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "470",
+   "FIELD2": "Old Colony Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "471",
+   "FIELD2": "Merrimac St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "472",
+   "FIELD2": "Merrimac St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "473",
+   "FIELD2": "Nashua St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "474",
+   "FIELD2": "Nashua St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "475",
+   "FIELD2": "Staniford St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "476",
+   "FIELD2": "Saratoga St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "477",
+   "FIELD2": "Main St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "478",
+   "FIELD2": "Neponset Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "479",
+   "FIELD2": "Neponset Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "480",
+   "FIELD2": "Longwood Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "481",
+   "FIELD2": "Longwood Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "482",
+   "FIELD2": "River St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "483",
+   "FIELD2": "Neponset Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "484",
+   "FIELD2": "Neponset Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "485",
+   "FIELD2": "Perkins St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "486",
+   "FIELD2": "Morton St",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "487",
+   "FIELD2": "John F. Fitzgerald Surface Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "488",
+   "FIELD2": "Kelton St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "489",
+   "FIELD2": "Kneeland St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "490",
+   "FIELD2": "Kneeland St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "491",
+   "FIELD2": "L St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "492",
+   "FIELD2": "Lagrange St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "493",
+   "FIELD2": "Lincoln St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "494",
+   "FIELD2": "Lincoln St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "495",
+   "FIELD2": "Lomasney Way",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "496",
+   "FIELD2": "Lomasney Way",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "497",
+   "FIELD2": "Longwood Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "498",
+   "FIELD2": "Louis Prang St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "499",
+   "FIELD2": "Lowney Way",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "500",
+   "FIELD2": "Maffa Way",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "501",
+   "FIELD2": "Main St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "502",
+   "FIELD2": "Main St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "503",
+   "FIELD2": "Main St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "504",
+   "FIELD2": "Main St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "505",
+   "FIELD2": "Malcolm X Blvd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "506",
+   "FIELD2": "Marcella St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "507",
+   "FIELD2": "Market St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "508",
+   "FIELD2": "Market St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "509",
+   "FIELD2": "Market St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "510",
+   "FIELD2": "Martha Rd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "511",
+   "FIELD2": "Martin Luther King Jr Blvd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "512",
+   "FIELD2": "Massachusetts Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "513",
+   "FIELD2": "Massachusetts Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "514",
+   "FIELD2": "Massachusetts Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "515",
+   "FIELD2": "Massachusetts Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "516",
+   "FIELD2": "Massachusetts Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "517",
+   "FIELD2": "Massachusetts Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "518",
+   "FIELD2": "Maverick Sq",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "519",
+   "FIELD2": "Maverick Sq",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "520",
+   "FIELD2": "Medford St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "521",
+   "FIELD2": "Meridian St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "522",
+   "FIELD2": "Meridian St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "523",
+   "FIELD2": "Meridian St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "524",
+   "FIELD2": "Meridian St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "525",
+   "FIELD2": "Merrimac St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "526",
+   "FIELD2": "Merrimac St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "527",
+   "FIELD2": "Milk St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "528",
+   "FIELD2": "Milton St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "529",
+   "FIELD2": "Morton St",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "530",
+   "FIELD2": "Morton St",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "531",
+   "FIELD2": "Morton St",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "532",
+   "FIELD2": "Morton St",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "533",
+   "FIELD2": "Morton St",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "534",
+   "FIELD2": "Morton St",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "535",
+   "FIELD2": "Morton St",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "536",
+   "FIELD2": "Morton St",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "537",
+   "FIELD2": "Morton St",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "538",
+   "FIELD2": "Mountfort St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "539",
+   "FIELD2": "Mystic Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "540",
+   "FIELD2": "Mystic Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "541",
+   "FIELD2": "N Beacon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "542",
+   "FIELD2": "N Beacon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "543",
+   "FIELD2": "N Beacon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "544",
+   "FIELD2": "N Beacon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "545",
+   "FIELD2": "N Harvard St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "546",
+   "FIELD2": "N Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "547",
+   "FIELD2": "Nashua St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "548",
+   "FIELD2": "Nashua St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "549",
+   "FIELD2": "Nashua St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "550",
+   "FIELD2": "Nashua St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "551",
+   "FIELD2": "Nashua St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "552",
+   "FIELD2": "Nashua St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "553",
+   "FIELD2": "Neponset Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "554",
+   "FIELD2": "Neponset Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "555",
+   "FIELD2": "Neponset Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "556",
+   "FIELD2": "Neponset Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "557",
+   "FIELD2": "Neponset Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "558",
+   "FIELD2": "New Chardon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "559",
+   "FIELD2": "New Chardon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "560",
+   "FIELD2": "New Chardon St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "561",
+   "FIELD2": "New Rutherford Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "562",
+   "FIELD2": "New Rutherford Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "563",
+   "FIELD2": "New Rutherford Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "564",
+   "FIELD2": "New Rutherford Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "565",
+   "FIELD2": "New Rutherford Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "566",
+   "FIELD2": "New Sudbury St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "567",
+   "FIELD2": "Newbury St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "568",
+   "FIELD2": "Norfolk St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "569",
+   "FIELD2": "North St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "570",
+   "FIELD2": "Northampton St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "571",
+   "FIELD2": "Northern Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "572",
+   "FIELD2": "Northern Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "573",
+   "FIELD2": "Northern Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "574",
+   "FIELD2": "Northern Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "575",
+   "FIELD2": "Northern Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "576",
+   "FIELD2": "Old Colony Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "577",
+   "FIELD2": "Old Colony Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "578",
+   "FIELD2": "Old Colony Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "579",
+   "FIELD2": "Old Colony Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "580",
+   "FIELD2": "Old Colony Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "581",
+   "FIELD2": "Old Colony Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "582",
+   "FIELD2": "Old Colony Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "583",
+   "FIELD2": "Old Colony Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "584",
+   "FIELD2": "Old Colony Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "585",
+   "FIELD2": "Oliver St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "586",
+   "FIELD2": "Otis St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "587",
+   "FIELD2": "Park Dr",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "588",
+   "FIELD2": "Park Dr",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "589",
+   "FIELD2": "Park Dr",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "590",
+   "FIELD2": "Park Plz",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "591",
+   "FIELD2": "Park St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "592",
+   "FIELD2": "Park St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "593",
+   "FIELD2": "Parker St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "594",
+   "FIELD2": "Parsons St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "595",
+   "FIELD2": "Parsons St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "596",
+   "FIELD2": "Pearl St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "597",
+   "FIELD2": "Perkins St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "598",
+   "FIELD2": "Perkins St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "599",
+   "FIELD2": "Perkins St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "600",
+   "FIELD2": "Perkins St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "601",
+   "FIELD2": "Perkins St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "602",
+   "FIELD2": "Pleasant St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "603",
+   "FIELD2": "Pleasant St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "604",
+   "FIELD2": "Pleasant St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "605",
+   "FIELD2": "Pond St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "606",
+   "FIELD2": "Pond St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "607",
+   "FIELD2": "Pond St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "608",
+   "FIELD2": "Poplar St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "609",
+   "FIELD2": "Poplar St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "610",
+   "FIELD2": "Porter St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "611",
+   "FIELD2": "Porter St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "612",
+   "FIELD2": "Porter St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "613",
+   "FIELD2": "Preble St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "614",
+   "FIELD2": "Preble St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "615",
+   "FIELD2": "Preble St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "616",
+   "FIELD2": "Purchase St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "617",
+   "FIELD2": "Quincy St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "618",
+   "FIELD2": "Ritchie St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "619",
+   "FIELD2": "River St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "620",
+   "FIELD2": "River St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "621",
+   "FIELD2": "Riverway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "622",
+   "FIELD2": "Riverway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "623",
+   "FIELD2": "Riverway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "624",
+   "FIELD2": "Riverway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "625",
+   "FIELD2": "Riverway",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "626",
+   "FIELD2": "Robert St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "627",
+   "FIELD2": "Roxbury St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "628",
+   "FIELD2": "Roxbury St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "629",
+   "FIELD2": "Roxbury St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "630",
+   "FIELD2": "Roxbury St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "631",
+   "FIELD2": "Roxbury St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "632",
+   "FIELD2": "Ruggles St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "633",
+   "FIELD2": "Ruggles St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "634",
+   "FIELD2": "Rutherford Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "635",
+   "FIELD2": "Rutherford Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "636",
+   "FIELD2": "S Huntington Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "637",
+   "FIELD2": "Saratoga St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "638",
+   "FIELD2": "Savin Hill Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "639",
+   "FIELD2": "Seaport Blvd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "640",
+   "FIELD2": "Seaport Blvd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "641",
+   "FIELD2": "Seaport Blvd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "642",
+   "FIELD2": "Seaport Blvd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "643",
+   "FIELD2": "Seaport Blvd",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "644",
+   "FIELD2": "Seaver St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "645",
+   "FIELD2": "Seaver St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "646",
+   "FIELD2": "Soldiers Field Road Ext",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "647",
+   "FIELD2": "South St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "648",
+   "FIELD2": "South St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "649",
+   "FIELD2": "South St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "650",
+   "FIELD2": "Southampton St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "651",
+   "FIELD2": "Southampton St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "652",
+   "FIELD2": "Southampton St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "653",
+   "FIELD2": "Sparhawk St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "654",
+   "FIELD2": "Sprague St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "655",
+   "FIELD2": "Spring St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "656",
+   "FIELD2": "Spring St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "657",
+   "FIELD2": "Staniford St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "658",
+   "FIELD2": "Staniford St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "659",
+   "FIELD2": "Staniford St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "660",
+   "FIELD2": "State St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "661",
+   "FIELD2": "Stoughton St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "662",
+   "FIELD2": "Stuart St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "663",
+   "FIELD2": "Summer St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "664",
+   "FIELD2": "Summer St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "665",
+   "FIELD2": "Summer St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "666",
+   "FIELD2": "Talbot Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "667",
+   "FIELD2": "Temple Pl",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "668",
+   "FIELD2": "Theodore A Glynn St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "669",
+   "FIELD2": "Thirteenth St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "670",
+   "FIELD2": "Tremont St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "671",
+   "FIELD2": "Tremont St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "672",
+   "FIELD2": "Tremont St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "673",
+   "FIELD2": "Tremont St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "674",
+   "FIELD2": "Tremont St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "675",
+   "FIELD2": "Tremont St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "676",
+   "FIELD2": "Tremont St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "677",
+   "FIELD2": "Tremont St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "678",
+   "FIELD2": "Tremont St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "679",
+   "FIELD2": "Tremont St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "680",
+   "FIELD2": "Tremont St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "681",
+   "FIELD2": "Tremont St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "682",
+   "FIELD2": "Waldemar Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "683",
+   "FIELD2": "Water St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "684",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "685",
+   "FIELD2": "Warren St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "686",
+   "FIELD2": "Truman Pkwy",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "687",
+   "FIELD2": "Truman Pkwy",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "688",
+   "FIELD2": "Truman Pkwy",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "689",
+   "FIELD2": "Vine St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "690",
+   "FIELD2": "W Broadway",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "691",
+   "FIELD2": "W Broadway",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "692",
+   "FIELD2": "W First St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "693",
+   "FIELD2": "W Milton St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "694",
+   "FIELD2": "W Second St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "695",
+   "FIELD2": "Waldemar Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "696",
+   "FIELD2": "Waldemar Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "697",
+   "FIELD2": "Walk Hill St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "698",
+   "FIELD2": "Walley St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "699",
+   "FIELD2": "Walnut Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "700",
+   "FIELD2": "Walter St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "701",
+   "FIELD2": "Walter St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "702",
+   "FIELD2": "Walter St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "703",
+   "FIELD2": "Warren St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "704",
+   "FIELD2": "Warren St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "705",
+   "FIELD2": "Warren St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "706",
+   "FIELD2": "Warren St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "707",
+   "FIELD2": "Warren St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "708",
+   "FIELD2": "Warren St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "709",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "710",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "711",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "712",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "713",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "714",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "715",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "716",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "717",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "718",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "719",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "720",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "721",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "722",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "723",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "724",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "725",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "726",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "727",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "728",
+   "FIELD2": "Washington St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "729",
+   "FIELD2": "Weld St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "730",
+   "FIELD2": "West St",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "731",
+   "FIELD2": "Western Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "732",
+   "FIELD2": "Western Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "733",
+   "FIELD2": "Western Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "734",
+   "FIELD2": "Westland Ave",
+   "FIELD3": "City"
+ },
+ {
+   "FIELD1": "735",
+   "FIELD2": "William J Day Blvd",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "736",
+   "FIELD2": "William J Day Blvd",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "737",
+   "FIELD2": "William J Day Blvd",
+   "FIELD3": "State"
+ },
+ {
+   "FIELD1": "738",
+   "FIELD2": "Wood Ave",
+   "FIELD3": "City"
+ }
+]
