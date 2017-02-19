@@ -7,7 +7,7 @@ import uuid
 import sodapy
 
 
-
+# hi
 # https://data.cityofboston.gov/dataset/Property-Assessment-2014/qz7u-kb7x
 # https://data.cityofboston.gov/resource/jsri-cpsq.json
 
