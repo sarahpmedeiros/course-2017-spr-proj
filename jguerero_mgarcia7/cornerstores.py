@@ -1,4 +1,5 @@
-# https://data.cityofboston.gov/Health/Healthy-Corner-Stores/ekiy-2qmz/data
+# I loaded both the healthy corner stores and all the corner stores
+# We need to make it so that it does a union and add an attribute saying whether the corner store is a healthy one or not
 
 import urllib.request
 import json
@@ -7,10 +8,10 @@ import prov.model
 import datetime
 import uuid
 
-class example(dml.Algorithm):
-    contributor = 'alice_bob'
+class cornerstores(dml.Algorithm):
+    contributor = 'jguerero_mgarcia7'
     reads = []
-    writes = ['alice_bob.lost', 'alice_bob.found']
+    writes = ['jguerero_mgarcia7.cornerstores']
 
     @staticmethod
     def execute(trial = False):
@@ -20,27 +21,28 @@ class example(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('alice_bob', 'alice_bob')
+        repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
 
-        url = 'http://cs-people.bu.edu/lapets/591/examples/lost.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("lost")
-        repo.createCollection("lost")
-        repo['alice_bob.lost'].insert_many(r)
-        repo['alice_bob.lost'].metadata({'complete':True})
-        print(repo['alice_bob.lost'].metadata())
+        total_url = 'https://data.cityofboston.gov/resource/vwsn-4yhi.json'
+        response = urllib.request.urlopen(total_url).read().decode("utf-8")
+        total_r = json.loads(response)
+        total_s = json.dumps(total_r, sort_keys=True, indent=2)
 
-        url = 'http://cs-people.bu.edu/lapets/591/examples/found.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("found")
-        repo.createCollection("found")
-        repo['alice_bob.found'].insert_many(r)
+        healthy_url = 'https://data.cityofboston.gov/resource/ybm6-m5qd.json'
+        response = urllib.request.urlopen(healthy_url).read().decode("utf-8")
+        healthy_r = json.loads(response)
+        healthy_s = json.dumps(healthy_r, sort_keys=True, indent=2)
+
+        '''
+
+        repo.dropCollection("cornerstores")
+        repo.createCollection("cornerstores")
+        repo['jguerero_mgarcia7.cornerstores'].insert_many(r)
+        repo['jguerero_mgarcia7.cornerstores'].metadata({'complete':True})
+        print(repo['jguerero_mgarcia7.cornerstores'].metadata())
 
         repo.logout()
+        '''
 
         endTime = datetime.datetime.now()
 
@@ -95,9 +97,11 @@ class example(dml.Algorithm):
                   
         return doc
 
-example.execute()
+cornerstores.execute()
+'''
 doc = example.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
+'''
 
 ## eof

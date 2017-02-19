@@ -1,6 +1,3 @@
-# https://data.mass.gov/Health/Farmers-Markets/3v56-znm2
-# https://data.mass.gov/Health/Farmers-Markets-Map/rci2-8hjv (map version ?)
-
 import urllib.request
 import json
 import dml
@@ -8,38 +5,39 @@ import prov.model
 import datetime
 import uuid
 
-class example(dml.Algorithm):
-    contributor = 'alice_bob'
+class farmersmarkets(dml.Algorithm):
+    contributor = 'jguerero_mgarcia7'
     reads = []
-    writes = ['alice_bob.lost', 'alice_bob.found']
+    writes = ['jguerero_mgarcia7.farmersmarkets']
 
     @staticmethod
     def execute(trial = False):
-        '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
         startTime = datetime.datetime.now()
 
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('alice_bob', 'alice_bob')
+        repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
 
-        url = 'http://cs-people.bu.edu/lapets/591/examples/lost.json'
+        # Summer Farmers Markets
+        url = 'https://data.cityofboston.gov/resource/ckir-e47p.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("lost")
-        repo.createCollection("lost")
-        repo['alice_bob.lost'].insert_many(r)
-        repo['alice_bob.lost'].metadata({'complete':True})
-        print(repo['alice_bob.lost'].metadata())
+        repo.dropCollection("farmersmarkets")
+        repo.createCollection("farmersmarkets")
+        repo['jguerero_mgarcia7.farmersmarkets'].insert_many(r)
 
-        url = 'http://cs-people.bu.edu/lapets/591/examples/found.json'
+
+        # Winter Farmers Markets
+        url = 'https://data.cityofboston.gov/resource/txud-qumr.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("found")
-        repo.createCollection("found")
-        repo['alice_bob.found'].insert_many(r)
+        repo['jguerero_mgarcia7.farmersmarkets'].insert_many(r)
+
+        repo['jguerero_mgarcia7.farmersmarkets'].metadata({'complete':True})
+        print(repo['jguerero_mgarcia7.farmersmarkets'].metadata())
 
         repo.logout()
 
@@ -96,9 +94,11 @@ class example(dml.Algorithm):
                   
         return doc
 
-example.execute()
+farmersmarkets.execute()
+'''
 doc = example.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
+'''
 
 ## eof
