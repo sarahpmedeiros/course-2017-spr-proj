@@ -69,13 +69,13 @@ class healthEducation(dml.Algorithm):
 
         y = []
         for i in range(0,51):
-            y.append({'state':x[i][0], 'highschool': x[i][1], 'bachelor':x[i][2], 'unhealthydays': x[i][3]})
+            y.append({'state':x[i][0], 'highschool': x[i][1], 'bachelor':x[i][2], 'annual physically&mentally unhealthydays': x[i][3]})
 
         #print (y)
 
 
-        #repo.dropPermanent('jw0208.healthEducation')
-        #repo.createPermanent('jw0208.healthEducation')
+        repo.dropPermanent('jw0208.healthEducation')
+        repo.createPermanent('jw0208.healthEducation')
         repo['jw0208.healthEducation'].insert_many(y)
 
 
@@ -105,27 +105,31 @@ class healthEducation(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        doc.add_namespace('cdg', 'https://chronicdata.cdc.gov/resource/')
 
         this_script = doc.agent('alg:jw0208#healthEducation', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:t85d-b449', {'prov:label':'State physically and mentally unhealthy days vs. state education level', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        this_healthEducation = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(this_healthEducation, this_script)
-        doc.usage(this_healthEducation, resource, startTime, None,
+        resource = doc.entity('cdg:fq5d-abxc', {'prov:label':'State physically and mentally unhealthy days vs. state education level', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        this_healtheducation = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        doc.wasAssociatedWith(this_healtheducation, this_script)
+        doc.usage(this_healtheducation, resource, startTime, None,
                 {prov.model.PROV_TYPE:'ont:Retrieval'}
             )
 
         healthEducation = doc.entity('dat:jw0208#healthEducation', {prov.model.PROV_LABEL:'State physically and mentally unhealthy days vs. state education level', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(healthEducation, this_script)
-        doc.wasGeneratedBy(healthEducation, this_healthEducation, endTime)
-        doc.wasDerivedFrom(healthEducation, resource, this_healthEducation, this_healthEducation, this_healthEducation)
+        health = doc.entity('dat:jw0208#health', {prov.model.PROV_LABEL:'State physically and mentally unhealthy days vs. state education level', prov.model.PROV_TYPE:'ont:DataSet'})
+        education = doc.entity('dat:jw0208#education', {prov.model.PROV_LABEL:'State physically and mentally unhealthy days vs. state education level', prov.model.PROV_TYPE:'ont:DataSet'})
 
-        repo.record(doc.serialize()) # Record the provenance document.
+        doc.wasAttributedTo(healthEducation, this_script)
+        doc.wasGeneratedBy(healthEducation, this_healtheducation, endTime)
+        doc.wasDerivedFrom(health, resource, this_healtheducation, this_healtheducation, this_healtheducation)
+        doc.wasDerivedFrom(education, resource, this_healtheducation, this_healtheducation, this_healtheducation)
+
+        #repo.record(doc.serialize()) # Record the provenance document.
         repo.logout()
 
         return doc
 
 healthEducation.execute()
-#doc = healthEducation.provenance()
-#print(doc.get_provn())
-#print(json.dumps(json.loads(doc.serialize()), indent=4))
+doc = healthEducation.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
