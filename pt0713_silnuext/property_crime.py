@@ -7,12 +7,10 @@ import uuid
 import sodapy
 
 
-# http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5?selectedAttributes%5B%5D=DISTRICT&chartType=bar&uiTab=table
-# http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5.geojson
-class police_districts(dml.Algorithm):
+class property_crime(dml.Algorithm):
     contributor = 'pt0713_silnuext'
     reads = []
-    writes = ['pt0713_silnuext.police_districts']
+    writes = ['pt0713_silnuext.property_crime']
 
     @staticmethod
     def execute(trial = False):
@@ -23,20 +21,45 @@ class police_districts(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('pt0713_silnuext', 'pt0713_silnuext')
+        repo.dropCollection("property_crime")
+        repo.createCollection("property_crime")
 
-        url = "http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5.geojson"
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        r = [r['features'][i]['properties'] for i in range(11)]
-        print(len(r))
-        print(json.dumps(r))
-  
-     
-        repo.dropCollection("police_districts")
-        repo.createCollection("police_districts")
-        repo['pt0713_silnuext.police_districts'].insert_many(r)
-        repo['pt0713_silnuext.police_districts'].metadata({'complete':True})
-        print(repo['pt0713_silnuext.police_districts'].metadata())
+        client1 = sodapy.Socrata("data.cityofboston.gov", None)
+        response1 = client1.get("crime")
+
+        #r = json.loads(response)
+        s = json.dumps(response1, sort_keys=True, indent=2)
+        print(s)
+
+        repo['pt0713_silnuext.property_crime'].insert_many(response1)
+        repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
+        print(repo['pt0713_silnuext.property_crime'].metadata())
+
+
+
+        client2014 = sodapy.Socrata("data.cityofboston.gov", None)
+        response2014 = client2014.get("jsri-cpsq")
+        s = json.dumps(response2014, sort_keys=True, indent=2)
+        print(s)
+
+        repo['pt0713_silnuext.property_crime'].insert_many(response2014)
+        repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
+        print(repo['pt0713_silnuext.property_crime'].metadata())
+
+
+
+
+        client2015 = sodapy.Socrata("data.cityofboston.gov", None)
+        response2015 = client2015.get("n7za-nsjh")
+        s = json.dumps(response2015, sort_keys=True, indent=2)
+        print(s)
+
+        
+
+        repo['pt0713_silnuext.property_crime'].insert_many(response2015)
+        repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
+        print(repo['pt0713_silnuext.property_crime'].metadata())
+
 
         repo.logout()
 
@@ -44,6 +67,12 @@ class police_districts(dml.Algorithm):
 
         return {"start":startTime, "end":endTime}
     
+
+
+
+
+
+
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''
@@ -64,28 +93,28 @@ class police_districts(dml.Algorithm):
 
         this_script = doc.agent('alg:pt0713_silnuext#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_police_districts = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_property_crime = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_police_districts, this_script)
+        doc.wasAssociatedWith(get_property_crime, this_script)
 
-        doc.usage(get_police_districts, resource, startTime, None,
+        doc.usage(get_property_crime, resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+police_districts&$select=type,latitude,longitude,OPEN_DT'
+                  'ont:Query':'?type=Animal+property_crime&$select=type,latitude,longitude,OPEN_DT'
                   }
                   )
 
-        police_districts = doc.entity('dat:pt0713_silnuext#police_districts', {prov.model.PROV_LABEL:'Animals police_districts', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(police_districts, this_script)
-        doc.wasGeneratedBy(police_districts, get_police_districts, endTime)
-        doc.wasDerivedFrom(police_districts, resource, get_police_districts, get_police_districts, get_police_districts)
+        property_crime = doc.entity('dat:pt0713_silnuext#property_crime', {prov.model.PROV_LABEL:'Animals property_crime', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(property_crime, this_script)
+        doc.wasGeneratedBy(property_crime, get_property_crime, endTime)
+        doc.wasDerivedFrom(property_crime, resource, get_property_crime, get_property_crime, get_property_crime)
 
 
         repo.logout()
                   
         return doc
 
-police_districts.execute()
-doc = police_districts.provenance()
+property_crime.execute()
+doc = property_crime.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
