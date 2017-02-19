@@ -13,7 +13,7 @@ import uuid
 import sodapy
 
 
-class transformation0(dml.algorithm):
+class transformation1(dml.Algorithm):
     contributor = 'pgr_syquiac'
     reads = ['pgr_syquiac.cdc', 'pgr_syquiac.schools']
 

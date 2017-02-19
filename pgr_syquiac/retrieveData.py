@@ -15,8 +15,7 @@ import sodapy
 class retrieveData(dml.Algorithm):
     contributor = 'pgr_syquiac'
     reads = []
-    writes = ['pgr_syquiac.hospitals', 'pgr_syquiac.cdc', 'pgr_syquiac.camopenspaces', 'pgr_syquiac.schools', 'pgr_syquiac.events', 'pgr_syquiac.pools', 'pgr_syquiac.bosopenspaces']
-
+    writes = ['pgr_syquiac.hospitals', 'pgr_syquiac.cdc', 'pgr_syquiac.schools','pgr_syquiac.pools']
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
@@ -53,20 +52,6 @@ class retrieveData(dml.Algorithm):
         repo['pgr_syquiac.schools'].insert_many(r)
 
 
-        #Get data of Open Spaces in Cambridge
-        client = sodapy.Socrata("data.cambridgema.gov", None)
-        response = client.get("5ctr-ccas", limit=10)
-        repo.dropCollection("camopenspaces")
-        repo.createCollection("camopenspaces")
-        repo['pgr_syquiac.camopenspaces'].insert_many(response)
-
-        # Get data for Cambridge events
-        client = sodapy.Socrata("data.cambridgema.gov", None)
-        response = client.get("x4ex-qvpn", limit=10)
-        repo.dropCollection("events")
-        repo.createCollection("events")
-        repo['pgr_syquiac.events'].insert_many(response)
-
         # Get data for Open Swimming Pools in Boston
         client = sodapy.Socrata("data.cityofboston.gov", None)
         response = client.get("5jxx-wfpr", limit=1)
@@ -75,14 +60,8 @@ class retrieveData(dml.Algorithm):
         repo.createCollection("pools")
         repo['pgr_syquiac.pools'].insert_many(response)
 
-        # Get data for all Open Spaces in Boston
-        url = 'http://datamechanics.io/data/pgr_syquiac/bostonopenspaces.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("bosopenspaces")
-        repo.createCollection("bosopenspaces")
-        repo['pgr_syquiac.bosopenspaces'].insert_many(r)
+        # Need to add the healthy corner stores, this will be combined with pools for the obesity rates
+
 
 
         repo.logout()
