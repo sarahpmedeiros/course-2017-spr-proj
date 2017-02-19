@@ -129,7 +129,7 @@ class healthEducation(dml.Algorithm):
 
         return doc
 
-healthEducation.execute()
-doc = healthEducation.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#healthEducation.execute()
+#doc = healthEducation.provenance()
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))

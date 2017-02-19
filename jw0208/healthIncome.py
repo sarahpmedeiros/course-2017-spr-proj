@@ -125,8 +125,8 @@ class healthIncome(dml.Algorithm):
         repo.logout()
 
         return doc
-
-healthIncome.execute()
-doc = healthIncome.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#
+# healthIncome.execute()
+# doc = healthIncome.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
