@@ -1,12 +1,18 @@
 # Get population income by neighborhood data
 # https://www.census.gov/data/developers/data-sets/acs-1year.html (dk how to get it but apparently it's from here)
 
+from bs4 import BeautifulSoup
+
 import urllib.request
 import json
 import dml
 import prov.model
 import datetime
 import uuid
+import re
+
+d = []
+instance = {}
 
 class population(dml.Algorithm):
     contributor = 'jguerero_mgarcia7'
@@ -21,15 +27,45 @@ class population(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('jguerero_mgarcia7')
+        repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
 
         url = 'http://www.city-data.com/nbmaps/neigh-Boston-Massachusetts.html#N46'
         response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("kenmore")
-        repo.createCollection("kenmore")
-        repo['jguerero_mgarcia7.population'].insert_many(r)
+        soup = BeautifulSoup(response, 'html.parser')
+
+        for i in soup.findAll("div", {"class": "neighborhood"}): #returns a result set
+            data = i.text
+           # print (data)
+            instance['Neighborhood'] = data[: data.find(' ')]
+            instance['Area (in Square miles)'] = exc(re.findall('Area: (.+) square miles', data))
+            instance['Population'] = exc(re.findall('Population: (.+)Population', data))
+
+            try: 
+                a = regexFix(str(i.contents[10].contents[0].contents[2].contents[0].contents[1].b.string))
+            except AttributeError:
+                pass
+
+            t = a + '(.+) people per square mileBoston'
+            instance['Population Density: '] = exc(re.findall(t, data))
+
+            b = 'mileMedian household income in 2015: ' + a + '\$(\d+,?\d+)'
+            instance['Median Household Income in 2015 ($)'] = exc(re.findall(b, data))
+
+            c = 'Median rent in in 2015: ' + a + '\$(\d+,?\d+)'
+            instance['Median rent in 2015 ($)'] = exc(re.findall(c, data))
+
+            instance['Male Population'] = exc(re.findall('Males:(\d+,?\d+)Females:', data))
+            instance['Female Population'] = exc(re.findall('Females:(.+)Median ', data))
+            instance['Median Age in Male Population (years)'] = exc(re.findall('ageMales:(.+) yearsFemales', data))
+            instance['Median Age in Female Population (years)'] = exc(re.findall('yearsFemales:(.+) years', data))
+
+            d.append(instance)
+
+        new = json.loads(json.dumps(d))
+
+        repo.dropCollection("population")
+        repo.createCollection("population")
+        repo['jguerero_mgarcia7.population'].insert_many(new)
         repo['jguerero_mgarcia7.population'].metadata({'complete':True})
         print(repo['jguerero_mgarcia7.population'].metadata())
 
@@ -37,7 +73,8 @@ class population(dml.Algorithm):
 
         endTime = datetime.datetime.now()
 
-        return {"start":startTime, "end":endTime}
+        return {"start":startTime, "end":endTime} 
+        
 
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
@@ -88,6 +125,22 @@ class population(dml.Algorithm):
         repo.logout()
                   
         return doc
+
+def regexFix(string):
+    if '(' in string or ')' in string:
+        first = string.index('(')
+        second = string.index(')')
+        s = string[0:first] + '\\' + string[first:second] + '\\' + string[second:] 
+    else:
+        s = string
+    return s
+
+def exc(x):
+    try:
+        return x[0]
+    except IndexError:
+        return None
+
 
 population.execute()
 #doc = population.provenance()
