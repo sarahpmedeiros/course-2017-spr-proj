@@ -16,7 +16,7 @@ class transformation_one(dml.Algorithm):
 
     contributor = 'mrhoran_rnchen'
     reads = ['mrhoran_rnchen.community_gardens','mrhoran_rnchen.food_pantries']
-    writes = ['mrhoran_rnchen.healthy_options']
+    writes = ['mrhoran_rnchen.healthy_options', 'commgarden_zip_count', 'foodpantry_zip_count', 'garden_pantry_agg']
     @staticmethod
     def execute(trial = False):
         
@@ -49,7 +49,7 @@ class transformation_one(dml.Algorithm):
 
         commgarden_zip_count = dict(project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1]))))
 
-        repo.mrhoran_rnchen.commgarden_zip_count.insert_many(commgarden_zip_count)
+        repo.mrhoran_rnchen.commgarden_zip_count.insert(commgarden_zip_count)
       
 	#insert, insert_many, or insertMany? 
         #print(commgarden_zip_count)
