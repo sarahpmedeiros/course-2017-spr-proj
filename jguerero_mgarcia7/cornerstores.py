@@ -11,7 +11,7 @@ import uuid
 class cornerstores(dml.Algorithm):
     contributor = 'jguerero_mgarcia7'
     reads = []
-    writes = ['jguerero_mgarcia7.cornerstores']
+    writes = ['jguerero_mgarcia7.allcornerstores', 'jguerero_mgarcia7.healthycornerstores']
 
     @staticmethod
     def execute(trial = False):
@@ -25,24 +25,25 @@ class cornerstores(dml.Algorithm):
 
         total_url = 'https://data.cityofboston.gov/resource/vwsn-4yhi.json'
         response = urllib.request.urlopen(total_url).read().decode("utf-8")
-        total_r = json.loads(response)
-        total_s = json.dumps(total_r, sort_keys=True, indent=2)
+        r = json.loads(response)
+
+        repo.dropCollection("allcornerstores")
+        repo.createCollection("allcornerstores")
+        repo['jguerero_mgarcia7.allcornerstores'].insert_many(r)
+        repo['jguerero_mgarcia7.allcornerstores'].metadata({'complete':True})
+        print(repo['jguerero_mgarcia7.allcornerstores'].metadata())
 
         healthy_url = 'https://data.cityofboston.gov/resource/ybm6-m5qd.json'
         response = urllib.request.urlopen(healthy_url).read().decode("utf-8")
-        healthy_r = json.loads(response)
-        healthy_s = json.dumps(healthy_r, sort_keys=True, indent=2)
+        r = json.loads(response)
 
-        '''
-
-        repo.dropCollection("cornerstores")
-        repo.createCollection("cornerstores")
-        repo['jguerero_mgarcia7.cornerstores'].insert_many(r)
-        repo['jguerero_mgarcia7.cornerstores'].metadata({'complete':True})
-        print(repo['jguerero_mgarcia7.cornerstores'].metadata())
+        repo.dropCollection('healthycornerstores')
+        repo.createCollection('healthycornerstores')
+        repo['jguerero_mgarcia7.healthycornerstores'].insert_many(r)
+        repo['jguerero_mgarcia7.healthycornerstores'].metadata({'complete':True})
+        print(repo['jguerero_mgarcia7.healthycornerstores'].metadata())
 
         repo.logout()
-        '''
 
         endTime = datetime.datetime.now()
 
