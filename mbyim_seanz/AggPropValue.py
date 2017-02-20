@@ -14,9 +14,6 @@ class agg_prop_value(dml.Algorithm):
 	reads = ['mbyim_seanz.property_assessments']
 	writes = ['mbyim_seanz.agg_prop_value']
 
-	
-
-
 	@staticmethod
 	def execute(trial = False):
 		#S/O To Professor Lapetz
@@ -32,7 +29,6 @@ class agg_prop_value(dml.Algorithm):
 
 
 		startTime = datetime.datetime.now()
-
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
 
@@ -42,47 +38,29 @@ class agg_prop_value(dml.Algorithm):
 
 		property_assessments = repo.mbyim_seanz.property_assessments.find()
 
-		#print(property_assessments)
-
-
 		#make the zip_grouped_data
 		zip_data = []
-		print("here")
 		for row in property_assessments:
 			prop_dict = dict(row)
-			prop_dict_select = prop_dict['owner_mail_zipcode']
-			print(prop_dict_select)
+			try:
+				prop_dict_select = prop_dict['zipcode']
+				if prop_dict_select in boston_zips:
+					zip_data.append(prop_dict_select)
+			except:
+				print('there was an error with the zipcode key')
 
-			zip_data.append(prop_dict_select)
-
-
-		zip_grouped_data = aggregate(zip_data, sum)
-
-		
-		print(zip_grouped_data)
-		print(len(zip_data))
+		zip_grouped_data = aggregate(zip_data, sum)		
 		print(len(zip_grouped_data))
-
-		
 		
 		zip_grouped_data_str = str(zip_grouped_data).replace("'",'"')
 
 		zip_jsons = json.loads(zip_grouped_data_str)
 		s = json.dumps(zip_jsons, sort_keys=True, indent = 2)
-		
-
-
 		repo.dropCollection("agg_prop_value")
 		repo.createCollection("agg_prop_value")
 
 		repo['mbyim_seanz.agg_prop_value'].insert_many(zip_jsons)
 		repo['mbyim_seanz.agg_prop_value'].metadata({'complete':True})
-
-	
-	
-
-
-
 
 
 	@staticmethod
@@ -125,7 +103,7 @@ class agg_prop_value(dml.Algorithm):
 
 
 agg_prop_value.execute()
-#doc = agg_prop_value.provenance()
+doc = agg_prop_value.provenance()
 
 
 
