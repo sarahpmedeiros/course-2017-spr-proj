@@ -1,3 +1,7 @@
+CS591 Data Mechanics
+Wenjing Lyu
+Project-one
+
 ###About Project
 This project intends to characterize neighborhoods in Greater Boston Area based on several measurement index. The key measurement would be the economic condition and accessibility. The economic condition in certain areas will be evaluated based on Property Assessment 2016 dataset, and the accessibility of a neighborhood will be evaluated based on the sources from following datasets: Hospital Locations, Colleges and Universities, Waze Jam Data, Community Gardens, Farmers Markets. These datasets will be merged to answer the question: Is this area fully developed already? If not, what part could be improved to increase the overall accessibility. 
 
