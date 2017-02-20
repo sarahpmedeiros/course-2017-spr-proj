@@ -13,9 +13,10 @@ import uuid
 import sodapy
 
 
-class transformation0(dml.algorithm):
+class transformation2(dml.Algorithm):
     contributor = 'pgr_syquiac'
-    reads = ['pgr_syquiac.cdc', 'pgr_syquiac.hospitals']
+    reads = ['pgr_syquiac.cdc', 'pgr_syquiac.pools', 'pgr_syquiac.stores']
+    writes = ['pgr_syquiac.obesity_pools_stores']
 
     @staticmethod
     def execute(trial = False):
@@ -26,9 +27,7 @@ class transformation0(dml.algorithm):
         repo = client.repo
         repo.authenticate('pgr_syquiac', 'pgr_syquiac')
 
-        #start
-        cdcRepo = repo.pgr_syquiac.cdc
-        hospitalsRepo = repo.pgr_syquiac.hospitals
+        print("Starting.....")
 
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
@@ -51,3 +50,5 @@ class transformation0(dml.algorithm):
         doc.add_namespace('cdp', 'https://data.cambridgema.gov/resource/')
 
         this_script = doc.agent('alg:pgr_syquiac#retrieveData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+
+transformation2.execute()
