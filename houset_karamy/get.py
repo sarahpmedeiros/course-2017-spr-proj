@@ -13,7 +13,6 @@ class get(dml.Algorithm):
 
     @staticmethod
     def execute(trial = False):
-        '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
         startTime = datetime.datetime.now()
 
         # Set up the database connection.
@@ -22,55 +21,62 @@ class get(dml.Algorithm):
         repo.authenticate('houset_karamy', 'houset_karamy')
         
         # Data for Police Stations in Boston
-        url = 'https://data.cityofboston.gov/resource/pyxn-r3i2.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
+        #url = 'https://data.cityofboston.gov/resource/pyxn-r3i2.json'
+        #response = urllib.request.urlopen(url).read().decode("utf-8")
+        client = sodapy.Socrata("data.cityofboston.gov", None)
+        response = client.get("pyxn-r3i2", limit=30)
+       # r = json.loads(response)
+       # s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("policeStations")
         repo.createCollection("policeStations")
-        repo['houset_karamy'].insert_many(r)
-        repo['houset_karamy'].metadata({'complete':True})
-        print(repo['houset_karamy.policeStations'].metadata())
+        repo['houset_karamy'].insert_many(response)
+        #repo['houset_karamy'].metadata({'complete':True})
+        #print(repo['houset_karamy.policeStations'].metadata())
         
         # Data for Crime Reports in Boston
-        url = 'https://data.cityofboston.gov/resource/crime.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
+        #url = 'https://data.cityofboston.gov/resource/crime.json'
+        #response = urllib.request.urlopen(url).read().decode("utf-8")
+        client = sodapy.Socrata("data.cityofboston.gov", None)
+        response = client.get("crime", limit=30)
+        #r = json.loads(response)
+        #s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("crimeReportsBoston")
         repo.createCollection("crimeReportsBoston")
-        repo['houset_karamy.crimeReportsBoston'].insert_many(r)
+        repo['houset_karamy.crimeReportsBoston'].insert_many(response)
         
         # Data for Crime Reports in Cambridge
-        url = 'https://data.cambridgema.gov/resource/dypy-nwuz.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
+        #url = 'https://data.cambridgema.gov/resource/dypy-nwuz.json'
+        #response = urllib.request.urlopen(url).read().decode("utf-8")
+        client = sodapy.Socrata("data.cambridgema.gov", None)
+        response = client.get("dypy-nwuz", limit=30)
+        #r = json.loads(response)
+        #s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("crimeReportsCambridge")
         repo.createCollection("crimeReportsCambridge")
-        repo['houset_karamy.crimeReportsCambridge'].insert_many(r)
+        repo['houset_karamy.crimeReportsCambridge'].insert_many(response)
         
         # Data for Police Car Routes in Cambridge
-        url = 'https://data.cambridgema.gov/api/views/svjm-6war.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
+        #url = 'https://data.cambridgema.gov/api/views/svjm-6war.json'
+        #response = urllib.request.urlopen(url).read().decode("utf-8")
+        client = sodapy.Socrata("data.cambridgema.gov", None)
+        response = client.get("svjm-6war", limit=30)
+        #r = json.loads(response)
+        #s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("policeCarRoutesCambridge")
         repo.createCollection("policeCarRoutesCambridge")
-        repo['houset_karamy.policeCarRoutesCambridge'].insert_many(r)
+        repo['houset_karamy.policeCarRoutesCambridge'].insert_many(response)
         
         # Data for Police Walking Routes in Cambridge
-        url = 'https://data.cambridgema.gov/api/views/aaqv-qhr2.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
+        #url = 'https://data.cambridgema.gov/api/views/aaqv-qhr2.json'
+        #response = urllib.request.urlopen(url).read().decode("utf-8")
+        client = sodapy.Socrata("data.cambridgema.gov", None)
+        response = client.get("aaqv-qhr2", limit=30)
+        #r = json.loads(response)
+        #s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("policeWalkingRoutesCambridge")
         repo.createCollection("policeWalkingRoutesCambridge")
-        repo['houset_karamy.policeWalkingRoutesCambridge'].insert_many(r)
-       #******* I PUT IN THE LINKS FOR A FEW DATA SETS I FOUND RELEVANT*******
-       #******* JUST TO KEEP IT SIMPLER FOR US I DIDNT USE ALL THE ONES WE TALKED ABOUT********
-       #******* NEED HELP INSERTING MBTA ONE THOUGH. NOT SURE IF IT WORKS. NEED TO INCORPORATE PROVENANCE. IDEK ANYMORE*******
-    
+        repo['houset_karamy.policeWalkingRoutesCambridge'].insert_many(response)
+
        # url = 'http://cs-people.bu.edu/lapets/591/examples/found.json'
         #response = urllib.request.urlopen(url).read().decode("utf-8")
         #r = json.loads(response)
@@ -109,7 +115,7 @@ class get(dml.Algorithm):
       #writes = ['houset_karamy.policeStations','houset_karamy.crimeReportsBoston', 'houset_karamy.crimeReportsCambridge', 'houset_karamy.policeCarRoutesCambridge', 'houset_karamy.policeWalkingRoutesCambridge','houset_karamy.realTimeTravelMassdot']
 
             
-        this_script = doc.agent('alg:houset_karamy#get', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:houset_karamy#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         resource1 = doc.entity('bdp:pyxn-r3i2', {'prov:label':'Police Stations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource2 = doc.entity('bdp:crime', {'prov:label':'Crime Reports Boston', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource3 = doc.entity('cma:dypy-nwuz', {'prov:label':'Crime Reports Cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
@@ -216,6 +222,7 @@ class get(dml.Algorithm):
         repo.logout()
                   
         return doc
+
 
 get.execute()
 doc = get.provenance()
