@@ -52,7 +52,12 @@ class police_crime(dml.Algorithm):
         print(repo['pt0713_silnuext.police_crime'].metadata())
         
 
+<<<<<<< Updated upstream
         #non-trivial transformation
+=======
+        #mapreduce part
+
+>>>>>>> Stashed changes
         
 
         
