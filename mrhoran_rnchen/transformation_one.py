@@ -47,9 +47,10 @@ class transformation_one(dml.Algorithm):
 
         # agg those tuples
 
-        commgarden_zip_count = project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1])))
+        commgarden_zip_count = dict(project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1]))))
 
-        repo.mrhoran_rnchen.commgarden_zip_count.insertMany(commgarden_zip_count)
+        print(commgarden_zip_count)
+        repo.mrhoran_rnchen.commgarden_zip_count.insert(commgarden_zip_count)
        
         #print(commgarden_zip_count)
  
