@@ -49,9 +49,9 @@ class transformation_one(dml.Algorithm):
 
         commgarden_zip_count = dict(project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1]))))
 
-        print(commgarden_zip_count)
-        repo.mrhoran_rnchen.commgarden_zip_count.insert(commgarden_zip_count)
-       
+        repo.mrhoran_rnchen.commgarden_zip_count.insert_many(commgarden_zip_count)
+      
+	#insert, insert_many, or insertMany? 
         #print(commgarden_zip_count)
  
         # make a new tuple (zipcode, #food_pantries) from {"area":"South End",
