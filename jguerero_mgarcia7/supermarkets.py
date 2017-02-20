@@ -4,7 +4,7 @@ import dml
 import prov.model
 import datetime
 import uuid
-import PyPDF2
+import PyPDF2 # pip install PyPDF2
 from itertools import zip_longest
 
 class supermarkets(dml.Algorithm):
