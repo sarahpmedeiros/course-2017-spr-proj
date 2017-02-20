@@ -105,34 +105,18 @@ class transformation0(dml.Algorithm):
         doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/')
 
         this_script = doc.agent('alg:pgr_syquiac#transformation0', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        hospitals_doctor_visitsResource = doc.entity('dat:pgr_syquiac#hospitals_doctor_visits', {prov.model.PROV_LABEL: 'Hospital locations and doctor visits', prov.model.PROV_TYPE:'ont:Dataset'})
-        getResource = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'Hospital distance from people who have a lack of doctor visits'})
-        doc.wasAssociatedWith(getResource, this_script)
-        doc.used(getResource, hospitals_doctor_visitsResource, startTime)
-        doc.wasAttributedTo(hospitals_doctor_visitsResource, getResource)
-        doc.wasGeneratedBy(hospitals_doctor_visitsResource, getResource, endTime)
-        doc.wasDerivedFrom(hos)
+        hospitals_doctor_visits = doc.entity('dat:pgr_syquiac#hospitals_doctor_visits', {prov.model.PROV_LABEL: 'Hospital locations and doctor visits', prov.model.PROV_TYPE:'ont:Dataset'})
+        get_hospitals_doctors_visits = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'Hospital distance from people who have a lack of doctor visits'})
+        doc.wasAssociatedWith(get_hospitals_doctors_visits, this_script)
+        doc.used(getResource, hospitals_doctor_visits, startTime)
+        doc.wasAttributedTo(hospitals_doctor_visits, this_script)
+        doc.wasGeneratedBy(hospitals_doctor_visits, get_hospitals_doctors_visits, endTime)
 
         # repo.record(doc.serialize()) # Record the provenance document. <- doesn't work for some reason
 
         repo.logout()
 
         return doc
-
-        '''
-        #format for provenance
-
-        lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-
-        found = doc.entity('dat:alice_bob#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(found, this_script)
-        doc.wasGeneratedBy(found, get_found, endTime)
-        doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
-
-        '''
 
 
 transformation0.execute()

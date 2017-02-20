@@ -115,12 +115,12 @@ class transformation1(dml.Algorithm):
         doc.add_namespace('datm', 'https://datamechanics.io/data/pgr_syquiac') # datamechanics.io, hosts the schools data
 
         this_script = doc.agent('alg:pgr_syquiac#retrieveData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        sleep_rates_universitiesResource = doc.entity('dat:pgr_syquiac#sleep_rates_universities', {prov.model.PROV_LABEL: 'Sleep Rates and distance from universities', prov.model.PROV_TYPE:'ont:Dataset'})
-        getResource = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'Sleep rates of people (>18 years) and their distance from universities'})
-        doc.wasAssociatedWith(getResource, this_script)
-        doc.used(sleep_rates_universitiesResource, getResource, startTime)
-        doc.wasAttributedTo(sleep_rates_universitiesResource, this_script)
-        doc.wasGeneratedBy(sleep_rates_universitiesResource, getResource, endTime)
+        sleep_rates_universities = doc.entity('dat:pgr_syquiac#sleep_rates_universities', {prov.model.PROV_LABEL: 'Sleep Rates and distance from universities', prov.model.PROV_TYPE:'ont:Dataset'})
+        get_sleep_rates_universities = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'Sleep rates of people (>18 years) and their distance from universities'})
+        doc.wasAssociatedWith(get_sleep_rates_universities, this_script)
+        doc.used(sleep_rates_universities, get_sleep_rates_universities, startTime)
+        doc.wasAttributedTo(sleep_rates_universities, this_script)
+        doc.wasGeneratedBy(sleep_rates_universities, get_sleep_rates_universities, endTime)
 
 
         repo.logout()
@@ -132,5 +132,5 @@ class transformation1(dml.Algorithm):
 
 transformation1.execute()
 doc = transformation1.provenance()
-#print(doc.get_provn())
+print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
