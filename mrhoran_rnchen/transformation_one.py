@@ -73,6 +73,14 @@ class transformation_one(dml.Algorithm):
         result = project(select(temp, lambda t: t[0][0] == t[1][0]), lambda t: (t[0][0], t[0][1], t[1][1]))
         
 
+        for z in commgarden_zip_count:
+            if z[0] not in result:
+                 result.append((z[0],z[1],('food_pantry',0)))
+
+        for p in foodpantry_zip_count:
+            if p[0] not in result:
+                 result.append((p[0],('comm_gardens',0),p[1]))
+
         print(result)
         repo.logout()
 
