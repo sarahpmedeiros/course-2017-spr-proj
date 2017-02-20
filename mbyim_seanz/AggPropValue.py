@@ -46,17 +46,15 @@ class agg_prop_value(dml.Algorithm):
 
 
 		#make the zip_grouped_data
-		zip_list = []
+		zip_data = []
 		print("here")
 		for row in property_assessments:
-			print("Hello")
 			prop_dict = dict(row)
+			prop_dict_select = prop_dict['owner_mail_zipcode']
 			print(prop_dict)
-			#tax_dict_modified = tax_dict['zip'].split("-")[0]
-			#if tax_dict_modified in boston_zips:
-			#	zip_list.append(tax_dict_modified)
-			#else:
-			#	continue
+
+			zip_data.append(prop_dict_select)
+			
 
 		#zip_grouped_data = aggregate(zip_list, sum)
 
