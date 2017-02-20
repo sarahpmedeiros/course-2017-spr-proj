@@ -6,7 +6,7 @@ We have collected data about how many open spaces and trees there are in Cambrid
 
 We calculated the ratio of open space area to total area of the location, the CO2 usage per person, and the MMBTU usage per person. We then draw a connection between how much open space there is and how much extra energy is used in each location. This begins to give us insight on the relationship between open spaces and general energy usage.
 
-We also ran k-means on our tree's geographical data on each respective city. The goal was to again to better the trees in these cities, as well as to use the output locations to propose places where parks could be built etc.
+We also ran k-means on our tree's geographical data on each respective city. The goal was to again to better our understand of trees in these cities, as well as to use the output locations to propose places where parks could be built etc.
 
 ### Running our code
 
