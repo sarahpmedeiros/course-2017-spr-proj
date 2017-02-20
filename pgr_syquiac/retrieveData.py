@@ -62,7 +62,7 @@ class retrieveData(dml.Algorithm):
 
         # Get data for healthy corner stores
         client = sodapy.Socrata("data.cityofboston.gov", None)
-        response = client.get("ybm6-m5qd", limit=16)
+        response = client.get("ybm6-m5qd", limit=20)
         #print(response)
         repo.dropCollection("stores")
         repo.createCollection("stores")
