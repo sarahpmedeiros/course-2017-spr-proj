@@ -59,7 +59,7 @@ class get(dml.Algorithm):
         this_script = doc.agent('alg:houset_karamy#getPoliceCarRoutesCambridge', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         resource3 = doc.entity('cma:svjm-6war', {'prov:label':'Police Car Routes Cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         
-        get_crimeReportsCambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_policeCarRoutesCambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         
         doc.wasAssociatedWith(get_policeCarRoutesCambridge, this_script)
         
