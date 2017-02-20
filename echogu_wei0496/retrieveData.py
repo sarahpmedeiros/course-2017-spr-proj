@@ -9,7 +9,7 @@ import sodapy
 class retrieveData(dml.Algorithm):
     contributor = 'echogu_wei0496'
     reads = []
-    writes = ['echogu_wei0496.BikeNetwork', 'echogu_wei0496.HubwayStations', 'echogu_wei0496.ServicesRequest', 'echogu_wei0496.BLCLandmarks', 'echogu_wei0496.MASchools']
+    writes = ['echogu_wei0496.CityBoundary', 'echogu_wei0496.BikeNetwork', 'echogu_wei0496.HubwayStations', 'echogu_wei0496.ServicesRequest', 'echogu_wei0496.BLCLandmarks', 'echogu_wei0496.MASchools']
 
     @staticmethod
     def execute(trial=False):
@@ -22,32 +22,41 @@ class retrieveData(dml.Algorithm):
         repo = client.repo
         repo.authenticate('echogu_wei0496', 'echogu_wei0496')
 
+        # City of Boston Boundary
+        url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/142500a77e2a4dbeb94a86f7e0b568bc_0.geojson'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)['features']
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("CityBoundary")
+        repo.createCollection("CityBoundary")
+        repo['echogu_wei0496.CityBoundary'].insert_many(r)
+        repo['echogu_wei0496.CityBoundary'].metadata({'complete': True})
+        print(repo['echogu_wei0496.CityBoundary'].metadata())
+        print("Retrieved CityBoundary", repo['echogu_wei0496.BikeNetwork'].metadata())
+
         # Existing Bike Network
         url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/d02c9d2003af455fbc37f550cc53d3a4_0.geojson'
         response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        #s = json.dumps(r, sort_keys=True, indent=2)
+        r = json.loads(response)['features']
         repo.dropCollection("BikeNetwork")
         repo.createCollection("BikeNetwork")
-        repo['echogu_wei0496.BikeNetwork'].insert(r)
+        repo['echogu_wei0496.BikeNetwork'].insert_many(r)
         repo['echogu_wei0496.BikeNetwork'].metadata({'complete': True})
         print("Retrieved BikeNetwork", repo['echogu_wei0496.BikeNetwork'].metadata())
 
         # Hubway Stations
         url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/ee7474e2a0aa45cbbdfe0b747a5eb032_0.geojson'
         response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        #s = json.dumps(r, sort_keys=True, indent=2)
+        r = json.loads(response)['features']
         repo.dropCollection("HubwayStations")
         repo.createCollection("HubwayStations")
-        repo['echogu_wei0496.HubwayStations'].insert(r)
+        repo['echogu_wei0496.HubwayStations'].insert_many(r)
         repo['echogu_wei0496.HubwayStations'].metadata({'complete': True})
         print("Retrieved HubwayStations", repo['echogu_wei0496.HubwayStations'].metadata())
 
-        # 311 Open Services Request Map (JSON)
+        # 311 Open Services Request Map
         client = sodapy.Socrata("data.cityofboston.gov", dml.auth['services']['cityofbostondataportal']['token'])
         r = client.get("j2a7-cdyk", limit=100, REASON="Boston Bikes")
-        #s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("ServicesRequest")
         repo.createCollection("ServicesRequest")
         repo['echogu_wei0496.ServicesRequest'].insert_many(r)
@@ -57,22 +66,20 @@ class retrieveData(dml.Algorithm):
         # Boston Landmarks Commission (BLC) Landmarks
         url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/7a7aca614ad740e99b060e0ee787a228_3.geojson'
         response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        #s = json.dumps(r, sort_keys=True, indent=2)
+        r = json.loads(response)['features']
         repo.dropCollection("BLCLandmarks")
         repo.createCollection("BLCLandmarks")
-        repo['echogu_wei0496.BLCLandmarks'].insert(r)
+        repo['echogu_wei0496.BLCLandmarks'].insert_many(r)
         repo['echogu_wei0496.BLCLandmarks'].metadata({'complete': True})
         print("Retrieved BLCLandmarks", repo['echogu_wei0496.BLCLandmarks'].metadata())
 
         # MA Schools (Pre-K through High School)
         url = 'http://maps-massgis.opendata.arcgis.com/datasets/359016a59a594e0088547235913c9168_0.geojson'
         response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        #s = json.dumps(r, sort_keys=True, indent=2)
+        r = json.loads(response)['features']
         repo.dropCollection("MASchools")
         repo.createCollection("MASchools")
-        repo['echogu_wei0496.MASchools'].insert(r)
+        repo['echogu_wei0496.MASchools'].insert_many(r)
         repo['echogu_wei0496.MASchools'].metadata({'complete': True})
         print("Retrieved MASchools", repo['echogu_wei0496.MASchools'].metadata())
 
@@ -106,6 +113,10 @@ class retrieveData(dml.Algorithm):
         # define entity to represent resources
         this_script = doc.agent('alg:echogu_wei0496#retrieveData',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
+        resource_CityBoundary = doc.entity('bod:142500a77e2a4dbeb94a86f7e0b568bc_0',
+                                          {'prov:label': 'Boston City Boundary',
+                                           prov.model.PROV_TYPE: 'ont:DataResource',
+                                           'ont:Extension': 'geojson'})
         resource_BikeNetwork = doc.entity('bod:d02c9d2003af455fbc37f550cc53d3a4_0',
                               {'prov:label': 'Existing Bike Networks', prov.model.PROV_TYPE: 'ont:DataResource',
                                'ont:Extension': 'geojson'})
@@ -126,6 +137,7 @@ class retrieveData(dml.Algorithm):
                                             'ont:Extension': 'geojson'})
 
         # define activity to represent invocation of the script
+        get_CityBoundary = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
         get_BikeNetwork = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
         get_HubwayStations = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
         get_ServicesRequest = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
@@ -133,6 +145,7 @@ class retrieveData(dml.Algorithm):
         get_MASchools = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
 
         # associate the activity with the script
+        doc.wasAssociatedWith(get_CityBoundary, this_script)
         doc.wasAssociatedWith(get_BikeNetwork, this_script)
         doc.wasAssociatedWith(get_HubwayStations, this_script)
         doc.wasAssociatedWith(get_ServicesRequest, this_script)
@@ -140,6 +153,11 @@ class retrieveData(dml.Algorithm):
         doc.wasAssociatedWith(get_MASchools, this_script)
 
         # indicate that an activity used the entity
+        doc.usage(get_BikeNetwork, resource_CityBoundary, startTime, None,
+                  {prov.model.PROV_TYPE: 'ont:Retrieval',
+                   # 'ont:Query': '?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
+                   }
+                  )
         doc.usage(get_BikeNetwork, resource_BikeNetwork, startTime, None,
                   {prov.model.PROV_TYPE: 'ont:Retrieval',
                    #'ont:Query': '?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
@@ -167,6 +185,11 @@ class retrieveData(dml.Algorithm):
                   )
 
         # for the data obtained, indicate that the entity was attributed to what agent, was generated by which activity and was derived from what entity
+        CityBoundary = doc.entity('dat:echogu_wei0496#CityBoundary', {prov.model.PROV_LABEL: 'Boston City Boundary', prov.model.PROV_TYPE: 'ont:DataSet'})
+        doc.wasAttributedTo(CityBoundary, this_script)
+        doc.wasGeneratedBy(CityBoundary, get_CityBoundary, endTime)
+        doc.wasDerivedFrom(CityBoundary, resource_CityBoundary, resource_CityBoundary, resource_BikeNetwork, get_CityBoundary)
+
         BikeNetworks = doc.entity('dat:echogu_wei0496#BikeNetworks', {prov.model.PROV_LABEL: 'Existing Bike Networks', prov.model.PROV_TYPE: 'ont:DataSet'})
         doc.wasAttributedTo(BikeNetworks, this_script)
         doc.wasGeneratedBy(BikeNetworks, get_BikeNetwork, endTime)
@@ -196,7 +219,7 @@ class retrieveData(dml.Algorithm):
 
         return doc
 
-#retrieveData.execute()
+retrieveData.execute()
 doc = retrieveData.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
