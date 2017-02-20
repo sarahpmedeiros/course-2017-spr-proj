@@ -14,7 +14,7 @@ import sodapy
 
 class property_2014(dml.Algorithm):
     contributor = 'pt0713_silnuext'
-    reads = []
+    reads = ['pt0713_silnuext.property_2014']
     writes = ['pt0713_silnuext.property_2014']
 
     @staticmethod

@@ -12,7 +12,7 @@ import sodapy
 
 class fld(dml.Algorithm):
     contributor = 'pt0713_silnuext'
-    reads = []
+    reads = ['pt0713_silnuext.fld']
     writes = ['pt0713_silnuext.fld']
 
     @staticmethod

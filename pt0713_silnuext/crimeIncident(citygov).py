@@ -11,7 +11,7 @@ import sodapy
 
 class crime(dml.Algorithm):
     contributor = 'pt0713_silnuext'
-    reads = []
+    reads = ['pt0713_silnuext.crime']
     writes = ['pt0713_silnuext.crime']
 
     @staticmethod

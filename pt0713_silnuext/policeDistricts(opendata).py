@@ -11,7 +11,7 @@ import sodapy
 # http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5.geojson
 class police_districts(dml.Algorithm):
     contributor = 'pt0713_silnuext'
-    reads = []
+    reads = ['pt0713_silnuext.police_districts']
     writes = ['pt0713_silnuext.police_districts']
 
     @staticmethod

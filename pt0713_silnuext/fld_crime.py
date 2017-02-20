@@ -9,7 +9,7 @@ import sodapy
 
 class fld_crime(dml.Algorithm):
     contributor = 'pt0713_silnuext'
-    reads = []
+    reads = ['pt0713_silnuext.fld_crime']
     writes = ['pt0713_silnuext.fld_crime']
 
     @staticmethod

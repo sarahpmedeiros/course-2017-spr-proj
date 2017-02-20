@@ -9,7 +9,7 @@ import function_implement
 
 class police_crime(dml.Algorithm):
     contributor = 'pt0713_silnuext'
-    reads = []
+    reads = ['pt0713_silnuext.police_crime']
     writes = ['pt0713_silnuext.police_crime']
 
     @staticmethod
@@ -53,7 +53,6 @@ class police_crime(dml.Algorithm):
         
 
         #non-trivial transformation
-        
 
         
 

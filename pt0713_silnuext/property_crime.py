@@ -9,7 +9,7 @@ import sodapy
 
 class property_crime(dml.Algorithm):
     contributor = 'pt0713_silnuext'
-    reads = []
+    reads = ['pt0713_silnuext.property_crime']
     writes = ['pt0713_silnuext.property_crime']
 
     @staticmethod
