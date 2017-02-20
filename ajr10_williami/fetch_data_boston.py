@@ -60,7 +60,7 @@ class fetch_data_boston(dml.Algorithm):
         print("retrieving energy data from data.cityofboston.gov")
 
         client = sodapy.Socrata("data.cityofboston.gov", None)
-        response = client.get("exmd-natm")
+        response = client.get("exmd-natm", limit=50)
         r = json.loads(json.dumps(response, sort_keys=True, indent=2))
         
         repo.dropCollection("ajr10_williami.energy_boston")

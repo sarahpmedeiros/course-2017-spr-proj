@@ -33,8 +33,8 @@ class clean_energy(dml.Algorithm):
         repo.dropCollection('ajr10_williami.cleaned_energy_boston')
         repo.createCollection('ajr10_williami.cleaned_energy_boston')
 
-        energy_cambridge = repo["ajr10_williami.energy_cambridge"].find()
-        energy_boston = repo["ajr10_williami.energy_boston"].find()
+        energy_cambridge = repo['ajr10_williami.energy_cambridge'].find()
+        energy_boston = repo['ajr10_williami.energy_boston'].find()
 
         for cambridge_energy in energy_cambridge:
             CO2 = cambridge_energy['co2_kg']
