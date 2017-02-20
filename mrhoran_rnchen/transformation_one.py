@@ -34,14 +34,16 @@ class transformation_one(dml.Algorithm):
         #"site":"Richard Parker Memorial CG","state":"MA","zip_code":"2115"}
 
 
-        test_arr = []
-        temp = [o for o in repo.mrhoran_rnchen.community_gardens.find({})]
-        for g in temp:
-             test_arr.append({g['site'],g['zip_code']})
-        print(test_arr)
+        #test_arr = []
+        #temp = [o for o in repo.mrhoran_rnchen.community_gardens.find({})]
+        #for g in temp:
+        #     test_arr.append({g['site'],g['zip_code']})
+        #print(test_arr)
 
-        X = project(select('mrhoran_rnchen.community_gardens', lambda t: t[0] == "zip_code"), lambda t: (t[1],1))
+        #X = project(select('mrhoran_rnchen.community_gardens', lambda t: t[0] == "zip_code"), lambda t: (t[1],1))
 
+        X = project([o for o in repo.mrhoran_rnchen.community_gardens.find({})], getZips)
+        print(X)
 
         # agg those tuples
 
@@ -117,7 +119,6 @@ class transformation_one(dml.Algorithm):
 
 
 def aggregate(R, f):
-
     keys = {r[0] for r in R}
     return [(key, f([v for (k,v) in R if k == key])) for key in keys]
     
@@ -129,6 +130,10 @@ def project(R, p):
 
 def product(R, S):
     return [(t,u) for t in R for u in S]
+
+def getZips(garden):
+    return({garden['zip_code'],garden['site']})
+
 
 
 transformation_one.execute()
