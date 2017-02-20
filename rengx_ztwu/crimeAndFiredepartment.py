@@ -102,25 +102,25 @@ class crimeAndFiredpartment(dml.Algorithm):
         doc.usage(combine_CrimeAndFire, resource_crimereports, startTime)
 
         # Result dataset entity
-        CrimeAndFire = doc.entity('dat:rengx_ztwu#schoolandhosptial',
-                                      {prov.model.PROV_LABEL: 'All school and hosptial in Boston',
+        CrimeAndFire = doc.entity('dat:rengx_ztwu#CrimeAndFire',
+                                      {prov.model.PROV_LABEL: 'All Crime And Fire in Boston',
                                        prov.model.PROV_TYPE: 'ont:DataSet'})
 
-        doc.wasAttributedTo(schoolandhosptial, this_script)
-        doc.wasGeneratedBy(schoolandhosptial, combine_schoolandhosptial, endTime)
-        doc.wasDerivedFrom(schoolandhosptial, resource_publicschool, combine_schoolandhosptial,
-                           combine_schoolandhosptial,
-                           combine_schoolandhosptial)
-        doc.wasDerivedFrom(schoolandhosptial, resource_hosptial, combine_schoolandhosptial,
-                           combine_schoolandhosptial,
-                           combine_schoolandhosptial)
+        doc.wasAttributedTo(CrimeAndFire, this_script)
+        doc.wasGeneratedBy(CrimeAndFire, combine_CrimeAndFire, endTime)
+        doc.wasDerivedFrom(CrimeAndFire, resource_firestation, combine_CrimeAndFire,
+                           combine_CrimeAndFire,
+                           combine_CrimeAndFire)
+        doc.wasDerivedFrom(CrimeAndFire, resource_crimereports, combine_CrimeAndFire,
+                           combine_CrimeAndFire,
+                           combine_CrimeAndFire)
 
         repo.logout()
 
         return doc
 
-combinehosptial.execute()
-doc = combinehosptial.provenance()
+combineCrimeAndFire.execute()
+doc = combineCrimeAndFire.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 

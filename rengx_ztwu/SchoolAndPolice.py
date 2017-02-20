@@ -10,11 +10,11 @@ from bson.json_util import dumps
 
 
 
-class combineschoolandhosptial(dml.Algorithm):
+class SchoolAndPolice(dml.Algorithm):
 
     contributor = 'rengx_ztwu'
-    reads = ['rengx_ztwu.publicschool','rengx_ztwu.hosptial']
-    writes = ['rengx_ztwu.schoolandhosptial']
+    reads = ['rengx_ztwu.publicschool','rengx_ztwu.policestation']
+    writes = ['rengx_ztwu.SchoolAndPolice']
 
     @staticmethod
     def execute(trial = False):
@@ -28,25 +28,25 @@ class combineschoolandhosptial(dml.Algorithm):
 
         # Get the collections
         publicschool = repo['rengx_ztwu.publicschool']
-        hosptial = repo['rengx_ztwu.hosptial']
+        policestation = repo['rengx_ztwu.policestation']
 
         # Get names and zipcode of all schools and put them into (key, value) form
-        SchoolAndHospital = []
-        for entry in publicschool.find({"ZIPCODE": {"$exists": True}}):
-            SchoolAndHospital.append(
-                {"name": entry['SCH_NAME'], "value": {'zip': entry['ZIPCODE']}
+        SchoolAndPolice = []
+        for entry in policestation.find({"Location": {"$exists": True}}):
+            SchoolAndPolice.append(
+                {"name": entry['NAME'], "value": {'street': entry['Location']}
                  })
 
-        for entry in hosptial.find({"ZIPCODE": {"$exists": True}}):
-            SchoolAndHospital.append(
-                {"name": entry['NAME'], "value": {'zip': entry['ZIPCODE']}
+        for entry in crimereports.find({"STREETNAME": {"$exists": True}}):
+            SchoolAndPolice.append(
+                {"name": entry['SCH_NAME'], "value": {'street': entry['Location']}
                 })
 
 
     # Create a new collection and insert the result data set
-        repo.dropCollection('SchoolAndHospitalDB')
-        repo.createCollection('SchoolAndHospitalDB')
-        repo['rengx_ztwu.SchoolAndHospitalDB'].insert_many(SchoolAndHospital)
+        repo.dropCollection('SchoolAndPoliceDB')
+        repo.createCollection('SchoolAndPoliceDB')
+        repo['rengx_ztwu.SchoolAndPoliceDB'].insert_many(SchoolAndPolice)
 
         repo.logout()
         endTime = datetime.datetime.now()
@@ -74,7 +74,7 @@ class combineschoolandhosptial(dml.Algorithm):
         doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
 
         # Agent
-        this_script = doc.agent('alg:rengx_ztwu#schoolandhosptial',
+        this_script = doc.agent('alg:rengx_ztwu#SchoolAndPolice',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
 
         # Resources
@@ -83,44 +83,44 @@ class combineschoolandhosptial(dml.Algorithm):
                                                  prov.model.PROV_TYPE: 'ont:DataResource',
                                                  'ont:Extension': 'json'})
 
-        resource_hosptial = doc.entity('dat:rengx_ztwu#hosptial',
-                                              {'prov:label': 'hosptials in Boston',
+        resource_policestation = doc.entity('dat:rengx_ztwu#policestation',
+                                              {'prov:label': 'police station in Boston',
                                                prov.model.PROV_TYPE: 'ont:DataResource',
                                                'ont:Extension': 'json'})
 
         # Activities
-        combine_schoolandhosptial = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime,
+        combine_SchoolAndPolice = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime,
                                                 {
-                                                    prov.model.PROV_LABEL: "Combine all schools and hostials in Boston",
+                                                    prov.model.PROV_LABEL: "Combine all School And Police in Boston",
                                                     prov.model.PROV_TYPE: 'ont:Computation'})
 
         # Activities' Associations with Agent
-        doc.wasAssociatedWith(combine_schoolandhosptial, this_script)
+        doc.wasAssociatedWith(combine_SchoolAndPolice, this_script)
 
         # Record which activity used which resource
-        doc.usage(combine_schoolandhosptial, resource_publicschool, startTime)
-        doc.usage(combine_schoolandhosptial, resource_hosptial, startTime)
+        doc.usage(combine_SchoolAndPolice, resource_publicschool, startTime)
+        doc.usage(combine_SchoolAndPolice, resource_policestation, startTime)
 
         # Result dataset entity
-        schoolandhosptial = doc.entity('dat:rengx_ztwu#schoolandhosptial',
-                                      {prov.model.PROV_LABEL: 'All school and hosptial in Boston',
+        SchoolAndPolice = doc.entity('dat:rengx_ztwu#SchoolAndPolice',
+                                      {prov.model.PROV_LABEL: 'All School And Police in Boston',
                                        prov.model.PROV_TYPE: 'ont:DataSet'})
 
-        doc.wasAttributedTo(schoolandhosptial, this_script)
-        doc.wasGeneratedBy(schoolandhosptial, combine_schoolandhosptial, endTime)
-        doc.wasDerivedFrom(schoolandhosptial, resource_publicschool, combine_schoolandhosptial,
-                           combine_schoolandhosptial,
-                           combine_schoolandhosptial)
-        doc.wasDerivedFrom(schoolandhosptial, resource_hosptial, combine_schoolandhosptial,
-                           combine_schoolandhosptial,
-                           combine_schoolandhosptial)
+        doc.wasAttributedTo(SchoolAndPolice, this_script)
+        doc.wasGeneratedBy(SchoolAndPolice, combine_SchoolAndPolice, endTime)
+        doc.wasDerivedFrom(SchoolAndPolice, resource_publicschool, combine_SchoolAndPolice,
+                           combine_SchoolAndPolice,
+                           combine_SchoolAndPolice)
+        doc.wasDerivedFrom(SchoolAndPolice, resource_policestation, combine_SchoolAndPolice,
+                           combine_SchoolAndPolice,
+                           combine_SchoolAndPolice)
 
         repo.logout()
 
         return doc
 
-combineschoolandhosptial.execute()
-doc = combineschoolandhosptial.provenance()
+combineSchoolAndPolice.execute()
+doc = combineSchoolAndPolice.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
