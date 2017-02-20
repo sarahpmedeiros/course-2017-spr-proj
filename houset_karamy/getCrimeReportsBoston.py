@@ -56,7 +56,7 @@ class get(dml.Algorithm):
       #writes = ['houset_karamy.policeStations','houset_karamy.crimeReportsBoston', 'houset_karamy.crimeReportsCambridge', 'houset_karamy.policeCarRoutesCambridge', 'houset_karamy.policeWalkingRoutesCambridge','houset_karamy.realTimeTravelMassdot']
 
             
-        this_script = doc.agent('alg:houset_karamy#crimeReportsBoston', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:houset_karamy#getCrimeReportsBoston', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         
         resource1 = doc.entity('bdp:crime', {'prov:label':'Crime Reports Boston', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
                         
