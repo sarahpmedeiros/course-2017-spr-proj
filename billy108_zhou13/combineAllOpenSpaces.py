@@ -91,6 +91,75 @@ class combineAllOpenSpaces(dml.Algorithm):
 
     @staticmethod
     def provenance(doc=prov.model.ProvDocument(), startTime=None, endTime=None):
-        return
+        # Set up the database connection.
+        client = dml.pymongo.MongoClient()
+        repo = client.repo
+        repo.authenticate('billy108_zhou13', 'billy108_zhou13')
+
+        doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
+        doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
+        doc.add_namespace('ont',
+                          'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
+        doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
+        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        doc.add_namespace('cdp', 'https://data.cambridgema.gov/')
+        doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
+
+        # Agent
+        this_script = doc.agent('alg:billy108_zhou13#combineAllOpenSpaces',
+                                {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
+
+        # Resources
+        resource_communityGardens = doc.entity('dat:billy108_zhou13#communityGardens',
+                                                {'prov:label': 'Community Gardens in Boston',
+                                                 prov.model.PROV_TYPE: 'ont:DataResource',
+                                                 'ont:Extension': 'json'})
+
+        resource_openSpaceCambridge = doc.entity('dat:billy108_zhou13#openSpaceCambridge',
+                                              {'prov:label': 'Open Spaces in Cambridge',
+                                               prov.model.PROV_TYPE: 'ont:DataResource',
+                                               'ont:Extension': 'json'})
+
+        resource_openSpaceBoston = doc.entity('dat:billy108_zhou13#openSpaceBoston',
+                                              {'prov:label': 'Open Spaces in Boston',
+                                               prov.model.PROV_TYPE: 'ont:DataResource',
+                                               'ont:Extension': 'json'})
+        # Activities
+        combine_AllOpenSpaces = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime,
+                                                {
+                                                    prov.model.PROV_LABEL: "Combine all open spaces in Boston",
+                                                    prov.model.PROV_TYPE: 'ont:Computation'})
+
+        # Activities' Associations with Agent
+        doc.wasAssociatedWith(combine_AllOpenSpaces, this_script)
+
+        # Record which activity used which resource
+        doc.usage(combine_AllOpenSpaces, resource_communityGardens, startTime)
+        doc.usage(combine_AllOpenSpaces, resource_openSpaceCambridge, startTime)
+        doc.usage(combine_AllOpenSpaces, resource_openSpaceBoston, startTime)
+
+        # Result dataset entity
+        allOpenSpacesInBoston = doc.entity('dat:billy108_zhou13#allOpenSpacesInBoston',
+                                      {prov.model.PROV_LABEL: 'All open spaces in Boston',
+                                       prov.model.PROV_TYPE: 'ont:DataSet'})
+
+        doc.wasAttributedTo(allOpenSpacesInBoston, this_script)
+        doc.wasGeneratedBy(allOpenSpacesInBoston, combine_AllOpenSpaces, endTime)
+        doc.wasDerivedFrom(allOpenSpacesInBoston, resource_communityGardens, combine_AllOpenSpaces,
+                           combine_AllOpenSpaces,
+                           combine_AllOpenSpaces)
+        doc.wasDerivedFrom(allOpenSpacesInBoston, resource_openSpaceCambridge, combine_AllOpenSpaces,
+                           combine_AllOpenSpaces,
+                           combine_AllOpenSpaces)
+        doc.wasDerivedFrom(allOpenSpacesInBoston, resource_openSpaceBoston, combine_AllOpenSpaces,
+                           combine_AllOpenSpaces,
+                           combine_AllOpenSpaces)
+
+        repo.logout()
+
+        return doc
 
 combineAllOpenSpaces.execute()
+doc = combineAllOpenSpaces.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))

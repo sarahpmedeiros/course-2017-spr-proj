@@ -1,12 +1,9 @@
-import urllib
+
 import json
 import dml
 import prov.model
 import datetime
 import uuid
-import sodapy
-from bson.code import Code
-from bson.json_util import dumps
 
 class combineAll(dml.Algorithm):
 
@@ -25,63 +22,35 @@ class combineAll(dml.Algorithm):
         repo.authenticate('billy108_zhou13', 'billy108_zhou13')
 
         # Get the collections
-        openSpaceCambridge = repo['billy108_zhou13.openSpaceCambridge']
-        openSpaceBoston = repo['billy108_zhou13.openSpaceBoston']
-        communityGardens = repo['billy108_zhou13.communityGardens']
+        waterplayCambridge = repo['billy108_zhou13.waterplayCambridge']
+        allOpenSpacesBoston = repo['billy108_zhou13.allOpenSpacesInBoston']
+        allPoolsInBoston = repo['billy108_zhou13.allPoolsInBoston']
 
         #Get names, neighborhood of all open spaces in Cambridge
-        allOpenSpaces_list = []
-        for entry in openSpaceCambridge.find():
-            allOpenSpaces_list.append(
-                {"name": entry['name'], 'neighborhood': 'cambridge'}
+        allRecreationalPlaces_list = []
+        for entry in waterplayCambridge.find():
+            allRecreationalPlaces_list.append(
+                {"name": entry['park'], 'neighborhood': 'cambridge'}
             )
 
         #get names, neighborhood of all open spaces in Boston excluding Cambrdige and Brookline
-        for entry in openSpaceBoston.find():
+        for entry in allOpenSpacesBoston.find():
+            allRecreationalPlaces_list.append(
+                {"name": entry['name'], 'neighborhood': entry['neighborhood']}
+            )
 
-            if entry['properties'].get('DISTRICT').lower() == 'allston-brighton':
-                allOpenSpaces_list.append({"name": entry['properties'].get('SITE_NAME'),
-                                           'neighborhood': 'allston/brighton'})
-            elif entry['properties'].get('DISTRICT').lower() == 'north dorchester':
-                allOpenSpaces_list.append({"name": entry['properties'].get('SITE_NAME'),
-                                           'neighborhood': 'dorchester'})
-            elif entry['properties'].get('DISTRICT').lower() == 'central boston':
-                allOpenSpaces_list.append({"name": entry['properties'].get('SITE_NAME'),
-                                           'neighborhood': 'boston'})
-            else:
-                allOpenSpaces_list.append(
-                    {"name": entry['properties'].get('SITE_NAME'),
-                     'neighborhood': entry['properties'].get('DISTRICT').lower()}
-                )
 
         #get names, neighborhood of all community gardens in Boston
-        for entry in communityGardens.find():
-            if entry['site'] != 'Site name' and entry['area'] != 'Area':
-                if entry['area'].lower() == 'allston' or entry['area'].lower() == 'brighton':
-                    allOpenSpaces_list.append(
-                        {"name": entry['site'], 'neighborhood': 'allston/brighton'}
-                    )
-                elif entry['area'].lower() == 'back bay' or entry['area'].lower() == 'beacon hill' :
-                    allOpenSpaces_list.append(
-                        {"name": entry['site'], 'neighborhood': 'back bay/beacon hill'}
-                    )
-                elif entry['area'].lower() == 'mattapan or dorchester':
-                    allOpenSpaces_list.append(
-                        {"name": entry['site'], 'neighborhood': 'mattapan'}
-                    )
-                    allOpenSpaces_list.append(
-                        {"name": entry['site'], 'neighborhood': 'dorchester'}
-                    )
-                else:
-                    allOpenSpaces_list.append(
-                        {"name": entry['site'], 'neighborhood': entry['area'].lower()}
-                    )
+        for entry in allPoolsInBoston.find():
+            allRecreationalPlaces_list.append(
+                {"name": entry['name'], 'neighborhood': entry['value'].get('neighberhood')}
+            )
 
 
         # Create a new collection and insert the result data set
-        repo.dropCollection('allOpenSpacesInBoston')
-        repo.createCollection('allOpenSpacesInBoston')
-        repo['billy108_zhou13.allOpenSpacesInBoston'].insert_many(allOpenSpaces_list)
+        repo.dropCollection('allRecreationalPlaces')
+        repo.createCollection('allRecreationalPlaces')
+        repo['billy108_zhou13.allRecreationalPlaces'].insert_many(allRecreationalPlaces_list)
 
 
         repo.logout()
@@ -91,6 +60,76 @@ class combineAll(dml.Algorithm):
 
     @staticmethod
     def provenance(doc=prov.model.ProvDocument(), startTime=None, endTime=None):
-        return
+        # Set up the database connection.
+        client = dml.pymongo.MongoClient()
+        repo = client.repo
+        repo.authenticate('billy108_zhou13', 'billy108_zhou13')
+
+        doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
+        doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
+        doc.add_namespace('ont',
+                          'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
+        doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
+        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        doc.add_namespace('cdp', 'https://data.cambridgema.gov/')
+        doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
+
+        # Agent
+        this_script = doc.agent('alg:billy108_zhou13#combineAll',
+                                {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
+
+        # Resources
+        resource_waterplayCambridge = doc.entity('dat:billy108_zhou13#waterplayCambridge',
+                                               {'prov:label': 'Waterplay Parks in Cambridge',
+                                                prov.model.PROV_TYPE: 'ont:DataResource',
+                                                'ont:Extension': 'json'})
+
+        resource_allOpenSpacesInBoston = doc.entity('dat:billy108_zhou13#allOpenSpacesInBoston',
+                                                 {'prov:label': 'All Open Spaces in Boston',
+                                                  prov.model.PROV_TYPE: 'ont:DataResource',
+                                                  'ont:Extension': 'json'})
+
+        resource_allPoolsInBoston = doc.entity('dat:billy108_zhou13#allPoolsInBoston',
+                                              {'prov:label': 'All Swimming Pools in Boston',
+                                               prov.model.PROV_TYPE: 'ont:DataResource',
+                                               'ont:Extension': 'json'})
+        # Activities
+        combine_allRecreationalPlaces = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime,
+                                             {
+                                                 prov.model.PROV_LABEL: "Combine all recreational places in Boston",
+                                                 prov.model.PROV_TYPE: 'ont:Computation'})
+
+        # Activities' Associations with Agent
+        doc.wasAssociatedWith(combine_allRecreationalPlaces, this_script)
+
+        # Record which activity used which resource
+        doc.usage(combine_allRecreationalPlaces, resource_waterplayCambridge, startTime)
+        doc.usage(combine_allRecreationalPlaces, resource_allOpenSpacesInBoston, startTime)
+        doc.usage(combine_allRecreationalPlaces, resource_allPoolsInBoston, startTime)
+
+        # Result dataset entity
+        allRecreationalPlaces = doc.entity('dat:billy108_zhou13#allRecreationalPlaces',
+                                           {prov.model.PROV_LABEL: 'All recreational places in Boston',
+                                            prov.model.PROV_TYPE: 'ont:DataSet'})
+
+        doc.wasAttributedTo(allRecreationalPlaces, this_script)
+        doc.wasGeneratedBy(allRecreationalPlaces, combine_allRecreationalPlaces, endTime)
+        doc.wasDerivedFrom(allRecreationalPlaces, resource_waterplayCambridge, combine_allRecreationalPlaces,
+                           combine_allRecreationalPlaces,
+                           combine_allRecreationalPlaces)
+        doc.wasDerivedFrom(allRecreationalPlaces, resource_allOpenSpacesInBoston, combine_allRecreationalPlaces,
+                           combine_allRecreationalPlaces,
+                           combine_allRecreationalPlaces)
+        doc.wasDerivedFrom(allRecreationalPlaces, resource_allPoolsInBoston, combine_allRecreationalPlaces,
+                           combine_allRecreationalPlaces,
+                           combine_allRecreationalPlaces)
+
+        repo.logout()
+
+        return doc
+
 
 combineAll.execute()
+doc = combineAll.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
