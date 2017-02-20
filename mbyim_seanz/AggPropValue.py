@@ -58,8 +58,10 @@ class agg_prop_value(dml.Algorithm):
 
 		zip_grouped_data = aggregate(zip_data, sum)
 
-		print(len(zip_data))
+		
 		print(zip_grouped_data)
+		print(len(zip_data))
+		print(len(zip_grouped_data))
 
 		
 		
