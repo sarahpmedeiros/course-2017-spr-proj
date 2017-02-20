@@ -31,9 +31,7 @@ class fetchData(dml.Algorithm):
         for key in data_urls:  
             url = data_urls[key]
             response = urllib.request.urlopen(url).read().decode("utf-8")
-            r = json.loads(response)
-            # s = json.dumps(r, sort_keys=True, indent=2)
-            # print(s)
+            r = json.loads(response) 
 
             repo.dropCollection(key)
             repo.createCollection(key)
@@ -41,7 +39,8 @@ class fetchData(dml.Algorithm):
             repo['asambors_maxzm.'+key].metadata({'complete':True})
 
 
-        sleep_soda_api = 'https://chronicdata.cdc.gov/resource/eqbn-8mpz.json'
+        # Using SODA API so different format for request
+        sleep_soda_api = 'https://chronicdata.cdc.gov/resource/eqbn-8mpz.json?$offset=13908&$limit=515'
         response = rq(method="GET", url=url) 
         r = response.json()
 
@@ -78,7 +77,7 @@ class fetchData(dml.Algorithm):
         doc.add_namespace('datm', 'http://datamechanics.io/data/') # datamechanics.io
         doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/') # CDC Data Portal
 
-        this_script = doc.agent('alg:asambors_maxzm#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:asambors_maxzm#fetchData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
         # BOSTON DATA PORTAL
         hospitals_resource = doc.entity('bdp:u6fv-m8v4', {'prov:label':'Hospital Locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
@@ -91,11 +90,11 @@ class fetchData(dml.Algorithm):
         zip_to_income_resource = doc.entity('datm:asambors_maxzm', {'prov:label':'Zip code to estimated income', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         lat_to_zip_resource = doc.entity('datm:asambors_maxzm', {'prov:label':'Latitude, longitude to zip code', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
-        get_hospitals = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'Hospital Locations'})
-        get_energy = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'Building Energy and Water Use Metrics'})
-        get_sleep = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'Sleeping less than 7 hours among adults aged >=18 years'})
-        get_zip_to_income = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'Zip code to estimated income'})
-        get_lat_to_zip = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'Latitude, longitude to zip code'})
+        get_hospitals = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_energy = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)  
+        get_sleep = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime) 
+        get_zip_to_income = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)  
+        get_lat_to_zip = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime) 
 
         doc.wasAssociatedWith(get_hospitals, this_script)
         doc.wasAssociatedWith(get_energy, this_script)
@@ -103,68 +102,44 @@ class fetchData(dml.Algorithm):
         doc.wasAssociatedWith(get_zip_to_income, this_script)
         doc.wasAssociatedWith(get_lat_to_zip, this_script)
 
-        doc.usage(get_hospitals, hospitals_resource, startTime, None,
-                {prov.model.PROV_TYPE:'ont:Retrieval',
-                 'ont:Query':'?$select=location&$limit=11000000'
-                }
-            )
+        doc.usage(get_hospitals, hospitals_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_energy, energy_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_sleep, sleep_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_zip_to_income, zip_to_income_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_lat_to_zip, lat_to_zip_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
 
-        doc.usage(get_energy, energy_resource, startTime, None,
-                {prov.model.PROV_TYPE:'ont:Retrieval',
-                 'ont:Query':'?$select=location&$limit=11000000'
-                }
-            )
+        Hospitals = doc.entity('dat:asambors_maxzm#hospitals', {prov.model.PROV_LABEL:'Hospital Locations', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(Hospitals, this_script)
+        doc.wasGeneratedBy(Hospitals, get_hospitals, endTime)
+        doc.wasDerivedFrom(Hospitals, hospitals_resource, get_hospitals, get_hospitals, get_hospitals)
 
-        doc.usage(get_sleep, sleep_resource, startTime, None,
-                {prov.model.PROV_TYPE:'ont:Retrieval',
-                 'ont:Query':'?$select=location&$limit=11000000'
-                }
-            )
+        Energy = doc.entity('dat:asambors_maxzm#energywater', {prov.model.PROV_LABEL:'Building Energy and Water Use Metrics', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(Energy, this_script)
+        doc.wasGeneratedBy(Energy, get_energy, endTime)
+        doc.wasDerivedFrom(Energy, energy_resource, get_energy, get_energy, get_energy)
 
-        doc.usage(get_zip_to_income, zip_to_income_resource, startTime, None,
-                {prov.model.PROV_TYPE:'ont:Retrieval',
-                 'ont:Query':'?$select=location&$limit=11000000'
-                }
-            )
+        Sleep = doc.entity('dat:asambors_maxzm#nosleep', {prov.model.PROV_LABEL:'Sleeping less than 7 hours among adults aged >=18 years', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(Sleep, this_script)
+        doc.wasGeneratedBy(Sleep, get_sleep, endTime)
+        doc.wasDerivedFrom(Sleep, sleep_resource, get_sleep, get_sleep, get_sleep)
 
-        doc.usage(get_lat_to_zip, lat_to_zip_resource, startTime, None,
-                {prov.model.PROV_TYPE:'ont:Retrieval',
-                 'ont:Query':'?$select=location&$limit=11000000'
-                }
-            )
+        ZipToIncome = doc.entity('dat:asambors_maxzm#ziptoincome', {prov.model.PROV_LABEL:'Zip code to estimated income', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(ZipToIncome, this_script)
+        doc.wasGeneratedBy(ZipToIncome, get_zip_to_income, endTime)
+        doc.wasDerivedFrom(ZipToIncome, zip_to_income_resource, get_zip_to_income, get_zip_to_income, get_zip_to_income)
 
-        Hospitals = doc.entity('dat:asambors_maxzm#hospitals', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-
-        Energy = doc.entity('dat:asambors_maxzm#energywater', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-
-        Sleep = doc.entity('dat:asambors_maxzm#nosleep', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-
-        ZipToIncome = doc.entity('dat:asambors_maxzm#ziptoincome', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-
-        LatLongToIncome = doc.entity('dat:asambors_maxzm#zipcodetolatlong', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
+        ZipcodeToLatLong = doc.entity('dat:asambors_maxzm#zipcodetolatlong', {prov.model.PROV_LABEL:'Latitude, longitude to zip code', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(ZipcodeToLatLong, this_script)
+        doc.wasGeneratedBy(ZipcodeToLatLong, get_lat_to_zip, endTime)
+        doc.wasDerivedFrom(ZipcodeToLatLong, lat_to_zip_resource, get_lat_to_zip, get_lat_to_zip, get_lat_to_zip)
 
         repo.logout()
                   
         return doc
 
 fetchData.execute()
-# doc = fetchData.provenance()
-# print(doc.get_provn())
-# print(json.dumps(json.loads(doc.serialize()), indent=4))
+doc = fetchData.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
