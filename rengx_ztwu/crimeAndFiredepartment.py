@@ -10,11 +10,11 @@ from bson.json_util import dumps
 
 
 
-class combineschoolandhosptial(dml.Algorithm):
+class crimeAndFiredpartment(dml.Algorithm):
 
     contributor = 'rengx_ztwu'
-    reads = ['rengx_ztwu.publicschool','rengx_ztwu.hosptial']
-    writes = ['rengx_ztwu.schoolandhosptial']
+    reads = ['rengx_ztwu.firestation','rengx_ztwu.crimereports']
+    writes = ['rengx_ztwu.CrimeAndFire']
 
     @staticmethod
     def execute(trial = False):
@@ -27,26 +27,26 @@ class combineschoolandhosptial(dml.Algorithm):
         repo.authenticate('rengx_ztwu', 'rengx_ztwu')
 
         # Get the collections
-        publicschool = repo['rengx_ztwu.publicschool']
-        hosptial = repo['rengx_ztwu.hosptial']
+        firestation = repo['rengx_ztwu.firestation']
+        crimereports = repo['rengx_ztwu.crimereports']
 
         # Get names and zipcode of all schools and put them into (key, value) form
-        SchoolAndHospital = []
-        for entry in publicschool.find({"ZIPCODE": {"$exists": True}}):
-            SchoolAndHospital.append(
-                {"name": entry['SCH_NAME'], "value": {'zip': entry['ZIPCODE']}
+        CrimeAndFire = []
+        for entry in firestation.find({"LOCADDR": {"$exists": True}}):
+            CrimeAndFire.append(
+                {"name": entry['LOCNAME'], "value": {'street': entry['LOCADDR']}
                  })
 
-        for entry in hosptial.find({"ZIPCODE": {"$exists": True}}):
-            SchoolAndHospital.append(
-                {"name": entry['NAME'], "value": {'zip': entry['ZIPCODE']}
+        for entry in crimereports.find({"STREETNAME": {"$exists": True}}):
+            CrimeAndFire.append(
+                {"name": entry['COMPNOS'], "value": {'street': entry['STREETNAME']}
                 })
 
 
     # Create a new collection and insert the result data set
-        repo.dropCollection('SchoolAndHospitalDB')
-        repo.createCollection('SchoolAndHospitalDB')
-        repo['rengx_ztwu.SchoolAndHospitalDB'].insert_many(SchoolAndHospital)
+        repo.dropCollection('CrimeAndFireDB')
+        repo.createCollection('CrimeAndFireDB')
+        repo['rengx_ztwu.CrimeAndFireDB'].insert_many(CrimeAndFire)
 
         repo.logout()
         endTime = datetime.datetime.now()
@@ -74,35 +74,35 @@ class combineschoolandhosptial(dml.Algorithm):
         doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
 
         # Agent
-        this_script = doc.agent('alg:rengx_ztwu#schoolandhosptial',
+        this_script = doc.agent('alg:rengx_ztwu#CrimeAndFire',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
 
         # Resources
-        resource_publicschool = doc.entity('dat:rengx_ztwu#publicschool',
-                                                {'prov:label': 'public school in Boston',
+        resource_firestation = doc.entity('dat:rengx_ztwu#firestation',
+                                                {'prov:label': 'firestation in Boston',
                                                  prov.model.PROV_TYPE: 'ont:DataResource',
                                                  'ont:Extension': 'json'})
 
-        resource_hosptial = doc.entity('dat:rengx_ztwu#hosptial',
-                                              {'prov:label': 'hosptials in Boston',
+        resource_crimereports = doc.entity('dat:rengx_ztwu#crimereports',
+                                              {'prov:label': 'crimereports in Boston',
                                                prov.model.PROV_TYPE: 'ont:DataResource',
                                                'ont:Extension': 'json'})
 
         # Activities
-        combine_schoolandhosptial = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime,
+        combine_CrimeAndFire = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime,
                                                 {
-                                                    prov.model.PROV_LABEL: "Combine all schools and hostials in Boston",
+                                                    prov.model.PROV_LABEL: "Combine all Crime And Fire in Boston",
                                                     prov.model.PROV_TYPE: 'ont:Computation'})
 
         # Activities' Associations with Agent
-        doc.wasAssociatedWith(combine_schoolandhosptial, this_script)
+        doc.wasAssociatedWith(combine_CrimeAndFire, this_script)
 
         # Record which activity used which resource
-        doc.usage(combine_schoolandhosptial, resource_publicschool, startTime)
-        doc.usage(combine_schoolandhosptial, resource_hosptial, startTime)
+        doc.usage(combine_CrimeAndFire, resource_firestation, startTime)
+        doc.usage(combine_CrimeAndFire, resource_crimereports, startTime)
 
         # Result dataset entity
-        schoolandhosptial = doc.entity('dat:rengx_ztwu#schoolandhosptial',
+        CrimeAndFire = doc.entity('dat:rengx_ztwu#schoolandhosptial',
                                       {prov.model.PROV_LABEL: 'All school and hosptial in Boston',
                                        prov.model.PROV_TYPE: 'ont:DataSet'})
 
