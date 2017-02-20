@@ -62,11 +62,15 @@ class police_crime(dml.Algorithm):
 
         districts = project(r, lambda t: (t['DISTRICT']))
 
+<<<<<<< Updated upstream
         print(districts)
 
         # repo['pt0713_silnuext.police_crime'].insert_many(districts)
         # repo['pt0713_silnuext.police_crime'].metadata({'complete':True})
         # print(repo['pt0713_silnuext.police_crime'].metadata())
+=======
+
+>>>>>>> Stashed changes
 
 
 
@@ -92,6 +96,12 @@ class police_crime(dml.Algorithm):
         repo['pt0713_silnuext.police_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.police_crime'].metadata())
         
+<<<<<<< Updated upstream
+=======
+
+
+
+>>>>>>> Stashed changes
         repo.logout()
 
         endTime = datetime.datetime.now()
