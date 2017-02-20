@@ -12,7 +12,6 @@ import uuid
 import re
 
 d = []
-instance = {}
 
 class population(dml.Algorithm):
     contributor = 'jguerero_mgarcia7'
