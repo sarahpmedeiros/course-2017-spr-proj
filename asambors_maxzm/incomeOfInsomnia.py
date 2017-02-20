@@ -103,11 +103,15 @@ class incomeOfInsomnia(dml.Algorithm):
                 aggregatedData = incomeOfInsomnia.aggregate(projectedCombos,incomeOfInsomnia.pickCloserZip)
 
 
+                print(aggregatedData)
 
                 #last project to proper form
 
-                incomeOfInsomniaData = incomeOfInsomnia.project(aggregatedData, lambda t: {**t[0],**t[1]})
+                incomeOfInsomniaData = []
+                for data in aggregatedData:
+                    incomeOfInsomniaData.append({*data[1]})
 
+                print(incomeOfInsomniaData)
 
 
 
