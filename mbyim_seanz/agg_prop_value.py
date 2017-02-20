@@ -48,8 +48,6 @@ class agg_prop_value(dml.Algorithm):
 				print('There was an error with getting a zipcode key')
 
 		aggregated_zip_data = aggregate(zip_data, sum)		
-		print(aggregated_zip_data)
-
 		aggregated_zip_data_str = str(aggregated_zip_data).replace("'",'"')	#small json fix to convert to strings
 
 		zip_jsons = json.loads(aggregated_zip_data_str)
