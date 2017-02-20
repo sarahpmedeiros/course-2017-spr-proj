@@ -54,16 +54,15 @@ class agg_prop_value(dml.Algorithm):
 			print(prop_dict_select)
 
 			zip_data.append(prop_dict_select)
-			
 
-		#zip_grouped_data = aggregate(zip_list, sum)
 
-		#print(len(zip_list))
-		#print(zip_grouped_data)
-		#print(count1)
-		#print(count)
+		zip_grouped_data = aggregate(zip_list, sum)
+
+		print(len(zip_list))
+		print(zip_grouped_data)
+
 		
-		'''
+		
 		zip_grouped_data_str = str(zip_grouped_data).replace("'",'"')
 
 		zip_jsons = json.loads(zip_grouped_data_str)
@@ -77,7 +76,7 @@ class agg_prop_value(dml.Algorithm):
 		repo['mbyim_seanz.agg_prop_value'].insert_many(zip_jsons)
 		repo['mbyim_seanz.agg_prop_value'].metadata({'complete':True})
 
-		'''
+	
 	
 
 
