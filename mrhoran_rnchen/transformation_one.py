@@ -17,18 +17,6 @@ class transformation_one(dml.Algorithm):
     contributor = 'mrhoran_rnchen'
     reads = ['mrhoran_rnchen.community_gardens','mrhoran_rnchen.food_pantries']
     writes = ['mrhoran_rnchen.healthy_options']
-
-    def aggregate(R, f):
-
-        keys = {r[0] for r in R}
-        return [(key, f([v for (k,v) in R if k == key])) for key in keys]
-    
-    def select(R, s):
-        return [t for t in R if s(t)]
-
-    def project(R, p):
-        return [p(t) for t in R]
-
     @staticmethod
     def execute(trial = False):
         
@@ -45,11 +33,19 @@ class transformation_one(dml.Algorithm):
         #"location":"15 Park Dr.","map_location_location":"15 Park Dr.",
         #"site":"Richard Parker Memorial CG","state":"MA","zip_code":"2115"}
 
+
+        test_arr = []
+        temp = [o for o in repo.mrhoran_rnchen.community_gardens.find({})]
+        for g in temp:
+             test_arr.append({g['site'],g['zip_code']})
+        print(test_arr)
+
         X = project(select('mrhoran_rnchen.community_gardens', lambda t: t[0] == "zip_code"), lambda t: (t[1],1))
+
 
         # agg those tuples
 
-        commgarden_zip_count = project(aggregate(Y, sum), lambda t: (t[0], ('comm_gardens',t[1])))
+        commgarden_zip_count = project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1])))
         
         # make a new tuple (zipcode, #food_pantries) from {"area":"South End",
         #"hours":"Saturdays 10:30 - 12:00","location":"1860 Washington St",
@@ -65,7 +61,7 @@ class transformation_one(dml.Algorithm):
 
         # combine them to make a new data set like (zip, (comm,1), (foodp, 1))
 
-        temp = product(comm_garden_count, foodpantry_zip_count)
+        temp = product(commgarden_zip_count, foodpantry_zip_count)
 
         project(select(temp, lambda t: t[0][0] == t[1][0]), lambda t: (t[0][0], t[0][1], t[1][1]))
         
@@ -119,8 +115,24 @@ class transformation_one(dml.Algorithm):
                   
         return doc
 
+
+def aggregate(R, f):
+
+    keys = {r[0] for r in R}
+    return [(key, f([v for (k,v) in R if k == key])) for key in keys]
+    
+def select(R, s):
+    return [t for t in R if s(t)]
+
+def project(R, p):
+    return [p(t) for t in R]
+
+def product(R, S):
+    return [(t,u) for t in R for u in S]
+
+
 transformation_one.execute()
-doc = getData.provenance()
+doc = transformation_one.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
