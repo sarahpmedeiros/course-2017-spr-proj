@@ -61,7 +61,7 @@ class police_crime(dml.Algorithm):
         r = [r['features'][i]['properties'] for i in range(11)]
 
         districts = project(r, lambda t: (t['DISTRICT']))
-        district_key = [('DISTRICT', dis) for dis in districts]
+
         print(districts)
 
         # repo['pt0713_silnuext.police_crime'].insert_many(districts)
@@ -87,8 +87,6 @@ class police_crime(dml.Algorithm):
 
         percentage_crime_in_police_district = crime_in_police_district / len(crime_district)
         print("The percentage of crime happens in police district is: ", percentage_crime_in_police_district)
-
-
 
         repo['pt0713_silnuext.police_crime'].insert_many(response1)
         repo['pt0713_silnuext.police_crime'].metadata({'complete':True})
