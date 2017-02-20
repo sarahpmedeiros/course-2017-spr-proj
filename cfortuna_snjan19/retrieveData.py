@@ -6,10 +6,10 @@ import datetime
 import uuid
 from requests import request as rq
 
-class example(dml.Algorithm):
+class retrieveData(dml.Algorithm):
     contributor = 'cfortuna_snjan19'
     reads = []
-    writes = ['alice_bob.lost', 'alice_bob.found']
+    writes = ['cfortuna_snjan19.SnowRoutes']
 
     @staticmethod
     def execute(trial = False):
@@ -27,9 +27,13 @@ class example(dml.Algorithm):
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
         print s
-        # repo.dropCollection("SnowRoutes")
-        # repo.createCollection("SnowRoutes")
-        # repo[cfortuna_snjan19.SnowRoutes].insert_many(r)
+        repo.dropCollection("SnowRoutes")
+        repo.createCollection("SnowRoutes")
+        repo[snjan19.SnowRoutes].insert_many(r)
+        repo['snjan19.SnowRoutes'].metadata({'complete':True})
+        print(repo['snjan19.SnowRoutes'].metadata())
+
+        
 
 
         url = 'http://cs-people.bu.edu/lapets/591/examples/lost.json'
