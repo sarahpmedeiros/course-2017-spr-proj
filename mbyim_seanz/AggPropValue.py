@@ -51,7 +51,7 @@ class agg_prop_value(dml.Algorithm):
 		for row in property_assessments:
 			prop_dict = dict(row)
 			prop_dict_select = prop_dict['owner_mail_zipcode']
-			print(prop_dict)
+			print(prop_dict_select)
 
 			zip_data.append(prop_dict_select)
 			
