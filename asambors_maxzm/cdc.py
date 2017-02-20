@@ -4,6 +4,7 @@ import dml
 import prov.model
 import datetime 
 import uuid
+import sodapy
 from requests import request as rq
 
 class cdc(dml.Algorithm):
@@ -11,36 +12,23 @@ class cdc(dml.Algorithm):
     reads = []
     writes = ['asambors_maxzm.cdc']
 
-
     @staticmethod
     def execute(trial = False):
         #retrieve cdc dataset    
-        startTime = datetime.datetime.now()
-        #set up conection
-        client = dml.pymongo.MongoClient()
-        repo = client.repo
-        repo.authenticate('asambors_maxzm','asambors_maxzm')
+        startTime = datetime.datetime.now() 
 
-        url = 'https://chronicdata.cdc.gov/api/views/6vp6-wxuq/rows.json?accessType=DOWNLOAD'
+        url = 'https://chronicdata.cdc.gov/resource/eqbn-8mpz.json?$offset=13908&$limit=515'
 
         print("MAKING REQUEST")
-        response = urllib.request.urlopen(url).read().decode("utf-8")
+        response = rq(method="GET", url=url) 
         print("REQUEST DONE")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        print(s)
+        r = response.json()
 
-        # repo.dropCollection("cdc")
-        # repo.createCollection("cdc")
-        # repo['asambors_maxzm.cdc'].insert_many(r)
-        # repo['asambors_maxzm.cdc'].metadata({'complete':True})
-        # print(repo['asambors_maxzm.cdc'].metadata())
+        print(r)
 
-        # repo.logout()
+        endTime = datetime.datetime.now()
 
-        # endTime = datetime.datetime.now()
-
-        # return {"start":startTime, "end":endTime}
+        return {"start":startTime, "end":endTime}
 
 
     @staticmethod
@@ -89,8 +77,3 @@ class cdc(dml.Algorithm):
         return doc
     
 cdc.execute()
-    
-    
-    
-    
-    
