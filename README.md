@@ -87,6 +87,7 @@ The `auth.json` file should remain empty and should not be submitted. When you a
     }
 }
 ```
+To access the contents of the `auth.json` file after you have loaded the `dml` library, use `dml.auth`.
 
 ## Running the execution script for a contributed project.
 
