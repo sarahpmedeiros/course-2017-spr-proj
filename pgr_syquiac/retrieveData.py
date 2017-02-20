@@ -130,20 +130,7 @@ class retrieveData(dml.Algorithm):
         doc.wasAssociatedWith(getStores, this_script)
         doc.usage(getStores, storesResource, startTime)#, None)
 
-        '''
-        # This is for when u create new data
-
-        lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-
-        found = doc.entity('dat:alice_bob#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(found, this_script)
-        doc.wasGeneratedBy(found, get_found, endTime)
-        doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
-
-        '''
+        
         #repo.record(doc.serialize()) # Record the provenance document. <- creates an error
         repo.logout()
 

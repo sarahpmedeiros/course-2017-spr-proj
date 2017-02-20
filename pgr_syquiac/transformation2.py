@@ -29,6 +29,14 @@ class transformation2(dml.Algorithm):
 
         print("Starting.....")
 
+        cdcRepo = repo.pgr_syquiac.cdc
+        poolsRepo = repo.pgr_syquiac.pools
+        storesRepo = repo.pgr_syquiac.stores
+
+        print(len(cdcRepo))
+        print(len(poolsRepo))
+        print(len(storesRepo))
+
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''

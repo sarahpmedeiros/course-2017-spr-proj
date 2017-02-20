@@ -41,8 +41,6 @@ class transformation1(dml.Algorithm):
             if i["FIELD4"] == "Boston" or i["FIELD4"] == "Cambridge":
                 boston_schools.append(i)
 
-        # Create a geolocator to get the coords
-        geolocator = Nominatim()
 
         # Now then add another field for each school in the list of Boston Schools of their closest sleep rates
         # Also need to add a coordinates field
@@ -84,15 +82,9 @@ class transformation1(dml.Algorithm):
             boston_schools[idx]['sleepRates'].append(i)
 
         # print(len(boston_schools))
-        # print(boston_schools[0])
+        print(len(boston_schools[6]['sleepRates']))
 
-        # print("----")
-        # for i in boston_schools:
-        #     for j in range(len(i["sleepRates"])):
-        #         if j == 0:
-        #             pass
-        #         else:
-        #             print (i["FIELD2"] + " " + i["sleepRates"][j]['data_value'])
+        
 
         repo.dropPermanent("sleep_rates_universities")
         repo.createPermanent("sleep_rates_universities")

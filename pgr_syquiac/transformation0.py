@@ -96,6 +96,7 @@ class transformation0(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('pgr_syquiac', 'pgr_syquiac')
+
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
@@ -104,7 +105,6 @@ class transformation0(dml.Algorithm):
         doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/')
 
         this_script = doc.agent('alg:pgr_syquiac#transformation0', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-
         hospitals_doctor_visitsResource = doc.entity('dat:pgr_syquiac#hospitals_doctor_visits', {prov.model.PROV_LABEL: 'Hospital locations and doctor visits', prov.model.PROV_TYPE:'ont:Dataset'})
         getResource = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'Hospital distance from people who have a lack of doctor visits'})
         doc.wasAssociatedWith(getResource, this_script)
@@ -112,9 +112,9 @@ class transformation0(dml.Algorithm):
         doc.wasAttributedTo(hospitals_doctor_visitsResource, getResource)
         doc.wasGeneratedBy(hospitals_doctor_visitsResource, getResource, endTime)
 
-        #repo.record(doc.serialize()) # Record the provenance document. <- doesn't work for some reason
+        # repo.record(doc.serialize()) # Record the provenance document. <- doesn't work for some reason
 
-        repo.logout
+        repo.logout()
 
         return doc
 
