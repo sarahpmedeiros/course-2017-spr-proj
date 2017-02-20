@@ -31,12 +31,12 @@ class population(dml.Algorithm):
 
         url = 'http://www.city-data.com/nbmaps/neigh-Boston-Massachusetts.html#N46'
         response = urllib.request.urlopen(url).read().decode("utf-8")
-        soup = BeautifulSoup(response, 'html.parser')
+        soup = BeautifulSoup(response, 'html.parser') #parse data to be able to extract information
 
         for i in soup.findAll("div", {"class": "neighborhood"}): #returns a result set
             data = i.text
-           # print (data)
-            instance['Neighborhood'] = data[: data.find(' ')]
+            instance = {}
+            instance['Neighborhood'] = exc(re.findall('(.+) neighborhood in', data))
             instance['Area (in Square miles)'] = exc(re.findall('Area: (.+) square miles', data))
             instance['Population'] = exc(re.findall('Population: (.+)Population', data))
 
@@ -61,8 +61,8 @@ class population(dml.Algorithm):
 
             d.append(instance)
 
-        new = json.loads(json.dumps(d))
 
+        new = json.loads(json.dumps(d))
         repo.dropCollection("population")
         repo.createCollection("population")
         repo['jguerero_mgarcia7.population'].insert_many(new)
@@ -70,6 +70,7 @@ class population(dml.Algorithm):
         print(repo['jguerero_mgarcia7.population'].metadata())
 
         repo.logout()
+
 
         endTime = datetime.datetime.now()
 
