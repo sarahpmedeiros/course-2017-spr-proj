@@ -104,46 +104,31 @@ class retrieveData(dml.Algorithm):
         hospitalsResource = doc.entity('bdp:u6fv-m8v4', {'prov:label':'Hospital Locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         getHospitals = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(getHospitals, this_script)
-        doc.usage(getHospitals, hospitalsResource, resource, startTime, None,
-        	{prov.model.PROV_TYPE:'ont:Retrieval'
-        	}
-        )
+        doc.usage(getHospitals, hospitalsResource, startTime)#, None)
 
         #cdc Data
         cdcResource = doc.entity('cdc:csmm-fdhi', {'prov:label':'500 Cities: Local Data for Better Health', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         getCDC = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(getCDC, this_script)
-        doc.usage(getCDC, cdcResource, resource, startTime, None,
-        	{prov.model.PROV_TYPE:'ont:Retrieval'
-        	}
-        )
+        doc.usage(getCDC, cdcResource, startTime)#, None)
 
         #university data
         schoolsResource = doc.entity('datm:pgr_syquia/universities', {'prov:label':'Schools', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         getSchools = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(getSchools, this_script)
-        doc.usage(getSchools, schoolsResource, resource, startTime, None,
-        	{prov.model.PROV_TYPE:'ont:Retrieval'
-        	}
-        )
+        doc.usage(getSchools, schoolsResource, startTime)#, None)
 
         #Open Swimming Pools data
         poolsResource = doc.entity('bdp:5jxx-wfpr', {'prov:label':'Pools', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         getPools = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(getPools, this_script)
-        doc.usage(getPools, poolsResource, resource, startTime, None,
-        	{prov.model.PROV_TYPE:'ont:Retrieval'
-        	}
-        )
+        doc.usage(getPools, poolsResource, startTime)#, None)
 
         #healthy corner stores data
         storesResource = doc.entity('bdp:ybm6-m5qd', {'prov:label':'Healthy Corner Stores', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         getStores = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(getStores, this_script)
-        doc.usage(getStores, storesResource, resource, startTime, None,
-        	{prov.model.PROV_TYPE:'ont:Retrieval'
-        	}
-        )
+        doc.usage(getStores, storesResource, startTime)#, None)
 
         '''
         # This is for when u create new data
@@ -159,13 +144,14 @@ class retrieveData(dml.Algorithm):
         doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
 
         '''
+        #repo.record(doc.serialize()) # Record the provenance document. <- creates an error
         repo.logout()
 
         return doc
 
 retrieveData.execute()
-#doc = example.provenance()
-#print(doc.get_provn())
-#print(json.dumps(json.loads(doc.serialize()), indent=4))
+doc = retrieveData.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

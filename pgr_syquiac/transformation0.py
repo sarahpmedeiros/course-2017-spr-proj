@@ -1,7 +1,7 @@
 '''
     Pauline Ramirez and Carlos Syquia
     transformation0.py
-    Combining the open spaces datasets between Boston and Cambridge, obesity rates and how far people are from open spaces
+    Correlation between lack of doctor visits and distance from the hospitals
 '''
 
 import urllib.request
@@ -45,13 +45,13 @@ class transformation0(dml.Algorithm):
 
         #print(locations)
 
-        cdc = cdcRepo.find()  
+        cdc = cdcRepo.find()
         visits = []
-        
+
         print("Collecting appropriate data from CDC data set...")
         for i in cdc:
             # Look to make sure its a census tract, for health insurance rates
-            if (i['measure'] == 'Visits to doctor for routine checkup within the past Year among adults aged >=18 Years' or 
+            if (i['measure'] == 'Visits to doctor for routine checkup within the past Year among adults aged >=18 Years' or
                 i['measureid'] == 'CHECKUP'):
                 visits.append(i)
 
@@ -80,7 +80,7 @@ class transformation0(dml.Algorithm):
         repo.logout()
         endTime = datetime.datetime.now()
         return {"start":startTime, "end":endTime}
-                
+
 
 
 
@@ -102,8 +102,38 @@ class transformation0(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
         doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/')
-        doc.add_namespace('cdp', 'https://data.cambridgema.gov/resource/')
 
-        this_script = doc.agent('alg:pgr_syquiac#retrieveData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:pgr_syquiac#transformation0', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+
+        hospitals_doctor_visitsResource = doc.entity('dat:pgr_syquiac#hospitals_doctor_visits', {prov.model.PROV_LABEL: 'Hospital locations and doctor visits', prov.model.PROV_TYPE:'ont:Dataset'})
+        getResource = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'Hospital distance from people who have a lack of doctor visits'})
+        doc.wasAssociatedWith(getResource, this_script)
+        doc.used(getResource, hospitals_doctor_visitsResource, startTime)
+        doc.wasAttributedTo(hospitals_doctor_visitsResource, getResource)
+        doc.wasGeneratedBy(hospitals_doctor_visitsResource, getResource, endTime)
+
+        #repo.record(doc.serialize()) # Record the provenance document. <- doesn't work for some reason
+
+        repo.logout
+
+        return doc
+
+        '''
+        #format for provenance
+        lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(lost, this_script)
+        doc.wasGeneratedBy(lost, get_lost, endTime)
+        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
+
+        found = doc.entity('dat:alice_bob#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(found, this_script)
+        doc.wasGeneratedBy(found, get_found, endTime)
+        doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
+
+        '''
+
 
 transformation0.execute()
+doc = transformation0.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
