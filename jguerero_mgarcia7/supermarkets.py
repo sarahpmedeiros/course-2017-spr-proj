@@ -1,11 +1,11 @@
-# https://www.ers.usda.gov/data-products/food-environment-atlas/data-access-and-documentation-downloads/#Current%20Version (snap benefits / supermarkets)
-
 import urllib.request
 import json
 import dml
 import prov.model
 import datetime
 import uuid
+import PyPDF2 # pip install PyPDF2
+from itertools import zip_longest
 
 class supermarkets(dml.Algorithm):
     contributor = 'jguerero_mgarcia7'
@@ -14,31 +14,41 @@ class supermarkets(dml.Algorithm):
 
     @staticmethod
     def execute(trial = False):
-        '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
-        startTime = datetime.datetime.now() #combination of date and a time
+        startTime = datetime.datetime.now()
 
         # Set up the database connection.
-        client = dml.pymongo.MongoClient() #create Mongo client
-        repo = client.repo #
-        repo.authenticate('alice_bob', 'alice_bob')
+        client = dml.pymongo.MongoClient()
+        repo = client.repo
+        repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
 
-        url = 'http://cs-people.bu.edu/lapets/591/examples/lost.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("lost")
-        repo.createCollection("lost")
-        repo['alice_bob.lost'].insert_many(r)
-        repo['alice_bob.lost'].metadata({'complete':True})
-        print(repo['alice_bob.lost'].metadata())
+        # Download pdf file
+        opener=urllib.request.build_opener()
+        opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
+        urllib.request.install_opener(opener)
 
-        url = 'http://cs-people.bu.edu/lapets/591/examples/found.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("found")
-        repo.createCollection("found")
-        repo['alice_bob.found'].insert_many(r)
+        url = 'http://www.bostonplans.org/getattachment/5f0e8d2d-2fb3-4b81-a08b-3cc9b918cd0e/'
+        filepath, response = urllib.request.urlretrieve(url)
+
+
+        # Parse table text into a json object
+        pdfFileObj = open(filepath, 'rb')
+        pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
+        pageObj = pdfReader.getPage(1)
+        table_as_string = pageObj.extractText().split('\n')
+
+
+        rows = grouper(table_as_string[52:-6],6) # Groups all of the items into tuples of 6
+        r = []
+        for row in rows:
+            info = {'neighborhood':row[0], 'store':row[1], 'address':row[2], 'year':row[3], 'total sq ft':row[4], 'type':row[5]}
+            r.append(info)
+
+
+        repo.dropCollection("supermarkets")
+        repo.createCollection("supermarkets")
+        repo['jguerero_mgarcia7.supermarkets'].insert_many(r)
+        repo['jguerero_mgarcia7.supermarkets'].metadata({'complete':True})
+        print(repo['jguerero_mgarcia7.supermarkets'].metadata())
 
         repo.logout()
 
@@ -95,9 +105,17 @@ class supermarkets(dml.Algorithm):
                   
         return doc
 
-example.execute()
+def grouper(iterable, n, fillvalue=None):
+    "Collect data into fixed-length chunks or blocks"
+    # grouper('ABCDEFG', 3, 'x') --> ABC DEF Gxx"
+    args = [iter(iterable)] * n
+    return zip_longest(*args, fillvalue=fillvalue)
+
+supermarkets.execute()
+'''
 doc = example.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
+'''
 
 ## eof

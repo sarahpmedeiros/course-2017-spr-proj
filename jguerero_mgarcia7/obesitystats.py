@@ -1,4 +1,5 @@
 # http://synthpopviewer.rti.org/obesity/index.html
+# <iframe id="download_iframe" style="display:none;" src="http://synthpopviewer.rti.org/obesity/downloads/MA.zip"></iframe>
 
 import urllib.request
 import json
@@ -6,39 +7,58 @@ import dml
 import prov.model
 import datetime
 import uuid
+import shapefile #pip install pyshp
+import zipfile
+import os.path
 
-class example(dml.Algorithm):
-    contributor = 'alice_bob'
+class obesitystats(dml.Algorithm):
+    contributor = 'jguerero_mgarcia7'
     reads = []
-    writes = ['alice_bob.lost', 'alice_bob.found']
+    writes = ['jguerero_mgarcia7.obesitystats']
 
     @staticmethod
     def execute(trial = False):
-        '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
         startTime = datetime.datetime.now()
 
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('alice_bob', 'alice_bob')
+        repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
 
-        url = 'http://cs-people.bu.edu/lapets/591/examples/lost.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("lost")
-        repo.createCollection("lost")
-        repo['alice_bob.lost'].insert_many(r)
-        repo['alice_bob.lost'].metadata({'complete':True})
-        print(repo['alice_bob.lost'].metadata())
+        # Download zip file with shapefile in it
+        opener=urllib.request.build_opener()
+        opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
+        urllib.request.install_opener(opener)
 
-        url = 'http://cs-people.bu.edu/lapets/591/examples/found.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("found")
-        repo.createCollection("found")
-        repo['alice_bob.found'].insert_many(r)
+        url = 'http://synthpopviewer.rti.org/obesity/downloads/MA.zip'
+        filepath, response = urllib.request.urlretrieve(url)
+
+        # Extract files from the zipped file
+        z = zipfile.ZipFile(filepath)
+        z.extract('MA.shp')
+        z.extract('MA.dbf')
+
+        # Create a shpfile object
+        myshp = open('MA.shp','rb')
+        mydbf = open('MA.dbf','rb')
+        shpfile = shapefile.Reader(shp=myshp,dbf=mydbf)
+
+        # Convert data to geojson
+        fields = shpfile.fields[1:]
+        field_names = [field[0] for field in fields]
+        r = []
+        for sr in shpfile.shapeRecords():
+            atr = dict(zip(field_names, sr.record))
+            geom = sr.shape.__geo_interface__
+            r.append(dict(type="Feature", \
+            geometry=geom, properties=atr)) 
+
+
+        repo.dropCollection("obesitystats")
+        repo.createCollection("obesitystats")
+        repo['jguerero_mgarcia7.obesitystats'].insert_many(r)
+        repo['jguerero_mgarcia7.obesitystats'].metadata({'complete':True})
+        print(repo['jguerero_mgarcia7.obesitystats'].metadata())
 
         repo.logout()
 
@@ -95,9 +115,12 @@ class example(dml.Algorithm):
                   
         return doc
 
-example.execute()
+
+obesitystats.execute()
+'''
 doc = example.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
+'''
 
 ## eof

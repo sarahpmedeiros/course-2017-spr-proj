@@ -1,0 +1,1 @@
+# Union of cornerstores, farmersmarkets, supermarkets.py to get food in general
