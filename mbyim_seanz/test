@@ -1,0 +1,18 @@
+import urllib.request
+import json
+import dml
+import prov.model
+import datetime
+import uuid
+from requests.auth import HTTPBasicAuth
+import json
+from pprint import pprint
+
+with open('auth.json') as auth_file:
+	auth_key = json.load(auth_file)
+
+pprint(auth_key)
+
+#MBTA Info
+#url = 'http://realtime.mbta.com/routes'
+#routes = requests.get(url, headers=)
