@@ -42,14 +42,14 @@ class transformation_one(dml.Algorithm):
 
         #X = project(select('mrhoran_rnchen.community_gardens', lambda t: t[0] == "zip_code"), lambda t: (t[1],1))
 
-        X = project([o for o in repo.mrhoran_rnchen.community_gardens.find({})], getZips)
-        print(X)
+        X = project([o for o in repo.mrhoran_rnchen.community_gardens.find({})], getGZips)
+        #print(X)
 
         # agg those tuples
 
         commgarden_zip_count = project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1])))
        
-        print(commgarden_zip_count)
+        #print(commgarden_zip_count)
  
         # make a new tuple (zipcode, #food_pantries) from {"area":"South End",
         #"hours":"Saturdays 10:30 - 12:00","location":"1860 Washington St",
@@ -57,8 +57,11 @@ class transformation_one(dml.Algorithm):
         #"location_1_state":"MA","name":"Grant Manor","site_number":"FB81",
         #"source":"http://www.fairfoods.org/dollarbag.html","zip_code":"21178"}
 
-        Y = project(select('mrhoran_rnchen.food_pantries', lambda t: t[0] == "zip_code"), lambda t: (t[1],1))
-        
+ #       Y = project(select('mrhoran_rnchen.food_pantries', lambda t: t[0] == "zip_code"), lambda t: (t[1],1))
+  
+        Y = project([p for p in repo.mrhoran_rnchen.food_pantries.find({})], getPZips)
+
+        # agg those tuples
         # agg those new tuples
 
         foodpantry_zip_count = project(aggregate(Y,sum), lambda t: (t[0], ('food_pantry',t[1])))
@@ -67,8 +70,10 @@ class transformation_one(dml.Algorithm):
 
         temp = product(commgarden_zip_count, foodpantry_zip_count)
 
-        project(select(temp, lambda t: t[0][0] == t[1][0]), lambda t: (t[0][0], t[0][1], t[1][1]))
+        result = project(select(temp, lambda t: t[0][0] == t[1][0]), lambda t: (t[0][0], t[0][1], t[1][1]))
         
+
+        print(result)
         repo.logout()
 
         endTime = datetime.datetime.now()
@@ -133,8 +138,11 @@ def project(R, p):
 def product(R, S):
     return [(t,u) for t in R for u in S]
 
-def getZips(garden):
-    return([garden['zip_code'],1])
+def getGZips(garden):
+    return(['0'+garden['zip_code'],1])
+
+def getPZips(foodpantry):
+    return([foodpantry['zip_code'],1])
 
 
 
