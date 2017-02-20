@@ -48,6 +48,8 @@ class transformation_one(dml.Algorithm):
         # agg those tuples
 
         commgarden_zip_count = project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1])))
+
+        repo.mrhoran_rnchen.commgarden_zip_count.insertMany(commgarden_zip_count)
        
         #print(commgarden_zip_count)
  
@@ -66,12 +68,14 @@ class transformation_one(dml.Algorithm):
 
         foodpantry_zip_count = project(aggregate(Y,sum), lambda t: (t[0], ('food_pantry',t[1])))
 
+        repo.mrhoran_rnchen.foodpantry_zip_count.insertMany(foodpantry_zip_count)
+       
         # combine them to make a new data set like (zip, (comm,1), (foodp, 1))
 
         temp = product(commgarden_zip_count, foodpantry_zip_count)
 
         result = project(select(temp, lambda t: t[0][0] == t[1][0]), lambda t: (t[0][0], t[0][1], t[1][1]))
-        
+       
 
         for z in commgarden_zip_count:
             if z[0] not in result:
@@ -82,6 +86,10 @@ class transformation_one(dml.Algorithm):
                  result.append((p[0],('comm_gardens',0),p[1]))
 
         print(result)
+
+	
+        repo.mrhoran_rnchen.garden_pantry_agg.insertMany(result)
+       
         repo.logout()
 
         endTime = datetime.datetime.now()
