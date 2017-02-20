@@ -56,9 +56,9 @@ class get(dml.Algorithm):
       #writes = ['houset_karamy.policeStations','houset_karamy.crimeReportsBoston', 'houset_karamy.crimeReportsCambridge', 'houset_karamy.policeCarRoutesCambridge', 'houset_karamy.policeWalkingRoutesCambridge','houset_karamy.realTimeTravelMassdot']
 
             
-        this_script = doc.agent('alg:houset_karamy#test', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:houset_karamy#crimeReportsBoston', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         
-        resource1 = doc.entity('bdp:crime', {'prov:label':'Police Stations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource1 = doc.entity('bdp:crime', {'prov:label':'Crime Reports Boston', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
                         
         get_crimeReportsBoston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 #         get_hospitals = doc.activity('log:a'+str(uuid.uuid4()), startTime, endTime, {prov.model.PROV_TYPE:'ont:Retrieval', 'ont:Query':'?type=ad&?$select=ad,name'})
@@ -69,13 +69,13 @@ class get(dml.Algorithm):
 
 #         doc.wasAssociatedWith(get_realTimeTravelMassDot, this_script)
         
-        doc.usage(get_policeStations, resource1, startTime, None,
+        doc.usage(get_crimeReportsBoston, resource1, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'})
         
 
            
         policeStations = doc.entity('dat:houset_karamy#crimeReportsBoston', {prov.model.PROV_LABEL:'Crime Reports Boston', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(policeStations, this_script)
+        doc.wasAttributedTo(crimeReportsBoston, this_script)
         doc.wasGeneratedBy(crimeReportsBoston get_crimeReportsBoston, endTime)
         doc.wasDerivedFrom(crimeReportsBoston, resource1, get_crimeReportsBoston, get_crimeReportsBoston, get_crimeReportsBoston) 
         
