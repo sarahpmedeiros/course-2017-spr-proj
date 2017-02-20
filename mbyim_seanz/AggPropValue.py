@@ -56,9 +56,9 @@ class agg_prop_value(dml.Algorithm):
 			zip_data.append(prop_dict_select)
 
 
-		zip_grouped_data = aggregate(zip_list, sum)
+		zip_grouped_data = aggregate(zip_data, sum)
 
-		print(len(zip_list))
+		print(len(zip_data))
 		print(zip_grouped_data)
 
 		
