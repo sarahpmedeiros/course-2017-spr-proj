@@ -47,7 +47,22 @@ class police_crime(dml.Algorithm):
         # non-trivial transformation
 
 
+<<<<<<< Updated upstream
 
+=======
+
+
+
+
+        #non-trivial transformation
+
+
+
+        #mapreduce part
+
+
+        
+>>>>>>> Stashed changes
 
 
         repo.logout()
