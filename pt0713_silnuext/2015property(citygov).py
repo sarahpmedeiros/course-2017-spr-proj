@@ -6,6 +6,7 @@ import datetime
 import uuid
 import sodapy
 
+
 # https://data.cityofboston.gov/Permitting/Property-Assessment-2015/yv8c-t43q
 # https://data.cityofboston.gov/resource/n7za-nsjh.json
 
@@ -87,5 +88,3 @@ print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
-
-

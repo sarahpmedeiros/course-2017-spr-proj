@@ -5,6 +5,7 @@ import prov.model
 import datetime
 import uuid
 import sodapy
+import function_implement
 
 
 class fld_crime(dml.Algorithm):
@@ -24,32 +25,28 @@ class fld_crime(dml.Algorithm):
         repo.dropCollection("fld_crime")
         repo.createCollection("fld_crime")
 
-
-
-
-
+        # import fld data
         client = sodapy.Socrata("data.mass.gov", None)
         response = client.get("x99p-b88k")
-        #r = json.loads(response)
         s = json.dumps(response, sort_keys=True, indent=2)
         print(s)
         repo['pt0713_silnuext.fld_crime'].insert_many(response)
         repo['pt0713_silnuext.fld_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.fld_crime'].metadata())
 
-
-
-
+        # import crime data
         client1 = sodapy.Socrata("data.cityofboston.gov", None)
         response1 = client1.get("crime")
-
-        #r = json.loads(response)
         s = json.dumps(response1, sort_keys=True, indent=2)
         print(s)
-
         repo['pt0713_silnuext.fld_crime'].insert_many(response1)
         repo['pt0713_silnuext.fld_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.fld_crime'].metadata())
+
+        # non-trivial transformation
+
+
+
 
 
         repo.logout()
@@ -58,12 +55,6 @@ class fld_crime(dml.Algorithm):
 
         return {"start":startTime, "end":endTime}
     
-
-
-
-
-
-
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''

@@ -9,6 +9,7 @@ import sodapy
 
 # http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5?selectedAttributes%5B%5D=DISTRICT&chartType=bar&uiTab=table
 # http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5.geojson
+
 class police_districts(dml.Algorithm):
     contributor = 'pt0713_silnuext'
     reads = ['pt0713_silnuext.police_districts']
@@ -29,8 +30,7 @@ class police_districts(dml.Algorithm):
         r = json.loads(response)
         r = [r['features'][i]['properties'] for i in range(11)]
         print(json.dumps(r))
-  
-     
+       
         repo.dropCollection("police_districts")
         repo.createCollection("police_districts")
         repo['pt0713_silnuext.police_districts'].insert_many(r)
@@ -89,5 +89,3 @@ print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
-
-

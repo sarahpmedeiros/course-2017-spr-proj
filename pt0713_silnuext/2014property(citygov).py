@@ -7,10 +7,8 @@ import uuid
 import sodapy
 
 
-# hi
 # https://data.cityofboston.gov/dataset/Property-Assessment-2014/qz7u-kb7x
 # https://data.cityofboston.gov/resource/jsri-cpsq.json
-
 
 class property_2014(dml.Algorithm):
     contributor = 'pt0713_silnuext'

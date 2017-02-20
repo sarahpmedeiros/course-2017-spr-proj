@@ -6,6 +6,7 @@ import datetime
 import uuid
 import sodapy
 
+
 #https://data.cityofboston.gov/Public-Safety/Crime-Incident-Reports-July-2012-August-2015-Sourc/7cdf-6fgx
 #https://data.cityofboston.gov/resource/crime.json
 
@@ -87,13 +88,3 @@ print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
-
-
-
-
-
-
-
-
-
-

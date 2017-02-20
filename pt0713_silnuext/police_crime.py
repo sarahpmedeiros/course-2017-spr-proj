@@ -7,6 +7,7 @@ import uuid
 import sodapy
 import function_implement
 
+
 class police_crime(dml.Algorithm):
     contributor = 'pt0713_silnuext'
     reads = ['pt0713_silnuext.police_crime']
@@ -24,37 +25,30 @@ class police_crime(dml.Algorithm):
         repo.dropCollection("police_crime")
         repo.createCollection("police_crime")
 
-
+        # import police districts data
         url = "http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5.geojson"
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         r = [r['features'][i]['properties'] for i in range(11)]
         print(json.dumps(r))
-  
-
         repo['pt0713_silnuext.police_crime'].insert_many(r)
         repo['pt0713_silnuext.police_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.police_crime'].metadata())
 
-
-
-
-        
+        # import crime data      
         client1 = sodapy.Socrata("data.cityofboston.gov", None)
         response1 = client1.get("crime")
-
-        #r = json.loads(response)
         s = json.dumps(response1, sort_keys=True, indent=2)
         print(s)
-
         repo['pt0713_silnuext.police_crime'].insert_many(response1)
         repo['pt0713_silnuext.police_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.police_crime'].metadata())
         
+        # non-trivial transformation
 
-        #non-trivial transformation
 
-        
+
+
 
         repo.logout()
 
@@ -62,12 +56,6 @@ class police_crime(dml.Algorithm):
 
         return {"start":startTime, "end":endTime}
     
-
-
-
-
-
-
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''

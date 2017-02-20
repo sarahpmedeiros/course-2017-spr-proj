@@ -5,6 +5,7 @@ import prov.model
 import datetime
 import uuid
 import sodapy
+import function_implement
 
 
 class property_crime(dml.Algorithm):
@@ -24,54 +25,44 @@ class property_crime(dml.Algorithm):
         repo.dropCollection("property_crime")
         repo.createCollection("property_crime")
 
+        # import crime data
         client1 = sodapy.Socrata("data.cityofboston.gov", None)
         response1 = client1.get("crime")
-
-        #r = json.loads(response)
         s = json.dumps(response1, sort_keys=True, indent=2)
         print(s)
-
         repo['pt0713_silnuext.property_crime'].insert_many(response1)
         repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.property_crime'].metadata())
 
-
-
+        # import property2014 data
         client2014 = sodapy.Socrata("data.cityofboston.gov", None)
         response2014 = client2014.get("jsri-cpsq")
         s = json.dumps(response2014, sort_keys=True, indent=2)
         print(s)
-
         repo['pt0713_silnuext.property_crime'].insert_many(response2014)
         repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.property_crime'].metadata())
 
-
-
-
+        # import property2015 data
         client2015 = sodapy.Socrata("data.cityofboston.gov", None)
         response2015 = client2015.get("n7za-nsjh")
         s = json.dumps(response2015, sort_keys=True, indent=2)
         print(s)
-
-        
-
         repo['pt0713_silnuext.property_crime'].insert_many(response2015)
         repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.property_crime'].metadata())
 
+        # non-trivial transformation
 
+
+
+
+        
         repo.logout()
 
         endTime = datetime.datetime.now()
 
         return {"start":startTime, "end":endTime}
-    
-
-
-
-
-
 
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
@@ -119,5 +110,3 @@ print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
-
-
