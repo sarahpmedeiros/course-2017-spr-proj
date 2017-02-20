@@ -21,7 +21,8 @@ class datapull(dml.Algorithm):
         repo.authenticate('mbyim_seanz', 'mbyim_seanz')
 
         #Parking Tickets Info---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        url = 'https://data.cityofboston.gov/resource/cpdb-ie6e.json?$select=ticket_loc,violation1'
+        # url = 'https://data.cityofboston.gov/resource/cpdb-ie6e.json?$select=ticket_loc,violation1'
+        url = 'https://data.cityofboston.gov/resource/cpdb-ie6e.json?$limit=1000000'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
@@ -32,7 +33,8 @@ class datapull(dml.Algorithm):
         print(repo['mbyim_seanz.parking_tickets'].metadata())
 
         #Vehicle Excise Tax Info------------------------------------------------------------------------------------------------------------------------------------------
-        url = 'https://data.cityofboston.gov/resource/ww9y-x77a.json?$select=zip'
+        # url = 'https://data.cityofboston.gov/resource/ww9y-x77a.json?$select=zip'
+        url = 'https://data.cityofboston.gov/resource/ww9y-x77a.json?$limit=1000000'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
@@ -42,7 +44,7 @@ class datapull(dml.Algorithm):
         repo['mbyim_seanz.vehicle_tax'].metadata({'complete':True})
         print(repo['mbyim_seanz.vehicle_tax'].metadata())
 
-        #mbta Info------------------------------------------------------------------------------------------------------------------------------------------
+        #MBTA Info------------------------------------------------------------------------------------------------------------------------------------------
         #MBTA API key Info
         with open('../auth.json') as auth_file:
             auth_key = json.load(auth_file)
@@ -89,7 +91,8 @@ class datapull(dml.Algorithm):
         print(repo['mbyim_seanz.mbta_stops'].metadata())
 
         #Property assessment data------------------------------------------------------------------------------------------------------------------------------------------
-        url = 'https://data.cityofboston.gov/resource/jsri-cpsq.json?%24select=full_address,ZIPCODE,AV_LAND,AV_BLDG,AV_TOTAL,Location'
+        # url = 'https://data.cityofboston.gov/resource/jsri-cpsq.json?%24select=full_address,ZIPCODE,AV_LAND,AV_BLDG,AV_TOTAL,Location'
+        url = 'https://data.cityofboston.gov/resource/jsri-cpsq.json?$limit=1000000'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
