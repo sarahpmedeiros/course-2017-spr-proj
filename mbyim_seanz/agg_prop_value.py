@@ -89,10 +89,10 @@ class agg_prop_value(dml.Algorithm):
 		return doc
 
 
-agg_prop_value.execute()
-doc = agg_prop_value.provenance()
+# agg_prop_value.execute()
+# doc = agg_prop_value.provenance()
 
-print('finished aggregating property values')
+# print('finished aggregating property values')
 
 
 

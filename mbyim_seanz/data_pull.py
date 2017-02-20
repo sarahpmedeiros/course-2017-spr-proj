@@ -214,11 +214,11 @@ class data_pull(dml.Algorithm):
         repo.logout()
         return doc
 
-data_pull.execute()
-# datapull.property_assessment()
+# data_pull.execute()
+# # datapull.property_assessment()
 
-doc = data_pull.provenance()
-print('finished data pull')
+# doc = data_pull.provenance()
+# print('finished data pull')
 
 # print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))

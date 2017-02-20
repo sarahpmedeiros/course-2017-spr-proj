@@ -98,9 +98,9 @@ class agg_vehicle_tax(dml.Algorithm):
 		return doc
 
 
-agg_vehicle_tax.execute()
-doc = agg_vehicle_tax.provenance()
-print('finished aggregating vehicle tax')
+# agg_vehicle_tax.execute()
+# doc = agg_vehicle_tax.provenance()
+# print('finished aggregating vehicle tax')
 
 
 
