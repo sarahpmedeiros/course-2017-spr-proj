@@ -111,6 +111,7 @@ class transformation0(dml.Algorithm):
         doc.used(getResource, hospitals_doctor_visitsResource, startTime)
         doc.wasAttributedTo(hospitals_doctor_visitsResource, getResource)
         doc.wasGeneratedBy(hospitals_doctor_visitsResource, getResource, endTime)
+        doc.wasDerivedFrom(hos)
 
         # repo.record(doc.serialize()) # Record the provenance document. <- doesn't work for some reason
 
@@ -120,6 +121,7 @@ class transformation0(dml.Algorithm):
 
         '''
         #format for provenance
+
         lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(lost, this_script)
         doc.wasGeneratedBy(lost, get_lost, endTime)

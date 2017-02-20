@@ -54,7 +54,7 @@ class retrieveData(dml.Algorithm):
 
         # Get data for Open Swimming Pools in Boston
         client = sodapy.Socrata("data.cityofboston.gov", None)
-        response = client.get("5jxx-wfpr", limit=1)
+        response = client.get("5jxx-wfpr", limit=150)
         #print(response)
         repo.dropCollection("pools")
         repo.createCollection("pools")
@@ -96,7 +96,7 @@ class retrieveData(dml.Algorithm):
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/') #Boston Data Portal
         doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/') #CDC data portal
         doc.add_namespace('cdp', 'https://data.cambridgema.gov/resource/')
-        doc.add_namespace('datm', 'https://datamechanics.io/data') # datamechanics.io, hosts the university data
+        doc.add_namespace('datm', 'https://datamechanics.io/data/pgr_syquiac') # datamechanics.io, hosts the schools data
 
         this_script = doc.agent('alg:pgr_syquiac#retrieveData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
@@ -104,33 +104,73 @@ class retrieveData(dml.Algorithm):
         hospitalsResource = doc.entity('bdp:u6fv-m8v4', {'prov:label':'Hospital Locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         getHospitals = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(getHospitals, this_script)
-        doc.usage(getHospitals, hospitalsResource, startTime)#, None)
+        doc.usage(getHospitals, hospitalsResource, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'
+                  }
+                  )
+
+        hospitals = doc.entity('dat:pgr_syquiac#hospitals', {prov.model.PROV_LABEL:'Boston Hospitals', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(hospitals, this_script)
+        doc.wasGeneratedBy(hospitals, getHospitals, endTime)
+        doc.wasDerivedFrom(hospitals, hospitalsResource, getHospitals, getHospitals, getHospitals)
 
         #cdc Data
         cdcResource = doc.entity('cdc:csmm-fdhi', {'prov:label':'500 Cities: Local Data for Better Health', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         getCDC = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(getCDC, this_script)
-        doc.usage(getCDC, cdcResource, startTime)#, None)
+        doc.usage(getCDC, cdcResource, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'
+                  }
+                  )
+
+        cdc = doc.entity('dat:pgr_syquiac#cdc', {prov.model.PROV_LABEL:'CDC 500 Dataset', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(cdc, this_script)
+        doc.wasGeneratedBy(cdc, getCDC, endTime)
+        doc.wasDerivedFrom(cdc, cdcResource, getCDC, getCDC, getCDC)
+
 
         #university data
-        schoolsResource = doc.entity('datm:pgr_syquia/universities', {'prov:label':'Schools', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        schoolsResource = doc.entity('datm:universities', {'prov:label':'Schools', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         getSchools = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(getSchools, this_script)
-        doc.usage(getSchools, schoolsResource, startTime)#, None)
+        doc.usage(getSchools, schoolsResource, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'
+                  }
+                  )
+
+        schools = doc.entity('dat:pgr_syquiac#schools', {prov.model.PROV_LABEL:'Colleges and Universities in the US', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(schools, this_script)
+        doc.wasGeneratedBy(schools, getSchools, endTime)
+        doc.wasDerivedFrom(schools, schoolsResource, getSchools, getSchools, getSchools)
 
         #Open Swimming Pools data
         poolsResource = doc.entity('bdp:5jxx-wfpr', {'prov:label':'Pools', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         getPools = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(getPools, this_script)
-        doc.usage(getPools, poolsResource, startTime)#, None)
+        doc.usage(getPools, poolsResource, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'
+                  }
+                  )
+
+        pools = doc.entity('dat:pgr_syquiac#pools', {prov.model.PROV_LABEL:'Boston Pools', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(pools, this_script)
+        doc.wasGeneratedBy(pools, getPools, endTime)
+        doc.wasDerivedFrom(pools, poolsResource, getPools, getPools, getPools)
 
         #healthy corner stores data
         storesResource = doc.entity('bdp:ybm6-m5qd', {'prov:label':'Healthy Corner Stores', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         getStores = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(getStores, this_script)
-        doc.usage(getStores, storesResource, startTime)#, None)
+        doc.usage(getStores, storesResource, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'
+                  }
+                  )
 
-        
+        stores = doc.entity('dat:pgr_syquiac#stores', {prov.model.PROV_LABEL:'Healthy Corner Stores', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(stores, this_script)
+        doc.wasGeneratedBy(stores, getStores, endTime)
+        doc.wasDerivedFrom(stores, storesResource, getStores, getStores, getStores)
+
         #repo.record(doc.serialize()) # Record the provenance document. <- creates an error
         repo.logout()
 
@@ -138,7 +178,7 @@ class retrieveData(dml.Algorithm):
 
 retrieveData.execute()
 doc = retrieveData.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
