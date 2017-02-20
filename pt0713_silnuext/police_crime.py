@@ -5,7 +5,36 @@ import prov.model
 import datetime
 import uuid
 import sodapy
-import function_implement
+
+# functions implemented from lecture notes
+def union(R, S):
+    return R + S
+
+def difference(R, S):
+    return [t for t in R if t not in S]
+
+def intersect(R, S):
+    return [t for t in R if t in S]
+
+def project(R, p):
+    return [p(t) for t in R]
+
+def select(R, s):
+    return [t for t in R if s(t)]
+ 
+def product(R, S):
+    return [(t,u) for t in R for u in S]
+
+def aggregate(R, f):
+    keys = {r[0] for r in R}
+    return [(key, f([v for (k,v) in R if k == key])) for key in keys]
+
+def map(f, R):
+    return [t for (k,v) in R for t in f(k,v)]
+    
+def reduce(f, R):
+    keys = {k for (k,v) in R}
+    return [f(k1, [v for (k2,v) in R if k1 == k2]) for k1 in keys]
 
 
 class police_crime(dml.Algorithm):
@@ -30,26 +59,41 @@ class police_crime(dml.Algorithm):
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         r = [r['features'][i]['properties'] for i in range(11)]
-        print(json.dumps(r))
-        repo['pt0713_silnuext.police_crime'].insert_many(r)
-        repo['pt0713_silnuext.police_crime'].metadata({'complete':True})
-        print(repo['pt0713_silnuext.police_crime'].metadata())
+
+        districts = project(r, lambda t: (t['DISTRICT']))
+        district_key = [('DISTRICT', dis) for dis in districts]
+        print(districts)
+
+        # repo['pt0713_silnuext.police_crime'].insert_many(districts)
+        # repo['pt0713_silnuext.police_crime'].metadata({'complete':True})
+        # print(repo['pt0713_silnuext.police_crime'].metadata())
+
+
+
 
         # import crime data      
         client1 = sodapy.Socrata("data.cityofboston.gov", None)
         response1 = client1.get("crime")
         s = json.dumps(response1, sort_keys=True, indent=2)
-        print(s)
+
+
+        crime_district = project(response1,lambda t:(t['reptdistrict']))
+        print(crime_district)
+
+        crime_in_police_district = 0
+        for district in crime_district:
+            if district in districts:
+                crime_in_police_district += 1
+
+        percentage_crime_in_police_district = crime_in_police_district / len(crime_district)
+        print("The percentage of crime happens in police district is: ", percentage_crime_in_police_district)
+
+
+
         repo['pt0713_silnuext.police_crime'].insert_many(response1)
         repo['pt0713_silnuext.police_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.police_crime'].metadata())
         
-        # non-trivial transformation
-
-
-
-
-
         repo.logout()
 
         endTime = datetime.datetime.now()
