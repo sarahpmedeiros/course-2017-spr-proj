@@ -45,7 +45,7 @@ class agg_prop_value(dml.Algorithm):
 				if property_zip_code in boston_zips:
 					zip_data.append([property_zip_code, property_value])
 			except:
-				print('There was an error with getting a zipcode key')
+				print('There was an error with getting a zipcode key (this is a minor minor issue)')
 
 		aggregated_zip_data = aggregate(zip_data, sum)		
 		aggregated_zip_data_str = str(aggregated_zip_data).replace("'",'"')	#small json fix to convert to strings
@@ -90,6 +90,7 @@ class agg_prop_value(dml.Algorithm):
 
 agg_prop_value.execute()
 doc = agg_prop_value.provenance()
+print('finished aggregating property values')
 
 
 
