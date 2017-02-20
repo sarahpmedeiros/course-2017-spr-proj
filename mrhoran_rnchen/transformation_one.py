@@ -48,7 +48,9 @@ class transformation_one(dml.Algorithm):
         # agg those tuples
 
         commgarden_zip_count = project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1])))
-        
+       
+        print(commgarden_zip_count)
+ 
         # make a new tuple (zipcode, #food_pantries) from {"area":"South End",
         #"hours":"Saturdays 10:30 - 12:00","location":"1860 Washington St",
         #"location_1_city":"South End","location_1_location":"1860 Washington St",
@@ -132,7 +134,7 @@ def product(R, S):
     return [(t,u) for t in R for u in S]
 
 def getZips(garden):
-    return({garden['zip_code'],garden['site']})
+    return([garden['zip_code'],1])
 
 
 
