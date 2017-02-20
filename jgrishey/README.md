@@ -10,3 +10,9 @@ to each Red Line Station. My third and final transformation used the car acciden
 data from the City of Cambridge and also used the Geonames nearbyPlace data. I was able to get the nearest
 landmark to each car accident and parking ticket and create a dataset containing each landmark's parking
 ticket and car accident data.
+
+MBTA - Need an account/token
+
+City of Boston/Cambdrige - Socrata
+
+Geonames - Need an account/username (No token)
