@@ -7,19 +7,19 @@ import prov.model
 import datetime
 import uuid
 
-class example(dml.Algorithm):
-    contributor = 'alice_bob'
+class supermarkets(dml.Algorithm):
+    contributor = 'jguerero_mgarcia7'
     reads = []
-    writes = ['alice_bob.lost', 'alice_bob.found']
+    writes = ['jguerero_mgarcia7.supermarkets']
 
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
-        startTime = datetime.datetime.now()
+        startTime = datetime.datetime.now() #combination of date and a time
 
         # Set up the database connection.
-        client = dml.pymongo.MongoClient()
-        repo = client.repo
+        client = dml.pymongo.MongoClient() #create Mongo client
+        repo = client.repo #
         repo.authenticate('alice_bob', 'alice_bob')
 
         url = 'http://cs-people.bu.edu/lapets/591/examples/lost.json'
