@@ -9,7 +9,7 @@ import uuid
 class get(dml.Algorithm):
     contributor = 'houset_karamy'
     reads = []
-    writes = ['houset_karamy.policeStations','houset_karamy.crimeReportsBoston', 'houset_karamy.crimeReportsCambridge', 'houset_karamy.policeCarRoutesCambridge', 'houset_karamy.policeWalkingRoutesCambridge','houset_karamy.realTimeTravelMassdot']
+    writes = ['houset_karamy.policeStations']
 
     @staticmethod
     def execute(trial = False):
@@ -20,7 +20,7 @@ class get(dml.Algorithm):
         repo = client.repo
         repo.authenticate('houset_karamy', 'houset_karamy')
         
-        dataSets = {'policeStations': 'https://data.cityofboston.gov/resource/pyxn-r3i2.json', 'crimeReportsBoston': 'https://data.cityofboston.gov/resource/crime.json', 'crimeReportsCambridge':'https://data.cambridgema.gov/resource/dypy-nwuz.json','policeCarRoutesCambridge': 'https://data.cambridgema.gov/api/views/svjm-6war.json', 'policeWalkingRoutesCambridge' :' https://data.cambridgema.gov/api/views/aaqv-qhr2.json'}  
+        dataSets = {'policeStations': 'https://data.cityofboston.gov/resource/pyxn-r3i2.json'}  
         for ds in dataSets:
             url = dataSets[ds]
             response = urllib.request.urlopen(url).read().decode("utf-8")
@@ -60,67 +60,22 @@ class get(dml.Algorithm):
       #writes = ['houset_karamy.policeStations','houset_karamy.crimeReportsBoston', 'houset_karamy.crimeReportsCambridge', 'houset_karamy.policeCarRoutesCambridge', 'houset_karamy.policeWalkingRoutesCambridge','houset_karamy.realTimeTravelMassdot']
 
             
-        this_script = doc.agent('alg:houset_karamy#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:houset_karamy#test', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        
         resource1 = doc.entity('bdp:pyxn-r3i2', {'prov:label':'Police Stations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        resource2 = doc.entity('bdp:crime', {'prov:label':'Crime Reports Boston', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        resource3 = doc.entity('cma:dypy-nwuz', {'prov:label':'Crime Reports Cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        resource4 = doc.entity('cma:svjm-6war', {'prov:label':'Police Car Routes Cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        resource5 = doc.entity('cma:aaqv-qhr2', {'prov:label':'Police Walking Routes Cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
                         
         get_policeStations = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_crimeReportsBoston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_crimeReportsCambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_policeCarRoutesCambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_policeWalkingRoutesCambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+#         get_hospitals = doc.activity('log:a'+str(uuid.uuid4()), startTime, endTime, {prov.model.PROV_TYPE:'ont:Retrieval', 'ont:Query':'?type=ad&?$select=ad,name'})
+
 #         get_realTimeTravelMassDot = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         
         doc.wasAssociatedWith(get_policeStations, this_script)
-        doc.wasAssociatedWith(get_crimeReportsBoston, this_script)
-        doc.wasAssociatedWith(get_crimeReportsCambridge, this_script)
-        doc.wasAssociatedWith(get_policeCarRoutesCambridge, this_script)
-        doc.wasAssociatedWith(get_policeWalkingRoutesCambridge, this_script)
+
 #         doc.wasAssociatedWith(get_realTimeTravelMassDot, this_script)
         
         doc.usage(get_policeStations, resource1, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval'#,
-#                   'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-        doc.usage(get_crimeReportsBoston, resource2, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval'#,
-#                   'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-        doc.usage(get_crimeReportsCambridge, resource3, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval'#,
-#                   'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-        doc.usage(get_policeCarRoutesCambridge, resource4, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval'#,
-#                   'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-        doc.usage(get_policeWalkingRoutesCambridge, resource5, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval'#,
-#                   'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-#         doc.usage(get_realTimeTravelMassDot, resource, startTime, None,
-#                   {prov.model.PROV_TYPE:'ont:Retrieval'#,
-# #                   'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-#                   }
-#                   )
-#         doc.usage(get_found, resource, startTime, None,
-#                   {prov.model.PROV_TYPE:'ont:Retrieval',
-#                   'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-#                   }
-#                   )
-#         doc.usage(get_lost, resource, startTime, None,
-#                   {prov.model.PROV_TYPE:'ont:Retrieval',
-#                   'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-#                   }
-#                   )
+                  {prov.model.PROV_TYPE:'ont:Retrieval'})
+        
 
            
         policeStations = doc.entity('dat:houset_karamy#policeStations', {prov.model.PROV_LABEL:'Police Station Locations', prov.model.PROV_TYPE:'ont:DataSet'})
@@ -128,41 +83,6 @@ class get(dml.Algorithm):
         doc.wasGeneratedBy(policeStations, get_policeStations, endTime)
         doc.wasDerivedFrom(policeStations, resource1, get_policeStations, get_policeStations, get_policeStations) 
         
-        crimeReportsBoston = doc.entity('dat:houset_karamy#crimeReportsBoston', {prov.model.PROV_LABEL:'Boston Crime Reports', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(crimeReportsBoston, this_script)
-        doc.wasGeneratedBy(crimeReportsBoston, get_crimeReportsBoston, endTime)
-        doc.wasDerivedFrom(crimeReportsBoston, resource2, get_crimeReportsBoston, get_crimeReportsBoston, get_crimeReportsBoston) 
-        
-        crimeReportsCambridge = doc.entity('dat:houset_karamy#crimeReportsCambridge', {prov.model.PROV_LABEL:'Cambridge Crime Reports', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(crimeReportsCambridge, this_script)
-        doc.wasGeneratedBy(crimeReportsCambridge, get_crimeReportsCambridge, endTime)
-        doc.wasDerivedFrom(crimeReportsCambridge, resource3, get_crimeReportsCambridge, get_crimeReportsCambridge, get_crimeReportsCambridge)
-        
-        policeCarRoutesCambridge = doc.entity('dat:houset_karamy#policeCarRoutesCambridge', {prov.model.PROV_LABEL:'Cambridge Police Car Routes', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(policeCarRoutesCambridge, this_script)
-        doc.wasGeneratedBy(policeCarRoutesCambridge, get_policeCarRoutesCambridge, endTime)
-        doc.wasDerivedFrom(policeCarRoutesCambridge, resource4, get_policeCarRoutesCambridge, get_policeCarRoutesCambridge, get_policeCarRoutesCambridge)
-        
-        policeWalkingRoutesCambridge = doc.entity('dat:houset_karamy#policeWalkingRoutesCambridge', {prov.model.PROV_LABEL:'Cambridge Police Walking Routes', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(policeWalkingRoutesCambridge, this_script)
-        doc.wasGeneratedBy(policeWalkingRoutesCambridge, get_policeWalkingRoutesCambridge, endTime)
-        doc.wasDerivedFrom(policeWalkingRoutesCambridge, resource5, get_policeWalkingRoutesCambridge, get_policeWalkingRoutesCambridge, get_policeWalkingRoutesCambridge)
-        
-#         realTimeTravelMassDot = doc.entity('dat:houset_karamy#realTimeTravelMassDot', {prov.model.PROV_LABEL:'MBTA Travel Times', prov.model.PROV_TYPE:'ont:DataSet'})
-#         doc.wasAttributedTo(realTimeTravelMassDot, this_script)
-#         doc.wasGeneratedBy(realTimeTravelMassDot, get_realTimeTravelMassDot, endTime)
-#         doc.wasDerivedFrom(realTimeTravelMassDot, resource, get_realTimeTravelMassDot, get_realTimeTravelMassDot, get_realTimeTravelMassDot)
-        
-        
-#         lost = doc.entity('dat:houset_karamy#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-#         doc.wasAttributedTo(lost, this_script)
-#         doc.wasGeneratedBy(lost, get_lost, endTime)
-#         doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-
-#         found = doc.entity('dat:houset_karamy#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-#         doc.wasAttributedTo(found, this_script)
-#         doc.wasGeneratedBy(found, get_found, endTime)
-#         doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
 
         repo.logout()
                   
