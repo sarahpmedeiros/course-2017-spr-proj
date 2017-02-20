@@ -35,7 +35,7 @@ class getData(dml.Algorithm):
         city_of_boston_datasets = {
 
             "community_gardens": "rdqf-ter7",#'https://data.cityofboston.gov/resource/rdqf-ter7.json',
-	    "corner_stores": "vwsn-4yh"#'https://data.cityofboston.gov/resource/vwsn-4yhi.json',                            
+            "food_pantries":"4tie-bhxw" #'https://data.cityofboston.gov/resource/4tie-bhxw.json'
             }
 
         
@@ -61,8 +61,9 @@ class getData(dml.Algorithm):
             repo.dropCollection(dataset)
             repo.createCollection(dataset)
             repo['mrhoran_rnchen.' + dataset].insert_many(response)
-            repo['mrhoran_rnchen.'+dataset].metadata({'complete':True})
+            repo['mrhoran_rnchen.'+ dataset].metadata({'complete':True})
             print(type(repo['mrhoran_rnchen.'+dataset].metadata()))
+
 
 
         ### DATASETS FROM CAMBRIDE DATA PORTAL ########################################
