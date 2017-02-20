@@ -5,7 +5,7 @@
 4. Public Swimming Pools in Boston – https://data.cityofboston.gov/Public-Property/Year-Round-Swimming-Pools/rtqb-8pht/data
 5. Cambridge Medical Events – https://data.cambridgema.gov/Public-Safety/Medical-Events/4hgq-4f2b/data
 
-#Transformations we are doing
+# Transformations we are doing
 1. Find the location of "obesity rates" in cdc and see if there is a correlation between that and how far people are from swimming pools and healthy corner stores
 
 2. sleep rates and correlation to university locations
