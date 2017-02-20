@@ -81,6 +81,8 @@ class agg_parking_tix(dml.Algorithm):
 agg_parking_tix.execute()
 doc = agg_parking_tix.provenance()
 
+print('finished aggregating parking tickets')
+
 
 
 

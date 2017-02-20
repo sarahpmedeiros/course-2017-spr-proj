@@ -4,8 +4,9 @@ import dml
 import prov.model
 import datetime
 import uuid
+import requests
 
-class datapull(dml.Algorithm):
+class data_pull(dml.Algorithm):
     contributor = 'mbyim_seanz'
     reads = []
     writes = ['mbyim_seanz.vehicle_tax', 'mbyim_seanz.parking_tickets', 'mbyim_seanz.mbta_stops', 'mbyim_seanz.property_assessments', 'mbyim_seanz.snow_parking']
@@ -46,7 +47,7 @@ class datapull(dml.Algorithm):
 
         #MBTA Info------------------------------------------------------------------------------------------------------------------------------------------
         #MBTA API key Info
-        with open('../auth.json') as auth_file:
+        with open('auth.json') as auth_file:
             auth_key = json.load(auth_file)
 
         api_key = auth_key['mbtadeveloperportal']['key']
@@ -92,7 +93,8 @@ class datapull(dml.Algorithm):
 
         #Property assessment data------------------------------------------------------------------------------------------------------------------------------------------
         # url = 'https://data.cityofboston.gov/resource/jsri-cpsq.json?%24select=full_address,ZIPCODE,AV_LAND,AV_BLDG,AV_TOTAL,Location'
-        url = 'https://data.cityofboston.gov/resource/jsri-cpsq.json?$limit=1000000'
+
+        url = 'https://data.cityofboston.gov/resource/jsri-cpsq.json?$limit=164090'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
@@ -118,7 +120,7 @@ class datapull(dml.Algorithm):
         endTime = datetime.datetime.now()
 
         return {"start":startTime, "end":endTime}
-    
+  
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''
@@ -212,8 +214,12 @@ class datapull(dml.Algorithm):
         repo.logout()
         return doc
 
-datapull.execute()
-doc = datapull.provenance()
+data_pull.execute()
+# datapull.property_assessment()
+
+doc = data_pull.provenance()
+print('finished data pull')
+
 # print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
 

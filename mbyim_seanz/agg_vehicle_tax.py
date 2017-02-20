@@ -100,8 +100,7 @@ class agg_vehicle_tax(dml.Algorithm):
 
 agg_vehicle_tax.execute()
 doc = agg_vehicle_tax.provenance()
-
-
+print('finished aggregating vehicle tax')
 
 
 
