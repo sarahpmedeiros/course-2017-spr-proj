@@ -40,7 +40,6 @@ class obesityperneighborhood(dml.Algorithm):
 			ob_shape = shape(ob_pts)
 			for name,shp in neighborhood_shapes.items():
 				if ob_shape.within(shp):
-					print('Stat for {} found'.format(name))
 					d[name].append(ob['properties'])
 					break
 
