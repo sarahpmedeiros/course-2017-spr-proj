@@ -15,8 +15,14 @@ import time
 class transformation_one(dml.Algorithm):
 
     contributor = 'mrhoran_rnchen'
-    reads = ['mrhoran_rnchen.community_gardens','mrhoran_rnchen.food_pantries']
-    writes = ['mrhoran_rnchen.healthy_options']
+
+    reads = ['mrhoran_rnchen.community_gardens',
+             'mrhoran_rnchen.food_pantries']
+
+    writes = ['mrhoran_rnchen.foodpantry_zip_count',
+              'mrhoran_rnchen.commgarden_zip_count',
+              'mrhoran_rnchen.garden_pantry_agg']
+
     @staticmethod
     def execute(trial = False):
         
@@ -28,55 +34,33 @@ class transformation_one(dml.Algorithm):
         
         repo.authenticate('mrhoran_rnchen', 'mrhoran_rnchen')
         
-        # make a new tuple (zipcode, #comm gardens) from
-        #{"area":"Fenway/Kenmore","coordinates":"42.3444242,-71.0952061",
-        #"location":"15 Park Dr.","map_location_location":"15 Park Dr.",
-        #"site":"Richard Parker Memorial CG","state":"MA","zip_code":"2115"}
-
-
-        #test_arr = []
-        #temp = [o for o in repo.mrhoran_rnchen.community_gardens.find({})]
-        #for g in temp:
-        #     test_arr.append({g['site'],g['zip_code']})
-        #print(test_arr)
-
-        #X = project(select('mrhoran_rnchen.community_gardens', lambda t: t[0] == "zip_code"), lambda t: (t[1],1))
-
         X = project([o for o in repo.mrhoran_rnchen.community_gardens.find({})], getGZips)
-        #print(X)
 
-        # agg those tuples
+        commgarden_zip_count = (project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1]))))
+                
+        repo.dropCollection('commgarden_zip_count')
+        repo.createCollection('commgarden_zip_count')
 
-        commgarden_zip_count = dict(project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1]))))
-
-        print(commgarden_zip_count)
-        repo.mrhoran_rnchen.commgarden_zip_count.insert(commgarden_zip_count)
-       
         #print(commgarden_zip_count)
- 
-        # make a new tuple (zipcode, #food_pantries) from {"area":"South End",
-        #"hours":"Saturdays 10:30 - 12:00","location":"1860 Washington St",
-        #"location_1_city":"South End","location_1_location":"1860 Washington St",
-        #"location_1_state":"MA","name":"Grant Manor","site_number":"FB81",
-        #"source":"http://www.fairfoods.org/dollarbag.html","zip_code":"21178"}
 
- #       Y = project(select('mrhoran_rnchen.food_pantries', lambda t: t[0] == "zip_code"), lambda t: (t[1],1))
-  
+        repo.mrhoran_rnchen.commgarden_zip_count.insert(dict(commgarden_zip_count))
+
+############################
         Y = project([p for p in repo.mrhoran_rnchen.food_pantries.find({})], getPZips)
 
-        # agg those tuples
-        # agg those new tuples
+        foodpantry_zip_count = (project(aggregate(Y,sum), lambda t: (t[0], ('food_pantry',t[1]))))
 
-        foodpantry_zip_count = project(aggregate(Y,sum), lambda t: (t[0], ('food_pantry',t[1])))
-
-        repo.mrhoran_rnchen.foodpantry_zip_count.insertMany(foodpantry_zip_count)
+        #print(foodpantry_zip_count)        
+        repo.dropCollection('foodpantry_zip_count')
+        repo.createCollection('foodpantry_zip_count')
+        
+        repo.mrhoran_rnchen.foodpantry_zip_count.insert(dict(foodpantry_zip_count))
        
         # combine them to make a new data set like (zip, (comm,1), (foodp, 1))
 
         temp = product(commgarden_zip_count, foodpantry_zip_count)
 
         result = project(select(temp, lambda t: t[0][0] == t[1][0]), lambda t: (t[0][0], t[0][1], t[1][1]))
-       
 
         for z in commgarden_zip_count:
             if z[0] not in result:
@@ -86,10 +70,14 @@ class transformation_one(dml.Algorithm):
             if p[0] not in result:
                  result.append((p[0],('comm_gardens',0),p[1]))
 
-        print(result)
+        #print(result)
 
-	
-        repo.mrhoran_rnchen.garden_pantry_agg.insertMany(result)
+        Y = project(result, lambda t: (t[0], (t[1], t[2])))
+
+        repo.dropCollection('garden_pantry_agg')
+        repo.createCollection('garden_pantry_agg')
+
+        repo.mrhoran_rnchen.garden_pantry_agg.insert(dict(Y))
        
         repo.logout()
 
@@ -118,9 +106,8 @@ class transformation_one(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:mrhoran_rnchen#getData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:mrhoran_rnchen#transformation_one', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
-        # label section might be wrong
         resource1 = doc.entity('bdp:rdqf-ter7', {'prov:label':'Community Gardens', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_community_gardens = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
@@ -133,10 +120,22 @@ class transformation_one(dml.Algorithm):
                   }
                   )
 
-        community_gardens = doc.entity('dat:mrhoran_rnchen#community_gardens', {prov.model.PROV_LABEL:'Community Gardens', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
-        doc.wasAttributedTo(community_gardens, this_script)
-        doc.wasGeneratedBy(community_gardens, get_community_gardens, endTime)
-        doc.wasDerivedFrom(community_gardens, resource1, get_community_gardens, get_community_gardens, get_community_gardens)
+           # label section might be wrong
+        resource2 = doc.entity('bdp:rdqf-ter7', {'prov:label':'Food Pantries', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+
+        get_food_pantries = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+        doc.wasAssociatedWith(get_food_pantries, this_script)
+
+        doc.usage(get_community_gardens, resource1, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'
+                  #'ont:Query':'location, area, coordinates, zip_code' #?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
+                  }
+                  )
+        food_pantries = doc.entity('dat:mrhoran_rnchen#food_pantries', {prov.model.PROV_LABEL:'Food Pantries', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
+        doc.wasAttributedTo(food_pantries, this_script)
+        doc.wasGeneratedBy(food_pantries, get_food_pantries, endTime)
+        doc.wasDerivedFrom(food_pantries, resource2, get_food_pantries, get_food_pantries, get_food_pantries)
         repo.logout()
                   
         return doc
@@ -160,7 +159,6 @@ def getGZips(garden):
 
 def getPZips(foodpantry):
     return([foodpantry['zip_code'],1])
-
 
 
 transformation_one.execute()
