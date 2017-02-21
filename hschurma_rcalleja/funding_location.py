@@ -85,7 +85,6 @@ class funding_location(dml.Algorithm):
         S = select(P, lambda t: t[0][0] == t[1][0])
         PR = project(S, lambda t: (t[0][0], t[0][1], t[1][1]))
         print(PR)
-
     
         #Trim white spaces
    
