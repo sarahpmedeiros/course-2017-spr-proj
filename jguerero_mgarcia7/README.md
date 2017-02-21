@@ -2,7 +2,7 @@ Write a short narrative and justification (5-10 sentences) explaining how these 
 
 # Project narrative
 
-Our project seeks to explore the relationship between food accessibility, obesity and income in Boston's neighborhoods. 
+Our project seeks to explore the relationship between food accessibility, obesity and income in Boston's neighborhoods. Primarily looking at whether a smaller income and decreased number of food source in the area is correlated to an increased obesity rate. Later, we hope to more closely look at the accessibility of these food sources by train, car or walking distance to better understand the implications this has on obesity rate.  
 
 # Dataset descriptions
 
@@ -15,14 +15,14 @@ Our project seeks to explore the relationship between food accessibility, obesit
 
 # Transformations
 
-First, we combined the Farmers' Markets, Corner Markets, and Supermarkets datasets in order to create an overall Food Source dataset. In order to do this we needed to standardize the attribute names, as well as get rid of attributes that were unnecessary.
+First, we combined the Farmers' Markets, Corner Markets, and Supermarkets datasets in order to create an overall Food Source dataset. In order to do this we needed to standardize the attribute names, as well as get rid of attributes that we deemed as unnecessary.
 
 Second, we had to map the regions in the Obesity Statistics in Massachusetts to neighborhoods in Boston in order to calculate the percentage of people who had a BMI >= 30 per neighborhood.
 
-Third, we created a new dataset that bro
+Third, we created a new dataset that combines information from all of the datasets to look at the relationships between information that will help us answer our overall project narrative. This new dataset includes the population size, average income, total number of food sources and average obesity based on the neighborhood. 
 
 # Required libraries and tools
-The libraries pyshp and shapely will need to be installed before the program can be executed. They can be installed with these pip commands:
+The libraries pyshp, and shapely will need to be installed before the program can be executed. They can be installed with these pip commands:
 '''
 pip install pyshp
 pip install shapely
