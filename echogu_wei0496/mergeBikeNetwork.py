@@ -31,7 +31,6 @@ class mergeBikeNetwork(dml.Algorithm):
         # projection
         BostonNetwork = []
         for item in rawBostonNetwork:
-            item = dict(item)
             try:
                 BostonNetwork.append({'_id': item['_id'],
                                       'street': item['properties']['STREET_NAM'],
@@ -42,7 +41,6 @@ class mergeBikeNetwork(dml.Algorithm):
 
         CambridgeNetwork = []
         for item in rawCambridgeNetwork:
-            item = dict(item)
             try:
                 CambridgeNetwork.append({'_id': item['_id'],
                                      'street': item['street'],
@@ -51,7 +49,7 @@ class mergeBikeNetwork(dml.Algorithm):
             except:
                 pass
 
-        # union
+        # aggregation
         BikeNetwork = transformData.union(BostonNetwork, CambridgeNetwork)
 
         repo.dropCollection("BikeNetwork")
@@ -83,7 +81,6 @@ class mergeBikeNetwork(dml.Algorithm):
         doc.add_namespace('ont',
                           'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
-        # doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
         this_script = doc.agent('alg:echogu_wei0496#mergeBikeNetwork',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})

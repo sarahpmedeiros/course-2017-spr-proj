@@ -9,6 +9,7 @@ import prov.model
 import datetime
 import uuid
 from echogu_wei0496 import transformData
+from geopy.distance import vincenty
 
 class mergeSchoolsHubway(dml.Algorithm):
     contributor = 'echogu_wei0496'
@@ -27,44 +28,63 @@ class mergeSchoolsHubway(dml.Algorithm):
         repo.authenticate('echogu_wei0496', 'echogu_wei0496')
 
         # loads the collection
-        rawMASchools = repo['echogu_wei0496.BostonNetwork'].find()
-        rawHubwayStations = repo['echogu_wei0496.CambridgeNetwork'].find()
+        rawMASchools = repo['echogu_wei0496.MASchools'].find()
+        rawHubwayStations = repo['echogu_wei0496.HubwayStations'].find()
 
         # projection
-        BostonZip = ['02135', '02134', '02215', '02128', '02129']
-        CambridgeZip = []
-        Zip
+        BostonZIP = ['02108', '02109', '02110', '02111', '02113', '02114', '02115', '02116', '02118', '02119', '02120', '02121', '02122', '02124', '02125', '02126', '02127', '02128', '02129', '02130', '02131', '02132', '02133', '02134', '02135', '02136', '02163', '02199', '02203', '02210', '02215', '02222']
+        CambridgeZIP = ['02138', '02139', '02140', '02141', '02142']
+        zip = BostonZIP + CambridgeZIP
+        grades = "03,04,05,06,07,08,09,10,11,12"
 
         BostonSchools = []
-        for item in MASchools:
-            item = dict(item)
+        for item in rawMASchools:
+            # select schools located in Boston and eliminate schools with only Pre-K, K, 01, 02 grades
             try:
-                BostonSchools.append({'_id': item['_id'],
-                                      'street': item['properties']['STREET_NAM'],
-                                      'geometry': item['geometry'],
-                                      'shape_len': item['properties']['Shape_Leng']})
+                if item['properties']['ZIP'] in zip and item['properties']['GRADES'] in grades:
+                    BostonSchools.append({'_id': item['_id'],
+                                          'properties': item['properties'],
+                                          'location': item['geometry']})
             except:
                 pass
 
-        CambridgeNetwork = []
-        for item in rawCambridgeNetwork:
-            item = dict(item)
+        HubwayStations = []
+        for item in rawHubwayStations:
             try:
-                CambridgeNetwork.append({'_id': item['_id'],
-                                     'street': item['street'],
-                                     'geometry': item['the_geom'],
-                                     'shape_len': item['shape_len']})
+                HubwayStations.append({'stations': item['geometry']['coordinates']})
             except:
                 pass
 
-        # union
-        BikeNetwork = transformData.union(BostonNetwork, CambridgeNetwork)
+        # product and rearrange (id, properties, location, station)
+        product = transformData.product(BostonSchools, HubwayStations)
+        # product = [{'_id': item[0]['_id'],
+        #             'properties': item[0]['properties'],
+        #             'location': item[0]['location'],                        # school locations coordinates
+        #             'stations': item[1]['stations']} for item in product]   # Hubway stations location coordinates
+        #
 
-        repo.dropCollection("BikeNetwork")
-        repo.createCollection("BikeNetwork")
-        repo['echogu_wei0496.BikeNetwork'].insert_many(BikeNetwork)
-        repo['echogu_wei0496.BikeNetwork'].metadata({'complete': True})
-        print("Saved BikeNetwork", repo['echogu_wei0496.BikeNetwork'].metadata())
+
+        # Aggregation: for each school, count number of Hubway stations within 5/10 minutes walk (500m)
+        # selection = []
+        # # keys = [item['_id'] for id in project]
+        # for item in product:
+        #     school = item['location']['coordinates']
+        #     station = item['stations']
+        #     d = vincenty(school, station).meters
+        #     if d < 500:
+        #         selection.append(item)
+        # print(selection[0])
+
+
+        # def aggregate(R, f):
+        #     keys = {r[0] for r in R}
+        #     return [(key, f([v for (k, v) in R if k == key])) for key in keys]
+
+        # repo.dropCollection("SchoolsHubway")
+        # repo.createCollection("SchoolsHubway")
+        # repo['echogu_wei0496.SchoolsHubway'].insert_many(SchoolsHubway)
+        # repo['echogu_wei0496.SchoolsHubway'].metadata({'complete': True})
+        # print("Saved SchoolsHubway", repo['echogu_wei0496.SchoolsHubway'].metadata())
 
         repo.logout()
 
@@ -74,11 +94,10 @@ class mergeSchoolsHubway(dml.Algorithm):
 
     @staticmethod
     def provenance(doc=prov.model.ProvDocument(), startTime=None, endTime=None):
-        '''
-            Create the provenance document describing everything happening
+        ''' Create the provenance document describing everything happening
             in this script. Each run of the script will generate a new
             document describing that invocation event.
-            '''
+        '''
 
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
@@ -92,7 +111,7 @@ class mergeSchoolsHubway(dml.Algorithm):
 
         this_script = doc.agent('alg:echogu_wei0496#mergeBikeNetwork',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
-        # resource = doc.entity('bdp:wc8w-nujj',
+        resource = doc.entity('bdp:wc8w-nujj',
                               {'prov:label': '311, Service Requests', prov.model.PROV_TYPE: 'ont:DataResource',
                                'ont:Extension': 'json'})
         # get_found = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
@@ -126,7 +145,7 @@ class mergeSchoolsHubway(dml.Algorithm):
 
         return doc
 
-mergeBikeNetwork.execute()
+mergeSchoolsHubway.execute()
 # doc = example.provenance()
 # print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
