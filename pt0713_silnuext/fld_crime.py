@@ -55,15 +55,13 @@ class fld_crime(dml.Algorithm):
         repo.createCollection("fld_crime")
 
         # import fld data
-        client = sodapy.Socrata("data.mass.gov", "gHD8VAjd6Dg0s5avVBsaHj8k6")
+        client = sodapy.Socrata("data.mass.gov", None)
         response = client.get("x99p-b88k")
         s = json.dumps(response, sort_keys=True, indent=2)
    
 
         fld_city_data = project(response, lambda t: (t["date_received"], [t.get("business_city")]))
         fld_city_month = [int(boston[0][6]) for boston in fld_city_data if boston[0][:4] == "2015" and boston[1] == ['Boston'] and boston[0][5] != 1]
-        #print(fld_city_month)
-        #[6, 4, 3, 9, 8, 2, 5, 7, 3, 8, 5, 2, 2, 2, 5, 9, 3, 7, 2, 2, 8, 5, 9, 8, 6, 6, 6, 1, 0, 6, 7, 1, 2, 8, 2, 1, 7, 9, 8, 9]
         fld12 = [num for num in fld_city_month if num == 1 or num == 2]
         fld34 = [num for num in fld_city_month if num == 3 or num == 4]
         fld56 = [num for num in fld_city_month if num == 5 or num == 6]
@@ -79,7 +77,7 @@ class fld_crime(dml.Algorithm):
 
 
         # import crime data
-        client1 = sodapy.Socrata("data.cityofboston.gov", "gHD8VAjd6Dg0s5avVBsaHj8k6")
+        client1 = sodapy.Socrata("data.cityofboston.gov", None)
         response1 = client1.get("crime")
         s = json.dumps(response1, sort_keys=True, indent=2)
 

@@ -54,11 +54,10 @@ class police_crime(dml.Algorithm):
         repo.dropCollection("police_crime")
         repo.createCollection("police_crime")
 
-        token = "?$$app_token="+dml.auth['services']['cityofbostondataportal']['token']
 
 
         # import police districts data
-        url = "http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5.geojson" + token 
+        url = "http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5.geojson"
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         r = [r['features'][i]['properties'] for i in range(11)]
