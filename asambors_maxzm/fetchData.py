@@ -120,7 +120,7 @@ class fetchData(dml.Algorithm):
         doc.wasGeneratedBy(Energy, get_energy, endTime)
         doc.wasDerivedFrom(Energy, energy_resource, get_energy, get_energy, get_energy)
 
-        Sleep = doc.entity('dat:asambors_maxzm#nosleep', {prov.model.PROV_LABEL:'Sleeping less than 7 hours among adults aged >=18 years', prov.model.PROV_TYPE:'ont:DataSet'})
+        Sleep = doc.entity('dat:asambors_maxzm#nosleepma', {prov.model.PROV_LABEL:'Sleeping less than 7 hours among adults aged >=18 years', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(Sleep, this_script)
         doc.wasGeneratedBy(Sleep, get_sleep, endTime)
         doc.wasDerivedFrom(Sleep, sleep_resource, get_sleep, get_sleep, get_sleep)
