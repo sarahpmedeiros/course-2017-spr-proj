@@ -17,8 +17,7 @@ class transformation_two(dml.Algorithm):
 
     reads = ['mrhoran_rnchen.farmers_market']
 
-    writes = ['mrhoran_rnchen.farmers_market_map',
-              'mrhoran_rnchen.local_fm']
+    writes = ['mrhoran_rnchen.local_fm']
 
 
     @staticmethod
@@ -36,39 +35,38 @@ class transformation_two(dml.Algorithm):
         ## get town name and lat, long coordinates
         X = select((project([o for o in repo.mrhoran_rnchen.farmers_market.find({})], get_correct_locations)), lambda t: t != None)
 
-        repo.dropCollection('local_fm')
-        repo.createCollection('local_fm')
+        repo.dropCollection('mrhoran_rnchen.local_fm')
+        repo.createCollection('mrhoran_rnchen.local_fm')
 
-        repo.mrhoran_rnchen.commgarden_zip_count.insert(dict(X))
+        repo.mrhoran_rnchen.local_fm.insert(dict(X))
 
         ## Now to do K means
-
-        ## TO BE DONEEE
-        # have to make this a list of tuples not just list of list
-
-##        Y = project(X, lambda t: (t[1]))
-##        
-##        M = [Y[0], Y[1]]
-##
-##        P = Y[1:]
-##
-##        OLD = []
-##        
-##        while OLD != M:
-##            OLD = M
-##
-##            MPD = [(m, p, dist(m,p)) for (m, p) in product(M, P)]
-##            PDs = [(p, dist(m,p)) for (m, p, d) in MPD]
-##            PD = aggregate(PDs, min)
-##            MP = [(m, p) for ((m,p,d), (p2,d2)) in product(MPD, PD) if p==p2 and d==d2]
-##            MT = aggregate(MP, plus)
-##
-##            M1 = [(m, 1) for ((m,p,d), (p2,d2)) in product(MPD, PD) if p==p2 and d==d2]
-##            MC = aggregate(M1, sum)
-##
-##            M = [scale(t,c) for ((m,t),(m2,c)) in product(MT, MC) if m == m2]
-##            print(sorted(M))
         
+        Y = (project(X, lambda t: (t[1][0], t[1][1])))
+
+        M = [Y[0], Y[1]]
+
+        P = Y[1:]
+
+        OLD = []
+        
+        while OLD != M:
+            OLD = M
+
+            MPD = [(m, p, dist(m,p)) for (m, p) in product(M, P)]
+            PDs = [(p, dist(m,p)) for (m, p, d) in MPD]
+            PD = aggregate(PDs, min)
+            MP = [(m, p) for ((m,p,d), (p2,d2)) in product(MPD, PD) if p==p2 and d==d2]
+            MT = aggregate(MP, plus)
+
+            M1 = [(m, 1) for ((m,p,d), (p2,d2)) in product(MPD, PD) if p==p2 and d==d2]
+            MC = aggregate(M1, sum)
+
+            M = [scale(t,c) for ((m,t),(m2,c)) in product(MT, MC) if m == m2]
+            #print(sorted(M))
+
+        print(sorted(M))
+
         repo.logout()
 
         endTime = datetime.datetime.now()
@@ -95,22 +93,22 @@ class transformation_two(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:mrhoran_rnchen#transformation_one', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:mrhoran_rnchen#transformation_two', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         
-        resource1 = doc.entity('bdp:rdqf-ter7', {'prov:label':'Food Pantries', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource1 = doc.entity('bdp:66t5-f563', {'prov:label':'Farmers Market', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
-        get_food_pantries = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_farmers_market = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_food_pantries, this_script)
+        doc.wasAssociatedWith(get_farmers_market, this_script)
 
-        doc.usage(get_food_pantries, resource1, startTime, None,
+        doc.usage(get_farmers_market, resource1, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'
                   }
                   )
-        food_pantries = doc.entity('dat:mrhoran_rnchen#food_pantries', {prov.model.PROV_LABEL:'Food Pantries', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
-        doc.wasAttributedTo(food_pantries, this_script)
-        doc.wasGeneratedBy(food_pantries, get_food_pantries, endTime)
-        doc.wasDerivedFrom(food_pantries, resource1, get_food_pantries, get_food_pantries, get_food_pantries)
+        farmers_market = doc.entity('dat:mrhoran_rnchen#farmers_market', {prov.model.PROV_LABEL:'Food Pantries', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
+        doc.wasAttributedTo(farmers_market, this_script)
+        doc.wasGeneratedBy(farmers_market, get_farmers_market, endTime)
+        doc.wasDerivedFrom(farmers_market, resource1, get_farmers_market, get_farmers_market, get_farmers_market)
         repo.logout()
                   
         return doc
@@ -154,7 +152,7 @@ def aggregate(R, f):
     
 transformation_two.execute()
 doc = transformation_two.provenance()
-#print(doc.get_provn())
-#print(json.dumps(json.loads(doc.serialize()), indent=4))
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
