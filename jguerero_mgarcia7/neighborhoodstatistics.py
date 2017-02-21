@@ -118,46 +118,44 @@ class neighborhoodstatistics(dml.Algorithm):
 		# Set up the database connection.
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
-		repo.authenticate('alice_bob', 'alice_bob')
+		repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
 		doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
-		doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
+		doc.add_namespace('dat', 'http://datamechanics.io/data/jguerero_mgarcia7') # The data sets are in <user>#<collection> format.
 		doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
 		doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-		doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-		this_script = doc.agent('alg:alice_bob#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-		resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-		get_found = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-		get_lost = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-		doc.wasAssociatedWith(get_found, this_script)
-		doc.wasAssociatedWith(get_lost, this_script)
-		doc.usage(get_found, resource, startTime, None,
-				  {prov.model.PROV_TYPE:'ont:Retrieval',
-				  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-				  }
+		this_script = doc.agent('alg:jguerero_mgarcia7#neighborhoodstatistics', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+		foodsources_resource = doc.entity('dat:foodsources', {'prov:label':'Food Sources', prov.model.PROV_TYPE:'ont:DataResource'})
+		pop_resource = doc.entity('dat:population', {'prov:label':'Boston Demographics', prov.model.PROV_TYPE:'ont:DataResource'})
+		obesity_resource = doc.entity('dat:obesityperneighborhood', {'prov:label':'Obesity Statistics per Neighborhood', prov.model.PROV_TYPE:'ont:DataResource'})
+
+		get_neighborhoodstatistics = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+		doc.wasAssociatedWith(get_neighborhoodstatistics, this_script)
+		doc.usage(get_neighborhoodstatistics, foodsources_resource, startTime, None,
+				  {prov.model.PROV_TYPE:'ont:Computation'}
 				  )
-		doc.usage(get_lost, resource, startTime, None,
-				  {prov.model.PROV_TYPE:'ont:Retrieval',
-				  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-				  }
+		doc.usage(get_neighborhoodstatistics, obesity_resource, startTime, None,
+				  {prov.model.PROV_TYPE:'ont:Computation'}
+				  )
+		doc.usage(get_neighborhoodstatistics, pop_resource, startTime, None,
+				  {prov.model.PROV_TYPE:'ont:Computation'}
 				  )
 
-		lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-		doc.wasAttributedTo(lost, this_script)
-		doc.wasGeneratedBy(lost, get_lost, endTime)
-		doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
+		neighborhoodstatistics = doc.entity('dat:jguerero_mgarcia7#neighborhoodstatistics', {prov.model.PROV_LABEL:'Statistics per neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
+		doc.wasAttributedTo(neighborhoodstatistics, this_script)
+		doc.wasGeneratedBy(neighborhoodstatistics, get_neighborhoodstatistics, endTime)
 
-		found = doc.entity('dat:alice_bob#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-		doc.wasAttributedTo(found, this_script)
-		doc.wasGeneratedBy(found, get_found, endTime)
-		doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
+		doc.wasDerivedFrom(neighborhoodstatistics, obesity_resource, get_neighborhoodstatistics, get_neighborhoodstatistics, get_neighborhoodstatistics)
+		doc.wasDerivedFrom(neighborhoodstatistics, pop_resource, get_neighborhoodstatistics, get_neighborhoodstatistics, get_neighborhoodstatistics)
+		doc.wasDerivedFrom(neighborhoodstatistics, foodsources_resource, get_neighborhoodstatistics, get_neighborhoodstatistics, get_neighborhoodstatistics)
+
 
 		repo.logout()
 				  
 		return doc
 
-neighborhoodstatistics.execute()
 '''
+neighborhoodstatistics.execute()
 doc = example.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))

@@ -111,39 +111,42 @@ class foodsources(dml.Algorithm):
 		# Set up the database connection.
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
-		repo.authenticate('alice_bob', 'alice_bob')
+		repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
 		doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
-		doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
+		doc.add_namespace('dat', 'http://datamechanics.io/data/jguereo_mgarcia7') # The data sets are in <user>#<collection> format.
 		doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
 		doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-		doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-		this_script = doc.agent('alg:alice_bob#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-		resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-		get_found = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-		get_lost = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-		doc.wasAssociatedWith(get_found, this_script)
-		doc.wasAssociatedWith(get_lost, this_script)
-		doc.usage(get_found, resource, startTime, None,
-				  {prov.model.PROV_TYPE:'ont:Retrieval',
-				  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-				  }
+		this_script = doc.agent('alg:jguerero_mgarcia7#foodsources', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+		
+		allcornerstores_resource = doc.entity('dat:allcornerstores', {'prov:label':'Corner Stores', prov.model.PROV_TYPE:'ont:DataSet'})
+		supermarkets_resource = doc.entity('dat:supermarkets', {'prov:label':'Supermarkets', prov.model.PROV_TYPE:'ont:DataSet'})
+		farmersmarkets_resource = doc.entity('dat:farmersmarkets', {'prov:label':'Farmers Markets', prov.model.PROV_TYPE:'ont:DataSet'})
+
+
+		get_foodsources = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+		doc.wasAssociatedWith(get_foodsources, this_script)
+		doc.usage(get_foodsources, allcornerstores_resource, startTime, None,
+				  {prov.model.PROV_TYPE:'ont:Computation'}
 				  )
-		doc.usage(get_lost, resource, startTime, None,
-				  {prov.model.PROV_TYPE:'ont:Retrieval',
-				  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-				  }
+		doc.usage(get_foodsources, supermarkets_resource, startTime, None,
+				  {prov.model.PROV_TYPE:'ont:Computation'}
 				  )
+		doc.usage(get_foodsources, farmersmarkets_resource, startTime, None,
+		  {prov.model.PROV_TYPE:'ont:Computation'}
+		  )
 
-		lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-		doc.wasAttributedTo(lost, this_script)
-		doc.wasGeneratedBy(lost, get_lost, endTime)
-		doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
+		foodsources = doc.entity('dat:jguerero_mgarcia7#foodsources', {prov.model.PROV_LABEL:'Sources of food per neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
+		doc.wasAttributedTo(foodsources, this_script)
+		doc.wasGeneratedBy(foodsources, get_foodsources, endTime)
 
-		found = doc.entity('dat:alice_bob#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-		doc.wasAttributedTo(found, this_script)
-		doc.wasGeneratedBy(found, get_found, endTime)
-		doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
+		doc.wasDerivedFrom(foodsources, allcornerstores_resource, get_foodsources, get_foodsources, get_foodsources)
+		doc.wasDerivedFrom(foodsources, supermarkets_resource, get_foodsources, get_foodsources, get_foodsources)
+		doc.wasDerivedFrom(foodsources, farmersmarkets_resource, get_foodsources, get_foodsources, get_foodsources)
+
+
+
 
 		repo.logout()
 				  

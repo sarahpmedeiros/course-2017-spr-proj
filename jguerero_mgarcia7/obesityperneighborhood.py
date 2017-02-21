@@ -107,7 +107,8 @@ class obesityperneighborhood(dml.Algorithm):
 		obesityperneighborhood = doc.entity('dat:jguerero_mgarcia7#obesityperneighborhood', {prov.model.PROV_LABEL:'Obesity Statistics Per Neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
 		doc.wasAttributedTo(obesityperneighborhood, this_script)
 		doc.wasGeneratedBy(obesityperneighborhood, get_obesityperneighborhood, endTime)
-		doc.wasDerivedFrom(obesityperneighborhood, resource, get_obesityperneighborhood, get_obesityperneighborhood, get_obesityperneighborhood)
+		doc.wasDerivedFrom(obesityperneighborhood, obesitystats_resource, get_obesityperneighborhood, get_obesityperneighborhood, get_obesityperneighborhood)
+		doc.wasDerivedFrom(obesityperneighborhood, neighborhoods_resource, get_obesityperneighborhood, get_obesityperneighborhood, get_obesityperneighborhood)
 
 		repo.logout()
 				  

@@ -69,26 +69,21 @@ class farmersmarkets(dml.Algorithm):
         resource_wfarmers = doc.entity('bdp:txud-qumr', {'prov:label':'Winter Farmers Markets', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_sfarmers = doc.entity('bdp:ckir-e47p', {'prov:label':'Summer Farmers Markets', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
-        get_wfarmers = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_sfarmers = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_farmersmarkets = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_wfarmers, this_script)
-        doc.wasAssociatedWith(get_sfarmers, this_script)
-        doc.usage(get_wfarmers, resource_wfarmers, startTime, None,
+        doc.wasAssociatedWith(get_farmersmarkets, this_script)
+        doc.usage(get_farmersmarkets, resource_wfarmers, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'}
                   )
-        doc.usage(get_sfarmers, resource_sfarmers, startTime, None,
+        doc.usage(get_farmersmarkets, resource_sfarmers, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'}
                   )
 
         farmersmarkets = doc.entity('dat:jguerero_mgarcia7#farmersmarkets', {prov.model.PROV_LABEL:'farmersmarkets', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(farmersmarkets, this_script)
-        doc.wasGeneratedBy(farmersmarkets, get_wfarmers, endTime)
-        doc.wasDerivedFrom(farmersmarkets, resource_wfarmers, get_wfarmers, get_wfarmers, get_wfarmers)
-
-        doc.wasAttributedTo(farmersmarkets, this_script)
-        doc.wasGeneratedBy(farmersmarkets, get_sfarmers, endTime)
-        doc.wasDerivedFrom(farmersmarkets, resource_sfarmers, get_sfarmers, get_sfarmers, get_sfarmers)
+        doc.wasGeneratedBy(farmersmarkets, get_farmersmarkets, endTime)
+        doc.wasDerivedFrom(farmersmarkets, resource_wfarmers, get_farmersmarkets, get_farmersmarkets, get_farmersmarkets)
+        doc.wasDerivedFrom(farmersmarkets, resource_sfarmers, get_farmersmarkets, get_farmersmarkets, get_farmersmarkets)
 
 
 
