@@ -16,7 +16,7 @@ from geopy.geocoders import Nominatim
 
 class transformation0(dml.Algorithm):
     contributor = 'pgr_syquiac'
-    reads = ['pgr_syquiac.hospitals', 'pgr_syquia.cdc']
+    reads = ['pgr_syquiac.hospitals', 'pgr_syquiac.cdc']
     writes = ['pgr_syquiac.hospitals_doctor_visits']
 
     @staticmethod
@@ -104,11 +104,9 @@ class transformation0(dml.Algorithm):
         hospitals_doctor_visits = doc.entity('dat:pgr_syquiac#hospitals_doctor_visits', {prov.model.PROV_LABEL: 'Hospital locations and doctor visits', prov.model.PROV_TYPE:'ont:Dataset'})
         get_hospitals_doctors_visits = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'Hospital distance from people who have a lack of doctor visits'})
         doc.wasAssociatedWith(get_hospitals_doctors_visits, this_script)
-        doc.used(getResource, hospitals_doctor_visits, startTime)
+        doc.used(get_hospitals_doctors_visits, hospitals_doctor_visits, startTime)
         doc.wasAttributedTo(hospitals_doctor_visits, this_script)
         doc.wasGeneratedBy(hospitals_doctor_visits, get_hospitals_doctors_visits, endTime)
-
-        # repo.record(doc.serialize()) # Record the provenance document. <- doesn't work for some reason
 
         repo.logout()
 

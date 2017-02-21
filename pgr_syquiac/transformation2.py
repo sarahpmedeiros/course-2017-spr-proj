@@ -81,14 +81,14 @@ class transformation2(dml.Algorithm):
                 else:
                     # print(i)
                     addr += i["st_name"] + " " + i["suffix"] + " Boston MA "
-        
+
             # print(addr)
             # print("Count : " + str(count))
             location = geolocator.geocode(addr)
             # print("Address: " + location.address)
             # print("Coordinates: " + str((location.longitude, location.latitude)))
             # print("--**--")
-        
+
             i["coordinates"].append((location.longitude, location.latitude))
 
         #print(pools[0])
@@ -106,13 +106,13 @@ class transformation2(dml.Algorithm):
             # closest hospital
             distance = vincenty(i['coordinates'][0], stores[0]['location']['coordinates']).miles
             idx = 0
-        
+
             for j in range(len(stores)):
                 rate_distance = vincenty(i['coordinates'][0], stores[j]['location']['coordinates']).miles
                 if rate_distance < distance:
                     distance = rate_distance
                     idx = j
-        
+
             stores[idx]['closest_pools'].append(i)
 
         print("Now mapping obesity data points to the closest corner stores...")
@@ -169,6 +169,10 @@ class transformation2(dml.Algorithm):
         doc.used(obesity_pools_stores, get_obesity_pools_stores, startTime)
         doc.wasAttributedTo(obesity_pools_stores, this_script)
         doc.wasGeneratedBy(obesity_pools_stores, get_obesity_pools_stores, endTime)
+
+        repo.logout()
+
+        return doc
 
 # transformation2.execute()
 # doc = transformation1.provenance()
