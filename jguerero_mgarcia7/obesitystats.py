@@ -9,8 +9,6 @@ import prov.model
 import datetime
 import uuid
 import shapefile #pip install pyshp
-import zipfile
-
 
 class obesitystats(dml.Algorithm):
     contributor = 'jguerero_mgarcia7'
@@ -91,6 +89,8 @@ def convert_shpfile_to_json(shpfilepath,dbffilepath):
     ''' This is the code that was used to grab the zip file with the shapefiles in it, and then convert it to geojson '''
 
     '''
+    import zipfile
+
     # Download zip file with shapefile in it
     opener=urllib.request.build_opener()
     opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
