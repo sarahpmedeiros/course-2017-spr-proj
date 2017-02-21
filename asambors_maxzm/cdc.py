@@ -23,7 +23,6 @@ class cdc(dml.Algorithm):
         response = rq(method="GET", url=url) 
         print("REQUEST DONE")
         r = response.json()
-
         print(r)
 
         endTime = datetime.datetime.now()
