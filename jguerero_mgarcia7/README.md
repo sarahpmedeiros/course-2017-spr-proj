@@ -1,5 +1,3 @@
-Write a short narrative and justification (5-10 sentences) explaining how these data sets can be combined to answer an interesting question or solve a problem. You do not need to solve the actual problem in this project, and it is acceptable to merely combine data sets in a way that is likely to support one or more solutions involving the particular data you choose.
-
 # Project narrative
 
 Our project seeks to explore the relationship between food accessibility, obesity and income in Boston's neighborhoods. We believe that we will find that a smaller income and a lack of close food sources in a neighborhood will correlate to a higher obesity percentage. Later, we hope to more closely look at the accessibility of these food sources by train, car or walking distance to better understand the implications this has on obesity. 
@@ -23,7 +21,7 @@ Third, we created a new dataset that combines information from all of the datase
 
 # Required libraries and tools
 The libraries pyshp and shapely will need to be installed before the program can be executed. They can be installed with these pip commands:
-'''
+```
 pip install pyshp
 pip install shapely
-'''
+```
