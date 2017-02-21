@@ -20,7 +20,7 @@ class get(dml.Algorithm):
         repo = client.repo
         repo.authenticate('houset_karamy', 'houset_karamy')
         
-        dataSets = {'crimeReportsCambridge':'https://data.cambridgema.gov/resource/dypy-nwuz.json'}  
+        dataSets = {'crimeReportsCambridge': 'https://data.cambridgema.gov/resource/dypy-nwuz.json'}  
         for ds in dataSets:
             url = dataSets[ds]
             response = urllib.request.urlopen(url).read().decode("utf-8")
@@ -52,35 +52,35 @@ class get(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namspace('cma', 'https://data.cambridgema.gov/browse')
+        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
         
-      #writes = ['houset_karamy.policeStations','houset_karamy.crimeReportsBoston', 'houset_karamy.crimeReportsCambridge', 'houset_karamy.policeCarRoutesCambridge', 'houset_karamy.policeWalkingRoutesCambridge','houset_karamy.realTimeTravelMassdot']
+      #writes = ['houset_karamy.crimeReportsCambridge','houset_karamy.crimeReportsBoston', 'houset_karamy.crimeReportsCambridge', 'houset_karamy.policeCarRoutesCambridge', 'houset_karamy.policeWalkingRoutesCambridge','houset_karamy.realTimeTravelMassdot']
 
             
         this_script = doc.agent('alg:houset_karamy#getCrimeReportsCambridge', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         
-        resource3 = doc.entity('cma:dypy-nwuz', {'prov:label':'Crime Reports Cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        
+        resource1 = doc.entity('bdp:pyxn-r3i2', {'prov:label':'Police Stations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+                        
         get_crimeReportsCambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 #         get_hospitals = doc.activity('log:a'+str(uuid.uuid4()), startTime, endTime, {prov.model.PROV_TYPE:'ont:Retrieval', 'ont:Query':'?type=ad&?$select=ad,name'})
 
 #         get_realTimeTravelMassDot = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         
         doc.wasAssociatedWith(get_crimeReportsCambridge, this_script)
-        
-#         doc.wasAssociatedWith(get_realTimeTravelMassDot, this_script)
 
-        doc.usage(get_crimeReportsCambridge, resource3, startTime, None,
+#         doc.wasAssociatedWith(get_realTimeTravelMassDot, this_script)
+        
+        doc.usage(get_crimeReportsCambridge, resource1, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'})
-       
         
-        
-        crimeReportsCambridge = doc.entity('dat:houset_karamy#crimeReportsCambridge', {prov.model.PROV_LABEL:'Cambridge Crime Reports', prov.model.PROV_TYPE:'ont:DataSet'})
+
+           
+        crimeReportsCambridge = doc.entity('dat:houset_karamy#crimeReportsCambridge', {prov.model.PROV_LABEL:'Police Station Locations', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(crimeReportsCambridge, this_script)
         doc.wasGeneratedBy(crimeReportsCambridge, get_crimeReportsCambridge, endTime)
-        doc.wasDerivedFrom(crimeReportsCambridge, resource3, get_crimeReportsCambridge, get_crimeReportsCambridge, get_crimeReportsCambridge)
+        doc.wasDerivedFrom(crimeReportsCambridge, resource1, get_crimeReportsCambridge, get_crimeReportsCambridge, get_crimeReportsCambridge) 
         
-        
+
         repo.logout()
                   
         return doc
