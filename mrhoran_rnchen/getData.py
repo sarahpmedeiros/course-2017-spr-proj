@@ -182,9 +182,9 @@ class getData(dml.Algorithm):
 
         resource5 = doc.entity('bdp:66t5-f563', {'prov:label':'Farmers Markets', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
-        get_farmers_market = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_farmers_markets = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_farmers_market, this_script)
+        doc.wasAssociatedWith(get_farmers_markets, this_script)
 
         doc.usage(get_farmers_markets, resource5, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'
@@ -214,8 +214,8 @@ class getData(dml.Algorithm):
 
         farmers_market = doc.entity('dat:mrhoran_rnchen#farmers_market', {prov.model.PROV_LABEL:'Farmers Markets', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
         doc.wasAttributedTo(farmers_market, this_script)
-        doc.wasGeneratedBy(farmers_market, get_farmers_market, endTime)
-        doc.wasDerivedFrom(farmers_market, resource4, get_farmers_market, get_farmers_market, get_farmers_market)
+        doc.wasGeneratedBy(farmers_market, get_farmers_markets, endTime)
+        doc.wasDerivedFrom(farmers_market, resource4, get_farmers_markets, get_farmers_markets, get_farmers_markets)
 
         repo.logout()
                   
