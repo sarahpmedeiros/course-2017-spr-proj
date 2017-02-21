@@ -33,3 +33,8 @@ Since some open datasets we chose from online resources have no zipcode as an at
 <li>'allRecreationalPlaces'- output of combineAll.py</li>
 </ol>
 
+##Code Executing Instructions:
+To run to entire program:
+```
+python3 execute.py billy108_zhou13
+```
