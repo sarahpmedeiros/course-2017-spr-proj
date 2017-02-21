@@ -7,14 +7,11 @@ import dml
 import prov.model
 import datetime
 import uuid
-import shapefile #pip install pyshp
-import zipfile
-import os.path
 
-class obesitystats(dml.Algorithm):
+class neighborhoods(dml.Algorithm):
     contributor = 'jguerero_mgarcia7'
     reads = []
-    writes = ['jguerero_mgarcia7.obesitystats']
+    writes = ['jguerero_mgarcia7.neighborhoods']
 
     @staticmethod
     def execute(trial = False):
@@ -25,42 +22,16 @@ class obesitystats(dml.Algorithm):
         repo = client.repo
         repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
 
-        # Download zip file with shapefile in it
-        opener=urllib.request.build_opener()
-        opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
-        urllib.request.install_opener(opener)
-
-        url = 'http://synthpopviewer.rti.org/obesity/downloads/MA.zip'
-        filepath, response = urllib.request.urlretrieve(url)
-
-        # Extract files from the zipped file
-        z = zipfile.ZipFile(filepath)
-        z.extract('MA.shp')
-        z.extract('MA.dbf')
-
-        # Create a shpfile object
-        myshp = open('MA.shp','rb')
-        mydbf = open('MA.dbf','rb')
-        shpfile = shapefile.Reader(shp=myshp,dbf=mydbf)
-
-        # Convert data to geojson
-        fields = shpfile.fields[1:]
-        field_names = [field[0] for field in fields]
-        r = []
-        for sr in shpfile.shapeRecords():
-            atr = dict(zip(field_names, sr.record))
-            geom = sr.shape.__geo_interface__
-            r.append(dict(type="Feature", \
-            geometry=geom, properties=atr)) 
+        url = 'https://data.cityofboston.gov/resource/pbfk-2wv3.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
 
 
-        print(r[0])
-
-        repo.dropCollection("obesitystats")
-        repo.createCollection("obesitystats")
-        repo['jguerero_mgarcia7.obesitystats'].insert_many(r)
-        repo['jguerero_mgarcia7.obesitystats'].metadata({'complete':True})
-        print(repo['jguerero_mgarcia7.obesitystats'].metadata())
+        repo.dropCollection("neighborhoods")
+        repo.createCollection("neighborhoods")
+        repo['jguerero_mgarcia7.neighborhoods'].insert_many(r)
+        repo['jguerero_mgarcia7.neighborhoods'].metadata({'complete':True})
+        print(repo['jguerero_mgarcia7.neighborhoods'].metadata())
 
         repo.logout()
 
@@ -118,7 +89,7 @@ class obesitystats(dml.Algorithm):
         return doc
 
 
-obesitystats.execute()
+neighborhoods.execute()
 '''
 doc = example.provenance()
 print(doc.get_provn())
