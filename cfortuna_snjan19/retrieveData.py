@@ -4,12 +4,14 @@ import dml
 import prov.model
 import datetime
 import uuid
-from requests import request as rq
+import csv
+import json
+import requests 
 
 class retrieveData(dml.Algorithm):
     contributor = 'cfortuna_snjan19'
     reads = []
-    writes = ['cfortuna_snjan19.SnowRoutes']
+    writes = ['cfortuna_snjan19.SnowRoutes','cfortuna_snjan19.BikeRoutes','cfortuna_snjan19.PotHoles','cfortuna_snjan19.Streets']
 
     @staticmethod
     def execute(trial = False):
@@ -19,40 +21,52 @@ class retrieveData(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('alice_bob', 'alice_bob')
+        repo.authenticate('cfortuna_snjan19', 'cfortuna_snjan19')
 
-        #Importing Datasets and putting them inside the mongoDB database
+        ######Importing Datasets and putting them inside the mongoDB database
+        #SNOW EMERGENCY Routes
         url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/4f3e4492e36f4907bcd307b131afe4a5_0.geojson'
         response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        print s
+        r = json.load(response)
+        for element in r:
+            del element['coordinates']
+        s = json.dumps(r, sort_keys=True, indent=2)       
+        print (s)
         repo.dropCollection("SnowRoutes")
         repo.createCollection("SnowRoutes")
-        repo[snjan19.SnowRoutes].insert_many(r)
-        repo['snjan19.SnowRoutes'].metadata({'complete':True})
-        print(repo['snjan19.SnowRoutes'].metadata())
-
-        
+        repo['cfortuna_snjan19.SnowRoutes'].insert_many(r)
 
 
-        url = 'http://cs-people.bu.edu/lapets/591/examples/lost.json'
+        #BIKE NETWORKS
+        url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/d02c9d2003af455fbc37f550cc53d3a4_0.geojson'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("lost")
-        repo.createCollection("lost")
-        repo['alice_bob.lost'].insert_many(r)
-        repo['alice_bob.lost'].metadata({'complete':True})
-        print(repo['alice_bob.lost'].metadata())
+        print (s)
+        repo.dropCollection("BikeRoutes")
+        repo.createCollection("BikeRoutes")
+        repo['cfortuna_snjan19.BikeRoutes'].insert_many(r)
 
-        url = 'http://cs-people.bu.edu/lapets/591/examples/found.json'
+        #POTHOLES
+        url = 'https://data.cityofboston.gov/resource/n65p-xaz7.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("found")
-        repo.createCollection("found")
-        repo['alice_bob.found'].insert_many(r)
+        print (s)
+        repo.dropCollection("PotHoles")
+        repo.createCollection("PotHoles")
+        repo['cfortuna_snjan19.PotHoles'].insert_many(r)
+
+        #Streets of Boston
+        url = 'https://data.mass.gov/resource/ms23-5ubn.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        print (s)
+        repo.dropCollection("Streets")
+        repo.createCollection("Streets")
+        repo['cfortuna_snjan19.Streets'].insert_many(r)
+
 
         repo.logout()
 
@@ -71,7 +85,7 @@ class retrieveData(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('alice_bob', 'alice_bob')
+        repo.authenticate('cfortuna_snjan19', 'cfortuna_snjan19')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
@@ -109,7 +123,7 @@ class retrieveData(dml.Algorithm):
                   
         return doc
 
-example.execute()
+retrieveData.execute()
 doc = example.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
