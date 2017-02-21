@@ -20,13 +20,26 @@ Later I am going to cluster crime incidents on the map to find out accurate dang
 
 ## 2.b
 
+This project use app token from boston data portal. To retrieve data automatically, app token should be added into `auth.json` file as follow format:
+```
+{
+    "services": {
+        "cityofbostondataportal": {
+            "service": "https://data.cityofboston.gov/",
+            "username": "alice_bob@example.org",
+            "token": "XxXXXXxXxXxXxxXXXXxxXxXxX",
+            "key": "xxXxXXXXXXxxXXXxXXXXXXxxXxxxxXXxXxxX"
+        }
+    }
+}
+```
 The algorithm that retrieve these datasets automatically is in the file: ```retrieve.py```. To run it, uncomment this line first.
 
-```shell
+```
 # retrieve.execute()
 ```
 Then run
-```python
+```
 python3 retrieve.py
 ```
 
@@ -36,16 +49,40 @@ Three non-trival transformations are as follows. They must be run in the name or
 
 ### Transformation 1
 
-The script is in ```transformation1.py```. This transformation mainly preprocesses all datasets. Porject needed part from different datasets and union crime incidents.  To run it,
+The script is in ```transformation1.py```. This transformation mainly preprocesses all datasets. Porject needed part from different datasets and union crime incidents.  
+
+Crime dataset after preprocessing
+
+![crime](http://datamechanics.io/data/tigerlei/4.png) 
+
+Police dataset after preprocessing
+
+![police](http://datamechanics.io/data/tigerlei/5.png) 
+
+Univeristy dataset after preprocessing
+
+![university](http://datamechanics.io/data/tigerlei/6.png) 
+
+Homicides dataset after preprocessing
+
+![homicides](http://datamechanics.io/data/tigerlei/7.png) 
+
+To run it,
 ```python
 python3 transformation1.py
 ```
 
 ### Transformation 2
 
-The script is in ```transformation2.py```. This transformation groups crime incidents & homicides by district ID. Then join with police on district ID to get zipcodes.
+The script is in ```transformation2.py```. Police stations are assigned by districts name due to government. This transformation groups crime incidents & homicides by district ID. Then join with police dataset on district ID to get zipcodes.
 
-![crime_distribution](http://datamechanics.io/data/tigerlei/1.png) ![homicides_distribution](http://datamechanics.io/data/tigerlei/2.png) 
+Crime incidents distribution
+
+![crime_distribution](http://datamechanics.io/data/tigerlei/1.png) 
+
+Homicides distribution
+
+![homicides_distribution](http://datamechanics.io/data/tigerlei/2.png) 
 
 It's quite clear to see that B2/ B3/ C11/ D4 districts got both hight crime incidents and homicides in the past five years. These police stations need to pay more attention on patrol. To run it,
 ```python
@@ -56,9 +93,11 @@ python3 transformation2.py
 
 The script is in ```transformation3.py```. This transformation first transforms university and police data from json into Geojson format. Then add geosphere index to find all police stations within 2kms for each university. 
 
+University name and nearby police stations
+
 ![neighborhood of universities and police stations](http://datamechanics.io/data/tigerlei/3.png)
 
- From the result, most of universities are near police sations. However, a few of them still need to build some mechanics to deal with emergencies crime incidents. To run it,
+ From the result, most of universities are near police sations. However, a few of them don't have nearby police stations. They need to build some mechanics to deal with emergencies crime incidents. To run it,
 ```python
 python3 transformation3.py
 ```
