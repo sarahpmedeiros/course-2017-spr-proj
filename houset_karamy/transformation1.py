@@ -23,49 +23,27 @@ class transformation1(dml.Algorithm):
         repo.createCollection("transformation1")
 
 
-        # import crime data
-        #client1 = sodapy.Socrata("data.cityofboston.gov", None)
-        #response1 = client1.get("crime")
-        #s = json.dumps(response1, sort_keys=True, indent=2)
-        
-            
-        #crime_month = project(response1, lambda x: (x["year"], x["month"]))
-        #crime_month2015 = [crime_2015month for crime_2015month in crime_month if crime_2015month[0] == "2015"]
-        #crime12 = [crime12_2015 for crime12_2015 in crime_month2015 if crime12_2015[1] == '1' or crime12_2015[1] == '2']
-        #print("The crime number happens in Jan and Feb in 2015 is: ", len(crime12))
-        #crime34 = [crime34_2015 for crime34_2015 in crime_month2015 if crime34_2015[1] == '3' or crime34_2015[1] == '4']
-        #print("The crime number happens in Mar and Apr in 2015 is: ", len(crime34))
-        #crime56 = [crime56_2015 for crime56_2015 in crime_month2015 if crime56_2015[1] == '5' or crime56_2015[1] == '6']
-        #print("The crime number happens in May and Jun in 2015 is: ", len(crime56))
-        #crime78 = [crime78_2015 for crime78_2015 in crime_month2015 if crime78_2015[1] == '7' or crime78_2015[1] == '8']
-        #print("The crime number happens in Jul and Aug in 2015 is: ", len(crime78))
-
+        #import data we're using
         crimes = repo['houset_karamy.crimeReportsBoston'].find()
         
+        #get the different districts
         crimeTypes = []
         for crime in crimes:
             crimeTypes.append(crime["reptdistrict"])
             
+        #count the number of crimes in each district
         crimeCounts = []
         for crime in crimeTypes:
             crimeCounts.append((crimeTypes.count(crime), crime))
         
+        #get the final count for each in dictionary form
         finalCount = []
         for crime in crimeCounts:
             finalCount.append({'crime': crime[1], 'count': crime[0]})
         
+        #insert into new database
         repo['houset_karamy.transformation1'].insert_many(finalCount)
         
-        #repo["houset_karamy.transformation1"].insert_many(response1)
-        #repo["houset_karamy.transformation1"].metadata({"complete":True})
-        #print(repo["houset_karamy.transformation1"].metadata())
-
-        #print("The percentage of fld complaint / crime in Jan and Feb is: ", len(fld12) / len(crime12))
-        #print("The percentage of fld complaint / crime in Mar and Apr is: ", len(fld34) / len(crime34))
-        #print("The percentage of fld complaint / crime in May and Jun is: ", len(fld56) / len(crime56))
-        #print("The percentage of fld complaint / crime in Jul and Aug is: ", len(fld78) / len(crime78))
-
-
         repo.logout()
 
         endTime = datetime.datetime.now()
