@@ -16,3 +16,4 @@ this_script = doc.agent('alg:asambors_maxzm#fetchData', {prov.model.PROV_TYPE:pr
   * In each file, do we need to have a prov method? Can we reference the prov method found in the file that fetches all the data?
   * If each file requires a prov method, do we copy and paste or should we just grab the relevant dataset?
   * We didn't need any authentication, should we be concerned by this? 
+  * How to clear our mongodb? 
