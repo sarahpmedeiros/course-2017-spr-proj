@@ -32,12 +32,10 @@ class transformation1(dml.Algorithm):
         cdcRepo = repo.pgr_syquiac.cdc
         schoolsRepo = repo.pgr_syquiac.schools
 
-        all_schools = schoolsRepo.find()
-
         # Need to collect all the boston schools only
         print("Gathering schools in Boston....")
         boston_schools = []
-        for i in all_schools:
+        for i in schoolsRepo.find():
             if i["FIELD4"] == "Boston" or i["FIELD4"] == "Cambridge":
                 boston_schools.append(i)
 
@@ -47,17 +45,14 @@ class transformation1(dml.Algorithm):
         for i in boston_schools:
             i['sleepRates'] = []
             i['coordinates'] = []
+            i['coordinates'].append((i["FIELD65"], i["FIELD66"])) # Add coordinates field
 
-        # Add coordinates
-        for i in boston_schools:
-            i['coordinates'].append((i["FIELD65"], i["FIELD66"]))
-
+        # print(boston_schools[0])
 
         # Now filter by sleep issues for boston
-        cdc = cdcRepo.find()
         sleep = []
         print("Collecting appropriate data from CDC data set...")
-        for i in cdc:
+        for i in cdcRepo.find():
             # Look to make sure its a census tract, for health insurance rates
             if (i['measure'] == 'Sleeping less than 7 hours among adults aged >=18 Years' or
                 i['measureid'] == 'SLEEP'):
@@ -82,7 +77,6 @@ class transformation1(dml.Algorithm):
             boston_schools[idx]['sleepRates'].append(i)
 
         # print(len(boston_schools))
-        print(len(boston_schools[6]['sleepRates']))
 
 
 
@@ -130,7 +124,7 @@ class transformation1(dml.Algorithm):
 
 
 
-transformation1.execute()
-doc = transformation1.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# transformation1.execute()
+# doc = transformation1.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))

@@ -33,23 +33,19 @@ class transformation0(dml.Algorithm):
         cdcRepo = repo.pgr_syquiac.cdc
 
         # Look for health insurance rates near hospitals
-        hospitals = bosHospitalsRepo.find()
         locations = []
-
         print("Gathering all the hospitals in Boston...")
         # For each hospital, collect doctor visiting rates in the vicinity
-        for i in hospitals:
+        for i in bosHospitalsRepo.find():
             # Create an empty list of doctor visit rates
             i['doctorVisits'] = []
             locations.append(i)
 
-        #print(locations)
+        #print(locations[0])
 
-        cdc = cdcRepo.find()
         visits = []
-
         print("Collecting appropriate data from CDC data set...")
-        for i in cdc:
+        for i in cdcRepo.find():
             # Look to make sure its a census tract, for health insurance rates
             if (i['measure'] == 'Visits to doctor for routine checkup within the past Year among adults aged >=18 Years' or
                 i['measureid'] == 'CHECKUP'):
@@ -119,7 +115,7 @@ class transformation0(dml.Algorithm):
         return doc
 
 
-transformation0.execute()
-doc = transformation0.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# transformation0.execute()
+# doc = transformation0.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
