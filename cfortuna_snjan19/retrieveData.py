@@ -11,7 +11,7 @@ import requests
 class retrieveData(dml.Algorithm):
     contributor = 'cfortuna_snjan19'
     reads = []
-    writes = ['cfortuna_snjan19.SnowRoutes','cfortuna_snjan19.BikeRoutes','cfortuna_snjan19.PotHoles','cfortuna_snjan19.Streets']
+    writes = ['cfortuna_snjan19.SnowRoutes','cfortuna_snjan19.BikeRoutes','cfortuna_snjan19.PotHoles','cfortuna_snjan19.Streets', 'cfortuna_snjan19.ParkingMeters']
 
     @staticmethod
     def execute(trial = False):
@@ -73,7 +73,7 @@ class retrieveData(dml.Algorithm):
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
-        print (s)
+        #print (s)
         repo.dropCollection("ParkingMeters")
         repo.createCollection("ParkingMeters")
         repo['cfortuna_snjan19.ParkingMeters'].insert_many(r['features'])
