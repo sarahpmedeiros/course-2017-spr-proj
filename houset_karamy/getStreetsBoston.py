@@ -5,7 +5,7 @@ import prov.model
 import datetime
 import uuid
 
-class get(dml.Algorithm):
+class getStreetsBoston(dml.Algorithm):
     contributor = 'houset_karamy'
     reads = []
     writes = ['houset_karamy.streetsBoston']
