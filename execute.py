@@ -1,7 +1,13 @@
 import sys
 import os
 import importlib
+<<<<<<< HEAD
 import argparse
+=======
+import json
+import argparse
+import prov.model
+>>>>>>> cface0adbefd4f4bc82d2bd44c2c6372fb44ae68
 
 parser = argparse.ArgumentParser()
 parser.add_argument("contributor_folder")
@@ -31,7 +37,30 @@ while len(algorithms) > 0:
             break
 
 # Execute the algorithms in order.
+<<<<<<< HEAD
 for algorithm in ordered:
     algorithm.execute()
+=======
+provenance = prov.model.ProvDocument()
+for algorithm in ordered:
+    algorithm.execute()
+    provenance = algorithm.provenance(provenance)
+
+# Display a provenance record of the overall execution process.
+print(provenance.get_provn())
+
+# Render the provenance document as an interactive graph.
+prov_json = json.loads(provenance.serialize())
+import protoql
+agents = [[a] for a in prov_json['agent']]
+entities = [[e] for e in prov_json['entity']]
+activities = [[v] for v in prov_json['activity']]
+wasAssociatedWith = [(v['prov:activity'], v['prov:agent'], 'wasAssociatedWith') for v in prov_json['wasAssociatedWith'].values()]
+wasAttributedTo = [(v['prov:entity'], v['prov:agent'], 'wasAttributedTo') for v in prov_json['wasAttributedTo'].values()]
+wasDerivedFrom = [(v['prov:usedEntity'], v['prov:generatedEntity'], 'wasDerivedFrom') for v in prov_json['wasDerivedFrom'].values()]
+wasGeneratedBy = [(v['prov:entity'], v['prov:activity'], 'wasGeneratedBy') for v in prov_json['wasGeneratedBy'].values()]
+used = [(v['prov:activity'], v['prov:entity'], 'used') for v in prov_json['used'].values()]
+open('provenance.html', 'w').write(protoql.html("graph(" + str(entities + agents + activities) + ", " + str(wasAssociatedWith + wasAttributedTo + wasDerivedFrom + wasGeneratedBy + used) + ")"))
+>>>>>>> cface0adbefd4f4bc82d2bd44c2c6372fb44ae68
 
 ## eof

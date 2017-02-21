@@ -59,12 +59,15 @@ If you do not want to run `db.loadServerScripts()` every time you open a new ter
 
 ## Other required libraries and tools
 
-You will need the latest versions of the PROV and DML Python libraries. If you have `pip` installed, the following should install the latest versions automatically:
+You will need the latest versions of the PROV, DML, and Protoql Python libraries. If you have `pip` installed, the following should install the latest versions automatically:
 ```
 pip install prov --upgrade --no-cache-dir
 pip install dml --upgrade --no-cache-dir
+pip install protoql --upgrade --no-cache-dir
 ```
 If you are having trouble installing `lxml` in a Windows environment, you could try retrieving it [here](http://www.lfd.uci.edu/~gohlke/pythonlibs/).
+
+Note that you may need to use `python -m pip install <library>` to avoid issues if you have multiple versions of `pip` and Python on your system.
 
 ## Formatting the `auth.json` file
 
@@ -87,10 +90,18 @@ The `auth.json` file should remain empty and should not be submitted. When you a
     }
 }
 ```
+<<<<<<< HEAD
+=======
+To access the contents of the `auth.json` file after you have loaded the `dml` library, use `dml.auth`.
+>>>>>>> cface0adbefd4f4bc82d2bd44c2c6372fb44ae68
 
 ## Running the execution script for a contributed project.
 
 To execute all the algorithms for a particular contributor (e.g., `alice_bob`) in an order that respects their explicitly specified data flow dependencies, you can run the following from the root directory:
 ```
 python execute.py alice_bob
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> cface0adbefd4f4bc82d2bd44c2c6372fb44ae68
