@@ -78,7 +78,6 @@ class neighborhoodstatistics(dml.Algorithm):
 
 		#extract necessary info from obesity per neighboorhood statistics dataset
 		obese_info = dict(project(obesity_cursor, lambda z: (z['neighborhood'], z['pctbmige30'])))
-		print (obese_info)
 
 		#begins to create dictionary based on population information
 		for i in pop_info:
