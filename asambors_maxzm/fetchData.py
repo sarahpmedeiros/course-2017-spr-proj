@@ -43,12 +43,12 @@ class fetchData(dml.Algorithm):
 
         # Using SODA API so different format for request
         sleep_soda_api = 'https://chronicdata.cdc.gov/resource/eqbn-8mpz.json?$offset=13908&$limit=515'
-        response = rq(method="GET", url=url) 
-        r = response.json()
+        response = rq(method="GET", url=sleep_soda_api) 
+        sleep_data = response.json()
 
         repo.dropCollection('nosleepma')
         repo.createCollection('nosleepma')
-        repo['asambors_maxzm.nosleepma'].insert_many(r)
+        repo['asambors_maxzm.nosleepma'].insert_many(sleep_data)
         repo['asambors_maxzm.nosleepma'].metadata({'complete':True})
 
         repo.logout()
