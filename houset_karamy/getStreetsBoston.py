@@ -58,18 +58,11 @@ class get(dml.Algorithm):
         resource1 = doc.entity('mag:ms23-5ubn', {'prov:label':'Streets Boston', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
                         
         get_streetsBoston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-#         get_hospitals = doc.activity('log:a'+str(uuid.uuid4()), startTime, endTime, {prov.model.PROV_TYPE:'ont:Retrieval', 'ont:Query':'?type=ad&?$select=ad,name'})
-
-#         get_realTimeTravelMassDot = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        
+ 
         doc.wasAssociatedWith(get_streetsBoston, this_script)
-
-#         doc.wasAssociatedWith(get_realTimeTravelMassDot, this_script)
         
         doc.usage(get_streetsBoston, resource1, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'})
-        
-
            
         streetsBoston = doc.entity('dat:houset_karamy#streetsBoston', {prov.model.PROV_LABEL:'Streets Boston', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(streetsBoston, this_script)
