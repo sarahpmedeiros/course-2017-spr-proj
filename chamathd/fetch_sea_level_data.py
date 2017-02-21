@@ -40,7 +40,7 @@ class fetch_sea_level_data(dml.Algorithm):
         print()
 
         # Sea level data for 7.5-foot rise
-        print("Fetching five-foot sea level data from Boston ArcGIS Open Data")
+        print("Fetching seven-foot sea level data from Boston ArcGIS Open Data")
 
         colName = "chamathd.sea_level_seven"
         
