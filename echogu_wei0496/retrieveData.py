@@ -1,3 +1,5 @@
+# retrieveData: retrieve raw data from online data portal
+
 import urllib.request
 import json
 import dml
@@ -9,11 +11,12 @@ import sodapy
 class retrieveData(dml.Algorithm):
     contributor = 'echogu_wei0496'
     reads = []
-    writes = ['echogu_wei0496.CityBoundary', 'echogu_wei0496.BikeNetwork', 'echogu_wei0496.HubwayStations', 'echogu_wei0496.ServicesRequest', 'echogu_wei0496.BLCLandmarks', 'echogu_wei0496.MASchools']
+    writes = ['echogu_wei0496.BostonNetwork', 'echogu_wei0496.CambridgeNetwork', 'echogu_wei0496.HubwayStations',
+              'echogu_wei0496.ServicesRequest', 'echogu_wei0496.BLCLandmarks']
 
     @staticmethod
     def execute(trial=False):
-        ''' Retrieve some data sets (not using the API here for the sake of simplicity).
+        ''' Retrieve some data sets.
         '''
         startTime = datetime.datetime.now()
 
@@ -22,27 +25,24 @@ class retrieveData(dml.Algorithm):
         repo = client.repo
         repo.authenticate('echogu_wei0496', 'echogu_wei0496')
 
-        # City of Boston Boundary
-        url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/142500a77e2a4dbeb94a86f7e0b568bc_0.geojson'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)['features']
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("CityBoundary")
-        repo.createCollection("CityBoundary")
-        repo['echogu_wei0496.CityBoundary'].insert_many(r)
-        repo['echogu_wei0496.CityBoundary'].metadata({'complete': True})
-        print(repo['echogu_wei0496.CityBoundary'].metadata())
-        print("Retrieved CityBoundary", repo['echogu_wei0496.BikeNetwork'].metadata())
-
-        # Existing Bike Network
+        # Boston Bike Network
         url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/d02c9d2003af455fbc37f550cc53d3a4_0.geojson'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)['features']
-        repo.dropCollection("BikeNetwork")
-        repo.createCollection("BikeNetwork")
-        repo['echogu_wei0496.BikeNetwork'].insert_many(r)
-        repo['echogu_wei0496.BikeNetwork'].metadata({'complete': True})
-        print("Retrieved BikeNetwork", repo['echogu_wei0496.BikeNetwork'].metadata())
+        repo.dropCollection("BostonNetwork")
+        repo.createCollection("BostonNetwork")
+        repo['echogu_wei0496.BostonNetwork'].insert_many(r)
+        repo['echogu_wei0496.BostonNetwork'].metadata({'complete': True})
+        print("Retrieved BostonNetwork", repo['echogu_wei0496.BostonNetwork'].metadata())
+
+        # Cambridge Bike Network
+        client = sodapy.Socrata("data.cambridgema.gov", dml.auth['services']['cityofbostondataportal']['token'])
+        r = client.get("6nf3-vbnd", limit=1000)
+        repo.dropCollection("CambridgeNetwork")
+        repo.createCollection("CambridgeNetwork")
+        repo['echogu_wei0496.CambridgeNetwork'].insert_many(r)
+        repo['echogu_wei0496.CambridgeNetwork'].metadata({'complete': True})
+        print("Retrieved CambridgeNetwork", repo['echogu_wei0496.CambridgeNetwork'].metadata())
 
         # Hubway Stations
         url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/ee7474e2a0aa45cbbdfe0b747a5eb032_0.geojson'
@@ -73,15 +73,15 @@ class retrieveData(dml.Algorithm):
         repo['echogu_wei0496.BLCLandmarks'].metadata({'complete': True})
         print("Retrieved BLCLandmarks", repo['echogu_wei0496.BLCLandmarks'].metadata())
 
-        # MA Schools (Pre-K through High School)
-        url = 'http://maps-massgis.opendata.arcgis.com/datasets/359016a59a594e0088547235913c9168_0.geojson'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)['features']
-        repo.dropCollection("MASchools")
-        repo.createCollection("MASchools")
-        repo['echogu_wei0496.MASchools'].insert_many(r)
-        repo['echogu_wei0496.MASchools'].metadata({'complete': True})
-        print("Retrieved MASchools", repo['echogu_wei0496.MASchools'].metadata())
+        # # MA Schools (Pre-K through High School)
+        # url = 'http://maps-massgis.opendata.arcgis.com/datasets/359016a59a594e0088547235913c9168_0.geojson'
+        # response = urllib.request.urlopen(url).read().decode("utf-8")
+        # r = json.loads(response)['features']
+        # repo.dropCollection("MASchools")
+        # repo.createCollection("MASchools")
+        # repo['echogu_wei0496.MASchools'].insert_many(r)
+        # repo['echogu_wei0496.MASchools'].metadata({'complete': True})
+        # print("Retrieved MASchools", repo['echogu_wei0496.MASchools'].metadata())
 
         repo.logout()
 
@@ -106,20 +106,21 @@ class retrieveData(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
-        doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/') # Boston Maps Open Data
+        doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/') # City of Boston Maps Open Data
+        doc.add_namespace('cdp', 'https://data.cambridgema.gov/resource/') # City of Cambridge Cambridge Open Data Portal
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/') # City Of Boston Data Portal
         doc.add_namespace('mod', 'http://maps-massgis.opendata.arcgis.com/datasets/') #MassGIS Open Data
 
         # define entity to represent resources
         this_script = doc.agent('alg:echogu_wei0496#retrieveData',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
-        resource_CityBoundary = doc.entity('bod:142500a77e2a4dbeb94a86f7e0b568bc_0',
-                                          {'prov:label': 'Boston City Boundary',
-                                           prov.model.PROV_TYPE: 'ont:DataResource',
-                                           'ont:Extension': 'geojson'})
-        resource_BikeNetwork = doc.entity('bod:d02c9d2003af455fbc37f550cc53d3a4_0',
-                              {'prov:label': 'Existing Bike Networks', prov.model.PROV_TYPE: 'ont:DataResource',
+        resource_BostonNetwork = doc.entity('bod:d02c9d2003af455fbc37f550cc53d3a4_0',
+                              {'prov:label': 'Boston Bike Network', prov.model.PROV_TYPE: 'ont:DataResource',
                                'ont:Extension': 'geojson'})
+        resource_CambridgeNetwork = doc.entity('cdp:6nf3-vbnd',
+                                            {'prov:label': 'Cambridge Bike Network',
+                                             prov.model.PROV_TYPE: 'ont:DataResource',
+                                             'ont:Extension': 'json'})
         resource_HubwayStations = doc.entity('bod:ee7474e2a0aa45cbbdfe0b747a5eb032_0',
                                           {'prov:label': 'Hubway Stations',
                                            prov.model.PROV_TYPE: 'ont:DataResource',
@@ -131,69 +132,59 @@ class retrieveData(dml.Algorithm):
                                              {'prov:label': 'BLC Landmarks',
                                               prov.model.PROV_TYPE: 'ont:DataResource',
                                               'ont:Extension': 'geojson'})
-        resource_MASchools = doc.entity('mod:359016a59a594e0088547235913c9168_0',
-                                           {'prov:label': 'BLC Landmarks',
-                                            prov.model.PROV_TYPE: 'ont:DataResource',
-                                            'ont:Extension': 'geojson'})
+        # resource_MASchools = doc.entity('mod:359016a59a594e0088547235913c9168_0',
+        #                                    {'prov:label': 'BLC Landmarks',
+        #                                     prov.model.PROV_TYPE: 'ont:DataResource',
+        #                                     'ont:Extension': 'geojson'})
 
         # define activity to represent invocation of the script
-        get_CityBoundary = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
-        get_BikeNetwork = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        get_BostonNetwork = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        get_CambridgeNetwork  = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
         get_HubwayStations = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
         get_ServicesRequest = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
         get_BLCLandmarks = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
-        get_MASchools = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        # get_MASchools = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
 
         # associate the activity with the script
-        doc.wasAssociatedWith(get_CityBoundary, this_script)
-        doc.wasAssociatedWith(get_BikeNetwork, this_script)
+        doc.wasAssociatedWith(get_BostonNetwork, this_script)
+        doc.wasAssociatedWith(get_CambridgeNetwork, this_script)
         doc.wasAssociatedWith(get_HubwayStations, this_script)
         doc.wasAssociatedWith(get_ServicesRequest, this_script)
         doc.wasAssociatedWith(get_BLCLandmarks, this_script)
-        doc.wasAssociatedWith(get_MASchools, this_script)
+        # doc.wasAssociatedWith(get_MASchools, this_script)
 
         # indicate that an activity used the entity
-        doc.usage(get_BikeNetwork, resource_CityBoundary, startTime, None,
-                  {prov.model.PROV_TYPE: 'ont:Retrieval',
-                   # 'ont:Query': '?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                   }
+        doc.usage(get_BostonNetwork, resource_BostonNetwork, startTime, None,
+                  {prov.model.PROV_TYPE: 'ont:Retrieval'}
                   )
-        doc.usage(get_BikeNetwork, resource_BikeNetwork, startTime, None,
-                  {prov.model.PROV_TYPE: 'ont:Retrieval',
-                   #'ont:Query': '?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                   }
+        doc.usage(get_CambridgeNetwork, resource_CambridgeNetwork, startTime, None,
+                  {prov.model.PROV_TYPE: 'ont:Retrieval'}
                   )
         doc.usage(get_HubwayStations, resource_HubwayStations, startTime, None,
-                  {prov.model.PROV_TYPE: 'ont:Retrieval',
-                   #'ont:Query': '?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                   }
+                  {prov.model.PROV_TYPE: 'ont:Retrieval'}
                   )
         doc.usage(get_ServicesRequest, resource_ServicesRequest, startTime, None,
                   {prov.model.PROV_TYPE: 'ont:Retrieval',
-                   # 'ont:Query': '?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
+                   #'ont:Query': '?REASON=Boston+Bikes&$select=type,latitude,longitude,OPEN_DT'
                    }
                   )
         doc.usage(get_BLCLandmarks, resource_BLCLandmarks, startTime, None,
-                  {prov.model.PROV_TYPE: 'ont:Retrieval',
-                   # 'ont:Query': '?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                   }
+                  {prov.model.PROV_TYPE: 'ont:Retrieval'}
                   )
-        doc.usage(get_MASchools, resource_MASchools, startTime, None,
-                  {prov.model.PROV_TYPE: 'ont:Retrieval',
-                   # 'ont:Query': '?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                   }
-                  )
+        # doc.usage(get_MASchools, resource_MASchools, startTime, None,
+        #           {prov.model.PROV_TYPE: 'ont:Retrieval'}
+        #           )
 
         # for the data obtained, indicate that the entity was attributed to what agent, was generated by which activity and was derived from what entity
-        CityBoundary = doc.entity('dat:echogu_wei0496#CityBoundary', {prov.model.PROV_LABEL: 'Boston City Boundary', prov.model.PROV_TYPE: 'ont:DataSet'})
-        doc.wasAttributedTo(CityBoundary, this_script)
-        doc.wasGeneratedBy(CityBoundary, get_CityBoundary, endTime)
-        doc.wasDerivedFrom(CityBoundary, resource_CityBoundary, resource_CityBoundary, resource_BikeNetwork, get_CityBoundary)
+        BostonNetwork = doc.entity('dat:echogu_wei0496#BostonNetwork', {prov.model.PROV_LABEL: 'Boston Bike Network', prov.model.PROV_TYPE: 'ont:DataSet'})
+        doc.wasAttributedTo(BostonNetwork, this_script)
+        doc.wasGeneratedBy(BostonNetwork, get_BostonNetwork, endTime)
+        doc.wasDerivedFrom(BostonNetwork, resource_BostonNetwork, get_BostonNetwork, get_BostonNetwork, get_BostonNetwork)
 
-        BikeNetworks = doc.entity('dat:echogu_wei0496#BikeNetworks', {prov.model.PROV_LABEL: 'Existing Bike Networks', prov.model.PROV_TYPE: 'ont:DataSet'})
-        doc.wasAttributedTo(BikeNetworks, this_script)
-        doc.wasGeneratedBy(BikeNetworks, get_BikeNetwork, endTime)
-        doc.wasDerivedFrom(BikeNetworks, resource_BikeNetwork, get_BikeNetwork, get_BikeNetwork, get_BikeNetwork)
+        CambridgeNetwork = doc.entity('dat:echogu_wei0496#CambridgeNetwork', {prov.model.PROV_LABEL: 'Cambridge Bike Network', prov.model.PROV_TYPE: 'ont:DataSet'})
+        doc.wasAttributedTo(CambridgeNetwork, this_script)
+        doc.wasGeneratedBy(CambridgeNetwork, get_CambridgeNetwork, endTime)
+        doc.wasDerivedFrom(CambridgeNetwork, resource_CambridgeNetwork, resource_CambridgeNetwork, resource_CambridgeNetwork, resource_CambridgeNetwork)
 
         HubwayStations = doc.entity('dat:echogu_wei0496#HubwayStations', {prov.model.PROV_LABEL: 'Hubway Stations', prov.model.PROV_TYPE: 'ont:DataSet'})
         doc.wasAttributedTo(HubwayStations, this_script)
@@ -210,10 +201,10 @@ class retrieveData(dml.Algorithm):
         doc.wasGeneratedBy(BLCLandmarks, get_BLCLandmarks, endTime)
         doc.wasDerivedFrom(BLCLandmarks, resource_BLCLandmarks, get_BLCLandmarks, get_BLCLandmarks, get_BLCLandmarks)
 
-        MASchools = doc.entity('dat:echogu_wei0496#MASchools', {prov.model.PROV_LABEL: 'MA Schools', prov.model.PROV_TYPE: 'ont:DataSet'})
-        doc.wasAttributedTo(MASchools, this_script)
-        doc.wasGeneratedBy(MASchools, get_MASchools, endTime)
-        doc.wasDerivedFrom(MASchools, resource_MASchools, get_MASchools, get_MASchools, get_MASchools)
+        # MASchools = doc.entity('dat:echogu_wei0496#MASchools', {prov.model.PROV_LABEL: 'MA Schools', prov.model.PROV_TYPE: 'ont:DataSet'})
+        # doc.wasAttributedTo(MASchools, this_script)
+        # doc.wasGeneratedBy(MASchools, get_MASchools, endTime)
+        # doc.wasDerivedFrom(MASchools, resource_MASchools, get_MASchools, get_MASchools, get_MASchools)
 
         repo.logout()
 
