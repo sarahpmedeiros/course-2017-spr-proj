@@ -26,21 +26,21 @@ class combineAll(dml.Algorithm):
         allOpenSpacesBoston = repo['billy108_zhou13.allOpenSpacesInBoston']
         allPoolsInBoston = repo['billy108_zhou13.allPoolsInBoston']
 
-        #Get names, neighborhood of all open spaces in Cambridge
+        #Get names, neighborhood of all water play parks in Cambridge
         allRecreationalPlaces_list = []
         for entry in waterplayCambridge.find():
             allRecreationalPlaces_list.append(
                 {"name": entry['park'], 'neighborhood': 'cambridge'}
             )
 
-        #get names, neighborhood of all open spaces in Boston excluding Cambrdige and Brookline
+        #get names, neighborhood of all open spaces in Boston
         for entry in allOpenSpacesBoston.find():
             allRecreationalPlaces_list.append(
                 {"name": entry['name'], 'neighborhood': entry['neighborhood']}
             )
 
 
-        #get names, neighborhood of all community gardens in Boston
+        #get names, neighborhood of all swimming pools in Boston
         for entry in allPoolsInBoston.find():
             allRecreationalPlaces_list.append(
                 {"name": entry['name'], 'neighborhood': entry['value'].get('neighberhood')}
