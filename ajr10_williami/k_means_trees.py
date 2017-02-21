@@ -115,8 +115,8 @@ class k_means_trees(dml.Algorithm):
 
         this_script = doc.agent('alg:ajr10_williami#k_means_trees', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
-        clean_trees_cambridge_resource = doc.entity('awc:cleaned_trees_cambridge', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        clean_trees_boston_resource = doc.entity('awc:trees_boston', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        clean_trees_cambridge_resource = doc.entity('awc:cleaned_trees_cambridge', {'prov:label':'ajr10_williami.cleaned_trees_cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        clean_trees_boston_resource = doc.entity('awc:trees_boston', {'prov:label':'cleaned_trees_boston', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         calculate_k_means_trees_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         calculate_k_means_trees_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)

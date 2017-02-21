@@ -101,10 +101,10 @@ class calculate_energy_ratio(dml.Algorithm):
 
         this_script = doc.agent('alg:ajr10_williami#calculate_energy_ratio', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
-        areas_cambridge_resource = doc.entity('awc:area_spaces_cambridge', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        areas_boston_resource = doc.entity('awc:area_spaces_boston', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        energy_cambridge_resource = doc.entity('awc:cleaned_energy_cambridge', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        energy_boston_resource = doc.entity('awc:cleaned_energy_boston', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        areas_cambridge_resource = doc.entity('awc:area_spaces_cambridge', {'prov:label':'ajr10_williami.area_spaces_cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        areas_boston_resource = doc.entity('awc:area_spaces_boston', {'prov:label':'ajr10_williami.area_spaces_boston', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        energy_cambridge_resource = doc.entity('awc:cleaned_energy_cambridge', {'prov:label':'ajr10_williami.cleaned_energy_cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        energy_boston_resource = doc.entity('awc:cleaned_energy_boston', {'prov:label':'ajr10_williami.cleaned_energy_boston', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_areas_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_areas_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
