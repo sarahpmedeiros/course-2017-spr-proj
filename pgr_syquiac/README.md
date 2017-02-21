@@ -6,17 +6,14 @@
 
 4. Public Swimming Pools in Boston – https://data.cityofboston.gov/Public-Property/Year-Round-Swimming-Pools/rtqb-8pht/data
 
-5. Cambridge Medical Events – https://data.cambridgema.gov/Public-Safety/Medical-Events/4hgq-4f2b/data
-
-# Transformations we are doing
-1. Find the location of "obesity rates" in cdc and see if there is a correlation between that and how far people are from swimming pools and healthy corner stores
-
-2. sleep rates and correlation to university locations
-
-3. Lack of doctor visits and correlation to hospital locations
+5. Boston Hospitals – https://data.cityofboston.gov/Public-Health/Hospital-Locations/46f7-2snz
 
 # Narrative
 
-Write a short narrative and justification (5-10 sentences) explaining how these data sets can be combined to answer an interesting question or solve a problem. You do not need to solve the actual problem in this project, and it is acceptable to merely combine data sets in a way that is likely to support one or more solutions involving the particular data you choose. Include this narrative in a README.md file within your directory (along with any documentation you may write in that file).
+For this project, we wanted to create datasets that could tell us whether certain medical conditions or measures (as they are called on the CDC dataset) can be correlated with given attributes of where the person lives (e.g. if a person lives near a hospital). We collect all the necessary datasets in retrieveData.py. We use the GeoPy API to find coordinates for datasets that do not provide that information.
 
-Your README.md file should list any idiosyncratic details associated with the services and/or credentials needed to run your scripts.
+The first dataset (created by transformation0.py) is a dataset that has all records in the CDC500 dataset of people in Boston visiting their doctors and maps them to the hospital nearest to them. We suspect that the closer one lives to a hospital the more often they would go visit their doctor. A lack of check ups could lead to undiagnosed diseases/injury so based on this information we can see the areas in Boston where doctors need to be more accessible.
+
+The second dataset (created by transformation1.py) is a dataset that has all the people in Boston and Cambridge who sleep less than 7 hours and maps them to the nearest colleges/universities in Boston/Cambridge. We expect that these areas are populated by almost college students exclusively and therefore will have many people who sleep less than 7 hours.
+
+The third dataset (created by transformation2.py) is a dataset that has the obesity rates of people in Boston and maps them to pools and "healthy corner stores" nearest to them. We want to see whether being close to either or both of these facilities reduce obesity rates, and could signal that there should be more of these facilities around.
