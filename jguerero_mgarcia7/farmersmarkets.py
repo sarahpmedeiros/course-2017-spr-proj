@@ -1,3 +1,5 @@
+# PROV DONE
+
 import urllib.request
 import json
 import dml
@@ -33,7 +35,7 @@ class farmersmarkets(dml.Algorithm):
         url = 'https://data.cityofboston.gov/resource/txud-qumr.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
+        
         repo['jguerero_mgarcia7.farmersmarkets'].insert_many(r)
 
         repo['jguerero_mgarcia7.farmersmarkets'].metadata({'complete':True})
@@ -56,49 +58,42 @@ class farmersmarkets(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('alice_bob', 'alice_bob')
+        repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:alice_bob#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_found = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_lost = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_found, this_script)
-        doc.wasAssociatedWith(get_lost, this_script)
-        doc.usage(get_found, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
+        this_script = doc.agent('alg:jguerero_mgarcia7#farmersmarkets', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        resource_wfarmers = doc.entity('bdp:txud-qumr', {'prov:label':'Winter Farmers Markets', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource_sfarmers = doc.entity('bdp:ckir-e47p', {'prov:label':'Summer Farmers Markets', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+
+        get_wfarmers = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_sfarmers = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+        doc.wasAssociatedWith(get_wfarmers, this_script)
+        doc.wasAssociatedWith(get_sfarmers, this_script)
+        doc.usage(get_wfarmers, resource_wfarmers, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'}
                   )
-        doc.usage(get_lost, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                  }
+        doc.usage(get_sfarmers, resource_sfarmers, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'}
                   )
 
-        lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
+        farmersmarkets = doc.entity('dat:jguerero_mgarcia7#farmersmarkets', {prov.model.PROV_LABEL:'farmersmarkets', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(farmersmarkets, this_script)
+        doc.wasGeneratedBy(farmersmarkets, get_wfarmers, endTime)
+        doc.wasDerivedFrom(farmersmarkets, resource_wfarmers, get_wfarmers, get_wfarmers, get_wfarmers)
 
-        found = doc.entity('dat:alice_bob#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(found, this_script)
-        doc.wasGeneratedBy(found, get_found, endTime)
-        doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
+        doc.wasAttributedTo(farmersmarkets, this_script)
+        doc.wasGeneratedBy(farmersmarkets, get_sfarmers, endTime)
+        doc.wasDerivedFrom(farmersmarkets, resource_sfarmers, get_sfarmers, get_sfarmers, get_sfarmers)
+
+
 
         repo.logout()
                   
         return doc
-
-farmersmarkets.execute()
-'''
-doc = example.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
-'''
 
 ## eof

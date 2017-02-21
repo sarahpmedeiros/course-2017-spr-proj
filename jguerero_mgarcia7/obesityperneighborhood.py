@@ -5,9 +5,9 @@ import dml
 import prov.model
 import datetime
 import uuid
-import shapefile #pip install pyshp
 from collections import defaultdict
-from shapely.geometry import shape # pip install shapely
+from shapely.geometry import shape #pip install shapely
+import pickle
 
 class obesityperneighborhood(dml.Algorithm):
 	contributor = 'jguerero_mgarcia7'
@@ -28,10 +28,7 @@ class obesityperneighborhood(dml.Algorithm):
 		obesitystats = repo['jguerero_mgarcia7.obesitystats']
 
 		# Create shapeobjects for each neighborhood
-		neighborhood_shapes = {}
-		for neighborhood in neighborhoods.find({}):
-			neighborhood_pts = neighborhood['the_geom']
-			neighborhood_shapes[neighborhood['name']] = shape(neighborhood_pts)
+		neighborhood_shapes = {n['name']:shape(n['the_geom']) for n in neighborhoods.find({})}
 
 		# Go through the obesity areas and figure out what neighborhood it's from
 		d = defaultdict(list)
@@ -44,17 +41,20 @@ class obesityperneighborhood(dml.Algorithm):
 					break
 
 		# Go through neighborhoods and aggregate all of the obesity stats per neighborhood
+
+		def project(R, p):
+			return [p(d) for d in R]
+
+		def aggregate(D, f):
+		    keys = D[0].keys()
+		    return {key:f([v for d in D for k,v in d.items() if k == key]) for key in keys}
+
 		r = []
 		for n_name,stats in d.items():
-			final = defaultdict(list)
 			info = {'neighborhood': n_name}
-			for item in stats:
-				for key,val in item.items():
-					if key in ('popgte20', 'popbmige30'): # popgte20 = population over 20 years old, popbmige30 = population with bmi >= 30
-						final[key].append(val)
 
-			for key,val in final.items():
-				info[key] = sum(val)
+			# Aggregate data per obesity area for a whole neighborhood
+			info.update(aggregate(project(stats,lambda d: {'popgte20':d['popgte20'], 'popbmige30':d['popbmige30']}),sum))
 
 			info['pctbmige30'] = (info['popbmige30']/info['popgte20']) * 100 # percentage of population w bmi >= 30
 			r.append(info)
@@ -84,39 +84,31 @@ class obesityperneighborhood(dml.Algorithm):
 		# Set up the database connection.
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
-		repo.authenticate('alice_bob', 'alice_bob')
+		repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
 		doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
-		doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
+		doc.add_namespace('dat', 'http://datamechanics.io/data/jguerero_mgarcia7') # The data sets are in <user>#<collection> format.
 		doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
 		doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-		doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-		this_script = doc.agent('alg:alice_bob#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-		resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-		get_found = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-		get_lost = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-		doc.wasAssociatedWith(get_found, this_script)
-		doc.wasAssociatedWith(get_lost, this_script)
-		doc.usage(get_found, resource, startTime, None,
-				  {prov.model.PROV_TYPE:'ont:Retrieval',
-				  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-				  }
-				  )
-		doc.usage(get_lost, resource, startTime, None,
-				  {prov.model.PROV_TYPE:'ont:Retrieval',
-				  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-				  }
+
+		this_script = doc.agent('alg:jguerero_mgarcia7#obesityperneighborhood', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+		obesitystats_resource = doc.entity('dat:obesitystats', {'prov:label':'Obesity Statistics MA', prov.model.PROV_TYPE:'ont:DataSet'})
+		neighborhoods_resource = doc.entity('dat:neighborhoods', {'prov:label':'Neighborhoods Shapefile', prov.model.PROV_TYPE:'ont:DataSet'})
+
+		get_obesityperneighborhood = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+		doc.wasAssociatedWith(get_obesityperneighborhood, this_script)
+		doc.usage(get_obesityperneighborhood, obesitystats_resource, startTime, None,
+				  {prov.model.PROV_TYPE:'ont:Computation'}
 				  )
 
-		lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-		doc.wasAttributedTo(lost, this_script)
-		doc.wasGeneratedBy(lost, get_lost, endTime)
-		doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
+		doc.usage(get_obesityperneighborhood, neighborhoods_resource, startTime, None,
+		  {prov.model.PROV_TYPE:'ont:Computation'}
+		  )
 
-		found = doc.entity('dat:alice_bob#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-		doc.wasAttributedTo(found, this_script)
-		doc.wasGeneratedBy(found, get_found, endTime)
-		doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
+		obesityperneighborhood = doc.entity('dat:jguerero_mgarcia7#obesityperneighborhood', {prov.model.PROV_LABEL:'Obesity Statistics Per Neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
+		doc.wasAttributedTo(obesityperneighborhood, this_script)
+		doc.wasGeneratedBy(obesityperneighborhood, get_obesityperneighborhood, endTime)
+		doc.wasDerivedFrom(obesityperneighborhood, resource, get_obesityperneighborhood, get_obesityperneighborhood, get_obesityperneighborhood)
 
 		repo.logout()
 				  
