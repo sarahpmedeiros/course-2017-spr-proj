@@ -6,6 +6,8 @@ import datetime
 import uuid
 from requests import request as rq
 
+__author__ = 'Ann Ming Samborski'
+
 class fetchData(dml.Algorithm):
     contributor = 'asambors_maxzm'
     reads = []
