@@ -23,8 +23,9 @@ class retrieveData(dml.Algorithm):
         repo = client.repo
         repo.authenticate('cfortuna_snjan19', 'cfortuna_snjan19')
 
-        ######Importing Datasets and putting them inside the mongoDB database
-        #SNOW EMERGENCY Routes
+        ###### Importing Datasets and putting them inside the mongoDB database #####
+
+        # Snow emergency routes
         url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/4f3e4492e36f4907bcd307b131afe4a5_0.geojson'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
@@ -37,37 +38,45 @@ class retrieveData(dml.Algorithm):
         #repo['cfortuna_snjan19.SnowRoutes'].metadeta({'complete':True})
         #print(repo['cfortuna_snjan19.SnowRoutes'].metadeta())
 
+        # Bike Networks
+        url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/d02c9d2003af455fbc37f550cc53d3a4_0.geojson'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        #print (s)
+        repo.dropCollection("BikeRoutes")
+        repo.createCollection("BikeRoutes")
+        repo['cfortuna_snjan19.BikeRoutes'].insert_many(r['features'])
 
-        # #BIKE NETWORKS
-        # url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/d02c9d2003af455fbc37f550cc53d3a4_0.geojson'
-        # response = urllib.request.urlopen(url).read().decode("utf-8")
-        # r = json.loads(response)
-        # s = json.dumps(r, sort_keys=True, indent=2)
-        # print (s)
-        # repo.dropCollection("BikeRoutes")
-        # repo.createCollection("BikeRoutes")
-        # repo['cfortuna_snjan19.BikeRoutes'].insert_many(r)
+        # Potholes
+        url = 'http://data.cityofboston.gov/resource/n65p-xaz7.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        #print (s)
+        repo.dropCollection("PotHoles")
+        repo.createCollection("PotHoles")
+        repo['cfortuna_snjan19.PotHoles'].insert_many(r)
 
-        # #POTHOLES
-        # url = 'https://data.cityofboston.gov/resource/n65p-xaz7.json'
-        # response = urllib.request.urlopen(url).read().decode("utf-8")
-        # r = json.loads(response)
-        # s = json.dumps(r, sort_keys=True, indent=2)
-        # print (s)
-        # repo.dropCollection("PotHoles")
-        # repo.createCollection("PotHoles")
-        # repo['cfortuna_snjan19.PotHoles'].insert_many(r)
+        # Streets of Boston
+        url = 'http://data.mass.gov/resource/ms23-5ubn.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        #print (s)
+        repo.dropCollection("Streets")
+        repo.createCollection("Streets")
+        repo['cfortuna_snjan19.Streets'].insert_many(r)
 
-        # #Streets of Boston
-        # url = 'https://data.mass.gov/resource/ms23-5ubn.json'
-        # response = urllib.request.urlopen(url).read().decode("utf-8")
-        # r = json.loads(response)
-        # s = json.dumps(r, sort_keys=True, indent=2)
-        # print (s)
-        # repo.dropCollection("Streets")
-        # repo.createCollection("Streets")
-        # repo['cfortuna_snjan19.Streets'].insert_many(r)
-
+        # Parking Meters
+        url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/962da9bb739f440ba33e746661921244_9.geojson'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        print (s)
+        repo.dropCollection("ParkingMeters")
+        repo.createCollection("ParkingMeters")
+        repo['cfortuna_snjan19.ParkingMeters'].insert_many(r['features'])
 
         repo.logout()
 
