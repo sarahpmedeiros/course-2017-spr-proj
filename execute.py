@@ -5,7 +5,7 @@ import argparse
 import prov.model
 
 parser = argparse.ArgumentParser()
-parser.add_argument("jguerero_mgarcia7")
+parser.add_argument("contributor_folder")
 args = parser.parse_args()
 
 # Extract the algorithm classes from the modules in the
@@ -31,7 +31,6 @@ while len(algorithms) > 0:
             del algorithms[i]
             break
 
-'''
 # Execute the algorithms in order.
 provenance = prov.model.ProvDocument()
 for algorithm in ordered:
@@ -40,6 +39,5 @@ for algorithm in ordered:
 
 # Display a provenance record of the overall execution process.
 print(provenance.get_provn())
-'''
 
 ## eof

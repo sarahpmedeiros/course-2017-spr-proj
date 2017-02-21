@@ -106,10 +106,10 @@ def scrape_pdf_file():
         info = {'neighborhood':row[0], 'store':row[1], 'address':row[2], 'year':row[3], 'total sq ft':row[4], 'type':row[5]}
         r.append(info)
 
-
-supermarkets.execute()
-doc = example.provenance()
+'''
+#supermarkets.execute()
+doc = supermarkets.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
-
+'''
 ## eof

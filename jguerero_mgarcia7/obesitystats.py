@@ -72,9 +72,8 @@ class obesitystats(dml.Algorithm):
         this_script = doc.agent('alg:jguerero_mgarcia7#obesitystats', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         resource = doc.entity('rti:MA', {'prov:label':'MA Obesity Stats', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'shp'})
         get_obesitystats = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_found, this_script)
         doc.wasAssociatedWith(get_obesitystats, this_script)
-        doc.usage(get_found, resource, startTime, None,
+        doc.usage(get_obesitystats, resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'}
                   )
 
