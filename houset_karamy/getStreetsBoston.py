@@ -7,7 +7,7 @@ import uuid
 class get(dml.Algorithm):
     contributor = 'houset_karamy'
     reads = []
-    writes = ['houset_karamy.crimeReportsBoston']
+    writes = ['houset_karamy.streetsBoston']
 
     @staticmethod
     def execute(trial = False):
@@ -58,7 +58,7 @@ class get(dml.Algorithm):
             
         this_script = doc.agent('alg:houset_karamy#streetsBoston', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         
-        resource1 = doc.entity('mag:crime', {'prov:label':'Streets Boston', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource1 = doc.entity('mag:ms23-5ubn', {'prov:label':'Streets Boston', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
                         
         get_streetsBoston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 #         get_hospitals = doc.activity('log:a'+str(uuid.uuid4()), startTime, endTime, {prov.model.PROV_TYPE:'ont:Retrieval', 'ont:Query':'?type=ad&?$select=ad,name'})
