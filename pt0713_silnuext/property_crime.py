@@ -7,6 +7,41 @@ import uuid
 import sodapy
 import function_implement
 
+# functions implemented from lecture notes
+def dist(p, q):
+    (x1,y1) = p
+    (x2,y2) = q
+    return (x1-x2)**2 + (y1-y2)**2
+
+def union(R, S):
+    return R + S
+
+def difference(R, S):
+    return [t for t in R if t not in S]
+
+def intersect(R, S):
+    return [t for t in R if t in S]
+
+def project(R, p):
+    return [p(t) for t in R]
+
+def select(R, s):
+    return [t for t in R if s(t)]
+ 
+def product(R, S):
+    return [(t,u) for t in R for u in S]
+
+def aggregate(R, f):
+    keys = {r[0] for r in R}
+    return [(key, f([v for (k,v) in R if k == key])) for key in keys]
+
+def map(f, R):
+    return [t for (k,v) in R for t in f(k,v)]
+    
+def reduce(f, R):
+    keys = {k for (k,v) in R}
+    return [f(k1, [v for (k2,v) in R if k1 == k2]) for k1 in keys]
+
 
 class property_crime(dml.Algorithm):
     contributor = 'pt0713_silnuext'
@@ -29,30 +64,58 @@ class property_crime(dml.Algorithm):
         client1 = sodapy.Socrata("data.cityofboston.gov", None)
         response1 = client1.get("crime")
         s = json.dumps(response1, sort_keys=True, indent=2)
-        print(s)
+
+        crime_coordination = project(response1,lambda x:(x["year"], x["location"]["latitude"],x["location"]["longitude"]))
+        crime_14 = [crime_2014 for crime_2014 in crime_coordination if crime_2014[0] == "2012"]
+        crime_14coordination = [(float(latitude), float(longitude)) for (year, latitude, longitude) in crime_14]
+
+        crime_15 = [crime_2015 for crime_2015 in crime_coordination if crime_2015[0] == "2015"]
+        crime_15coordination = [(float(latitude), float(longitude)) for (year, latitude, longitude) in crime_15]
+
+
         repo['pt0713_silnuext.property_crime'].insert_many(response1)
         repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.property_crime'].metadata())
+
+
 
         # import property2014 data
         client2014 = sodapy.Socrata("data.cityofboston.gov", None)
         response2014 = client2014.get("jsri-cpsq")
         s = json.dumps(response2014, sort_keys=True, indent=2)
-        print(s)
+
+        property14_price_coordination = project(response2014, lambda x: (x["av_total"],x["location"]))
+        property14_coordination = [(float(a[1][1:13]), float(a[1][-14:-1])) for a in property14_price_coordination]
+        property14_price_coordination_float = [(int(price[0]), coordination) for price in property14_price_coordination for coordination in property14_coordination]
+
         repo['pt0713_silnuext.property_crime'].insert_many(response2014)
         repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.property_crime'].metadata())
+
 
         # import property2015 data
         client2015 = sodapy.Socrata("data.cityofboston.gov", None)
         response2015 = client2015.get("n7za-nsjh")
         s = json.dumps(response2015, sort_keys=True, indent=2)
-        print(s)
+
+        property15_price_coordination = project(response2015, lambda x: (x["av_total"],x["location"]))
+        property15_coordination = [(float(a[1][1:12]), float(a[1][-13:-1])) for a in property15_price_coordination]
+        property15_price_coordination_float = [(int(price[0]), coordination) for price in property15_price_coordination for coordination in property15_coordination]
+
         repo['pt0713_silnuext.property_crime'].insert_many(response2015)
         repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.property_crime'].metadata())
 
-        # non-trivial transformation
+        # calculating distance between property assessment in 2014 and crime happened in 2014
+        dis_list = []
+        for i in property14_price_coordination_float:
+            for j in crime_14coordination:
+                dis_list += [(i[1], dist(i[1],j))]
+
+        agg = aggregate(dis_list,min)
+        print(agg)
+
+
 
 
 

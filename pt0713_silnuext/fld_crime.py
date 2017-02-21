@@ -55,32 +55,21 @@ class fld_crime(dml.Algorithm):
         repo.createCollection("fld_crime")
 
         # import fld data
-        client = sodapy.Socrata("data.mass.gov", None)
+        client = sodapy.Socrata("data.mass.gov", "gHD8VAjd6Dg0s5avVBsaHj8k6")
         response = client.get("x99p-b88k")
         s = json.dumps(response, sort_keys=True, indent=2)
    
 
-        fld_city_data = project(response, lambda x: (x["date_received"], x["business_city"]))
+        fld_city_data = project(response, lambda t: (t["date_received"], [t.get("business_city")]))
         print(fld_city_data)
-
 
         repo["pt0713_silnuext.fld_crime"].insert_many(response)
         repo["pt0713_silnuext.fld_crime"].metadata({"complete":True})
         print(repo["pt0713_silnuext.fld_crime"].metadata())
 
 
-
-
-
-
-
-
-
-
-
-
         # import crime data
-        client1 = sodapy.Socrata("data.cityofboston.gov", None)
+        client1 = sodapy.Socrata("data.cityofboston.gov", "gHD8VAjd6Dg0s5avVBsaHj8k6")
         response1 = client1.get("crime")
         s = json.dumps(response1, sort_keys=True, indent=2)
 
@@ -95,21 +84,9 @@ class fld_crime(dml.Algorithm):
         crime78 = [crime78_2015 for crime78_2015 in crime_month2015 if crime78_2015[1] == '7' or crime78_2015[1] == '8']
         print("The crime number happens in Jul and Aug in 2015 is: ", len(crime78))
 
-
-
-
-
-
         repo["pt0713_silnuext.fld_crime"].insert_many(response1)
         repo["pt0713_silnuext.fld_crime"].metadata({"complete":True})
         print(repo["pt0713_silnuext.fld_crime"].metadata())
-
-        # non-trivial transformation
-
-
-
-
-
 
         repo.logout()
 
@@ -151,7 +128,6 @@ class fld_crime(dml.Algorithm):
         doc.wasAttributedTo(fld_crime, this_script)
         doc.wasGeneratedBy(fld_crime, get_fld_crime, endTime)
         doc.wasDerivedFrom(fld_crime, resource, get_fld_crime, get_fld_crime, get_fld_crime)
-
 
         repo.logout()
                   

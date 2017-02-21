@@ -60,14 +60,13 @@ class police_crime(dml.Algorithm):
         r = json.loads(response)
         r = [r['features'][i]['properties'] for i in range(11)]
 
+        # getting DISTRICT column from police_district dataset
         districts = project(r, lambda t: (t['DISTRICT']))
-
-
         print(districts)
 
-        # repo['pt0713_silnuext.police_crime'].insert_many(districts)
-        # repo['pt0713_silnuext.police_crime'].metadata({'complete':True})
-        # print(repo['pt0713_silnuext.police_crime'].metadata())
+        repo['pt0713_silnuext.police_crime'].insert_many(r)
+        repo['pt0713_silnuext.police_crime'].metadata({'complete':True})
+        print(repo['pt0713_silnuext.police_crime'].metadata())
 
 
 
@@ -77,15 +76,17 @@ class police_crime(dml.Algorithm):
         response1 = client1.get("crime")
         s = json.dumps(response1, sort_keys=True, indent=2)
 
-
+        # getting DISTRICT column from crime dataset
         crime_district = project(response1,lambda t:(t['reptdistrict']))
         print(crime_district)
 
+        # if a crime happens in police_district: count+1
         crime_in_police_district = 0
         for district in crime_district:
             if district in districts:
                 crime_in_police_district += 1
 
+        # count the final percentage of crime happens in police district / all of the crimes happen
         percentage_crime_in_police_district = crime_in_police_district / len(crime_district)
         print("The percentage of crime happens in police district is: ", percentage_crime_in_police_district)
 
