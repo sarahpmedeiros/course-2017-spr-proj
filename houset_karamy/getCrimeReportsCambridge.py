@@ -74,7 +74,8 @@ class get(dml.Algorithm):
         
 
            
-        crimeReportsCambridge = doc.entity('dat:houset_karamy#crimeReportsCambridge', {prov.model.PROV_LABEL:'Cambridge Crime Reports', prov.model.PROV_TYPE:'ont:DataSet'})        doc.wasAttributedTo(crimeReportsCambridge, this_script)
+        crimeReportsCambridge = doc.entity('dat:houset_karamy#crimeReportsCambridge', {prov.model.PROV_LABEL:'Cambridge Crime Reports', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(crimeReportsCambridge, this_script)
         doc.wasGeneratedBy(crimeReportsCambridge, get_CrimeReportsCambridge, endTime)
         doc.wasDerivedFrom(crimeReportsCambridge, resource1, get_CrimeReportsCambridge, get_CrimeReportsCambridge, get_CrimeReportsCambridge) 
         
