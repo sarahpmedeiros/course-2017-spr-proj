@@ -23,11 +23,11 @@ class get(dml.Algorithm):
         #dataSets = {'crimeReportsCambridge': 'http://datamechanics.io/data/DataSets/CrimeReportsCambridge'}  
         url = 'http://datamechanics.io/data/DataSets/CrimeReportsCambridge'
         response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
+        #r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("crimeReportsCambridge")
+        #repo.dropCollection("crimeReportsCambridge")
         repo.createCollection("crimeReportsCambridge")
-        repo['houset_karamy.crimeReportsCambridge'].insert_many(r)
+        repo['houset_karamy.crimeReportsCambridge'].insert_many(response)
         
         repo.logout()
         
