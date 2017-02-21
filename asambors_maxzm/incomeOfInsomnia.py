@@ -112,11 +112,14 @@ class incomeOfInsomnia(dml.Algorithm):
                 incomeOfInsomniaData = []
                 for (a,b) in aggregatedData:
                         try:
+                                b[0].update(b[1])
                                 incomeOfInsomniaData.append(b[0])
                         except TypeError:
                                 print((a,b))
 
 
+
+                print(incomeOfInsomniaData)
 
 
                 repo.dropCollection("incomeofinsomnia")
