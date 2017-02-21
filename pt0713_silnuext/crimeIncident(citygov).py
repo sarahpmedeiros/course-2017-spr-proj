@@ -6,6 +6,7 @@ import datetime
 import uuid
 import sodapy
 
+#prov check
 
 #https://data.cityofboston.gov/Public-Safety/Crime-Incident-Reports-July-2012-August-2015-Sourc/7cdf-6fgx
 #https://data.cityofboston.gov/resource/crime.json
@@ -60,19 +61,16 @@ class crime(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:pt0713_silnuext#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        this_script = doc.agent('alg:pt0713_silnuext#crimeIncident(citygov)', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        resource = doc.entity('bdp:crime', {'prov:label':'crime', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         get_crime = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_crime, this_script)
 
         doc.usage(get_crime, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+crime&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
+                  {prov.model.PROV_TYPE:'ont:Retrieval',})
 
-        crime = doc.entity('dat:pt0713_silnuext#crime', {prov.model.PROV_LABEL:'Animals crime', prov.model.PROV_TYPE:'ont:DataSet'})
+        crime = doc.entity('dat:pt0713_silnuext#crime', {prov.model.PROV_LABEL:'crime', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(crime, this_script)
         doc.wasGeneratedBy(crime, get_crime, endTime)
         doc.wasDerivedFrom(crime, resource, get_crime, get_crime, get_crime)

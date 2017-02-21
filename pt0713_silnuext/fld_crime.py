@@ -125,23 +125,34 @@ class fld_crime(dml.Algorithm):
         doc.add_namespace("ont", "http://datamechanics.io/ontology#") # "Extension", "DataResource", "DataSet", "Retrieval", "Query", or "Computation".
         doc.add_namespace("log", "http://datamechanics.io/log/") # The event log.
         doc.add_namespace("bdp", "https://data.cityofboston.gov/resource/")
+        doc.add_namespace('aaa', 'https://data.mass.gov/dataset')
 
-        this_script = doc.agent("alg:pt0713_silnuext#example", {prov.model.PROV_TYPE:prov.model.PROV["SoftwareAgent"], "ont:Extension":"py"})
-        resource = doc.entity("bdp:wc8w-nujj", {"prov:label":"311, Service Requests", prov.model.PROV_TYPE:"ont:DataResource", "ont:Extension":"json"})
+        this_script = doc.agent("alg:pt0713_silnuext#fld_crime", {prov.model.PROV_TYPE:prov.model.PROV["SoftwareAgent"], "ont:Extension":"py"})
+        resource1 = doc.entity("bdp:wc8w-nujj", {"prov:label":"crime", prov.model.PROV_TYPE:"ont:DataResource", "ont:Extension":"json"})
+        resource2 = doc.entity("aaa:x99p-b88k", {"prov:label":"fld", prov.model.PROV_TYPE:"ont:DataResource", "ont:Extension":"json"})
+
         get_fld_crime = doc.activity("log:uuid"+str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_fld_crime, this_script)
 
-        doc.usage(get_fld_crime, resource, startTime, None,
-                  {prov.model.PROV_TYPE:"ont:Retrieval",
-                  "ont:Query":"?type=Animal+fld_crime&$select=type,latitude,longitude,OPEN_DT"
-                  }
-                  )
+        doc.usage(get_fld_crime, resource1, startTime, None,
+                  {prov.model.PROV_TYPE:"ont:Retrieval",})
 
-        fld_crime = doc.entity("dat:pt0713_silnuext#fld_crime", {prov.model.PROV_LABEL:"Animals fld_crime", prov.model.PROV_TYPE:"ont:DataSet"})
+        doc.usage(get_fld_crime, resource2, startTime, None,
+                  {prov.model.PROV_TYPE:"ont:Retrieval",})
+
+                  
+
+        crime = doc.entity("dat:pt0713_silnuext#fld_crime", {prov.model.PROV_LABEL:"crime", prov.model.PROV_TYPE:"ont:DataSet"})
         doc.wasAttributedTo(fld_crime, this_script)
         doc.wasGeneratedBy(fld_crime, get_fld_crime, endTime)
-        doc.wasDerivedFrom(fld_crime, resource, get_fld_crime, get_fld_crime, get_fld_crime)
+        doc.wasDerivedFrom(fld_crime, resource1, get_fld_crime, get_fld_crime, get_fld_crime)
+
+        fld = doc.entity("dat:pt0713_silnuext#fld_crime", {prov.model.PROV_LABEL:"fld", prov.model.PROV_TYPE:"ont:DataSet"})
+        doc.wasAttributedTo(fld_crime, this_script)
+        doc.wasGeneratedBy(fld_crime, get_fld_crime, endTime)
+        doc.wasDerivedFrom(fld_crime, resource2, get_fld_crime, get_fld_crime, get_fld_crime)
+
 
         repo.logout()
                   

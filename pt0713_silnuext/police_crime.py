@@ -6,6 +6,8 @@ import datetime
 import uuid
 import sodapy
 
+#prov check
+
 # functions implemented from lecture notes
 def union(R, S):
     return R + S
@@ -120,25 +122,34 @@ class police_crime(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        doc.add_namespace('aaa','http://bostonopendata-boston.opendata.arcgis.com/datasets/') # police district
         #doc
 
-        this_script = doc.agent('alg:pt0713_silnuext#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        this_script = doc.agent('alg:pt0713_silnuext#police_crime', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        # https://data.cityofboston.gov/resource/crime.json
+        resource1 = doc.entity('bdp:crime', {'prov:label':'crime_district1415', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource2 = doc.entity('aaa:9a3a8c427add450eaf45a470245680fc_5', {'prov:label':'police_district', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'geojson'})
+        # http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5.geojson
         get_police_crime = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
 
         doc.wasAssociatedWith(get_police_crime, this_script)
 
-        doc.usage(get_police_crime, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+police_crime&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
+        doc.usage(get_police_crime, resource1, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',})
+   
+        doc.usage(get_police_crime, resource2, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',})
 
-        police_crime = doc.entity('dat:pt0713_silnuext#police_crime', {prov.model.PROV_LABEL:'Animals police_crime', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(police_crime, this_script)
-        doc.wasGeneratedBy(police_crime, get_police_crime, endTime)
-        doc.wasDerivedFrom(police_crime, resource, get_police_crime, get_police_crime, get_police_crime)
+        crime = doc.entity('dat:pt0713_silnuext#police_crime', {prov.model.PROV_LABEL:'Crime Incident Reports (July 2012 - August 2015)', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(crime, this_script)
+        doc.wasGeneratedBy(crime, get_police_crime, endTime)
+        doc.wasDerivedFrom(crime, resource1, get_police_crime, get_police_crime, get_police_crime)
 
+        police = doc.entity('dat:pt0713_silnuext#police_crime', {prov.model.PROV_LABEL:'POLICE DISTRICTS', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(police, this_script)
+        doc.wasGeneratedBy(police, get_police_crime, endTime)
+        doc.wasDerivedFrom(police, resource2, get_police_crime, get_police_crime, get_police_crime)
 
         repo.logout()
                   

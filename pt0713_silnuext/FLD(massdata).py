@@ -6,7 +6,7 @@ import datetime
 import uuid
 import sodapy
 
-
+# PROV CHECK
 # https://data.mass.gov/dataset/FLD-Complaints/c5kv-hee8
 # https://data.mass.gov/resource/x99p-b88k.json
 
@@ -58,21 +58,18 @@ class fld(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        doc.add_namespace('bdp', 'https://data.mass.gov/dataset')
 
-        this_script = doc.agent('alg:pt0713_silnuext#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        this_script = doc.agent('alg:pt0713_silnuext#FLD(massdata)', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        resource = doc.entity('bdp:x99p-b88k', {'prov:label':'fld', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         get_fld = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_fld, this_script)
 
         doc.usage(get_fld, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+fld&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
+                  {prov.model.PROV_TYPE:'ont:Retrieval',})
 
-        fld = doc.entity('dat:pt0713_silnuext#fld', {prov.model.PROV_LABEL:'Animals fld', prov.model.PROV_TYPE:'ont:DataSet'})
+        fld = doc.entity('dat:pt0713_silnuext#fld', {prov.model.PROV_LABEL:'fld', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(fld, this_script)
         doc.wasGeneratedBy(fld, get_fld, endTime)
         doc.wasDerivedFrom(fld, resource, get_fld, get_fld, get_fld)

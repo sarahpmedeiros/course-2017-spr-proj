@@ -6,6 +6,7 @@ import datetime
 import uuid
 import sodapy
 
+#prov check
 
 # http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5?selectedAttributes%5B%5D=DISTRICT&chartType=bar&uiTab=table
 # http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5.geojson
@@ -60,20 +61,18 @@ class police_districts(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        doc.add_namespace('aaa','http://bostonopendata-boston.opendata.arcgis.com/datasets/')
 
-        this_script = doc.agent('alg:pt0713_silnuext#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        this_script = doc.agent('alg:pt0713_silnuext#policeDistrcts(opendata)', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        resource = doc.entity('aaa:9a3a8c427add450eaf45a470245680fc_5', {'prov:label':'police_district', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'geojson'})
         get_police_districts = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_police_districts, this_script)
 
         doc.usage(get_police_districts, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+police_districts&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
+                  {prov.model.PROV_TYPE:'ont:Retrieval',})
 
-        police_districts = doc.entity('dat:pt0713_silnuext#police_districts', {prov.model.PROV_LABEL:'Animals police_districts', prov.model.PROV_TYPE:'ont:DataSet'})
+        police_districts = doc.entity('dat:pt0713_silnuext#police_districts', {prov.model.PROV_LABEL:'police_districts', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(police_districts, this_script)
         doc.wasGeneratedBy(police_districts, get_police_districts, endTime)
         doc.wasDerivedFrom(police_districts, resource, get_police_districts, get_police_districts, get_police_districts)

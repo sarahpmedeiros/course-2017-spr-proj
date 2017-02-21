@@ -60,19 +60,16 @@ class property_2014(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:pt0713_silnuext#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        this_script = doc.agent('alg:pt0713_silnuext#2014property(citygov)', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        resource = doc.entity('bdp:jsri-cpsq', {'prov:label':'property14', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         get_property_2014 = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_property_2014, this_script)
 
         doc.usage(get_property_2014, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+property_2014&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
+                  {prov.model.PROV_TYPE:'ont:Retrieval',})
 
-        property_2014 = doc.entity('dat:pt0713_silnuext#property_2014', {prov.model.PROV_LABEL:'Animals property_2014', prov.model.PROV_TYPE:'ont:DataSet'})
+        property_2014 = doc.entity('dat:pt0713_silnuext#property_2014', {prov.model.PROV_LABEL:'property_2014', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(property_2014, this_script)
         doc.wasGeneratedBy(property_2014, get_property_2014, endTime)
         doc.wasDerivedFrom(property_2014, resource, get_property_2014, get_property_2014, get_property_2014)
