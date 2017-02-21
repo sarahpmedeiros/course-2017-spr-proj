@@ -91,15 +91,13 @@ class neighborhoodstatistics(dml.Algorithm):
 		#appends food_info and obese_info information to dictionary so far based on neighborhood
 		for k,Neighborhood in enumerate(n['Neighborhood'] for n in nstats):
 			if food_info.get(Neighborhood) != None:
-				print (Neighborhood, food_info.get(Neighborhood))
 				nstats[k]['Number of Food Sources'] = food_info.get(Neighborhood)
 			if obese_info.get(Neighborhood) != None:
-				print (Neighborhood, obese_info.get(Neighborhood))
 				nstats[k]['Average Obesity (%)'] = obese_info.get(Neighborhood)
 
 		repo.dropCollection("neighborhoodstatistics")
 		repo.createCollection("neighborhoodstatistics")
-		repo['jguerero_mgarcia7.neighborhoodstatistics'].insert_many(d)
+		repo['jguerero_mgarcia7.neighborhoodstatistics'].insert_many(nstats)
 		repo['jguerero_mgarcia7.neighborhoodstatistics'].metadata({'complete':True})
 		print(repo['jguerero_mgarcia7.neighborhoodstatistics'].metadata())
 
