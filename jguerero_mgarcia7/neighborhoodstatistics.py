@@ -1,4 +1,4 @@
-# Union of cornerstores, farmersmarkets, supermarkets to get food in general
+# Combine all the data sets by neighborhood
 
 import urllib.request
 import json
@@ -7,10 +7,10 @@ import prov.model
 import datetime
 import uuid
 
-class foodsources(dml.Algorithm):
+class neighborhoodstatistics(dml.Algorithm):
     contributor = 'jguerero_mgarcia7'
     reads = []
-    writes = ['jguerero_mgarcia7.FoodSources']
+    writes = ['jguerero_mgarcia7.neighborhoodstatistics']
 
     @staticmethod
     def execute(trial = False):
@@ -22,61 +22,30 @@ class foodsources(dml.Algorithm):
         repo = client.repo
         repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
 
-		#cursors for all information in datasetss
-        farmersmarkets_data_cursor = repo['jguerero_mgarcia7.farmersmarkets'].find()
-        supermarkets_data_cursor = repo['jguerero_mgarcia7.supermarkets'].find()
-        cornerstores_data_cursor = repo['jguerero_mgarcia7.allcornerstores'].find()
+        population_cursor = repo['jguerero_mgarcia7.population'].find()
+        foodsources_cursor = repo['jguerero_mgarcia7.foodsources'].find()
+        obesity_cursor = repo['jguerero_mgarcia7.obesitystats'].find()
 
-        combined_dataset = []
-        temp = {'Neighborhood': 0, 'Type': 0, 'Name': 0, 'Address': 0, 'Zipcode': 0, 'Coordinates': 0} 
+        nstats = []
+        temp_stats = {'Neighborhood': 0, 'Population Size': 0, 'Average Income ($)': 0, 'Number of Food Sources': 0, 'Average Obesity (%)': 0}
 
-        #farmers market data extraction
-        count = 0
-        for i in farmersmarkets_data_cursor:
-        	temp = {key:0 for key in temp}
-        	temp['Neighborhood'] = i.get('area')
-        	temp['Type'] = 'Farmers Market'
-        	temp['Zipcode'] = i.get('zip_code')
-        	temp['Coordinates'] = i.get('coordinates')
-        	if (count < 29):
-        		temp['Name'] = i.get('name')
-        		temp['Address'] = i.get('location')
-        	else:
-        		temp['Name'] = i.get('location')
-        		temp['Address'] = i.get('location_1_location')
+        def intersect(R, S):
+        	return [t for t in R if t in S]
 
-        	combined_dataset.append(temp)
-        	count += 1
+        def project(R, p):
+        	return [p(t) for t in R]
 
-        #supermarkets data extraction
-        for j in supermarkets_data_cursor:
-        	temp = {key:0 for key in temp}
-        	temp['Neighborhood'] = j.get('neighborhood')
-        	temp['Type'] = 'Supermarkets'
-        	temp['Name'] = j.get('store')
-        	temp['Address'] = j.get('address')
-        	temp['Zipcode'] = None
-        	temp['Coordinates'] = None
+        def aggregate(R, f):
+        	keys = {r[0] for r in R}
+        	print (keys)
+        	return [(key, f([v for (k,p,i) in R if k == key])) for key in keys]
 
-        	combined_dataset.append(temp)
+        #extracts necessary information from Population dataset to be used for new dataset
+        pop_info = project(population_cursor, lambda x: (x['Neighborhood'], x['Population'], x['Median Household Income in 2015 ($)']))
 
-        #cornerstores data extraction
-        for k in cornerstores_data_cursor:
-        	temp = {key:0 for key in temp}
-        	temp['Neighborhood'] = k.get('area')
-        	temp['Type'] = 'Cornerstores'
-        	temp['Name'] = k.get('site')
-        	temp['Address'] = k.get('address')
-        	temp['Zipcode'] = '0' + k.get('zip')
-        	temp['Coordinates'] = k.get('coordinates')
-
-        	combined_dataset.append(temp)
-
-        repo.dropCollection("foodsources")
-        repo.createCollection("foodsources")
-        repo['jguerero_mgarcia7.foodsources'].insert_many(combined_dataset)
-        repo['jguerero_mgarcia7.foodsources'].metadata({'complete':True})
-        print(repo['jguerero_mgarcia7.foodsources'].metadata())
+        #get important info for food sources
+        food_info = project(foodsources_cursor, lambda y: (y['Neighborhood'], y['Type']))
+        print (food_info)
 
         repo.logout()
 
@@ -133,7 +102,7 @@ class foodsources(dml.Algorithm):
                   
         return doc
 
-foodsources.execute()
+neighborhoodstatistics.execute()
 '''
 doc = example.provenance()
 print(doc.get_provn())
