@@ -16,5 +16,5 @@ We want to find a best office location for a new company. The first factor we co
 
 # Transformations
 1. Rent.....
-2. Project MBTA, Food and Safety data, besides the needed infomation, for the value of key "location", we add tags such that (location, "transport") for MBTA data, (location, "restaurant") for Food data and (location, "crime") for Safety data. Then implement union of three datasets into the second new dataset.
+2. Project MBTA, Food and Safety data, besides the needed infomation, for the value of key "location", we add tags such that (location, "transport") for MBTA data, (location, "food") for Food data and (location, "crime") for Safety data. Then implement union of three datasets into the second new dataset.
 3. After project the needed information, combine the two Salary data, then aggragate the dataset using the job title as the key, get the average salary for different jobs. The third new dataset contain the key: job title, values: average salary and other infomation such as company name, year and so on.
