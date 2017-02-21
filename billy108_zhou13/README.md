@@ -5,7 +5,7 @@
 + Yue Zhou (zhouy13@bu.edu)
 
 ##Narrative
-In this project, we aim to combine all data sets about aerobic and recreational places in Boston such as swimming pools , public parks and water play park, so that we could use the resulting new datasets for later development of the Project 2 and to see how sportive Boston's neighborhoods are by counting how many recreational places there are in each neighborhood.
+In this project, we aim to combine all data sets about aerobic and recreational places in Boston such as swimming pools , public parks and water play park, so that we could use the resulting new datasets for later developments of the Project 2 and to see how sportive Boston's neighborhoods are by counting how many recreational places there are in each neighborhood. By displaying these information, people could have one more perspective to view a neighborhood and decide whether they want to live in such neighborhood. Moreover, government officers could also reflect from these information to see whether a neighborhood need a improvement on the provision of recreational places. 
 Since some open datasets we chose from online resources have no zipcode as an attribute and the coordinates are messy, we determined to attribute a specific park or pool to a neighborhood rather than a zipcode.
 
 ##6 Datasets from 3 different portals
