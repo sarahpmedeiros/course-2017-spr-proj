@@ -27,45 +27,46 @@ class retrieveData(dml.Algorithm):
         #SNOW EMERGENCY Routes
         url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/4f3e4492e36f4907bcd307b131afe4a5_0.geojson'
         response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.load(response)
-        for element in r:
-            del element['coordinates']
-        s = json.dumps(r, sort_keys=True, indent=2)       
-        print (s)
+        r = json.loads(response)
+        #for element in r['features']:
+        #    del element['geometry']
+        s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("SnowRoutes")
         repo.createCollection("SnowRoutes")
-        repo['cfortuna_snjan19.SnowRoutes'].insert_many(r)
+        repo['cfortuna_snjan19.SnowRoutes'].insert_many(r['features'])
+        #repo['cfortuna_snjan19.SnowRoutes'].metadeta({'complete':True})
+        #print(repo['cfortuna_snjan19.SnowRoutes'].metadeta())
 
 
-        #BIKE NETWORKS
-        url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/d02c9d2003af455fbc37f550cc53d3a4_0.geojson'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        print (s)
-        repo.dropCollection("BikeRoutes")
-        repo.createCollection("BikeRoutes")
-        repo['cfortuna_snjan19.BikeRoutes'].insert_many(r)
+        # #BIKE NETWORKS
+        # url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/d02c9d2003af455fbc37f550cc53d3a4_0.geojson'
+        # response = urllib.request.urlopen(url).read().decode("utf-8")
+        # r = json.loads(response)
+        # s = json.dumps(r, sort_keys=True, indent=2)
+        # print (s)
+        # repo.dropCollection("BikeRoutes")
+        # repo.createCollection("BikeRoutes")
+        # repo['cfortuna_snjan19.BikeRoutes'].insert_many(r)
 
-        #POTHOLES
-        url = 'https://data.cityofboston.gov/resource/n65p-xaz7.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        print (s)
-        repo.dropCollection("PotHoles")
-        repo.createCollection("PotHoles")
-        repo['cfortuna_snjan19.PotHoles'].insert_many(r)
+        # #POTHOLES
+        # url = 'https://data.cityofboston.gov/resource/n65p-xaz7.json'
+        # response = urllib.request.urlopen(url).read().decode("utf-8")
+        # r = json.loads(response)
+        # s = json.dumps(r, sort_keys=True, indent=2)
+        # print (s)
+        # repo.dropCollection("PotHoles")
+        # repo.createCollection("PotHoles")
+        # repo['cfortuna_snjan19.PotHoles'].insert_many(r)
 
-        #Streets of Boston
-        url = 'https://data.mass.gov/resource/ms23-5ubn.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        print (s)
-        repo.dropCollection("Streets")
-        repo.createCollection("Streets")
-        repo['cfortuna_snjan19.Streets'].insert_many(r)
+        # #Streets of Boston
+        # url = 'https://data.mass.gov/resource/ms23-5ubn.json'
+        # response = urllib.request.urlopen(url).read().decode("utf-8")
+        # r = json.loads(response)
+        # s = json.dumps(r, sort_keys=True, indent=2)
+        # print (s)
+        # repo.dropCollection("Streets")
+        # repo.createCollection("Streets")
+        # repo['cfortuna_snjan19.Streets'].insert_many(r)
 
 
         repo.logout()
@@ -124,8 +125,8 @@ class retrieveData(dml.Algorithm):
         return doc
 
 retrieveData.execute()
-doc = example.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#doc = retrieveData.provenance()
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
