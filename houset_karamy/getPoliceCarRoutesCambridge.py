@@ -67,7 +67,7 @@ class get(dml.Algorithm):
         doc.usage(get_policeCarRoutesCambridge, resource3, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'})
        
-        policeCarRoutesCambridge = doc.entity('dat:houset_karamy#policeCarRoutesCambridge', {prov.model.PROV_LABEL:'Cambridge Crime Reports', prov.model.PROV_TYPE:'ont:DataSet'})
+        policeCarRoutesCambridge = doc.entity('dat:houset_karamy#policeCarRoutesCambridge', {prov.model.PROV_LABEL:'Police Car Routes Cambridge', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(policeCarRoutesCambridge, this_script)
         doc.wasGeneratedBy(policeCarRoutesCambridge, get_policeCarRoutesCambridge, endTime)
         doc.wasDerivedFrom(policeCarRoutesCambridge, resource3, get_policeCarRoutesCambridge, get_policeCarRoutesCambridge, get_policeCarRoutesCambridge)
