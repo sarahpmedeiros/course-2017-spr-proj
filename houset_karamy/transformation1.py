@@ -8,7 +8,7 @@ import sodapy
 
 class transformation1(dml.Algorithm):
     contributor = "houset_karamy"
-    reads = ["houset_karamy.transformation1"]
+    reads = ["houset_karamy.crimeReportsBoston"]
     writes = ["houset_karamy.transformation1"]
 
     @staticmethod
@@ -91,7 +91,7 @@ class transformation1(dml.Algorithm):
         doc.add_namespace("bdp", "https://data.cityofboston.gov/resource/")
 
         this_script = doc.agent("alg:houset_karamy#example", {prov.model.PROV_TYPE:prov.model.PROV["SoftwareAgent"], "ont:Extension":"py"})
-        resource = doc.entity("bdp:wc8w-nujj", {"prov:label":"Transformation1", prov.model.PROV_TYPE:"ont:DataResource", "ont:Extension":"json"})
+        resource = doc.entity("bdp:crime", {"prov:label":"Transformation1", prov.model.PROV_TYPE:"ont:DataResource", "ont:Extension":"json"})
         get_transformation1 = doc.activity("log:uuid"+str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_transformation1, this_script)
