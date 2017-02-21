@@ -63,7 +63,7 @@ class incomeOfInsomnia(dml.Algorithm):
 
                 
                 #loads
-                nosleep = repo['asambors_maxzm.nosleep']
+                nosleep = repo['asambors_maxzm.nosleepma']
                 ziptoincome = repo['asambors_maxzm.ziptoincome']
                 zipcodetolatlong = repo['asambors_maxzm.zipcodetolatlong']
 
