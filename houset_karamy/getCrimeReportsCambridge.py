@@ -20,7 +20,7 @@ class get(dml.Algorithm):
         repo = client.repo
         repo.authenticate('houset_karamy', 'houset_karamy')
         
-        dataSets = {'crimeReportsCambridge': 'http://datamechanics.io/data/DataSets/CrimeReportsCambridge'}  
+        dataSets = {'crimeReportsCambridge': 'https://data.cambridgema.gov/resource/dypy-nwuz.json'}  
         for ds in dataSets:
             url = dataSets[ds]
             response = urllib.request.urlopen(url).read().decode("utf-8")
@@ -52,12 +52,11 @@ class get(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('cma', 'https://data.cambridgema.gov/resource/')     
-        doc.add_namespace('datm', 'https://datamechanics.io/data/DataSets')
+        doc.add_namespace('cma', 'https://data.cambridgema.gov/resource/')   
             
         this_script = doc.agent('alg:houset_karamy#getCrimeReportsCambridge', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         
-        resource1 = doc.entity('datm:CrimeReportsCambridge', {'prov:label':'Crime Reports Cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource1 = doc.entity('cma:dypy-nwuz', {'prov:label':'Crime Reports Cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
                         
         get_CrimeReportsCambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
