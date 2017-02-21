@@ -102,7 +102,7 @@ class transformation1(dml.Algorithm):
                   }
                   )
 
-        fld_crime = doc.entity("dat:houset_karamy#transformation1", {prov.model.PROV_LABEL:"transformation1", prov.model.PROV_TYPE:"ont:DataSet"})
+        transformation1 = doc.entity("dat:houset_karamy#transformation1", {prov.model.PROV_LABEL:"transformation1", prov.model.PROV_TYPE:"ont:DataSet"})
         doc.wasAttributedTo(transformation1, this_script)
         doc.wasGeneratedBy(transformation1, get_transformation1, endTime)
         doc.wasDerivedFrom(transformation1, resource, get_transformation1, get_transformation1, get_transformation1)
