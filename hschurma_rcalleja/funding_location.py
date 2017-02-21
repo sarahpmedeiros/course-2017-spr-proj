@@ -27,7 +27,7 @@ def aggregate(R, f):
     keys = {r[0] for r in R}
     return [(key, f([v for (k,v) in R if k == key])) for key in keys]
 
-class locationByFunding(dml.Algorithm):
+class funding_location(dml.Algorithm):
     contributor = 'hschurma_rcalleja'
     reads = ['hschurma_rcalleja.funding', 'hschurma_rcalleja.location']
     writes = ['hschurma_rcalleja.location_funding']
@@ -73,8 +73,7 @@ class locationByFunding(dml.Algorithm):
         
         nameFund = []
         for i in range(len(funding)):
-            n = funding[i]["FIELD2"].strip()
-            nameFund.append((n, funding[i]["FIELD13"]))
+            nameFund.append((funding[i]["FIELD2"].strip(), funding[i]["FIELD13"].strip()))
 
 
         #print(nameFund)
@@ -110,43 +109,38 @@ class locationByFunding(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:hschurma_rcalleja#retrieve', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+
+        this_script = doc.agent('alg:hschurma_rcalleja#location_funding', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
 
+        location = doc.entity('dat:hschurma_rcalleja#location', {prov.model.PROV_LABEL:'Boston Public Schools', \
+            prov.model.PROV_TYPE:'ont:DataSet'})
+        funding = doc.entity('dat:hschurma_rcalleja#funding',{prov.model.PROV_LABEL:'BPS Funding', \
+            prov.model.PROV_TYPE:'ont:DataSet'})
 
-        get_found = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_lost = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-
-        doc.wasAssociatedWith(get_found, this_script)
-        doc.wasAssociatedWith(get_lost, this_script)
-
-        doc.usage(get_found, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-        doc.usage(get_lost, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-
-        lost = doc.entity('dat:hschurma_rcalleja#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-
-        found = doc.entity('dat:hschurma_rcalleja#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(found, this_script)
-        doc.wasGeneratedBy(found, get_found, endTime)
-        doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
         
+        get_loc_fund = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+        doc.wasAssociatedWith(get_loc_fund, this_script)
+        
+        doc.used(get_loc_fund, location, startTime)
+        doc.used(get_loc_fund, funding, startTime)
+
+        loc_fund = doc.entity('dat:hschurma_rcalleja#location_funding', {prov.model.PROV_LABEL:'High School Funding and Location Data', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(loc_fund, this_script)
+        doc.wasGeneratedBy(loc_fund, get_loc_fund, endTime)
+
+        doc.wasDerivedFrom(loc_fund, funding, get_loc_fund, get_loc_fund, get_loc_fund)
+        doc.wasDerivedFrom(loc_fund, location, get_loc_fund, get_loc_fund, get_loc_fund)
+
+        #repo.record(doc.serialize())
         repo.logout()
                   
         return doc
         
-locationByFunding.execute()
-doc = locationByFunding.provenance()
+funding_location.execute()
+doc = funding_location.provenance()
+print(json.dumps(json.loads(doc.serialize()), indent=4))
+
         
