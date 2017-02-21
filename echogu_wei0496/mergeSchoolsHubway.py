@@ -63,9 +63,9 @@ class mergeSchoolsHubway(dml.Algorithm):
                     'stations': item[1]['stations']} for item in product]   # Hubway stations location coordinates
 
         # aggregation: for each school, count the number of hubway stations within 500m walk
+        SchoolsHubway = []
         keys = {item['_id'] for item in product}
         for key in keys:
-            SchoolsHubway = []
             count = 0
             for item in product:
                 if item['_id'] == key:
@@ -78,8 +78,6 @@ class mergeSchoolsHubway(dml.Algorithm):
                                   'properties': item['properties'],
                                   'location': item['location'],
                                   'CountStations': count})
-
-        print(SchoolsHubway)
 
         repo.dropCollection("SchoolsHubway")
         repo.createCollection("SchoolsHubway")

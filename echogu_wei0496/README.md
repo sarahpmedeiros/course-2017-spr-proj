@@ -21,3 +21,4 @@ we've found out that the Hubway Stations dataset include the locations of cambri
 
 #### Set Up
 ```$ pip3 install geopy```
+```pip3 install shapely```

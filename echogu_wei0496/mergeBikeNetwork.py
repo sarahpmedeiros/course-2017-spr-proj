@@ -1,4 +1,5 @@
-# mergeBikeNetwork - merge city of boston and cambridge bike network data sets
+# mergeBikeNetwork.py
+# merge city of boston and cambridge bike network data sets
 
 import urllib.request
 import json
