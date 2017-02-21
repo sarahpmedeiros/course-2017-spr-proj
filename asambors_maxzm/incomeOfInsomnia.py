@@ -137,46 +137,73 @@ class incomeOfInsomnia(dml.Algorithm):
 
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
+        # reads = ['asambors_maxzm.nosleep','asambors_maxzm.ziptoincome','asambors_maxzm.zipcodetolatlong']
+        # writes = ['asambors_maxzm.incomeofinsomnia']
 
-
-    # Set up the database connection.
+        # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('asambors_maxzm', 'asambors_maxzm')
+
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        
+        # ADD CDC DATA SOURCE
+        doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/') # CDC Data Portal
 
-        this_script = doc.agent('alg:alice_bob#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_found = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_lost = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_found, this_script)
-        doc.wasAssociatedWith(get_lost, this_script)
-        doc.usage(get_found, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-       )
-        doc.usage(get_lost, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                }
-        )
+        this_script = doc.agent('alg:asambors_maxzm#incomeOfInsomnia', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
-        lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
+        # CDC DATA
+        sleep_resource = doc.entity('cdc:eqbn-8mpz', {'prov:label':'Sleeping less than 7 hours among adults aged >=18 years', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        
+        # DATAMECHANICS.IO DATA
+        zip_to_income_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'Zip code to estimated income', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        lat_to_zip_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'Latitude, longitude to zip code', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
-        found = doc.entity('dat:alice_bob#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(found, this_script)
-        doc.wasGeneratedBy(found, get_found, endTime)
-        doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
+        # INCOME OF INSOMNIA RESOURCE
+        income_of_insomnia_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'What is the income of those who sleep less than 7 hours a night', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+
+        get_sleep = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime) 
+        get_zip_to_income = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)  
+        get_lat_to_zip = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime) 
+        get_income_of_insomnia = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+        doc.wasAssociatedWith(get_sleep, this_script)
+        doc.wasAssociatedWith(get_zip_to_income, this_script)
+        doc.wasAssociatedWith(get_lat_to_zip, this_script) 
+
+        doc.usage(get_sleep, sleep_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_zip_to_income, zip_to_income_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_lat_to_zip, lat_to_zip_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+
+        Sleep = doc.entity('dat:asambors_maxzm#nosleepma', {prov.model.PROV_LABEL:'Sleeping less than 7 hours among adults aged >=18 years', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(Sleep, this_script)
+        doc.wasGeneratedBy(Sleep, get_sleep, endTime)
+        doc.wasDerivedFrom(Sleep, sleep_resource, get_sleep, get_sleep, get_sleep)
+
+        ZipToIncome = doc.entity('dat:asambors_maxzm#ziptoincome', {prov.model.PROV_LABEL:'Zip code to estimated income', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(ZipToIncome, this_script)
+        doc.wasGeneratedBy(ZipToIncome, get_zip_to_income, endTime)
+        doc.wasDerivedFrom(ZipToIncome, zip_to_income_resource, get_zip_to_income, get_zip_to_income, get_zip_to_income)
+
+        ZipcodeToLatLong = doc.entity('dat:asambors_maxzm#zipcodetolatlong', {prov.model.PROV_LABEL:'Latitude, longitude to zip code', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(ZipcodeToLatLong, this_script)
+        doc.wasGeneratedBy(ZipcodeToLatLong, get_lat_to_zip, endTime)
+        doc.wasDerivedFrom(ZipcodeToLatLong, lat_to_zip_resource, get_lat_to_zip, get_lat_to_zip, get_lat_to_zip)
+
+        IncomeOfInsomnia = doc.entity('dat:asambors_maxzm#incomeofinsomnia', {prov.model.PROV_LABEL:'What is the income of those who sleep less than 7 hours a night', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(IncomeOfInsomnia, this_script)
+        doc.wasGeneratedBy(IncomeOfInsomnia, get_income_of_insomnia, endTime)
+        doc.wasDerivedFrom(IncomeOfInsomnia, income_of_insomnia_resource, get_income_of_insomnia, get_income_of_insomnia, get_income_of_insomnia)
+
         repo.logout()
+                  
         return doc
 
 
 incomeOfInsomnia.execute()
+doc = incomeOfInsomnia.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))

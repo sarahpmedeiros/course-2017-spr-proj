@@ -73,9 +73,8 @@ class fetchData(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         
-        # ADD THREE DATA SOURCES
+        # ADD TWO OTHER DATA SOURCES BESIDES DATAMECHANICS.IO/DATA/
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/') # Boston Data Portal
-        doc.add_namespace('datm', 'http://datamechanics.io/data/') # datamechanics.io
         doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/') # CDC Data Portal
 
         this_script = doc.agent('alg:asambors_maxzm#fetchData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
@@ -88,8 +87,8 @@ class fetchData(dml.Algorithm):
         sleep_resource = doc.entity('cdc:eqbn-8mpz', {'prov:label':'Sleeping less than 7 hours among adults aged >=18 years', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         
         # DATAMECHANICS.IO DATA
-        zip_to_income_resource = doc.entity('datm:asambors_maxzm', {'prov:label':'Zip code to estimated income', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        lat_to_zip_resource = doc.entity('datm:asambors_maxzm', {'prov:label':'Latitude, longitude to zip code', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        zip_to_income_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'Zip code to estimated income', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        lat_to_zip_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'Latitude, longitude to zip code', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_hospitals = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_energy = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)  
