@@ -23,13 +23,16 @@ def select(R, s):
 def product(R, S):
     return [(t,u) for t in R for u in S]
 
+def prodThree(R, S, T):
+    return [(t,u,v) for t in R for u in S for v in T]
+
 def aggregate(R, f):
     keys = {r[0] for r in R}
     return [(key, f([v for (k,v) in R if k == key])) for key in keys]
 
 class funding_gradrates(dml.Algorithm):
     contributor = 'hschurma_rcalleja'
-    reads = ['hschurma_rcalleja.funding', 'hschurma_rcalleja.gradrates']
+    reads = ['hschurma_rcalleja.funding', 'hschurma_rcalleja.gradrates', 'hschurma_rcalleja.graduation']
     writes = ['hschurma_rcalleja.funding_gradrates']
 
 
@@ -47,32 +50,41 @@ class funding_gradrates(dml.Algorithm):
         
         #Dict of School name and Funding
         funding = list(repo.hschurma_rcalleja.funding.aggregate([{"$project":{"_id":0, "FIELD2":1, "FIELD13":1}}]))
-        
+
+        #create list of (school name, funding)
         nameFund = []
         for i in range(len(funding)):
             nameFund.append((funding[i]["FIELD2"].strip(), funding[i]["FIELD13"].strip()))
 
-    
-        #print(nameFund)
-        #print(nameLoc)
-        #print(nameFund)
 
+        #list size of graduation data
+        size = list(repo.hschurma_rcalleja.graduation.aggregate([{"$project": { "item":1, "numEntries": { "$size": "$data"}}}]))
+        s = size[0]['numEntries']
+
+        #create list of (school name, num students graduated)
+        grads = []
+        schools = []
+        for i in range(s):
+            school = list(repo.hschurma_rcalleja.graduation.aggregate([{"$project": { "school": { "$arrayElemAt": ["$data", i]}}}]))
+            if (school[0]['school'][13] == "All Colleges" and school[0]['school'][14] == "All Students"):
+                grads.append((school[0]['school'][12], school[0]['school'][15]))
+        
+        #list of grad rates
         gradrates = list(repo.hschurma_rcalleja.gradrates.aggregate([{"$project":{"_id":0, "FIELD1":1, "FIELD10":1}}]))
 
-
+        #project into list of (school name, grad rate)
         name_grad = []
-
         for i in gradrates:
             name_grad.append((i['FIELD1'],i['FIELD10']))
 
-
-        P = product(name_grad, nameFund)
-        S = select(P, lambda t: t[0][0] == t[1][0])
-        PR = project(S, lambda t: (t[0][0], t[0][1], t[1][1]))
+        #Product, selection, and projection
+        P = prodThree(name_grad, nameFund, grads)
+        S = select(P, lambda t: t[0][0] == t[1][0] == t[2][0])
+        PR = project(S, lambda t: (t[0][0], t[0][1], t[1][1], t[2][1]))
         print(PR)
 
-    
-        #Trim white spaces
+        #Format = (School Name, Graduation Rate, Funding, Num Graduates)
+
    
 
     @staticmethod
@@ -93,43 +105,39 @@ class funding_gradrates(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+    
+        this_script = doc.agent('alg:hschurma_rcalleja#funding_gradrates', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
-        this_script = doc.agent('alg:hschurma_rcalleja#retrieve', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-
-
-
-        get_found = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_lost = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-
-
-        doc.wasAssociatedWith(get_found, this_script)
-        doc.wasAssociatedWith(get_lost, this_script)
-
-        doc.usage(get_found, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-        doc.usage(get_lost, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-
-        lost = doc.entity('dat:hschurma_rcalleja#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-
-        found = doc.entity('dat:hschurma_rcalleja#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(found, this_script)
-        doc.wasGeneratedBy(found, get_found, endTime)
-        doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
+        funding = doc.entity('dat:hschurma_rcalleja#funding', {'prov:label':'BPS Funding', \
+            prov.model.PROV_TYPE:'ont:DataSet'})
+        gradrates = doc.entity('dat:hschurma_rcalleja#gradrates', {'prov:label':'BPS Graduation Rates', \
+            prov.model.PROV_TYPE:'ont:DataSet'})
+        gradnums = doc.entity('dat:hschurma_rcalleja#graduation', {'prov:label':'Graduates Attending College', \
+            prov.model.PROV_TYPE:'ont:DataSet'})
         
+        get_grad_fund = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+        doc.wasAssociatedWith(get_grad_fund, this_script)
+
+        doc.used(get_grad_fund, funding, startTime)
+        doc.used(get_grad_fund, gradrates, startTime)
+        doc.used(get_grad_fund, gradnums, startTime)
+
+        grad_fund = doc.entity('dat:hschurma_rcalleja#funding_gradrates', {prov.model.PROV_LABEL:'High School Funding and Graduation Data', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(grad_fund, this_script)
+        doc.wasGeneratedBy(grad_fund, get_grad_fund, endTime)
+        
+        doc.wasDerivedFrom(grad_fund, funding, get_grad_fund, get_grad_fund, get_grad_fund)
+        doc.wasDerivedFrom(grad_fund, gradrates, get_grad_fund, get_grad_fund, get_grad_fund)
+        doc.wasDerivedFrom(grad_fund, gradnums, get_grad_fund, get_grad_fund, get_grad_fund)
+
+        #repo.record(doc.serialize())
         repo.logout()
                   
         return doc
         
 funding_gradrates.execute()
 doc = funding_gradrates.provenance()
+#print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
+
