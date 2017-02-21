@@ -20,15 +20,16 @@ class get(dml.Algorithm):
         repo = client.repo
         repo.authenticate('houset_karamy', 'houset_karamy')
         
-        #dataSets = {'crimeReportsCambridge': 'http://datamechanics.io/data/DataSets/CrimeReportsCambridge'}  
-        url = 'http://datamechanics.io/data/DataSets/CrimeReportsCambridge'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        #r = json.loads(response)
-        #s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("crimeReportsCambridge")
-        repo.createCollection("crimeReportsCambridge")
-        repo['houset_karamy.crimeReportsCambridge'].insert_many(response)
-        
+        dataSets = {'crimeReportsCambridge': 'http://datamechanics.io/data/DataSets/CrimeReportsCambridge'}  
+        for ds in dataSets:
+            url = dataSets[ds]
+            response = urllib.request.urlopen(url).read().decode("utf-8")
+            r = json.loads(response)
+            s = json.dumps(r, sort_keys=True, indent=2)
+            repo.dropPermanent(ds)
+            repo.createPermanent(ds)
+            repo['houset_karamy.' + ds].insert_many(r)
+            
         repo.logout()
         
         endTime = datetime.datetime.now()
