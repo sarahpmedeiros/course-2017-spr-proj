@@ -55,7 +55,8 @@ class get(dml.Algorithm):
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
         doc.add_namespace('mbta', 'http://realtime.mbta.com/developer/api/v2/r') # MBTA API
-        doc.add_namspace('cma', 'https://data.cambridgema.gov/browse')
+        doc.add_namspace('cma', 'https://data.cambridgema.gov/resource/')
+        doc.add_namespace('mag', 'https://data.mass.gov/resource/')
         
       #writes = ['houset_karamy.policeStations','houset_karamy.crimeReportsBoston', 'houset_karamy.crimeReportsCambridge', 'houset_karamy.policeCarRoutesCambridge', 'houset_karamy.policeWalkingRoutesCambridge','houset_karamy.realTimeTravelMassdot']
 
