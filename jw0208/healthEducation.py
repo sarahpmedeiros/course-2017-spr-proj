@@ -116,8 +116,8 @@ class healthEducation(dml.Algorithm):
             )
 
         healthEducation = doc.entity('dat:jw0208#healthEducation', {prov.model.PROV_LABEL:'State physically and mentally unhealthy days vs. state education level', prov.model.PROV_TYPE:'ont:DataSet'})
-        health = doc.entity('dat:jw0208#health', {prov.model.PROV_LABEL:'State physically and mentally unhealthy days vs. state education level', prov.model.PROV_TYPE:'ont:DataSet'})
-        education = doc.entity('dat:jw0208#education', {prov.model.PROV_LABEL:'State physically and mentally unhealthy days vs. state education level', prov.model.PROV_TYPE:'ont:DataSet'})
+        health = doc.entity('dat:jw0208#health', {prov.model.PROV_LABEL:'State physically and mentally unhealthy days in year 2015', prov.model.PROV_TYPE:'ont:DataSet'})
+        education = doc.entity('dat:jw0208#education', {prov.model.PROV_LABEL:'state education level in year 2015', prov.model.PROV_TYPE:'ont:DataSet'})
 
         doc.wasAttributedTo(healthEducation, this_script)
         doc.wasGeneratedBy(healthEducation, this_healtheducation, endTime)

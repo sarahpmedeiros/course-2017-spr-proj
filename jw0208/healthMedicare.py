@@ -77,9 +77,9 @@ class healthMedicare(dml.Algorithm):
         #print (y)
 
 
-        repo.dropPermanent('jw0208.healthEducation')
-        repo.createPermanent('jw0208.healthEducation')
-        repo['jw0208.healthEducation'].insert_many(y)
+        repo.dropPermanent('jw0208.healthMedicare')
+        repo.createPermanent('jw0208.healthMedicare')
+        repo['jw0208.healthMedicare'].insert_many(y)
 
         repo.logout()
         endTime = datetime.datetime.now()
@@ -107,20 +107,20 @@ class healthMedicare(dml.Algorithm):
 
         this_script = doc.agent('alg:jw0208#healthMedicare',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
-        resource = doc.entity('cdg:fq5d-abxc',{'prov:label': 'State physically and mentally unhealthy days vs. state education level',
+        resource = doc.entity('cdg:fq5d-abxc',{'prov:label': 'State physically and mentally unhealthy days vs. state medicare spent on patient compare to national level',
                                prov.model.PROV_TYPE: 'ont:DataResource', 'ont:Extension': 'json'})
         this_healthMedicare = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(this_healthMedicare, this_script)
-        doc.usage(this_healthMedicare, resource, startTime, None,
-                  {prov.model.PROV_TYPE: 'ont:Retrieval'}
-                  )
+        doc.usage(this_healthMedicare, resource, startTime, None,{prov.model.PROV_TYPE: 'ont:Retrieval'})
 
-        healthMedicare = doc.entity('dat:jw0208#healthMedicare', {
-            prov.model.PROV_LABEL: 'State physically and mentally unhealthy days vs. state education level',
-            prov.model.PROV_TYPE: 'ont:DataSet'})
+        healthMedicare = doc.entity('dat:jw0208#healthMedicare', {prov.model.PROV_LABEL:'State physically and mentally unhealthy days vs. state medicare spent on patient compare to national level', prov.model.PROV_TYPE:'ont:DataSet'})
+        health = doc.entity('dat:jw0208#health', {prov.model.PROV_LABEL:'State physically and mentally unhealthy days in year 2015', prov.model.PROV_TYPE:'ont:DataSet'})
+        medicare = doc.entity('dat:jw0208#medicare', {prov.model.PROV_LABEL:'state hospital medicare spent on each patient compare to national level in year 2015', prov.model.PROV_TYPE:'ont:DataSet'})
+
         doc.wasAttributedTo(healthMedicare, this_script)
         doc.wasGeneratedBy(healthMedicare, this_healthMedicare, endTime)
-        doc.wasDerivedFrom(healthMedicare, resource, this_healthMedicare, this_healthMedicare, this_healthMedicare)
+        doc.wasDerivedFrom(health, resource, this_healthMedicare, this_healthMedicare, this_healthMedicare)
+        doc.wasDerivedFrom(medicare, resource, this_healthMedicare, this_healthMedicare, this_healthMedicare)
 
         #repo.record(doc.serialize())  # Record the provenance document.
         repo.logout()

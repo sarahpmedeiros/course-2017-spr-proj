@@ -112,14 +112,18 @@ class healthIncome(dml.Algorithm):
         resource = doc.entity('cdg:fq5d-abxc', {'prov:label':'State physically and mentally unhealthy days vs. state income&poverty level', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         this_healthIncome = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(this_healthIncome, this_script)
-        doc.usage(this_healthIncome, resource, startTime, None,
-                {prov.model.PROV_TYPE:'ont:Retrieval'}
-            )
+        doc.usage(this_healthIncome, resource, startTime, None,{prov.model.PROV_TYPE:'ont:Retrieval'})
 
-        healthIncome = doc.entity('dat:jw0208#healthIncome', {prov.model.PROV_LABEL:'State physically and mentally unhealthy days vs. state education level', prov.model.PROV_TYPE:'ont:DataSet'})
+        healthIncome = doc.entity('dat:jw0208#healthIncome', {prov.model.PROV_LABEL:'State physically and mentally unhealthy days vs. state income&poverty level', prov.model.PROV_TYPE:'ont:DataSet'})
+        health = doc.entity('dat:jw0208#health',{prov.model.PROV_LABEL: 'State physically and mentally unhealthy days in year 2015',prov.model.PROV_TYPE: 'ont:DataSet'})
+        income = doc.entity('dat:jw0208#education', {prov.model.PROV_LABEL: 'state annual household income in year 2015',prov.model.PROV_TYPE: 'ont:DataSet'})
+        poverty = doc.entity('dat:jw0208#poverty', {prov.model.PROV_LABEL: 'state poverty populatiion percentage in year 2015', prov.model.PROV_TYPE: 'ont:DataSet'})
+
         doc.wasAttributedTo(healthIncome, this_script)
         doc.wasGeneratedBy(healthIncome, this_healthIncome, endTime)
-        doc.wasDerivedFrom(healthIncome, resource, this_healthIncome, this_healthIncome, this_healthIncome)
+        doc.wasDerivedFrom(health, resource, this_healthIncome, this_healthIncome, this_healthIncome)
+        doc.wasDerivedFrom(income, resource, this_healthIncome, this_healthIncome, this_healthIncome)
+        doc.wasDerivedFrom(poverty, resource, this_healthIncome, this_healthIncome, this_healthIncome)
 
         #repo.record(doc.serialize()) # Record the provenance document.
         repo.logout()
