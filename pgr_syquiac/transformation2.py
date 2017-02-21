@@ -1,7 +1,7 @@
 '''
     Pauline Ramirez and Carlos Syquia
     transformation2.py
-    obesity and healthy corner stores and correlation to hospital locations
+    obesity and healthy corner stores and distance to hospital locations
 '''
 
 import urllib.request
@@ -43,8 +43,6 @@ class transformation2(dml.Algorithm):
             if (i['measure'] == 'Obesity among adults aged >=18 Years' or
                 i['measureid'] == 'OBESITY'):
                 obesity.append(i)
-
-        # print(len(obesity))
 
         pools = []
         for i in poolsRepo.find():
@@ -91,7 +89,6 @@ class transformation2(dml.Algorithm):
 
             i["coordinates"].append((location.longitude, location.latitude))
 
-        #print(pools[0])
         # Collect the closest pools and add that to the stores, and then collect the closest obesity data points
 
         stores = []
@@ -130,7 +127,6 @@ class transformation2(dml.Algorithm):
 
             stores[idx]['obesity_rates'].append(i)
 
-        # print(stores[0])
 
         repo.dropPermanent("obesity_pools_stores")
         repo.createPermanent("obesity_pools_stores")
@@ -141,8 +137,6 @@ class transformation2(dml.Algorithm):
         endTime = datetime.datetime.now()
         return {"start":startTime, "end":endTime}
 
-        # print(len(stores))
-        # print(stores[0]['location'])
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''
@@ -174,7 +168,3 @@ class transformation2(dml.Algorithm):
 
         return doc
 
-# transformation2.execute()
-# doc = transformation1.provenance()
-# print(doc.get_provn())
-# print(json.dumps(json.loads(doc.serialize()), indent=4))

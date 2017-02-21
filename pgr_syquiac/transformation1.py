@@ -1,7 +1,7 @@
 '''
     Pauline Ramirez and Carlos Syquia
     transformation1.py
-    Sleep rates and correlation to university locations
+    Sleep rates and distance to university locations
 '''
 
 import urllib.request
@@ -47,7 +47,6 @@ class transformation1(dml.Algorithm):
             i['coordinates'] = []
             i['coordinates'].append((i["FIELD65"], i["FIELD66"])) # Add coordinates field
 
-        # print(boston_schools[0])
 
         # Now filter by sleep issues for boston
         sleep = []
@@ -75,10 +74,6 @@ class transformation1(dml.Algorithm):
                     idx = j
 
             boston_schools[idx]['sleepRates'].append(i)
-
-        # print(len(boston_schools))
-
-
 
         repo.dropPermanent("sleep_rates_universities")
         repo.createPermanent("sleep_rates_universities")
@@ -123,8 +118,3 @@ class transformation1(dml.Algorithm):
         return doc
 
 
-
-# transformation1.execute()
-# doc = transformation1.provenance()
-# print(doc.get_provn())
-# print(json.dumps(json.loads(doc.serialize()), indent=4))

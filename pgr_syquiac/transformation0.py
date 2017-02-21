@@ -1,7 +1,7 @@
 '''
     Pauline Ramirez and Carlos Syquia
     transformation0.py
-    Correlation between lack of doctor visits and distance from the hospitals
+    Relationship between lack of doctor visits and distance from the hospitals
 '''
 
 import urllib.request
@@ -41,8 +41,6 @@ class transformation0(dml.Algorithm):
             i['doctorVisits'] = []
             locations.append(i)
 
-        #print(locations[0])
-
         visits = []
         print("Collecting appropriate data from CDC data set...")
         for i in cdcRepo.find():
@@ -51,7 +49,6 @@ class transformation0(dml.Algorithm):
                 i['measureid'] == 'CHECKUP'):
                 visits.append(i)
 
-        #print(len(visits))
         print("Mapping rates to closest hospitals...")
         for i in visits:
             # We want to iterate through all the visits rates and map them to the
@@ -113,7 +110,3 @@ class transformation0(dml.Algorithm):
         return doc
 
 
-# transformation0.execute()
-# doc = transformation0.provenance()
-# print(doc.get_provn())
-# print(json.dumps(json.loads(doc.serialize()), indent=4))

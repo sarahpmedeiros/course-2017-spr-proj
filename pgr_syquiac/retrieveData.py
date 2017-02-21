@@ -1,5 +1,8 @@
 '''
 Pauline Ramirez & Carlos Syquia
+retrieveData.py
+
+Retrieves data from the data sets we're using
 
 '''
 
@@ -37,7 +40,6 @@ class retrieveData(dml.Algorithm):
         client = sodapy.Socrata("chronicdata.cdc.gov", None)
         response = client.get("csmm-fdhi", CityName="Boston",
         GeographicLevel="Census Tract", limit=5000)
-        #print(len(response))
         repo.dropCollection("cdc")
         repo.createCollection("cdc")
         repo['pgr_syquiac.cdc'].insert_many(response)
@@ -55,7 +57,6 @@ class retrieveData(dml.Algorithm):
         # Get data for Open Swimming Pools in Boston
         client = sodapy.Socrata("data.cityofboston.gov", None)
         response = client.get("5jxx-wfpr", limit=150)
-        #print(response)
         repo.dropCollection("pools")
         repo.createCollection("pools")
         repo['pgr_syquiac.pools'].insert_many(response)
@@ -63,7 +64,6 @@ class retrieveData(dml.Algorithm):
         # Get data for healthy corner stores
         client = sodapy.Socrata("data.cityofboston.gov", None)
         response = client.get("ybm6-m5qd", limit=20)
-        #print(response)
         repo.dropCollection("stores")
         repo.createCollection("stores")
         repo['pgr_syquiac.stores'].insert_many(response)
@@ -171,14 +171,9 @@ class retrieveData(dml.Algorithm):
         doc.wasGeneratedBy(stores, getStores, endTime)
         doc.wasDerivedFrom(stores, storesResource, getStores, getStores, getStores)
 
-        #repo.record(doc.serialize()) # Record the provenance document. <- creates an error
+        
         repo.logout()
 
         return doc
-
-# retrieveData.execute()
-doc = retrieveData.provenance()
-print(doc.get_provn())
-#print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
