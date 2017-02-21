@@ -1,0 +1,22 @@
+Boston public schools (for lookup / 2012-2013):
+https://data.cityofboston.gov/dataset/Boston-Public-Schools-School-Year-2012-2013-/e29s-ympv
+
+Neighborhoods(for lookup):
+https://data.cityofboston.gov/api/views/pbfk-2wv3/rows.json?accessType=DOWNLOAD:
+
+grad rates by race/gender/sex and separated by region - so we need to separate 
+school info into districts(2006-2013):
+https://data.mass.gov/Education/Graduation-Rate-Report-State-by-District-by-School/jncu-rvh4
+
+tech percentages by orgcode - how does access to tech affect grad rates?
+https://data.mass.gov/Education/Technology-Report-by-State-by-District-by-School-2/c2he-p42r
+
+income distribution by county/district/county:
+https://datausa.io/profile/geo/boston-ma/#income_geo
+
+
+public school, neighborhood, address, org code, census tract
+
+income, census tract
+
+org_code, grad rates, tech % 
