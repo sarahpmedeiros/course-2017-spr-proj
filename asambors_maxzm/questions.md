@@ -17,3 +17,4 @@ this_script = doc.agent('alg:asambors_maxzm#fetchData', {prov.model.PROV_TYPE:pr
   * If each file requires a prov method, do we copy and paste or should we just grab the relevant dataset?
   * We didn't need any authentication, should we be concerned by this? 
   * How to clear our mongodb? 
+  * How would you like the files arranged? A bit confused on what the architecture overall is supposed to look like beyond having class files
