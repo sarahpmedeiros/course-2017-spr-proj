@@ -41,10 +41,10 @@ def aggregate(R, f):
     return [(key, f([v for (k, v) in R if k == key])) for key in keys]
 
 
-class locationByFunding(dml.Algorithm):
+class funding_SAT(dml.Algorithm):
     contributor = 'hschurma_rcalleja'
     reads = ['hschurma_rcalleja.funding', 'hschurma_rcalleja.SAT']
-    writes = ['hschurma_rcalleja.SAT_funding']
+    writes = ['hschurma_rcalleja.funding_SAT']
 
     @staticmethod
     def execute(trial=False):
@@ -55,27 +55,28 @@ class locationByFunding(dml.Algorithm):
         repo = client.repo
         repo.authenticate('hschurma_rcalleja', 'hschurma_rcalleja')
 
-        repo.dropPermanent("SAT_funding")
-        repo.createPermanent("SAT_funding")
+        repo.dropPermanent("funding_SAT")
+        repo.createPermanent("funding_SAT")
 
         # size of SAT data set
         SAT = list(repo.hschurma_rcalleja.SAT.find())
         SATlen = len(SAT)
         #print(SAT)
 
-        # list of schools
+        # list of schools in form [{'Name': val, 'NumTesting': val, 'Reading': val, 'Math': val, 'Writing': val}]
         SATschools = []
         for i in range(2, SATlen):
             temp = SAT[i]
-            SATschools.append((temp['FIELD1'].strip(), (temp['FIELD2'], temp['FIELD3'], temp['FIELD4'], temp['FIELD5'])))
+            SATschools.append({'Name': temp['FIELD1'].strip(), 'NumTesting': temp['FIELD2'], 'Reading': temp['FIELD3'], 'Math': temp['FIELD4'], 'Writing': temp['FIELD5']})
 
         # Dict of School name and Funding
         funding = list(repo.hschurma_rcalleja.funding.aggregate([{"$project": {"_id": 0, "FIELD2": 1, "FIELD13": 1}}]))
 
+        # [{'Name': val, 'Funding': val}]
         nameFund = []
         for i in range(len(funding)):
             n = funding[i]["FIELD2"].strip()
-            nameFund.append((n, funding[i]["FIELD13"]))
+            nameFund.append({'Name': n, 'Funding': funding[i]["FIELD13"]})
 
         # print(nameFund)
         # print(nameLoc)
@@ -84,11 +85,14 @@ class locationByFunding(dml.Algorithm):
 
         P = product(SATschools, nameFund)
         #print(P)
-        S = select(P, lambda t: t[0][0] == t[1][0])
+        S = select(P, lambda t: t[0]['Name'] == t[1]['Name'])
         # print(S)
-        PR = project(S, lambda t: (t[0][0], t[0][1], t[1][1]))
+        PR = project(S, lambda t: {'Name': t[0]['Name'], 'NumTesting': t[0]['NumTesting'], 'Reading': t[0]['Reading'], 'Math': t[0]['Math'], 'Writing': t[0]['Writing'], 'Funding': t[1]['Funding']})
         print(PR)
 
+        repo.dropCollection('funding_SAT')
+        repo.createCollection('funding_SAT')
+        repo['hschurma_rcalleja.funding_SAT'].insert(PR)
 
         # Trim white spaces
 
@@ -150,6 +154,6 @@ class locationByFunding(dml.Algorithm):
         return doc
 
 
-locationByFunding.execute()
-doc = locationByFunding.provenance()
+funding_SAT.execute()
+doc = funding_SAT.provenance()
 

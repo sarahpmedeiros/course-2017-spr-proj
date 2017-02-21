@@ -54,7 +54,7 @@ class funding_gradrates(dml.Algorithm):
         #create list of (school name, funding)
         nameFund = []
         for i in range(len(funding)):
-            nameFund.append((funding[i]["FIELD2"].strip(), funding[i]["FIELD13"].strip()))
+            nameFund.append({'Name': funding[i]["FIELD2"].strip(), 'Funding': funding[i]["FIELD13"].strip()})
 
 
         #list size of graduation data
@@ -67,7 +67,7 @@ class funding_gradrates(dml.Algorithm):
         for i in range(s):
             school = list(repo.hschurma_rcalleja.graduation.aggregate([{"$project": { "school": { "$arrayElemAt": ["$data", i]}}}]))
             if (school[0]['school'][13] == "All Colleges" and school[0]['school'][14] == "All Students"):
-                grads.append((school[0]['school'][12], school[0]['school'][15]))
+                grads.append({'Name': school[0]['school'][12], 'GradNum': school[0]['school'][15]})
         
         #list of grad rates
         gradrates = list(repo.hschurma_rcalleja.gradrates.aggregate([{"$project":{"_id":0, "FIELD1":1, "FIELD10":1}}]))
@@ -75,17 +75,19 @@ class funding_gradrates(dml.Algorithm):
         #project into list of (school name, grad rate)
         name_grad = []
         for i in gradrates:
-            name_grad.append((i['FIELD1'],i['FIELD10']))
+            name_grad.append({'Name': i['FIELD1'], 'GradRate': i['FIELD10']})
 
         #Product, selection, and projection
         P = prodThree(name_grad, nameFund, grads)
-        S = select(P, lambda t: t[0][0] == t[1][0] == t[2][0])
-        PR = project(S, lambda t: (t[0][0], t[0][1], t[1][1], t[2][1]))
+        S = select(P, lambda t: t[0]['Name'] == t[1]['Name'] == t[2]['Name'])
+        PR = project(S, lambda t: {'Name': t[0]['Name'], 'GradRate': t[0]['GradRate'], 'Funding': t[1]['Funding'], 'GradNum': t[2]['GradNum']})
         print(PR)
 
         #Format = (School Name, Graduation Rate, Funding, Num Graduates)
 
-   
+        repo.dropCollection('funding_gradrates')
+        repo.createCollection('funding_gradrates')
+        repo['hschurma_rcalleja.funding_gradrates'].insert(PR)
 
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):

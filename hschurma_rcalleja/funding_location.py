@@ -82,17 +82,15 @@ class funding_location(dml.Algorithm):
 
 
         P = product(nameLoc, nameFund)
-        print(P)
+        #print(P)
         S = select(P, lambda t: t[0]['Name'] == t[1]['Name'])
-        PR = project(S, lambda t: {t[0]['Name'], t[0]['location'], t[1]['Funding']})
+        print(S)
+        PR = project(S, lambda t: {'Name': t[0]['Name'], 'location': t[0]['location'], 'Funding': t[1]['Funding']})
         print(PR)
-<<<<<<< HEAD
-=======
 
         repo.dropCollection('funding_location')
         repo.createCollection('funding_location')
         repo['hschurma_rcalleja.funding_location'].insert(PR)
->>>>>>> f083e4ddc9571aff30930c38f3b20548c1b997fc
     
         #Trim white spaces
    
