@@ -76,7 +76,7 @@ class get(dml.Algorithm):
         return doc
 
 
-get.execute()
-doc = get.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#get.execute()
+#doc = get.provenance()
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
