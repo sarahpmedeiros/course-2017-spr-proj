@@ -54,8 +54,11 @@ class police_crime(dml.Algorithm):
         repo.dropCollection("police_crime")
         repo.createCollection("police_crime")
 
+        token = "?$$app_token="+dml.auth['services']['cityofbostondataportal']['token']
+
+
         # import police districts data
-        url = "http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5.geojson"
+        url = "http://bostonopendata-boston.opendata.arcgis.com/datasets/9a3a8c427add450eaf45a470245680fc_5.geojson" + token 
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         r = [r['features'][i]['properties'] for i in range(11)]
@@ -118,6 +121,7 @@ class police_crime(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        #doc
 
         this_script = doc.agent('alg:pt0713_silnuext#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})

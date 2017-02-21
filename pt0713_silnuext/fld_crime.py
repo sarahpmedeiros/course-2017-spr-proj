@@ -61,8 +61,18 @@ class fld_crime(dml.Algorithm):
    
 
         fld_city_data = project(response, lambda t: (t["date_received"], [t.get("business_city")]))
-        print(fld_city_data)
-
+        fld_city_month = [int(boston[0][6]) for boston in fld_city_data if boston[0][:4] == "2015" and boston[1] == ['Boston'] and boston[0][5] != 1]
+        #print(fld_city_month)
+        #[6, 4, 3, 9, 8, 2, 5, 7, 3, 8, 5, 2, 2, 2, 5, 9, 3, 7, 2, 2, 8, 5, 9, 8, 6, 6, 6, 1, 0, 6, 7, 1, 2, 8, 2, 1, 7, 9, 8, 9]
+        fld12 = [num for num in fld_city_month if num == 1 or num == 2]
+        fld34 = [num for num in fld_city_month if num == 3 or num == 4]
+        fld56 = [num for num in fld_city_month if num == 5 or num == 6]
+        fld78 = [num for num in fld_city_month if num == 7 or num == 8]
+        print("the number of complaints in 2015 Jan + Feb: " , len(fld12))
+        print("the number of complaints in 2015 Mar + Apr: " , len(fld34))
+        print("the number of complaints in 2015 May + Jun: " , len(fld56))
+        print("the number of complaints in 2015 Jul + Aug: " , len(fld78))
+        
         repo["pt0713_silnuext.fld_crime"].insert_many(response)
         repo["pt0713_silnuext.fld_crime"].metadata({"complete":True})
         print(repo["pt0713_silnuext.fld_crime"].metadata())
@@ -74,7 +84,7 @@ class fld_crime(dml.Algorithm):
         s = json.dumps(response1, sort_keys=True, indent=2)
 
         crime_month = project(response1, lambda x: (x["year"], x["month"]))
-        crime_month2015 = [crime_2015month for crime_2015month in crime_month if crime_2015month[0] == "2012"]
+        crime_month2015 = [crime_2015month for crime_2015month in crime_month if crime_2015month[0] == "2015"]
         crime12 = [crime12_2015 for crime12_2015 in crime_month2015 if crime12_2015[1] == '1' or crime12_2015[1] == '2']
         print("The crime number happens in Jan and Feb in 2015 is: ", len(crime12))
         crime34 = [crime34_2015 for crime34_2015 in crime_month2015 if crime34_2015[1] == '3' or crime34_2015[1] == '4']
@@ -87,6 +97,12 @@ class fld_crime(dml.Algorithm):
         repo["pt0713_silnuext.fld_crime"].insert_many(response1)
         repo["pt0713_silnuext.fld_crime"].metadata({"complete":True})
         print(repo["pt0713_silnuext.fld_crime"].metadata())
+
+        print("The percentage of fld complaint / crime in Jan and Feb is: ", len(fld12) / len(crime12))
+        print("The percentage of fld complaint / crime in Mar and Apr is: ", len(fld34) / len(crime34))
+        print("The percentage of fld complaint / crime in May and Jun is: ", len(fld56) / len(crime56))
+        print("The percentage of fld complaint / crime in Jul and Aug is: ", len(fld78) / len(crime78))
+
 
         repo.logout()
 
