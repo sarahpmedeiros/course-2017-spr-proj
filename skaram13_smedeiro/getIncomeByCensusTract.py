@@ -3,8 +3,7 @@ import json
 import dml
 import prov.model
 import datetime
-import uuid
-
+import time
 class getIncomeByCensusTract(dml.Algorithm):
     contributor = 'skaram13_smedeiro'
     reads = []
@@ -42,13 +41,14 @@ class getIncomeByCensusTract(dml.Algorithm):
         repo.dropCollection("income")
         repo.createCollection("income")
         
+        # print (dbEntries)
         repo['skaram13_smedeiro.income'].insert_many(dbEntries)
 
         #test and print from database
         results = repo['skaram13_smedeiro.income'].find()
-        print (results)
-        for each in results:
-            print (each)
+        # print (results)
+        # for each in results:
+        #     print (each)
 
         repo.logout()
 
@@ -100,9 +100,9 @@ class getIncomeByCensusTract(dml.Algorithm):
                   
         return doc
 
-getIncomeByCensusTract.execute()
-doc = getIncomeByCensusTract.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# getIncomeByCensusTract.execute()
+# doc = getIncomeByCensusTract.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

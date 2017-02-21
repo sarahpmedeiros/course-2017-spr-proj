@@ -5,8 +5,9 @@ import prov.model
 import datetime
 import uuid
 import requests 
-
-class gradRates(dml.Algorithm):
+import time
+import csv
+class getGradRate(dml.Algorithm):
 	contributor = 'skaram13_smedeiro'
 	reads = []
 	writes = ['skaram13_smedeiro.gradRates']
@@ -21,25 +22,17 @@ class gradRates(dml.Algorithm):
 		repo = client.repo
 		repo.authenticate('skaram13_smedeiro', 'skaram13_smedeiro')
 
-		offset = 0
-		url = 'https://data.mass.gov/resource/bvpn-kwiy.json?$limit=50000&$offset=' + str(offset)
-		res = requests.get(url)
-		response = urllib.request.urlopen(url).read().decode("utf-8")
-		r = json.loads(response)
-		while (r!=[]):
-			offset+=50000 
-			dictOfGradRates = {}
-			for item in r:
-				if ('org_code' in item and 'reg4_r' in item and item['mat_id']=='5' and item['fy_code']=='2011'):
-					org_code = item['org_code']
-					reg4_r = item['reg4_r']
-					dictOfGradRates[org_code] = (reg4_r)
-			url = 'https://data.mass.gov/resource/bvpn-kwiy.json?$limit=50000&$offset=' + str(offset)
-			res = requests.get(url)
-			response = urllib.request.urlopen(url).read().decode("utf-8")
-			r = json.loads(response)	
+		# ['Wilmington', '3420000', '266', '92.1', '3', '0.4', '1.5', '3', '0']
+		dictOfGradRates = {}
+		with open('2011 Graduation Report.csv', 'r') as f:
+			read_data = csv.reader(f)
+			for entry in read_data:
+				org_code = entry[1]
+				percentGraduated = entry[3]
+				dictOfGradRates[org_code] = percentGraduated
 
 
+				# print (dictOfGradRates)
 		repo.dropCollection("gradRates")
 		repo.createCollection("gradRates")
 		repo['skaram13_smedeiro.gradRates'].insert_one(dictOfGradRates)
@@ -69,7 +62,7 @@ class gradRates(dml.Algorithm):
 		doc.add_namespace('dat', 'http://datamechanics.io/data/skaram13_smedeiro/') # The data sets are in <user>#<collection> format.
 		doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
 		doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-		doc.add_namespace('dmg', 'https://data.mass.gov/resource/')
+		doc.add_namespace('dmg', 'https://census.gov/resource/')
 
 
 		#Agents
@@ -78,9 +71,9 @@ class gradRates(dml.Algorithm):
 
 		# Entities
 		# this is the data set that take the Grad reports from 
-		gradReport = doc.entity('dmg:skaram13_smedeiro#Graduation-Rate-Report-by-State-by-District-by-School',{'prov:label':'Graduation Report', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})		
+		gradReport = doc.entity('dmg:skaram13_smedeiro#Graduation-Rate-Report-by-District-by-School',{'prov:label':'Graduation Report', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'CSV'})		
 		#this is the data set we create in this script
-		gradRates = doc.entity('dat:skaram13_smedeiro#GradRates',{'prov:label':'Regular 4-year rate percent graduated', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
+		gradRates = doc.entity('dat:skaram13_smedeiro#GradRates',{'prov:label':'Percent graduated for 2011', prov.model.PROV_TYPE:'ont:DataSet'})
 
 		# Activities			
 		get_gradRates = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
@@ -100,10 +93,30 @@ class gradRates(dml.Algorithm):
 				  
 		return doc
 
-# gradRates.execute()
-# doc = gradRates.provenance()
-# print(doc.get_provn())
-# print(json.dumps(json.loads(doc.serialize()), indent=4))
+getGradRate.execute()
+doc = getGradRate.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
 #  
+
+# offset = 0
+		# url = 'https://data.mass.gov/resource/bvpn-kwiy.json?$limit=50000&$offset=' + str(offset)
+		# res = requests.get(url)
+		# response = urllib.request.urlopen(url).read().decode("utf-8")
+		# r = json.loads(response)
+		# while (r!=[]):
+		# 	offset+=50000 
+			# dictOfGradRates = {}
+			# for item in r:
+			# 	if ('org_code' in item and 'reg4_r' in item and item['mat_id']=='5' and item['fy_code']=='2011'):
+			# 		org_code = item['org_code']
+			# 		reg4_r = item['reg4_r']
+			# 		dictOfGradRates[org_code] = (reg4_r)
+		# 	url = 'https://data.mass.gov/resource/bvpn-kwiy.json?$limit=50000&$offset=' + str(offset)
+		# 	time.sleep(3)
+		# 	res = requests.get(url)
+		# 	response = urllib.request.urlopen(url).read().decode("utf-8")
+		# 	r = json.loads(response)	
+

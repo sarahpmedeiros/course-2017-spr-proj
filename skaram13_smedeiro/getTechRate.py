@@ -5,12 +5,13 @@ import prov.model
 import datetime
 import uuid
 import requests
-
-class techRates(dml.Algorithm):
+import time
+import string
+import csv
+class getTechRate(dml.Algorithm):
 	contributor = 'skaram13_smedeiro'
 	reads = []
 	writes = ['skaram13_smedeiro.techRates']
-	
 
 	@staticmethod
 	def execute(trial = False):
@@ -21,34 +22,45 @@ class techRates(dml.Algorithm):
 		repo = client.repo
 		repo.authenticate('skaram13_smedeiro', 'skaram13_smedeiro')
 
-		offset = 0
-		url = 'https://data.mass.gov/resource/x3d8-cquh.json?$limit=50000&$offset=' + str(offset)
-		res = requests.get(url)
-		response = urllib.request.urlopen(url).read().decode("utf-8")
-		r = json.loads(response)
-		while (r!=[]):
+			# print("Parsing CSV...")
+		dictOfTechRates = {}	
+		with open('technology.csv', 'r') as f:
+			read_data = csv.reader(f)
+			for entry in read_data:
+				org_code = ('{0:0>8}'.format(entry[0]))
+				tech_stu_per_comp = entry[2]
+				dictOfTechRates[org_code] = (tech_stu_per_comp)
+				
+		# offset = 0
+		# url = 'https://data.mass.gov/resource/x3d8-cquh.json?$limit=50000&$offset=' + str(offset)
+		# res = requests.get(url)
+		# response = urllib.request.urlopen(url).read().decode("utf-8")
+		# r = json.loads(response)
+		# while (r!=[]):
 			# print ('here')
-			offset+=50000
-			dictOfTechRates = {}
-			for item in r:
-				if ('tech_stu_per_comp_cnt' in item and 'org_code' in item and item['fy_code']=='2011'):
-					org_code = item['org_code']
-					tech_stu_per_comp_cnt = item['tech_stu_per_comp_cnt']
-					dictOfTechRates[org_code] = (tech_stu_per_comp_cnt)
-			url = 'https://data.mass.gov/resource/x3d8-cquh.json?$limit=50000&$offset=' + str(offset)
-			res = requests.get(url)
-			response = urllib.request.urlopen(url).read().decode("utf-8")
-			r = json.loads(response)
+			# offset+=50000
+			# dictOfTechRates = {}
+			# for item in r:
+				# if ('tech_stu_per_comp_cnt' in item and 'org_code' in item and item['fy_code']=='2011'):
+					# org_code = item['org_code']
+					# tech_stu_per_comp_cnt = item['tech_stu_per_comp_cnt']
+					# dictOfTechRates[org_code] = (tech_stu_per_comp_cnt)
+			# url = 'https://data.mass.gov/resource/x3d8-cquh.json?$limit=50000&$offset=' + str(offset)
+			# time.sleep(3)
+			# res = requests.get(url)
+			# response = urllib.request.urlopen(url).read().decode("utf-8")
+			# r = json.loads(response)
 
 		repo.dropCollection("techRates")
 		repo.createCollection("techRates")
+		print (dictOfTechRates )
 		repo['skaram13_smedeiro.techRates'].insert_one(dictOfTechRates)
 		repo['skaram13_smedeiro.techRates'].metadata({'complete':True})
-		# print(repo['skaram13_smedeiro.techRates'].metadata())
+		# # print(repo['skaram13_smedeiro.techRates'].metadata())
 
   
 
-		repo.logout()
+		# repo.logout()
 
 		endTime = datetime.datetime.now()
 
@@ -100,7 +112,7 @@ class techRates(dml.Algorithm):
 				  
 		return doc
 
-# techRates.execute()
+getTechRate.execute()
 # doc = techRates.provenance()
 # # print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))

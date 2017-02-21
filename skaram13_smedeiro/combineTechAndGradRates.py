@@ -5,9 +5,9 @@ import prov.model
 import datetime
 import uuid
 
-class techAndGradRates(dml.Algorithm):
+class combineTechAndGradRates(dml.Algorithm):
 	contributor = 'skaram13_smedeiro'
-	reads = ['skaram13_smedeiro.techRates','skaram13_smedeiro.gradRates']
+	reads = ['skaram13_smedeiro.techRates','skaram13_smedeiro.gradRates', 'skaram13_smedeiro.school']
 	writes = ['skaram13_smedeiro.gradAndTechRatesByOrgCode']
 	
 
@@ -26,7 +26,11 @@ class techAndGradRates(dml.Algorithm):
 
 		techRates = repo.skaram13_smedeiro.techRates.find()
 		gradRates = repo.skaram13_smedeiro.gradRates.find()
-	
+		# {'street': '612 Metropolitan Av', 'state': 'MA', 'censusTract': '140300',
+		#  'city': 'Hyde Park', 'orgcode': '00350541', 'zipcode': '02136',
+		#   'schoolName': 'Another Course To College'}
+		schoolInfo = repo.skaram13_smedeiro.school.find()
+
 		dictOfTechRates={}
 		for entry in techRates:
 			dictOfTechRates = (entry)
@@ -35,6 +39,12 @@ class techAndGradRates(dml.Algorithm):
 		for entry in gradRates:
 			dictOfGradRates = (entry)
 		# print (dictOfGradRates)
+		listOfSchools = []
+		for entry in schoolInfo:
+			# listOfSchools.append(entry)
+			print (entry['orgcode'])
+
+		# print (dictOfSchools)
 
 		keysInTechDict = (dictOfTechRates.keys())
 		keysInGradDict = (dictOfGradRates.keys())
@@ -47,11 +57,12 @@ class techAndGradRates(dml.Algorithm):
 			if x in keysInTechDict:
 				keepList.append(x)
 
+		# print (keepList)
 		combinedList = []
 		for x in keepList:
 			combinedList.append({'org_code':x,'tech_rate':dictOfTechRates[x],'grad_rate':dictOfGradRates[x]})
 
-		# print (combinedList)
+		print (combinedList)
 		repo['skaram13_smedeiro.gradAndTechRatesByOrgCode'].insert_many(combinedList)
 		repo['skaram13_smedeiro.gradAndTechRatesByOrgCode'].metadata({'complete':True})
 		# print(repo['skaram13_smedeiro.techRates'].metadata())
@@ -115,7 +126,7 @@ class techAndGradRates(dml.Algorithm):
 				  
 		return doc
 
-# techAndGradRates.execute()
+combineTechAndGradRates.execute()
 # doc = techAndGradRates.provenance()
 # # print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))

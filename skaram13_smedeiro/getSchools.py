@@ -6,11 +6,12 @@ import prov.model
 import datetime
 import uuid
 import csv
+import time
 
 class getSchools(dml.Algorithm):
     contributor = 'skaram13_smedeiro'
     reads = []
-    writes = ['skaram13_smedeiro.income']
+    writes = ['skaram13_smedeiro.school']
 
     @staticmethod
     def execute(trial = False):
@@ -35,7 +36,7 @@ class getSchools(dml.Algorithm):
             addressNotFound = []
             schoolName = ""
             splitSchoolName = []
-            print("Parsing CSV...")
+            # print("Parsing CSV...")
             with open('search.csv', 'r') as f:
                 read_data = csv.reader(f)
 
@@ -48,6 +49,7 @@ class getSchools(dml.Algorithm):
                         city = entry[7]
                         state = entry[8]
                         zipcode = entry[9]
+                        time.sleep(2)
                         census = requestCensusTract(city, state, zipcode, street)
 
                         if len(census['result']['addressMatches']) == 0:
@@ -63,6 +65,7 @@ class getSchools(dml.Algorithm):
         repo.dropCollection("school")
         repo.createCollection("school")
         
+        # print(dbEntries)
         repo['skaram13_smedeiro.school'].insert_many(dbEntries)
 
         #test and print from database
@@ -88,37 +91,37 @@ class getSchools(dml.Algorithm):
             '''
 
         # Set up the database connection.
-        client = dml.pymongo.MongoClient()
-        repo = client.repo
-        repo.authenticate('skaram13_smedeiro', 'skaram13_smedeiro')
-        doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
-        doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
-        doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
-        doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
+        # client = dml.pymongo.MongoClient()
+        # repo = client.repo
+        # repo.authenticate('skaram13_smedeiro', 'skaram13_smedeiro')
+        # doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
+        # doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
+        # doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
+        # doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
 
-        this_script = doc.agent('alg:skaram13_smedeiro#getSchools', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        schools = doc.entity('dat:skaram13_smedeiro#schools', {prov.model.PROV_LABEL:'Dataset with school names, orgcodes, and addresses', prov.model.PROV_TYPE:'ont:DataSet'})
+        # this_script = doc.agent('alg:skaram13_smedeiro#getSchools', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        # schools = doc.entity('dat:skaram13_smedeiro#schools', {prov.model.PROV_LABEL:'Dataset with school names, orgcodes, and addresses', prov.model.PROV_TYPE:'ont:DataSet'})
 
-        this_run = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        # this_run = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        school_resource = doc.entity('', {'prov:label':' Dataset with school names, orgcodes, and census tract', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'csv'})
+        # school_resource = doc.entity('', {'prov:label':' Dataset with school names, orgcodes, and census tract', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'csv'})
 
-        get_income = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        # get_income = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_income, this_script)
+        # doc.wasAssociatedWith(get_income, this_script)
 
-        doc.usage(get_income, income_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        # doc.usage(get_income, income_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
 
-        income = doc.entity('dat:skaram13_smedeiro#income', {prov.model.PROV_LABEL:'Income', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(income, this_script)
-        doc.wasGeneratedBy(income, get_income, endTime)
-        doc.wasDerivedFrom(income, income_resource, get_income, get_income, get_income)
-        repo.logout()
+        # income = doc.entity('dat:skaram13_smedeiro#income', {prov.model.PROV_LABEL:'Income', prov.model.PROV_TYPE:'ont:DataSet'})
+        # doc.wasAttributedTo(income, this_script)
+        # doc.wasGeneratedBy(income, get_income, endTime)
+        # doc.wasDerivedFrom(income, income_resource, get_income, get_income, get_income)
+        # repo.logout()
                   
         return doc
 
 getSchools.execute()
-print("Done!")
+# print("Done!")
 #doc = getIncomeByCensusTract.provenance()
 #print(doc.get_provn())
 #print(json.dumps(json.loads(doc.serialize()), indent=4))
