@@ -27,5 +27,4 @@ This file retrieves the data sets from our different data portals and sources
 This file uses the data from the Funding data set and the Gradrates data set, merges them, and then filters out their information to create a data set that includes 'School Name' and 'School Funding'
 
 (Eventually we want to include data from a few consecutive years to see how that data changes over time)
-
   
