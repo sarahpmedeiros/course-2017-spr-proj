@@ -103,3 +103,5 @@ auth.json
 node_modules/
 
 auth.json
+
+*.p
