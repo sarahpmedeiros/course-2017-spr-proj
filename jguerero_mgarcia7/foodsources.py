@@ -9,8 +9,8 @@ import uuid
 
 class foodsources(dml.Algorithm):
 	contributor = 'jguerero_mgarcia7'
-	reads = []
-	writes = ['jguerero_mgarcia7.FoodSources']
+	reads = ['jguerero_mgarcia7.farmersmarkets', 'jguerero_mgarcia7.supermarkets', 'jguerero_mgarcia7.allcornerstores']
+	writes = ['jguerero_mgarcia7.foodsources']
 
 	@staticmethod
 	def execute(trial = False):

@@ -22,13 +22,16 @@ class neighborhoodstatistics(dml.Algorithm):
 		repo = client.repo
 		repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
 
+		#create cursors to be able to go through the data
 		population_cursor = repo['jguerero_mgarcia7.population'].find()
 		foodsources_cursor = repo['jguerero_mgarcia7.foodsources'].find()
 		obesity_cursor = repo['jguerero_mgarcia7.obesityperneighborhood'].find()
 
+		#list for dictionarys (temp_stats) of neighborhood statistics
 		nstats = []
 		temp_stats = {'Neighborhood': 0, 'Population Size': 0, 'Average Income ($)': 0, 'Number of Food Sources': 0, 'Average Obesity (%)': 0}
 
+		#all transformations used
 		def union(R, S):
 			return R + S
 
@@ -46,9 +49,9 @@ class neighborhoodstatistics(dml.Algorithm):
 			return [(key, f([v for (k,v) in R if k == key])) for key in keys]
 
 		#extracts necessary information from Population dataset to be used for new dataset
-		print ('\n')
-
 		p = project(population_cursor, lambda x: (x['Neighborhood'], x['Population'], x['Median Household Income in 2015 ($)']))
+
+		#certain cities information were combined to better fit the obesity dataset
 		FK = select(p, lambda a: a[0] == 'Fenway' or a[0] == 'Kenmore')
 		FDD = select(p, lambda a: a[0] == 'Financial District' or a[0] == 'Downtown')
 		GCFH = select(p, lambda a: a[0] == 'Government Center' or a[0] == 'Faneuil Hall')
@@ -56,32 +59,28 @@ class neighborhoodstatistics(dml.Algorithm):
 		pop_info = select(p, lambda a: a[0] != 'Fenway' and a[0] != 'Kenmore' and a[0] != 'Financial District' and a[0] != 'Downtown' and a[0] != 'Government Center')
 
 		def combine(tupl):
+			'''
+				This function combines two tuples together
+			'''
 			if (len(tupl) == 2):
 				b = union(int(tupl[0][1].replace(",", "")), int(tupl[1][1].replace(",", "")))
 				c = union(int(tupl[0][2].replace(",", "")), int(tupl[1][2].replace(",", "")))//2
 				return (b,c)
 
+		#adds the corrected tuple information to the population info list of tuples
 		pop_info.append(('Fenway/Kenmore', combine(FK)[0], combine(FK)[1]))
 		pop_info.append(('Financial District/Downtown', combine(FDD)[0], combine(FDD)[1]))
 		pop_info.append(('Government Center/Faneuil Hall', GCFH[0][1], GCFH[0][2]))
 
-		#print (len(pop_info))
-		print ('\n')
-
-		#get important info for food sources
+		#get important info from food sources dataset 
 		value = project(foodsources_cursor, lambda y: (y['Neighborhood'], y['Type']))
 		food_info = dict(aggregate(value, lambda count: len(count)))
 
-
-		print (food_info['Chelsea'])
-		print ('\n')
-
-		#extract necessary info from obesity per neighboorhood statistics
+		#extract necessary info from obesity per neighboorhood statistics dataset
 		obese_info = dict(project(obesity_cursor, lambda z: (z['neighborhood'], z['pctbmige30'])))
-	#	print (obese_info['West Roxbury'])
+		print (obese_info)
 
-		#print (intersect(pop_info[0], value[0]))
-
+		#begins to create dictionary based on population information
 		for i in pop_info:
 			temp_stats = {key:0 for key in temp_stats}
 			temp_stats['Neighborhood'] = i[0]
@@ -89,14 +88,20 @@ class neighborhoodstatistics(dml.Algorithm):
 			temp_stats['Average Income ($)'] = i[2]
 			nstats.append(temp_stats)
 
-		#print (nstats)
-
-		#for j in food_info:
+		#appends food_info and obese_info information to dictionary so far based on neighborhood
 		for k,Neighborhood in enumerate(n['Neighborhood'] for n in nstats):
-			if food_info.get('Neighborhood') != None:
-				nstats['Number of Food Sources'] = food_info.get(Neighborhood)
-				#	break;
-		print (nstats)
+			if food_info.get(Neighborhood) != None:
+				print (Neighborhood, food_info.get(Neighborhood))
+				nstats[k]['Number of Food Sources'] = food_info.get(Neighborhood)
+			if obese_info.get(Neighborhood) != None:
+				print (Neighborhood, obese_info.get(Neighborhood))
+				nstats[k]['Average Obesity (%)'] = obese_info.get(Neighborhood)
+
+		repo.dropCollection("neighborhoodstatistics")
+		repo.createCollection("neighborhoodstatistics")
+		repo['jguerero_mgarcia7.neighborhoodstatistics'].insert_many(d)
+		repo['jguerero_mgarcia7.neighborhoodstatistics'].metadata({'complete':True})
+		print(repo['jguerero_mgarcia7.neighborhoodstatistics'].metadata())
 
 		repo.logout()
 
