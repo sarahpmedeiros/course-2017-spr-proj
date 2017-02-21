@@ -14,6 +14,7 @@ import time
 class transformation_one(dml.Algorithm):
 
     contributor = 'mrhoran_rnchen'
+<<<<<<< HEAD
 
     reads = ['mrhoran_rnchen.community_gardens',
              'mrhoran_rnchen.food_pantries']
@@ -22,6 +23,10 @@ class transformation_one(dml.Algorithm):
               'mrhoran_rnchen.commgarden_zip_count',
               'mrhoran_rnchen.garden_pantry_agg']
 
+=======
+    reads = ['mrhoran_rnchen.community_gardens','mrhoran_rnchen.food_pantries']
+    writes = ['mrhoran_rnchen.healthy_options', 'commgarden_zip_count', 'foodpantry_zip_count', 'garden_pantry_agg']
+>>>>>>> d960b1546ee2323b26395896e04b80f63ba792bc
     @staticmethod
     def execute(trial = False):
         
@@ -40,6 +45,16 @@ class transformation_one(dml.Algorithm):
         repo.dropCollection('commgarden_zip_count')
         repo.createCollection('commgarden_zip_count')
 
+<<<<<<< HEAD
+=======
+        commgarden_zip_count = project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1])))
+
+        repo.dropCollection('commgarden_zip_count')
+        repo.createCollection('commgarden_zip_count')
+        repo['mrhoran_rnchen.commgarden_zip_count'].insert_many(dict(commgarden_zip_count))
+      
+	#insert, insert_many, or insertMany? 
+>>>>>>> d960b1546ee2323b26395896e04b80f63ba792bc
         #print(commgarden_zip_count)
 
         repo.mrhoran_rnchen.commgarden_zip_count.insert(dict(commgarden_zip_count))

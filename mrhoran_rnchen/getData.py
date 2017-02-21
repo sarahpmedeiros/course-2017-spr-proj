@@ -11,7 +11,7 @@ class getData(dml.Algorithm):
     contributor = 'mrhoran_rnchen'
     reads = []
     writes = ['mrhoran_rnchen.community_gardens',
-              'mrhoran_rnchen.cornerstores',
+              'mrhoran_rnchen.food_pantries',
               'mrhoran_rnchen.demographics',
               'mrhoran_rnchen.medical_events',
               'mrhoran_rnchen.farmer_markets']
