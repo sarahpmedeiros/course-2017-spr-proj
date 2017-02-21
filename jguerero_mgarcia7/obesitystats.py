@@ -43,7 +43,7 @@ class obesitystats(dml.Algorithm):
         mydbf = open('MA.dbf','rb')
         shpfile = shapefile.Reader(shp=myshp,dbf=mydbf)
 
-        # Convert data to geojson
+        # Convert data to geojson to insert into the database
         fields = shpfile.fields[1:]
         field_names = [field[0] for field in fields]
         r = []
@@ -53,8 +53,6 @@ class obesitystats(dml.Algorithm):
             r.append(dict(type="Feature", \
             geometry=geom, properties=atr)) 
 
-
-        print(r[0])
 
         repo.dropCollection("obesitystats")
         repo.createCollection("obesitystats")

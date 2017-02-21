@@ -1,5 +1,4 @@
-# I loaded both the healthy corner stores and all the corner stores
-# We need to make it so that it does a union and add an attribute saying whether the corner store is a healthy one or not
+# Download all the corner stores from City of Boston Data Portal
 
 import urllib.request
 import json
@@ -11,7 +10,7 @@ import uuid
 class cornerstores(dml.Algorithm):
     contributor = 'jguerero_mgarcia7'
     reads = []
-    writes = ['jguerero_mgarcia7.allcornerstores', 'jguerero_mgarcia7.healthycornerstores']
+    writes = ['jguerero_mgarcia7.allcornerstores']
 
     @staticmethod
     def execute(trial = False):
@@ -23,6 +22,7 @@ class cornerstores(dml.Algorithm):
         repo = client.repo
         repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
 
+        # Download list of all corner stores
         total_url = 'https://data.cityofboston.gov/resource/vwsn-4yhi.json'
         response = urllib.request.urlopen(total_url).read().decode("utf-8")
         r = json.loads(response)
@@ -32,16 +32,6 @@ class cornerstores(dml.Algorithm):
         repo['jguerero_mgarcia7.allcornerstores'].insert_many(r)
         repo['jguerero_mgarcia7.allcornerstores'].metadata({'complete':True})
         print(repo['jguerero_mgarcia7.allcornerstores'].metadata())
-
-        healthy_url = 'https://data.cityofboston.gov/resource/ybm6-m5qd.json'
-        response = urllib.request.urlopen(healthy_url).read().decode("utf-8")
-        r = json.loads(response)
-
-        repo.dropCollection('healthycornerstores')
-        repo.createCollection('healthycornerstores')
-        repo['jguerero_mgarcia7.healthycornerstores'].insert_many(r)
-        repo['jguerero_mgarcia7.healthycornerstores'].metadata({'complete':True})
-        print(repo['jguerero_mgarcia7.healthycornerstores'].metadata())
 
         repo.logout()
 

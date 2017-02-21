@@ -33,7 +33,7 @@ class obesityperneighborhood(dml.Algorithm):
 			neighborhood_pts = neighborhood['the_geom']
 			neighborhood_shapes[neighborhood['name']] = shape(neighborhood_pts)
 
-		# Check to see what neighborhood the obesity stat polygons are in
+		# Go through the obesity areas and figure out what neighborhood it's from
 		d = defaultdict(list)
 		for ob in obesitystats.find({}):
 			ob_pts = ob['geometry']
@@ -44,20 +44,20 @@ class obesityperneighborhood(dml.Algorithm):
 					d[name].append(ob['properties'])
 					break
 
-		# Go through neighborhoods and combine all the obesity info per neighborhood
+		# Go through neighborhoods and aggregate all of the obesity stats per neighborhood
 		r = []
 		for n_name,stats in d.items():
 			final = defaultdict(list)
 			info = {'neighborhood': n_name}
 			for item in stats:
 				for key,val in item.items():
-					if key in ('popgte20', 'popbmige30'):
+					if key in ('popgte20', 'popbmige30'): # popgte20 = population over 20 years old, popbmige30 = population with bmi >= 30
 						final[key].append(val)
 
 			for key,val in final.items():
 				info[key] = sum(val)
 
-			info['pctbmige30'] = (info['popbmige30']/info['popgte20']) * 100
+			info['pctbmige30'] = (info['popbmige30']/info['popgte20']) * 100 # percentage of population w bmi >= 30
 			r.append(info)
 
 

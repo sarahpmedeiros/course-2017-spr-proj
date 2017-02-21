@@ -1,5 +1,4 @@
-# http://synthpopviewer.rti.org/obesity/index.html
-# <iframe id="download_iframe" style="display:none;" src="http://synthpopviewer.rti.org/obesity/downloads/MA.zip"></iframe>
+# Downloads the Boston neighborhood geojson
 
 import urllib.request
 import json
@@ -22,10 +21,10 @@ class neighborhoods(dml.Algorithm):
         repo = client.repo
         repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
 
+        # Download neighborhood geojson
         url = 'https://data.cityofboston.gov/resource/pbfk-2wv3.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
-
 
         repo.dropCollection("neighborhoods")
         repo.createCollection("neighborhoods")
