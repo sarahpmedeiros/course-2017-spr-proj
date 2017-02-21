@@ -45,7 +45,7 @@ class retrieve(dml.Algorithm):
         repo.createCollection("funding")
         repo['hschurma_rcalleja.funding'].insert_many(r)
 
-        url = 'http://datamechanics.io/data/hshurma_rcalleja/SAT2008.json'
+        url = 'http://datamechanics.io/data/hshurma_rcalleja/SAT2014.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)

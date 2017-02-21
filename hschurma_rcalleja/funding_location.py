@@ -61,7 +61,7 @@ class funding_location(dml.Algorithm):
         for j in range(s):
             if schools[j][0]['school'][11] =="HS":
                 sch = json.loads(schools[0][0]['school'][12][0])
-                nameLoc.append((schools[j][0]['school'][10], (sch['zip'], schools[j][0]['school'][12][1:3])))
+                nameLoc.append({'Name': schools[j][0]['school'][10], 'location': [sch['zip'], schools[j][0]['school'][12][1:3]]})
 
 
 
@@ -73,7 +73,7 @@ class funding_location(dml.Algorithm):
         
         nameFund = []
         for i in range(len(funding)):
-            nameFund.append((funding[i]["FIELD2"].strip(), funding[i]["FIELD13"].strip()))
+            nameFund.append({'Name': funding[i]["FIELD2"].strip(), 'Funding': funding[i]["FIELD13"].strip()})
 
 
         #print(nameFund)
@@ -82,9 +82,17 @@ class funding_location(dml.Algorithm):
 
 
         P = product(nameLoc, nameFund)
-        S = select(P, lambda t: t[0][0] == t[1][0])
-        PR = project(S, lambda t: (t[0][0], t[0][1], t[1][1]))
+        print(P)
+        S = select(P, lambda t: t[0]['Name'] == t[1]['Name'])
+        PR = project(S, lambda t: {t[0]['Name'], t[0]['location'], t[1]['Funding']})
         print(PR)
+<<<<<<< HEAD
+=======
+
+        repo.dropCollection('funding_location')
+        repo.createCollection('funding_location')
+        repo['hschurma_rcalleja.funding_location'].insert(PR)
+>>>>>>> f083e4ddc9571aff30930c38f3b20548c1b997fc
     
         #Trim white spaces
    
