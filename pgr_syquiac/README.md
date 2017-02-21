@@ -14,3 +14,9 @@
 2. sleep rates and correlation to university locations
 
 3. Lack of doctor visits and correlation to hospital locations
+
+# Narrative
+
+Write a short narrative and justification (5-10 sentences) explaining how these data sets can be combined to answer an interesting question or solve a problem. You do not need to solve the actual problem in this project, and it is acceptable to merely combine data sets in a way that is likely to support one or more solutions involving the particular data you choose. Include this narrative in a README.md file within your directory (along with any documentation you may write in that file).
+
+Your README.md file should list any idiosyncratic details associated with the services and/or credentials needed to run your scripts.

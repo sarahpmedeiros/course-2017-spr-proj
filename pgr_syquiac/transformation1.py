@@ -114,7 +114,7 @@ class transformation1(dml.Algorithm):
         doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/')
         doc.add_namespace('datm', 'https://datamechanics.io/data/pgr_syquiac') # datamechanics.io, hosts the schools data
 
-        this_script = doc.agent('alg:pgr_syquiac#retrieveData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:pgr_syquiac#transformation1', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         sleep_rates_universities = doc.entity('dat:pgr_syquiac#sleep_rates_universities', {prov.model.PROV_LABEL: 'Sleep Rates and distance from universities', prov.model.PROV_TYPE:'ont:Dataset'})
         get_sleep_rates_universities = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'Sleep rates of people (>18 years) and their distance from universities'})
         doc.wasAssociatedWith(get_sleep_rates_universities, this_script)
