@@ -57,34 +57,35 @@ class mergeSchoolsHubway(dml.Algorithm):
 
         # product and rearrange (id, properties, location, station)
         product = transformData.product(BostonSchools, HubwayStations)
-        # product = [{'_id': item[0]['_id'],
-        #             'properties': item[0]['properties'],
-        #             'location': item[0]['location'],                        # school locations coordinates
-        #             'stations': item[1]['stations']} for item in product]   # Hubway stations location coordinates
-        #
+        product = [{'_id': item[0]['_id'],
+                    'properties': item[0]['properties'],
+                    'location': item[0]['location'],                        # school locations coordinates
+                    'stations': item[1]['stations']} for item in product]   # Hubway stations location coordinates
 
+        # aggregation: for each school, count the number of hubway stations within 500m walk
+        keys = {item['_id'] for item in product}
+        for key in keys:
+            SchoolsHubway = []
+            count = 0
+            for item in product:
+                if item['_id'] == key:
+                    school = item['location']['coordinates'][1], item['location']['coordinates'][0]
+                    station = item['stations'][1], item['stations'][0]
+                    d = vincenty(school, station).meters
+                    if d < 500:
+                        count += 1
+            SchoolsHubway.append({'_id': key,
+                                  'properties': item['properties'],
+                                  'location': item['location'],
+                                  'CountStations': count})
 
-        # Aggregation: for each school, count number of Hubway stations within 5/10 minutes walk (500m)
-        # selection = []
-        # # keys = [item['_id'] for id in project]
-        # for item in product:
-        #     school = item['location']['coordinates']
-        #     station = item['stations']
-        #     d = vincenty(school, station).meters
-        #     if d < 500:
-        #         selection.append(item)
-        # print(selection[0])
+        print(SchoolsHubway)
 
-
-        # def aggregate(R, f):
-        #     keys = {r[0] for r in R}
-        #     return [(key, f([v for (k, v) in R if k == key])) for key in keys]
-
-        # repo.dropCollection("SchoolsHubway")
-        # repo.createCollection("SchoolsHubway")
-        # repo['echogu_wei0496.SchoolsHubway'].insert_many(SchoolsHubway)
-        # repo['echogu_wei0496.SchoolsHubway'].metadata({'complete': True})
-        # print("Saved SchoolsHubway", repo['echogu_wei0496.SchoolsHubway'].metadata())
+        repo.dropCollection("SchoolsHubway")
+        repo.createCollection("SchoolsHubway")
+        repo['echogu_wei0496.SchoolsHubway'].insert_many(SchoolsHubway)
+        repo['echogu_wei0496.SchoolsHubway'].metadata({'complete': True})
+        print("Saved SchoolsHubway", repo['echogu_wei0496.SchoolsHubway'].metadata())
 
         repo.logout()
 
