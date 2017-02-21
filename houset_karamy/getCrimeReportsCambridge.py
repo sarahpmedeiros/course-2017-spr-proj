@@ -58,20 +58,28 @@ class get(dml.Algorithm):
 
             
         this_script = doc.agent('alg:houset_karamy#getCrimeReportsCambridge', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        
         resource3 = doc.entity('cma:dypy-nwuz', {'prov:label':'Crime Reports Cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         
         get_crimeReportsCambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+#         get_hospitals = doc.activity('log:a'+str(uuid.uuid4()), startTime, endTime, {prov.model.PROV_TYPE:'ont:Retrieval', 'ont:Query':'?type=ad&?$select=ad,name'})
+
+#         get_realTimeTravelMassDot = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         
         doc.wasAssociatedWith(get_crimeReportsCambridge, this_script)
         
-       
+#         doc.wasAssociatedWith(get_realTimeTravelMassDot, this_script)
+
         doc.usage(get_crimeReportsCambridge, resource3, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'})
        
+        
+        
         crimeReportsCambridge = doc.entity('dat:houset_karamy#crimeReportsCambridge', {prov.model.PROV_LABEL:'Cambridge Crime Reports', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(crimeReportsCambridge, this_script)
         doc.wasGeneratedBy(crimeReportsCambridge, get_crimeReportsCambridge, endTime)
         doc.wasDerivedFrom(crimeReportsCambridge, resource3, get_crimeReportsCambridge, get_crimeReportsCambridge, get_crimeReportsCambridge)
+        
         
         repo.logout()
                   
