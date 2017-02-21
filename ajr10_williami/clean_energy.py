@@ -79,8 +79,8 @@ class clean_energy(dml.Algorithm):
 
         this_script = doc.agent('alg:ajr10_williami#clean_energy', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
-        energy_cambridge_resource = doc.entity('awc:energy_cambridge', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        energy_boston_resource = doc.entity('awc:energy_boston', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        energy_cambridge_resource = doc.entity('awc:energy_cambridge', {'prov:label':'ajr10_williami.cleaned_energy_cambridge, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        energy_boston_resource = doc.entity('awc:energy_boston', {'prov:label':'ajr10_williami.cleaned_energy_boston, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_energys_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_energys_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)

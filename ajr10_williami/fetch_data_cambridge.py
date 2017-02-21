@@ -89,9 +89,9 @@ class fetch_data_cambridge(dml.Algorithm):
         doc.add_namespace('cdp', 'https://data.cambridgema.gov/resource/')
 
         this_script = doc.agent('alg:ajr10_williami#fetch_data', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        open_spaces_cambridge_resource = doc.entity('cdp:5ctr-ccas', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        trees_cambridge_resource = doc.entity('cdp:q83f-7quz', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        energy_cambridge_resource = doc.entity('cdp:es2i-g3p6', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        open_spaces_cambridge_resource = doc.entity('cdp:5ctr-ccas', {'prov:label':'Open Space, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        trees_cambridge_resource = doc.entity('cdp:q83f-7quz', {'prov:label':'Street Trees, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        energy_cambridge_resource = doc.entity('cdp:es2i-g3p6', {'prov:label':'2016 Cambridge Building Energy and Water Use Data Disclosure, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_open_spaces_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_trees_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
