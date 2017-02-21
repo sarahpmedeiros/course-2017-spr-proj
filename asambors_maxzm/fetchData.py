@@ -40,7 +40,6 @@ class fetchData(dml.Algorithm):
             repo['asambors_maxzm.'+key].insert_many(r)
             repo['asambors_maxzm.'+key].metadata({'complete':True})
 
-
         # Using SODA API so different format for request
         sleep_soda_api = 'https://chronicdata.cdc.gov/resource/eqbn-8mpz.json?$offset=13908&$limit=515'
         response = rq(method="GET", url=sleep_soda_api) 
@@ -54,7 +53,7 @@ class fetchData(dml.Algorithm):
         repo.logout()
         endTime = datetime.datetime.now()
         return {"start":startTime, "end":endTime}
-        
+
     
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
