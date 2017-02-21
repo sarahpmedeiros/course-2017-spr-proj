@@ -1,4 +1,3 @@
-#import urllib.request
 import json
 import dml
 import prov.model
@@ -85,7 +84,6 @@ class transformation_one(dml.Algorithm):
 
         return {"start":startTime, "end":endTime}
 
-        
     
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):

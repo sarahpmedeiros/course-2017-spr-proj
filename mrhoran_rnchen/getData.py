@@ -14,7 +14,7 @@ class getData(dml.Algorithm):
               'mrhoran_rnchen.cornerstores',
               'mrhoran_rnchen.demographics',
               'mrhoran_rnchen.medical_events',
-              'mrhoran_rnchen.farmers_markets']
+              'mrhoran_rnchen.farmer_markets']
 
     @staticmethod
     def execute(trial = False):
@@ -53,7 +53,7 @@ class getData(dml.Algorithm):
         for dataset in city_of_boston_datasets:
 
             client = sodapy.Socrata("data.cityofboston.gov", None)
-            response = (client.get(city_of_boston_datasets[dataset], limit=10))
+            response = (client.get(city_of_boston_datasets[dataset], limit=1000))
             
             print(json.dumps(response, sort_keys=True, indent=2))
             s = json.dumps(response, sort_keys=True, indent=2)
@@ -75,7 +75,7 @@ class getData(dml.Algorithm):
         for dataset in city_of_cambrige_datasets:
 
             client = sodapy.Socrata("data.cambridgema.gov", token)
-            response = client.get(city_of_cambrige_datasets[dataset], limit=10)
+            response = client.get(city_of_cambrige_datasets[dataset], limit=1000)
             print(json.dumps(response, sort_keys=True, indent=2))
             
             s = json.dumps(response, sort_keys=True, indent=2)
@@ -92,7 +92,7 @@ class getData(dml.Algorithm):
         #if you need the url for any reason : "https://data.mass.gov/resource/66t5-f563.json"
 
         client = sodapy.Socrata("data.mass.gov", token)
-        response = client.get('66t5-f563', limit=10)
+        response = client.get('66t5-f563', limit=1000)
         print(json.dumps(response, sort_keys=True, indent=2))
             
         s = json.dumps(response, sort_keys=True, indent=2)
