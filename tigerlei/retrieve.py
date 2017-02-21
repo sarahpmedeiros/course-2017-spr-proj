@@ -4,6 +4,7 @@ import dml
 import prov.model
 import datetime
 import uuid
+import time
 
 class retrieve(dml.Algorithm):
     contributor = 'tigerlei'
@@ -19,11 +20,11 @@ class retrieve(dml.Algorithm):
         repo = client.repo
         repo.authenticate('tigerlei', 'tigerlei')
 
-        # Load credentials
-        with open('../auth.json') as auth_data:
-            credentials = json.load(auth_data)
+        # with open('auth.json') as auth_data:
+            # credentials = json.load(auth_data)
 
-        token = "?$$app_token="+credentials['services']['cityofbostondataportal']['token']
+        # Load app token
+        token = "?$$app_token="+dml.auth['services']['cityofbostondataportal']['token']
         limit = 50000
 
         boston_data_portal_datasets = {
@@ -41,17 +42,17 @@ class retrieve(dml.Algorithm):
             response = urllib.request.urlopen(url).read().decode("utf-8")
             r = json.loads(response)
             count = int(r[0]["count"])
-            print("Retreiving dataset:", dataset, ", total number of records:", count)
             pages = count//limit + 1
 
+            print("Retreiving dataset:", dataset)  
+            
             for i in range(pages):
-                print('page', i, 'of', pages)
                 offset = limit*i
                 paging = '&$limit=' + str(limit) + '&$offset=' + str(offset)
                 url = boston_data_portal_datasets[dataset] + token + paging
                 response = urllib.request.urlopen(url).read().decode("utf-8")
                 r = json.loads(response)
-
+                time.sleep(1)
                 repo['tigerlei.'+ dataset].insert_many(r)
 
         # Retrieve small datasets without app token
@@ -66,22 +67,25 @@ class retrieve(dml.Algorithm):
             url = boston_open_data_datasets[dataset]
             response = urllib.request.urlopen(url).read().decode("utf-8")
             r = json.loads(response)
-            
-            # flatten Geojson file 
+            print("Retreiving dataset:", dataset) 
+
+            #flatten Geojson file 
             for i in range(len(r['features'])):
-                repo['tigerlei.' + dataset].insert(r['features'][i]['properties'])
+                repo['tigerlei.' + dataset].insert(dict(list(r['features'][i]['properties'].items()) + list(r['features'][i]['geometry'].items())))
+
 
         # Manually download csv files and upload json format file as data resources
         url = 'http://datamechanics.io/data/tigerlei/Boston%20Homicides%202012-2016.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
+        print("Retreiving dataset: homicides") 
         repo.dropCollection("homicides")
         repo.createCollection("homicides")
         repo['tigerlei.homicides'].insert_many(r)
 
         repo.logout()
-
+        print("All datasets have been retrieved!") 
         endTime = datetime.datetime.now()
 
         return {"start":startTime, "end":endTime}
@@ -130,22 +134,22 @@ class retrieve(dml.Algorithm):
         crime2 = doc.entity('dat:tigerlei#crime2', {prov.model.PROV_LABEL:'crime incidents 2015-2016', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(crime2, this_script)
         doc.wasGeneratedBy(crime2, this_run, endTime)
-        doc.wasDerivedFrom(crime2, resource_crime2, this_run)
+        doc.wasDerivedFrom(crime2, resource_crime2, this_run, this_run, this_run)
 
         police = doc.entity('dat:tigerlei#police', {prov.model.PROV_LABEL:'police station in boston', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(police, this_script)
         doc.wasGeneratedBy(police, this_run, endTime)
-        doc.wasDerivedFrom(police, resource_police, this_run)
+        doc.wasDerivedFrom(police, resource_police, this_run, this_run, this_run)
 
         university = doc.entity('dat:tigerlei#university', {prov.model.PROV_LABEL:'colleges and universities in boston', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(university, this_script)
         doc.wasGeneratedBy(university, this_run, endTime)
-        doc.wasDerivedFrom(university, resource_university, this_run)
+        doc.wasDerivedFrom(university, resource_university, this_run, this_run, this_run)
 
         homicides = doc.entity('dat:tigerlei#homicides', {prov.model.PROV_LABEL:'homicides 2012-2016', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(homicides, this_script)
         doc.wasGeneratedBy(homicides, this_run, endTime)
-        doc.wasDerivedFrom(homicides, resource_homicides, this_run)
+        doc.wasDerivedFrom(homicides, resource_homicides, this_run, this_run, this_run)
 
         repo.logout()
                   
