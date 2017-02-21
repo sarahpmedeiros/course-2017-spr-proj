@@ -123,5 +123,4 @@ def convert_shpfile_to_json(shpfilepath,dbffilepath):
 
     return r
 
-obesitystats.execute()
 ## eof

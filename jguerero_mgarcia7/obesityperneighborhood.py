@@ -7,7 +7,6 @@ import datetime
 import uuid
 from collections import defaultdict
 from shapely.geometry import shape #pip install shapely
-import pickle
 
 class obesityperneighborhood(dml.Algorithm):
 	contributor = 'jguerero_mgarcia7'
@@ -115,8 +114,8 @@ class obesityperneighborhood(dml.Algorithm):
 		return doc
 
 
-obesityperneighborhood.execute()
 '''
+obesityperneighborhood.execute()
 doc = example.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))

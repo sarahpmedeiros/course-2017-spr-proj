@@ -135,10 +135,11 @@ def scrape_website():
     return json.loads(json.dumps(d))
 
 
-
+'''
 population.execute()
 #doc = population.provenance()
 #print(doc.get_provn())
 #print(json.dumps(json.loads(doc.serialize()), indent=4))
+'''
 
 ## eof
