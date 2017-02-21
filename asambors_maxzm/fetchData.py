@@ -11,7 +11,7 @@ __author__ = 'Ann Ming Samborski'
 class fetchData(dml.Algorithm):
     contributor = 'asambors_maxzm'
     reads = []
-    writes = ['asambors_maxzm.hospitals', 'asambors_maxzm.nosleep', 'asambors_maxzm.energywater', 'asambors_maxzm.ziptoincome', 'asambors_maxzm.zipcodetolatlong']
+    writes = ['asambors_maxzm.hospitals', 'asambors_maxzm.energywater', 'asambors_maxzm.ziptoincome', 'asambors_maxzm.zipcodetolatlong', 'asambors_maxzm.nosleepma']
 
     @staticmethod
     def execute(trial = False):
@@ -46,10 +46,10 @@ class fetchData(dml.Algorithm):
         response = rq(method="GET", url=url) 
         r = response.json()
 
-        repo.dropCollection('nosleep')
-        repo.createCollection('nosleep')
-        repo['asambors_maxzm.nosleep'].insert_many(r)
-        repo['asambors_maxzm.nosleep'].metadata({'complete':True})
+        repo.dropCollection('nosleepma')
+        repo.createCollection('nosleepma')
+        repo['asambors_maxzm.nosleepma'].insert_many(r)
+        repo['asambors_maxzm.nosleepma'].metadata({'complete':True})
 
         repo.logout()
         endTime = datetime.datetime.now()
