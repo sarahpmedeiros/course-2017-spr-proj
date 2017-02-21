@@ -11,9 +11,7 @@ __author__ = 'Ann Ming Samborski'
 
 class zipEnergyUse(dml.Algorithm):
     contributor = 'asambors_maxzm'
-    reads = ['asambors_maxzm.zipcodetolatlong',
-             'asambors_maxzm.energywater',
-             'asambors_maxzm.hospitals']
+    reads = ['asambors_maxzm.zipcodetolatlong', 'asambors_maxzm.energywater', 'asambors_maxzm.hospitals']
     writes = ['asambors_maxzm.zipenergyuse']
 
     @staticmethod
