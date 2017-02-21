@@ -103,5 +103,8 @@ auth.json
 *.csv
 *.json
 
+#html
+*.html
+
 # exclude node_modules
 node_modules/
