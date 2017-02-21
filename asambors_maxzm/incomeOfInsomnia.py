@@ -103,15 +103,18 @@ class incomeOfInsomnia(dml.Algorithm):
                 aggregatedData = incomeOfInsomnia.aggregate(projectedCombos,incomeOfInsomnia.pickCloserZip)
 
 
-                print(aggregatedData)
 
                 #last project to proper form
 
-                incomeOfInsomniaData = []
-                for data in aggregatedData:
-                    incomeOfInsomniaData.append({*data[1]})
 
-                print(incomeOfInsomniaData)
+
+                #fucky data fixing
+                incomeOfInsomniaData = []
+                for (a,b) in aggregatedData:
+                        try:
+                                incomeOfInsomniaData.append(b[0])
+                        except TypeError:
+                                print((a,b))
 
 
 
@@ -121,6 +124,7 @@ class incomeOfInsomnia(dml.Algorithm):
                 repo['asambors_maxzm.incomeofinsomnia'].insert_many(incomeOfInsomniaData)
                 repo['asambors_maxzm.incomeofinsomnia'].metadata({'complete':True})
 
+                print("data is uploaded")
 
 
                 endTime = datetime.datetime.now
