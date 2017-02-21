@@ -25,16 +25,40 @@ class mergeBikeNetwork(dml.Algorithm):
         repo.authenticate('echogu_wei0496', 'echogu_wei0496')
 
         # loads the collection
-        rawBostonNetwork = repo['echogu_wei0496.BostonNetwork']
-        rawCambridgeNetwork = repo['echogu_wei0496.CambridgeNetwork']
+        rawBostonNetwork = repo['echogu_wei0496.BostonNetwork'].find()
+        rawCambridgeNetwork = repo['echogu_wei0496.CambridgeNetwork'].find()
 
-        # BostonNetwork = []
-        # for item in rawBostonNetwork.find():
-        #     BostonNetwork.append({"_id": item['_id'], 'street': item['properties']})
+        # projection
+        BostonNetwork = []
+        for item in rawBostonNetwork:
+            item = dict(item)
+            try:
+                BostonNetwork.append({'_id': item['_id'],
+                                      'street': item['properties']['STREET_NAM'],
+                                      'geometry': item['geometry'],
+                                      'shape_len': item['properties']['Shape_Leng']})
+            except:
+                pass
 
-        # projection and union
-        # union = transformData.union(BostonNetwork, CambridgeNetwork)
-        # print(union[0])
+        CambridgeNetwork = []
+        for item in rawCambridgeNetwork:
+            item = dict(item)
+            try:
+                CambridgeNetwork.append({'_id': item['_id'],
+                                     'street': item['street'],
+                                     'geometry': item['the_geom'],
+                                     'shape_len': item['shape_len']})
+            except:
+                pass
+
+        # union
+        BikeNetwork = transformData.union(BostonNetwork, CambridgeNetwork)
+
+        repo.dropCollection("BikeNetwork")
+        repo.createCollection("BikeNetwork")
+        repo['echogu_wei0496.BikeNetwork'].insert_many(BikeNetwork)
+        repo['echogu_wei0496.BikeNetwork'].metadata({'complete': True})
+        print("Saved BikeNetwork", repo['echogu_wei0496.BikeNetwork'].metadata())
 
         repo.logout()
 
@@ -53,7 +77,7 @@ class mergeBikeNetwork(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('alice_bob', 'alice_bob')
+        repo.authenticate('echogu_wei0496', 'echogu_wei0496')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont',
@@ -61,7 +85,7 @@ class mergeBikeNetwork(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
         # doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:alice_bob#example',
+        this_script = doc.agent('alg:echogu_wei0496#mergeBikeNetwork',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
         resource = doc.entity('bdp:wc8w-nujj',
                               {'prov:label': '311, Service Requests', prov.model.PROV_TYPE: 'ont:DataResource',
@@ -81,13 +105,13 @@ class mergeBikeNetwork(dml.Algorithm):
         #            }
         #           )
         #
-        # lost = doc.entity('dat:alice_bob#lost',
+        # lost = doc.entity('dat:echogu_wei0496#lost',
         #                   {prov.model.PROV_LABEL: 'Animals Lost', prov.model.PROV_TYPE: 'ont:DataSet'})
         # doc.wasAttributedTo(lost, this_script)
         # doc.wasGeneratedBy(lost, get_lost, endTime)
         # doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
         #
-        # found = doc.entity('dat:alice_bob#found',
+        # found = doc.entity('dat:echogu_wei0496#found',
         #                    {prov.model.PROV_LABEL: 'Animals Found', prov.model.PROV_TYPE: 'ont:DataSet'})
         # doc.wasAttributedTo(found, this_script)
         # doc.wasGeneratedBy(found, get_found, endTime)
