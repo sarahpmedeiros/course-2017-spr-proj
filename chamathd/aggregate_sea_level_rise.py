@@ -180,9 +180,9 @@ class aggregate_sea_level_rise(dml.Algorithm):
                   
         return doc
 
-aggregate_sea_level_rise.execute()
-doc = aggregate_sea_level_rise.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+##aggregate_sea_level_rise.execute()
+##doc = aggregate_sea_level_rise.provenance()
+##print(doc.get_provn())
+##print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

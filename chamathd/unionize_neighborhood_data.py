@@ -125,9 +125,9 @@ class unionize_neighborhood_data(dml.Algorithm):
                   
         return doc
 
-unionize_neighborhood_data.execute()
-doc = unionize_neighborhood_data.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+##unionize_neighborhood_data.execute()
+##doc = unionize_neighborhood_data.provenance()
+##print(doc.get_provn())
+##print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

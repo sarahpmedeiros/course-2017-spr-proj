@@ -135,9 +135,9 @@ class append_polygon_and_centerpoint(dml.Algorithm):
                   
         return doc
 
-append_polygon_and_centerpoint.execute()
-doc = append_polygon_and_centerpoint.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+##append_polygon_and_centerpoint.execute()
+##doc = append_polygon_and_centerpoint.provenance()
+##print(doc.get_provn())
+##print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

@@ -116,9 +116,9 @@ class fetch_sea_level_data(dml.Algorithm):
                   
         return doc
 
-fetch_sea_level_data.execute()
-doc = fetch_sea_level_data.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+##fetch_sea_level_data.execute()
+##doc = fetch_sea_level_data.provenance()
+##print(doc.get_provn())
+##print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

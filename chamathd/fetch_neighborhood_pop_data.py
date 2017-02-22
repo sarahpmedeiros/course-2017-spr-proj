@@ -116,9 +116,9 @@ class fetch_neighborhood_pop_data(dml.Algorithm):
                   
         return doc
 
-fetch_neighborhood_pop_data.execute()
-doc = fetch_neighborhood_pop_data.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+##fetch_neighborhood_pop_data.execute()
+##doc = fetch_neighborhood_pop_data.provenance()
+##print(doc.get_provn())
+##print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
