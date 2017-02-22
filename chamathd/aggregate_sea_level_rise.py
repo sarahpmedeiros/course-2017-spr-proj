@@ -9,7 +9,7 @@ from shapely.geometry import shape
 
 class aggregate_sea_level_rise(dml.Algorithm):
     contributor = 'chamathd'
-    reads = ['chamathd.neighborhood_sea_level_data', \
+    reads = ['chamathd.neighborhood_info', \
              'chamathd.sea_level_five', \
              'chamathd.sea_level_seven']
     writes = ['chamathd.neighborhood_sea_level_data']
