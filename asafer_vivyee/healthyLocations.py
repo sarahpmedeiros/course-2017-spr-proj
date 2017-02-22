@@ -86,18 +86,22 @@ class healthyLocations(dml.Algorithm):
         orchards_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Urban Orchard Locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         corner_stores_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Healthy Corner Store Locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         nutrition_prog_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Community Culinary and Nutrition Programs', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        healthy_locations_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Aggregate of Health related locations', prov.model.PROV_TYPE:'ont:DataResource'})
 
         get_orchards = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
         get_corner_stores = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
         get_nutrition_prog = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        get_healthy_locations = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_orchards, this_script)
         doc.wasAssociatedWith(get_corner_stores, this_script)
         doc.wasAssociatedWith(get_nutrition_prog, this_script)
+        doc.wasAssociatedWith(get_healthy_locations, this_script)
 
         doc.usage(get_orchards, orchards_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_corner_stores, corner_stores_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_nutrition_prog, nutrition_prog_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_healthy_locations, healthy_locations_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
 
         orchards = doc.entity('dat:asafer_vivyee#orchards', {prov.model.PROV_LABEL:'Urban Orchard Locations', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(orchards, this_script)
@@ -113,6 +117,11 @@ class healthyLocations(dml.Algorithm):
         doc.wasAttributedTo(nutrition_prog, this_script)
         doc.wasGeneratedBy(nutrition_prog, get_nutrition_prog, endTime)
         doc.wasDerivedFrom(nutrition_prog, nutrition_prog_resource, get_nutrition_prog, get_nutrition_prog, get_nutrition_prog)
+
+        healthy_locations = doc.entity('dat:asafer_vivyee#healthy_locations', {prov.model.PROV_LABEL:'Aggregate of Health related locations', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(healthy_locations, this_script)
+        doc.wasGeneratedBy(healthy_locations, get_healthy_locations, endTime)
+        doc.wasDerivedFrom(healthy_locations, healthy_locations_resource, get_healthy_locations, get_healthy_locations, get_healthy_locations)
 
         repo.logout()
 
