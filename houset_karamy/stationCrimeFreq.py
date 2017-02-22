@@ -107,5 +107,5 @@ class stationCrimeFreq(dml.Algorithm):
                   
         return doc
 
-stationCrimeFreq.execute()
-doc = stationCrimeFreq.provenance()
+#stationCrimeFreq.execute()
+#doc = stationCrimeFreq.provenance()
