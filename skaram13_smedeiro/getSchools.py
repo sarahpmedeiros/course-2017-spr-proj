@@ -41,7 +41,6 @@ class getSchools(dml.Algorithm):
             i = 0
             for entry in read_data:
                 i += 1
-                print(i)
                 schoolName = entry[0]
                 splitSchoolName = entry[0].split(": ")
 
@@ -58,13 +57,13 @@ class getSchools(dml.Algorithm):
                         else:
                             censusTract = census['result']['addressMatches'][0]['geographies']['Census Blocks'][0]['TRACT']
                             dbEntry = {'schoolName':splitSchoolName[1], 'orgcode': orgcode,'city':city, 'state':state, 'zipcode': zipcode, 'street': street, 'censusTract': censusTract }
-                            print(dbEntry)
+                            #print(dbEntry)
                             dbEntries.append(dbEntry)
                     else:
                         failures.append([orgcode,street,city,state,zipcode])
 
-        print(failures)
-        print(len(failures))
+        #print(failures)
+        #print(len(failures))
         return (dbEntries)
 
 
