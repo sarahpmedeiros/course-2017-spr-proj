@@ -21,11 +21,11 @@ class fetchData(dml.Algorithm):
 
     @staticmethod
     def store(repo, url, collection):
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        response = json.loads(response)
-       
 
         if (collection == 'asafer_vivyee.mbta_routes'):
+            response = urllib.request.urlopen(url).read().decode("utf-8")
+            response = json.loads(response)
+
             routes = [ mode for mode in response['mode'] if mode['mode_name'] == 'Subway' or mode['mode_name'] == 'Bus' ]
             routes = [ (mode['mode_name'], route['route_id']) for mode in routes for route in mode['route'] ]
 
@@ -41,7 +41,7 @@ class fetchData(dml.Algorithm):
 
                 stops_by_route['name'] = route_id
                 stops_by_route['mode'] = mode
-                stops_by_route['path'] = response
+                stops_by_route['path'] = json.loads(response)
 
                 json_stops.append(stops_by_route)
 
@@ -49,7 +49,18 @@ class fetchData(dml.Algorithm):
             repo.createPermanent(collection)
             repo[collection].insert_many(json_stops)
 
+        elif (collection == 'asafer_vivyee.obesity'):
+            response = requests.get(url)
+            data = response.json()
+
+            repo.dropPermanent(collection)
+            repo.createPermanent(collection)
+            repo[collection].insert_many(data)
+
         else:
+            response = urllib.request.urlopen(url).read().decode("utf-8")
+            response = json.loads(response)
+
             repo.dropPermanent(collection)
             repo.createPermanent(collection)
             repo[collection].insert_many(response)
@@ -63,12 +74,11 @@ class fetchData(dml.Algorithm):
 
         mbta_key = dml.auth['services']['mbtadeveloperportal']['key']
         cityofboston_token = dml.auth['services']['cityofbostondataportal']['token']
-        cdc_token = dml.auth['services']['cdcdataportal']['token']
 
         datasets = {
             'asafer_vivyee.orchards': 'https://data.cityofboston.gov/resource/8tmm-wjbw.json?$$app_token=' + cityofboston_token,
             'asafer_vivyee.corner_stores': 'https://data.cityofboston.gov/resource/ybm6-m5qd.json?$$app_token=' + cityofboston_token,
-            'asafer_vivyee.obesity': 'https://chronicdata.cdc.gov/resource/a2ye-t2pa.json?$$app_token=' + cdc_token,
+            'asafer_vivyee.obesity': 'https://chronicdata.cdc.gov/resource/ahrt-wk9b.json?$offset=13908&$limit=177',
             'asafer_vivyee.nutrition_prog': 'https://data.cityofboston.gov/resource/ahjc-pw5e.json?$$app_token=' + cityofboston_token,
             'asafer_vivyee.mbta_routes': 'http://realtime.mbta.com/developer/api/v2/routes?api_key=' + mbta_key + '&format=json'
         }
