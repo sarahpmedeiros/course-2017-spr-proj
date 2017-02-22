@@ -132,7 +132,7 @@ class incomeOfInsomnia(dml.Algorithm):
         # DATAMECHANICS.IO DATA
         zip_to_income_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'Zip code to estimated income', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         lat_to_zip_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'Latitude, longitude to zip code', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        income_of_insomnia_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'What is the income of those who sleep less than 7 hours a night', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        income_of_insomnia_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'What is the income of those who sleep less than 7 hours a night', prov.model.PROV_TYPE:'ont:DataResource'})
 
         get_sleep = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime) 
         get_zip_to_income = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)  
