@@ -15,7 +15,6 @@ we can determine if there's more Hubway stations near the existing bicycle lanes
 By analyzing the historic landmark locations and school locations, we can determine how to allocate resources
 and provide suggestions for possible locations of more share-riding stations.
 
-
 ## Data Retrieval
 ##### Boston Existing Bike Networks
 Existing Biking Networks within the city of Boston (source: Boston Open Data)
