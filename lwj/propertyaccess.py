@@ -32,9 +32,10 @@ class propertyaccess(dml.Algorithm):
                except:
                     count += 1
                     continue
-          print(len(property_data))
-          print(count, "errors")
-          print(count2, "success")
+ #         print(len(property_data))
+#          print(count, "errors")
+
+#          print(count2, "success")
           return propertyinfo
 
                
@@ -43,8 +44,14 @@ class propertyaccess(dml.Algorithm):
      def execute(trial = False):
           startTime = datetime.datetime.now()
           context = ssl._create_unverified_context()
-          with open("./data/property.json","r") as f:
-               response = f.readlines()
+          #have to use download file as the api for this database only provide the first 1000 data,
+          #so i have to download it and open it here
+          try:
+               with open("./lwj/data/property.json","r") as f:
+                    response = f.readlines()
+          except:
+               with open("./data/property.json","r") as f:
+                    response = f.readlines()
           res = ""
           for i in response:
                res += i
@@ -58,8 +65,7 @@ class propertyaccess(dml.Algorithm):
           project.authenticate("lwj", "lwj")
           project.propertydb.drop()
           propertydb = project.propertydb
-          for i in property_data:
-               propertydb.insert_one(i)
+          propertydb.insert_many(property_data)
           project.logout()
           endTime = datetime.datetime.now()
           return {"star":startTime, "end":endTime}
@@ -100,10 +106,9 @@ class propertyaccess(dml.Algorithm):
           return doc
                             
           
-
-propertyaccess.execute()
-doc = propertyaccess.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#propertyaccess.execute()
+#doc = propertyaccess.provenance()
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 

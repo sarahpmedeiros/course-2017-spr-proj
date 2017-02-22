@@ -39,8 +39,7 @@ class filtermarket(dml.Algorithm):
           project.authenticate("lwj", "lwj")
           project.market.drop()
           market = project.market
-          for i in market_data:
-               market.insert_one(i)
+          market.insert_many(market_data)
           project.logout()
           endTime = datetime.datetime.now()
           return {"star":startTime, "end":endTime}
@@ -73,13 +72,6 @@ class filtermarket(dml.Algorithm):
 
           return doc
 
-     
-filtermarket.execute()
-doc = filtermarket.provenance()
-print(doc.get_provn())
-
-
-     
                
 
           

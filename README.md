@@ -9,15 +9,20 @@ This project intends to characterize neighborhoods in Greater Boston Area based 
 I defined a selection function to filter the Farmers Markets data first, which will help filter out the farmers markets in Masshachusetts but out of Boston area. Then I defined a union function to combine Hospital, Colleges and Universities, Gardens, and Markets datasets into one dataset based on a new schema and add a “Type” column to identify the place type. Since union.py reads the dataset from mongoldb instead of online source, the filtermarket.py should be run before the union.py. The third function is projection, which add a new column “average value” for the property assessment dataset by calculating total value/land area. Since the file of Property Assessment 2016 is too large (169,199 rows)to be handled from online source, I downloaded it first and then open the dataset from local. 
 
 ###Service Instructions
-Automatically
-If you don’t have the data file of property.json in the data file, You should first download the dataset here:https://data.cityofboston.gov/Permitting/Property-Assessment-2016/i7w8-ure5 , It is too large for url request.
+Run Automatically in the root dir
+```
+python3 execute.py lwj
 
-After downloading, try python3 execute.py lwj
+```
 
-Mannually
-The filtermarket.py should be run before the union.py
-You should download Property Assessment 2016 from City of Boston Data Portal before running propertyaccess.py
-You can download the dataset here: https://data.cityofboston.gov/Permitting/Property-Assessment-2016/i7w8-ure5
+Run Manually
+```
+python3 filtermarket.py
+python3 union.py
+python3 propertyaccess.py
+
+```
+Downloading may take some time
 
 ###Future Plan
 The Boston Neighborhood Shapefiles dataset would be later used to identify the boundaries for each neighborhood and the Waze Jam Data would probably be used to evaluate the traffic in a specific area.This project will help identity the overall characteristics of each neighborhood in Boston area and give some suggestions for the city development.

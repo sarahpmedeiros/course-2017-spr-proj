@@ -122,8 +122,7 @@ class union(dml.Algorithm):
                     continue
                #60
                
-          with open("./data/access.json", 'w') as file:
-               json.dump(access, file)
+          return access
                
  
      @staticmethod
@@ -155,15 +154,11 @@ class union(dml.Algorithm):
           response = urllib.request.urlopen(url, context = context).read().decode("utf-8")
           property_data = json.loads(response)
 
-          union.unionF(hospital_data, garden_data, market_data, college_data)
-          with open("./data/access.json", 'r') as file:
-               accessdb = file.read()
-          accessdb = json.loads(accessdb)
+          accessdb = union.unionF(hospital_data, garden_data, market_data, college_data)
          
           project.access.drop()
           access = project.access
-          for i in accessdb: 
-               access.insert_one(i)
+          access.insert_many(accessdb)
           project.logout()
           endTime = datetime.datetime.now()
           return {"start":startTime, "end":endTime}
@@ -225,10 +220,7 @@ class union(dml.Algorithm):
           return doc
                             
           
-
-
-
-union.execute()
-doc = union.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#union.execute()
+#doc = union.provenance()
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
