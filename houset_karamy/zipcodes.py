@@ -48,7 +48,7 @@ class zipcodes(dml.Algorithm):
         
         #put together
         together = []
-        print(type(together))
+#         print(type(together))
         for station in zipsStations:
             for street in zipsBoston:
                 if(station[1] == street[1]):
