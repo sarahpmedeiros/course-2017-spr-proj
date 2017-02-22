@@ -31,7 +31,7 @@ class zipcodes(dml.Algorithm):
         #get the zipcodes of police stations
         zipsStations = []
         for station in stations:
-          zipStations.append((station["name"],station["location_zip"]))
+            zipsStations.append((station["name"],station["location_zip"]))
 
         #get the different street's zipcodes
         zipsBoston = []
@@ -41,9 +41,9 @@ class zipcodes(dml.Algorithm):
         #put together
         together = []
         for station in zipsStation:
-          for street in zipsBoston:
-            if(station[1] == street[1]):
-              together.append({'station':station["name"], 'zip code': station["location_zip"], 'streets': street["st_name_std"]})
+            for street in zipsBoston:
+                if(station[1] == street[1]):
+                    together.append({'station':station["name"], 'zip code': station["location_zip"], 'streets': street["st_name_std"]})
         
         
         #insert into new database        
