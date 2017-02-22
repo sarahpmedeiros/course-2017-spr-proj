@@ -36,7 +36,7 @@ class zipcodes(dml.Algorithm):
         #get the different street's zipcodes
         zipsBoston = []
         for z in streets:
-            zipsBoston.append((z["st_name_std"],z["r_postcode"]))
+            zipsBoston.append(z["st_name_std"])
         
         #put together
         together = []
