@@ -40,11 +40,11 @@ class stationCrimeFreq(dml.Algorithm):
                 
             
         #count the number of crimesBoston in each district
-        putTogether = []
+        #putTogether = []
         for x in addresses:
             for y in bostonD:
                 if (y["district/neighborhood"][1] in x[0]):
-                    putTogether.append(x,y["count"])
+                    addresses.append(y["count"])
                     
 
         #get rid of duplicates
@@ -54,7 +54,7 @@ class stationCrimeFreq(dml.Algorithm):
 #                finalCount.append(d)
         
         #insert into new database        
-        repo['houset_karamy.stationCrimeFreq'].insert_many(putTogether)
+        repo['houset_karamy.stationCrimeFreq'].insert_many(addresses)
         
         repo.logout()
 
