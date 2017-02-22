@@ -34,7 +34,7 @@ class crimeFrequencyCambridge(dml.Algorithm):
 
         finalCount = []
         for crime in crimeCounts:
-            finalCount.append({'crime':crime[1], 'count': crime[0]})
+            finalCount.append({'neighborhood':crime[1], 'count': crime[0]})
 
         repo['houset_karamy.crimeFrequencyCambridge'].insert_many(finalCount)
 
@@ -62,7 +62,7 @@ class crimeFrequencyCambridge(dml.Algorithm):
         doc.add_namespace("log", "http://datamechanics.io/log/") # The event log.
         doc.add_namespace('cma', 'https://data.cambridgema.gov/resource/')   
 
-        this_script = doc.agent("alg:houset_karamy#example", {prov.model.PROV_TYPE:prov.model.PROV["SoftwareAgent"], "ont:Extension":"py"})
+        this_script = doc.agent("alg:houset_karamy#crimeFrequencyCambridge", {prov.model.PROV_TYPE:prov.model.PROV["SoftwareAgent"], "ont:Extension":"py"})
         resource = doc.entity('cma:dypy-nwuz', {'prov:label':'Crime Frequency Cambridge', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_CrimeFrequencyCambridge = doc.activity("log:uuid"+str(uuid.uuid4()), startTime, endTime)
@@ -85,7 +85,7 @@ class crimeFrequencyCambridge(dml.Algorithm):
         return doc
 
 crimeFrequencyCambridge.execute()
-doc = transformation1.provenance()
+doc = crimeFrequencyCambridge.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
