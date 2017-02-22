@@ -7,9 +7,16 @@ we find out that the City of Boston has launched several projects and program to
 For example, The [Connect Historic Boston](https://www.boston.gov/transportation/connect-historic-boston) Project wants to connect historic sites in downtown Boston. 
 And the [Youth Cycling Problem](https://www.boston.gov/departments/boston-bikes/youth-cycling-program) encourages students to ride by bringing biking curriculum to schools.
 
-We're interested in finding the optimized locations to place bike racks of ride sharing stations to help with these programs.
+In this project, we're interested in finding the optimized locations to place bike racks of ride sharing stations.
+We found a data set that lists the locations and properties of existing Hubway Stations (a bike-sharing program) around Boston Area.
+We also obtained data sets of Boston landmark locations and public school locations.
+By examining the relationship between existing Hubway stations and bike networks,
+we can determine if there's more Hubway stations near the existing bicycle lanes.
+By analyzing the historic landmark locations and school locations, we can determine how to allocate resources
+and provide suggestions for possible locations of more share-riding stations.
 
-## Data Sets
+
+## Data Retrieval
 ##### Boston Existing Bike Networks
 Existing Biking Networks within the city of Boston (source: Boston Open Data)
 
@@ -30,27 +37,35 @@ Public Schools in Massachusetts from Pre-K to 12th grade (source: MassGIS Open D
 
 ## Transformations and New Data Sets
 #### Bike Network
-we've found out that the Hubway Stations dataset include the locations of cambridge, thus we
+This data set has a record of the city of Boston's and Cambridge's Bike Networks (street name, length and geographical information).
+We've found out that the Hubway Stations has bike-sharing locations in both Boston and Cambridge,
+thus we decide to merge these two data sets.
+Since the two data sets have different schemas,
+we first do a ```projection``` on both data sets to clean them up then we merge them using ```union```.
 
 #### Landmarks and Hubway Stations
+This data set has a record of Boston's historic landmarks and their distance to the nearest Hubway Station. We use the ```product``` operation to combine two sets and ```project``` on the resulting set.
+Then we ```aggregate``` for each historic landmark, find the closest Hubway Station and get the distance.
+The function is not implemented efficiently so that the aggregation process might takes 20 seconds or more.
 
 #### Schools and Hubway Stations
-
-
-
-
-Write a short narrative and justification (5-10 sentences) explaining how these data sets can be combined to answer an interesting question or solve a problem. You do not need to solve the actual problem in this project, and it is acceptable to merely combine data sets in a way that is likely to support one or more solutions involving the particular data you choose.
-Include this narrative in a README.md file within your directory (along with any documentation you may write in that file).
-
+This data set has a record of Boston's public schools and the number of Hubway Stations nearby.
+First, we clean up the MA Schools data set by eliminating the schools outside Boston and the schools only offering lower grades (Pre-K to 2).
+Then we use the ```product``` function to combine two data sets. Then we ```aggregate``` on Schools.
+For each school, count the number of Hubway Stations within a 5-minute walking distance (we use 500 meters here).
 
 
 ## Setting Up
 Follows the procedure in [Data-Mechanics/course-2017-spr-proj](https://github.com/Data-Mechanics/course-2017-spr-proj).
 
-Required libraries:
+###### Required libraries
 ```
-pip3 install prov --upgrade --no-cache-dir
-pip3 install dml --upgrade --no-cache-dir
-pip3 install protoql --upgrade --no-cache-dir
-pip3 install geopy
+$ pip install prov --upgrade --no-cache-dir
+$ pip install dml --upgrade --no-cache-dir
+$ pip install protoql --upgrade --no-cache-dir
+$ pip install geopy
+```
+###### Run
+```
+$ python execute.py echogu_wei0496
 ```

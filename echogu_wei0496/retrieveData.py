@@ -13,7 +13,7 @@ class retrieveData(dml.Algorithm):
     contributor = 'echogu_wei0496'
     reads = []
     writes = ['echogu_wei0496.BostonNetwork', 'echogu_wei0496.CambridgeNetwork', 'echogu_wei0496.HubwayStations',
-              'echogu_wei0496.ServicesRequest', 'echogu_wei0496.BLCLandmarks']
+              'echogu_wei0496.ServicesRequest', 'echogu_wei0496.BLCLandmarks', 'echogu_wei0496.MASchools']
 
     @staticmethod
     def execute(trial=False):
