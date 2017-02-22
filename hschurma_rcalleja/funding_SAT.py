@@ -114,40 +114,32 @@ class funding_SAT(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:hschurma_rcalleja#retrieve',
+        this_script = doc.agent('alg:hschurma_rcalleja#funding_SAT',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
-        resource = doc.entity('bdp:wc8w-nujj',
-                              {'prov:label': '311, Service Requests', prov.model.PROV_TYPE: 'ont:DataResource',
-                               'ont:Extension': 'json'})
 
-        get_found = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
-        get_lost = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        funding = doc.entity('dat:hschurma_rcalleja#funding', {prov.model.PROV_LABEL: 'BPS Funding', \
+                                                               prov.model.PROV_TYPE: 'ont:DataSet'})
+        SAT = doc.entity('dat:hschurma_rcalleja#SAT', {prov.model.PROV_LABEL: 'SAT Scores', \
+                                                               prov.model.PROV_TYPE: 'ont:DataSet'})
 
-        doc.wasAssociatedWith(get_found, this_script)
-        doc.wasAssociatedWith(get_lost, this_script)
+        get_funding_SAT = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
 
-        doc.usage(get_found, resource, startTime, None,
-                  {prov.model.PROV_TYPE: 'ont:Retrieval',
-                   'ont:Query': '?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                   }
-                  )
-        doc.usage(get_lost, resource, startTime, None,
-                  {prov.model.PROV_TYPE: 'ont:Retrieval',
-                   'ont:Query': '?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                   }
-                  )
+        doc.wasAssociatedWith(get_funding_SAT, this_script)
 
-        lost = doc.entity('dat:hschurma_rcalleja#lost',
-                          {prov.model.PROV_LABEL: 'Animals Lost', prov.model.PROV_TYPE: 'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
+        doc.used(get_funding_SAT, funding, startTime)
+        doc.used(get_funding_SAT, SAT, startTime)
 
-        found = doc.entity('dat:hschurma_rcalleja#found',
-                           {prov.model.PROV_LABEL: 'Animals Found', prov.model.PROV_TYPE: 'ont:DataSet'})
-        doc.wasAttributedTo(found, this_script)
-        doc.wasGeneratedBy(found, get_found, endTime)
-        doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
+        funding_SAT = doc.entity('dat:hschurma_rcalleja#funding_SAT',
+                               {prov.model.PROV_LABEL: 'High School Funding and SAT Score Data',
+                                prov.model.PROV_TYPE: 'ont:DataSet'})
+        doc.wasAttributedTo(funding_SAT, this_script)
+        doc.wasGeneratedBy(get_funding_SAT, endTime)
+
+        doc.wasDerivedFrom(funding_SAT, funding, get_funding_SAT, get_funding_SAT, get_funding_SAT)
+        doc.wasDerivedFrom(funding_SAT, SAT, get_funding_SAT, get_funding_SAT, get_funding_SAT)
+
+        # repo.record(doc.serialize())
+        repo.logout()
 
         repo.logout()
 
