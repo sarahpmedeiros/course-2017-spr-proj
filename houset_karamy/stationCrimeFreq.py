@@ -84,7 +84,7 @@ class stationCrimeFreq(dml.Algorithm):
         resource = doc.entity("bdp:pyxn-r3i2", {"prov:label":"stationCrimeFreq", prov.model.PROV_TYPE:"ont:DataResource", "ont:Extension":"json"})
         get_stationCrimeFreq = doc.activity("log:uuid"+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_crimeFreq, this_script)
+        doc.wasAssociatedWith(get_stationCrimeFreq, this_script)
 
         doc.usage(get_stationCrimeFreq, resource, startTime, None,
                   {prov.model.PROV_TYPE:"ont:Retrieval"#,
