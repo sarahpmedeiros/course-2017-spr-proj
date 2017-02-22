@@ -9,10 +9,7 @@ import dml
 import prov.model
 import datetime
 import uuid
-from echogu_wei0496 import transformData
-from shapely.geometry import Polygon, LinearRing, Point
 from geopy.distance import vincenty
-
 
 class mergeLandmarksHubway(dml.Algorithm):
     contributor = 'echogu_wei0496'
@@ -52,19 +49,22 @@ class mergeLandmarksHubway(dml.Algorithm):
                 pass
 
         # product (id, properties, location, station)
-        product = transformData.product(Landmarks, HubwayStations)
-        product = [{'_id': item[0]['_id'],
+        def product(R, S):
+            return [(t, u) for t in R for u in S]
+
+        p = product(Landmarks, HubwayStations)
+        p = [{'_id': item[0]['_id'],
                     'properties': item[0]['properties'],
                     'geometry': item[0]['geometry'],                        # landmark locations
-                    'stations': item[1]['stations']} for item in product]   # Hubway stations location coordinates
+                    'stations': item[1]['stations']} for item in p]   # Hubway stations location coordinates
 
         # aggregation: for each historic landmark, find the closet Hubway station
-        # this process takes a while
+        # This is not an efficient implementation, the process tabkes about 20 seconds
         LandmarksHubway = []
-        keys = {item['_id'] for item in product}
+        keys = {item['_id'] for item in p}
         for key in keys:
             closest = float('inf')
-            for item in product:
+            for item in p:
                 if item['_id'] == key:
                     try:
                         polygon = [(c[1], c[0]) for c in item['geometry']['coordinates'][0]]
@@ -104,49 +104,37 @@ class mergeLandmarksHubway(dml.Algorithm):
         repo.authenticate('echogu_wei0496', 'echogu_wei0496')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
-        doc.add_namespace('ont',
-                          'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
+        doc.add_namespace('ont', 'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
 
-        this_script = doc.agent('alg:echogu_wei0496#mergeBikeNetwork',
+        this_script = doc.agent('alg:echogu_wei0496#mergeLandmarksHubway',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
-        resource = doc.entity('bdp:wc8w-nujj',
-                              {'prov:label': '311, Service Requests', prov.model.PROV_TYPE: 'ont:DataResource',
-                               'ont:Extension': 'json'})
-        # get_found = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
-        # get_lost = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
-        # doc.wasAssociatedWith(get_found, this_script)
-        # doc.wasAssociatedWith(get_lost, this_script)
-        # doc.usage(get_found, resource, startTime, None,
-        #           {prov.model.PROV_TYPE: 'ont:Retrieval',
-        #            'ont:Query': '?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-        #            }
-        #           )
-        # doc.usage(get_lost, resource, startTime, None,
-        #           {prov.model.PROV_TYPE: 'ont:Retrieval',
-        #            'ont:Query': '?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-        #            }
-        #           )
-        #
-        # lost = doc.entity('dat:echogu_wei0496#lost',
-        #                   {prov.model.PROV_LABEL: 'Animals Lost', prov.model.PROV_TYPE: 'ont:DataSet'})
-        # doc.wasAttributedTo(lost, this_script)
-        # doc.wasGeneratedBy(lost, get_lost, endTime)
-        # doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-        #
-        # found = doc.entity('dat:echogu_wei0496#found',
-        #                    {prov.model.PROV_LABEL: 'Animals Found', prov.model.PROV_TYPE: 'ont:DataSet'})
-        # doc.wasAttributedTo(found, this_script)
-        # doc.wasGeneratedBy(found, get_found, endTime)
-        # doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
-        #
+        resource_BLCLandmarks = doc.entity('dat:echogu_wei0496#BLCLandmarks',
+                                           {'prov:label': 'BLC Landmarks', prov.model.PROV_TYPE: 'ont:DataSet'})
+        resource_HubwayStations = doc.entity('dat:echogu_wei0496#HubwayStations',
+                                             {'prov:label': 'Hubway Stations', prov.model.PROV_TYPE: 'ont:DataSet'})
+
+        get_LandmarksHubway = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        doc.wasAssociatedWith(get_LandmarksHubway, this_script)
+        doc.usage(get_LandmarksHubway, resource_BLCLandmarks, startTime, None,
+                  {prov.model.PROV_TYPE: 'ont:Computation'})
+        doc.usage(get_LandmarksHubway, resource_HubwayStations, startTime, None,
+                  {prov.model.PROV_TYPE: 'ont:Computation'})
+
+        LandmarksHubway = doc.entity('dat:echogu_wei0496#LandmarksHubway',
+                                     {prov.model.PROV_LABEL: 'Landmarks Hubway Stations', prov.model.PROV_TYPE: 'ont:DataSet'})
+        doc.wasAttributedTo(LandmarksHubway, this_script)
+        doc.wasGeneratedBy(LandmarksHubway, get_LandmarksHubway, endTime)
+        doc.wasDerivedFrom(LandmarksHubway, resource_BLCLandmarks, get_LandmarksHubway, get_LandmarksHubway, get_LandmarksHubway)
+        doc.wasDerivedFrom(LandmarksHubway, resource_HubwayStations, get_LandmarksHubway, get_LandmarksHubway, get_LandmarksHubway)
+
         repo.logout()
 
         return doc
 
 mergeLandmarksHubway.execute()
-# doc = example.provenance()
-# print(doc.get_provn())
-# print(json.dumps(json.loads(doc.serialize()), indent=4))
+doc = mergeLandmarksHubway.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

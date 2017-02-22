@@ -7,7 +7,6 @@ import dml
 import prov.model
 import datetime
 import uuid
-from echogu_wei0496 import transformData
 
 class mergeBikeNetwork(dml.Algorithm):
     contributor = 'echogu_wei0496'
@@ -50,8 +49,8 @@ class mergeBikeNetwork(dml.Algorithm):
             except:
                 pass
 
-        # aggregation
-        BikeNetwork = transformData.union(BostonNetwork, CambridgeNetwork)
+        # union
+        BikeNetwork = BostonNetwork + CambridgeNetwork
 
         repo.dropCollection("BikeNetwork")
         repo.createCollection("BikeNetwork")
@@ -79,49 +78,40 @@ class mergeBikeNetwork(dml.Algorithm):
         repo.authenticate('echogu_wei0496', 'echogu_wei0496')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
-        doc.add_namespace('ont',
-                          'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
+        doc.add_namespace('ont', 'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
 
         this_script = doc.agent('alg:echogu_wei0496#mergeBikeNetwork',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
-        resource = doc.entity('bdp:wc8w-nujj',
-                              {'prov:label': '311, Service Requests', prov.model.PROV_TYPE: 'ont:DataResource',
-                               'ont:Extension': 'json'})
-        # get_found = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
-        # get_lost = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
-        # doc.wasAssociatedWith(get_found, this_script)
-        # doc.wasAssociatedWith(get_lost, this_script)
-        # doc.usage(get_found, resource, startTime, None,
-        #           {prov.model.PROV_TYPE: 'ont:Retrieval',
-        #            'ont:Query': '?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-        #            }
-        #           )
-        # doc.usage(get_lost, resource, startTime, None,
-        #           {prov.model.PROV_TYPE: 'ont:Retrieval',
-        #            'ont:Query': '?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-        #            }
-        #           )
-        #
-        # lost = doc.entity('dat:echogu_wei0496#lost',
-        #                   {prov.model.PROV_LABEL: 'Animals Lost', prov.model.PROV_TYPE: 'ont:DataSet'})
-        # doc.wasAttributedTo(lost, this_script)
-        # doc.wasGeneratedBy(lost, get_lost, endTime)
-        # doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-        #
-        # found = doc.entity('dat:echogu_wei0496#found',
-        #                    {prov.model.PROV_LABEL: 'Animals Found', prov.model.PROV_TYPE: 'ont:DataSet'})
-        # doc.wasAttributedTo(found, this_script)
-        # doc.wasGeneratedBy(found, get_found, endTime)
-        # doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
-        #
+        resource_BostonNetkwork = doc.entity('dat:echogu_wei0496#BostonNetwork',
+                                             {'prov:label': 'Boston Bike Network',
+                                              prov.model.PROV_TYPE: 'ont:DataSet'})
+        resource_CambridgeNetwork = doc.entity('dat:echogu_wei0496#CambridgeNetwork',
+                                             {'prov:label': 'Cambridge Bike Network',
+                                              prov.model.PROV_TYPE: 'ont:DataSet'})
+
+        get_BikeNetwork = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        doc.wasAssociatedWith(get_BikeNetwork, this_script)
+        doc.usage(get_BikeNetwork, resource_BostonNetkwork, startTime, None,
+                  {prov.model.PROV_TYPE: 'ont:Computation'})
+        doc.usage(get_BikeNetwork, resource_CambridgeNetwork, startTime, None,
+                  {prov.model.PROV_TYPE: 'ont:Computation'})
+
+        BikeNetwork = doc.entity('dat:echogu_wei0496#BikeNetwork',
+                          {prov.model.PROV_LABEL: 'Bike Network',
+                           prov.model.PROV_TYPE: 'ont:DataSet'})
+        doc.wasAttributedTo(BikeNetwork, this_script)
+        doc.wasGeneratedBy(BikeNetwork, get_BikeNetwork, endTime)
+        doc.wasDerivedFrom(BikeNetwork, resource_BostonNetkwork, get_BikeNetwork, get_BikeNetwork, get_BikeNetwork)
+        doc.wasDerivedFrom(BikeNetwork, resource_CambridgeNetwork, get_BikeNetwork, get_BikeNetwork, get_BikeNetwork)
+
         repo.logout()
 
         return doc
 
 mergeBikeNetwork.execute()
-# doc = example.provenance()
-# print(doc.get_provn())
-# print(json.dumps(json.loads(doc.serialize()), indent=4))
+doc = mergeBikeNetwork.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

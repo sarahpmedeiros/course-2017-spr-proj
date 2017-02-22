@@ -159,14 +159,15 @@ class retrieveData(dml.Algorithm):
                   {prov.model.PROV_TYPE: 'ont:Retrieval'}
                   )
         doc.usage(get_CambridgeNetwork, resource_CambridgeNetwork, startTime, None,
-                  {prov.model.PROV_TYPE: 'ont:Retrieval'}
+                  {prov.model.PROV_TYPE: 'ont:Retrieval',
+                   'ont:Query': '$limit=1000'}
                   )
         doc.usage(get_HubwayStations, resource_HubwayStations, startTime, None,
                   {prov.model.PROV_TYPE: 'ont:Retrieval'}
                   )
         doc.usage(get_ServicesRequest, resource_ServicesRequest, startTime, None,
                   {prov.model.PROV_TYPE: 'ont:Retrieval',
-                   #'ont:Query': '?REASON=Boston+Bikes&$select=type,latitude,longitude,OPEN_DT'
+                   'ont:Query': '?REASON=Boston+Bikes&$limit=100'
                    }
                   )
         doc.usage(get_BLCLandmarks, resource_BLCLandmarks, startTime, None,
