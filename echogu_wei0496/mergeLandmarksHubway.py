@@ -132,9 +132,9 @@ class mergeLandmarksHubway(dml.Algorithm):
 
         return doc
 
-mergeLandmarksHubway.execute()
-doc = mergeLandmarksHubway.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# mergeLandmarksHubway.execute()
+# doc = mergeLandmarksHubway.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

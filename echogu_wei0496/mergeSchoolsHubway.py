@@ -137,9 +137,9 @@ class mergeSchoolsHubway(dml.Algorithm):
 
         return doc
 
-mergeSchoolsHubway.execute()
-doc = mergeSchoolsHubway.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# mergeSchoolsHubway.execute()
+# doc = mergeSchoolsHubway.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
