@@ -35,8 +35,7 @@ class potHolesOnSnowRoutes(dml.Algorithm):
         repo = client.repo
         repo.authenticate('cfortuna_snjan19', 'cfortuna_snjan19')
 
-        ###### Importing Datasets and putting them inside the mongoDB database #####
-
+        # Read the datasets from Mongo
         repo.dropCollection("PotHolesOnSnowRoutes")
         repo.createCollection("PotHolesOnSnowRoutes")
 
@@ -45,6 +44,7 @@ class potHolesOnSnowRoutes(dml.Algorithm):
    
         ##### Perform transformations here #####
 
+        # Turns the datasets into lists
         snowData = []
         for element in snowRoutes:
             snowData.append(element["properties"]["FULL_NAME"])
@@ -56,18 +56,21 @@ class potHolesOnSnowRoutes(dml.Algorithm):
             if "location_street_name" in element:
                 potHoleData.append(element["location_street_name"])
 
+        # Performs an intersection of the two datasets
         potHoleSnowRoute = []
         for snowRoute in snowData:
             for potholeRoute in potHoleData:
                 if snowRoute in potholeRoute and snowRoute != " ":
                     potHoleSnowRoute.append(snowRoute)
 
+        # Determines the number of potholes on each route
         counts = []
         for route in potHoleSnowRoute:
             counts.append((potHoleSnowRoute.count(route), route))
 
         counts = removeDuplicates(counts)
 
+        # Stores the transormed database
         result = []
         for route in counts:
             result.append( {'route': route[1], 'count': route[0]} )
@@ -102,7 +105,6 @@ class potHolesOnSnowRoutes(dml.Algorithm):
         doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/') # Boston Open Data
         doc.add_namespace('dmg', 'https://data.mass.gov/resource/') #Portal to Data Mass Gov 
 
-
         this_script = doc.agent('alg:cfortuna_snjan19#potHolesOnSnowRoutes', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         Snow_resource = doc.entity('bod:4f3e4492e36f4907bcd307b131afe4a5_0.geojson',{'prov:label':'Snow Emergency Route, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         PotHoles_resource = doc.entity('bdp:n65p-xaz7',{'prov:label':'PotHoles, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
@@ -115,7 +117,6 @@ class potHolesOnSnowRoutes(dml.Algorithm):
 
         doc.usage(get_Snow,Snow_resource, startTime, None,{prov.model.PROV_TYPE:'ont:Retrieval','ont:Query':'?type=Snow+Emergency+Route'})
         doc.usage(get_PotHoles,PotHoles_resource,startTime, None,{prov.model.PROV_TYPE:'ont:Retrieval','ont:Query':'?type=Requests+for+Pothole+Repair'})
-
 
         Snow = doc.entity('dat:cfortuna_snjan19#Snow', {prov.model.PROV_LABEL:'Snow Emergency Routes', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(Snow, this_script)

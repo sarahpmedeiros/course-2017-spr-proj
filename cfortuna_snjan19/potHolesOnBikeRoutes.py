@@ -35,8 +35,7 @@ class potHolesOnBikeRoutes(dml.Algorithm):
         repo = client.repo
         repo.authenticate('cfortuna_snjan19', 'cfortuna_snjan19')
 
-        ###### Importing Datasets and putting them inside the mongoDB database #####
-
+        # Read the datasets from Mongo
         repo.dropCollection("PotHolesOnBikeRoutes")
         repo.createCollection("PotHolesOnBikeRoutes")
 
@@ -45,7 +44,7 @@ class potHolesOnBikeRoutes(dml.Algorithm):
    
         ##### Perform transformations here #####
 
-        # Need to shorten street to st, etc
+        # Shortens street to st, avenue to ave, etc
         bikeData = []
         for element in bikeRoutes:
             route = element["properties"]["STREET_NAM"]
@@ -66,23 +65,27 @@ class potHolesOnBikeRoutes(dml.Algorithm):
         
         bikeData = removeDuplicates(bikeData)
 
+        # Turns the dataset into list
         potHoleData = []
         for element in potholes:
             if "location_street_name" in element:
                 potHoleData.append(element["location_street_name"])
 
+        # Performs an intersection of the bike and pothole data        
         potHoleBikeRoute = []
         for bikeRoute in bikeData:
             for potholeRoute in potHoleData:
                 if bikeRoute in potholeRoute and bikeRoute != " ":
                     potHoleBikeRoute.append(bikeRoute)
 
+        # Determines the number of potholes on each route
         counts = []
         for route in potHoleBikeRoute:
             counts.append((route, potHoleBikeRoute.count(route)))
 
         counts = removeDuplicates(counts)
 
+        # Stores the transormed database
         result = []
         for route in counts:
             result.append( {'route': route[0], 'count': route[1]} )
@@ -117,7 +120,6 @@ class potHolesOnBikeRoutes(dml.Algorithm):
         doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/') # Boston Open Data
         doc.add_namespace('dmg', 'https://data.mass.gov/resource/') #Portal to Data Mass Gov 
 
-
         this_script = doc.agent('alg:cfortuna_snjan19#potHolesOnBikeRoutes', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         Bikes_resource = doc.entity('bod:d02c9d2003af455fbc37f550cc53d3a4_0.geojson',{'prov:label':'Existing Bike Network, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         PotHoles_resource = doc.entity('bdp:n65p-xaz7',{'prov:label':'PotHoles, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
@@ -130,7 +132,6 @@ class potHolesOnBikeRoutes(dml.Algorithm):
 
         doc.usage(get_Bikes,Bikes_resource, startTime, None,{prov.model.PROV_TYPE:'ont:Retrieval','ont:Query':'?type=Existing+Bike+Network'})
         doc.usage(get_PotHoles,PotHoles_resource,startTime, None,{prov.model.PROV_TYPE:'ont:Retrieval','ont:Query':'?type=Requests+for+Pothole+Repair'})
-
 
         Bikes = doc.entity('dat:cfortuna_snjan19#Bikes', {prov.model.PROV_LABEL:'Biking Routes', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(Bikes, this_script)

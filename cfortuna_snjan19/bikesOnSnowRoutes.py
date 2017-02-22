@@ -31,8 +31,7 @@ class bikesOnSnowRoutes(dml.Algorithm):
         repo = client.repo
         repo.authenticate('cfortuna_snjan19', 'cfortuna_snjan19')
 
-        ###### Importing Datasets and putting them inside the mongoDB database #####
-
+        # Read the datasets from Mongo
         repo.dropCollection("BikesOnSnowRoutes")
         repo.createCollection("BikesOnSnowRoutes")
 
@@ -41,11 +40,12 @@ class bikesOnSnowRoutes(dml.Algorithm):
    
         ##### Perform transformations here #####
 
+        # Turn datasets into lists
         snowData = []
         for element in snowRoutes:
             snowData.append(element["properties"]["FULL_NAME"])
         
-        # Need to shorten street to st, etc
+        # Shortens street to st, avenue to ave, etc
         bikeData = []
         for element in bikeRoutes:
             route = element["properties"]["STREET_NAM"]
@@ -64,8 +64,10 @@ class bikesOnSnowRoutes(dml.Algorithm):
 
             bikeData.append(route)
 
+        # Finds roads that are both snow emergency routes and bike routes
         snowBikeRoute = removeDuplicates(intersect(snowData, bikeData))
 
+        # Places a unique identifier on each road
         result = []
         uid = 1
         for route in snowBikeRoute:
@@ -101,7 +103,6 @@ class bikesOnSnowRoutes(dml.Algorithm):
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/') # portal to city of Boston Data
         doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/') # Boston Open Data
         doc.add_namespace('dmg', 'https://data.mass.gov/resource/') #Portal to Data Mass Gov 
-
 
         this_script = doc.agent('alg:cfortuna_snjan19#bikesOnSnowRoutes', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         Bikes_resource = doc.entity('bod:d02c9d2003af455fbc37f550cc53d3a4_0.geojson',{'prov:label':'Existing Bike Network, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
