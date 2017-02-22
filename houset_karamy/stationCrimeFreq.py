@@ -36,7 +36,7 @@ class stationCrimeFreq(dml.Algorithm):
         bostonD =[]
         for dist in crimeF:
             if (dist["district/neighborhood"][0] == "Boston"):
-                append.bostonD(dist)
+                bostonD.append(dist)
                 
             
         #count the number of crimesBoston in each district
@@ -44,11 +44,11 @@ class stationCrimeFreq(dml.Algorithm):
         for x in addresses:
             for y in bostonD:
                 if (y["district/neighborhood"][1] in x[0]):
-                    append.putTogether(x,y["count"])
+                    putTogether.append(x,y["count"])
                     
 
         #get rid of duplicates
- #       finalCount = []
+#       finalCount = []
 #        for d in totalCount:
 #            if (d not in finalCount):
 #                finalCount.append(d)
