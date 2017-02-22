@@ -7,6 +7,7 @@ import prov.model
 import datetime
 import uuid
 import math
+from collections import defaultdict 
 
 class zipcodes(dml.Algorithm):
     contributor = 'houset_karamy'
@@ -28,24 +29,35 @@ class zipcodes(dml.Algorithm):
         streets = repo['houset_karamy.streetsBoston'].find()
         stations = repo['houset_karamy.policeStations'].find()
         
+
         #get the zipcodes of police stations
         zipsStations = []
         for station in stations:
+            # print(station)
             zipsStations.append((station["name"],station["location_zip"]))
 
+        # print(zipStations)
         #get the different street's zipcodes
-        #zipsBoston = []
-        #for z in streets:
-            #zipsBoston.append(z["st_name_std"])
+        zipsBoston = []
+        for st in streets:
+            try:
+                st['st_name_std']
+            except KeyError:
+                continue
+            else:
+                zipsBoston.append((st['st_name_std'], st['l_postcode']))
         
-        #put together
-        together = []
+        together = {}
         for station in zipsStations:
-            for street in streets:
-                if(station[1] == street["l_postcode"]):
-                    together.append({'station':station["name"], 'zip code': station["location_zip"], 'streets': street["st_name_std"]})
-        
-        
+            together.update({station[0]: list()})
+
+
+
+        for station in zipsStations:
+            for street in zipsBoston:
+                if(station[1] == street[1]):
+                    together[station[0]].append(street[0])
+
         #insert into new database        
         repo['houset_karamy.zipcodes'].insert_many(together)
         
