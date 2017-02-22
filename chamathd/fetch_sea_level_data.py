@@ -35,7 +35,7 @@ class fetch_sea_level_data(dml.Algorithm):
         repo.createCollection(colName)
 
         print("Inserting JSON data into collection", colName)
-        repo[colName].insert_many([{'coordinates': polygon} for polygon in r["features"][0]["geometry"]["coordinates"]])
+        repo[colName].insert_many([{'geometry': {'type': 'Polygon', 'coordinates': polygon}} for polygon in r["features"][0]["geometry"]["coordinates"]])
         print("Finished writing data to", colName)
         print()
 
@@ -53,7 +53,7 @@ class fetch_sea_level_data(dml.Algorithm):
         repo.createCollection(colName)
 
         print("Inserting JSON data into collection", colName)
-        repo[colName].insert_many([{'coordinates': polygon} for polygon in r["features"][0]["geometry"]["coordinates"]])
+        repo[colName].insert_many([{'geometry': {'type': 'Polygon', 'coordinates': polygon}} for polygon in r["features"][0]["geometry"]["coordinates"]])
         print("Finished writing data to", colName)
         print()
 

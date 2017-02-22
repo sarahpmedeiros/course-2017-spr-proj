@@ -29,11 +29,6 @@ class append_polygon_and_centerpoint(dml.Algorithm):
         repo.dropCollection(colName)
         repo.createCollection(colName)
 
-        # Retrieve data from the neighborhood collection
-        print("Retrieving data from the neighborhood collection")
-        nhood_col = repo["chamathd.neighborhood_pop"].find().limit(50)
-        print()
-
         # Retrieve polygon data for Boston neighborhoods
         print("Retrieving polygon data from the Boston neighborhood area collection")
         boston_area_col = repo["chamathd.neighborhood_area_boston"].find().limit(50)
@@ -47,6 +42,8 @@ class append_polygon_and_centerpoint(dml.Algorithm):
             x, y = shapelyCenter.x, shapelyCenter.y
 
             # Iterate through our neighborhood collection to find a matching name
+            # Retrieve data from the neighborhood collection
+            nhood_col = repo["chamathd.neighborhood_pop"].find().limit(50)
             for nhood in nhood_col:
                 if nhood["name"] == polyName:
                     newDict = nhood
@@ -71,6 +68,8 @@ class append_polygon_and_centerpoint(dml.Algorithm):
             x, y = shapelyCenter.x, shapelyCenter.y
 
             # Iterate through our neighborhood collection to find a matching name
+            # Retrieve data from the neighborhood collection
+            nhood_col = repo["chamathd.neighborhood_pop"].find().limit(50)
             for nhood in nhood_col:
                 if nhood["name"] == polyName:
                     newDict = nhood
