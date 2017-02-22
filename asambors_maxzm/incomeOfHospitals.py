@@ -57,12 +57,13 @@ class incomeOfHospitals(dml.Algorithm):
                 #map all the hospitals to the proper income
                 #product
 
-                print(hospitals.find())
                 
-                allCombos = incomeOfHospitals.product(hospitals.find({},{'_id': False}),ziptoincome)
+                allCombos = incomeOfHospitals.product(hospitals.find({},{'_id': False}),selectedZipToIncome)
+
+                print(allCombos)
 
                 #select ones with equal zip codes
-                selectedCombos = incomeOfHospitals.select(allCombos,lambda t: t[0]['zipcode']==t[1]['zipcode'])
+                selectedCombos = incomeOfHospitals.select(allCombos,lambda t: int(t[0]['location_zip'])==int(t[1]['zip_code']))
 
 
                 #last project to proper form
