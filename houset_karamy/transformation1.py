@@ -45,10 +45,8 @@ class transformation1(dml.Algorithm):
         
         #get rid of duplicates
         #insert into new database
-        finalCount = []
-        for x in totalCount:
-            if x[0] not in finalCount:
-                finalCount.append({'district':x[1], 'count': x[0]})
+        finalCount = [x for x in totalCount if x not in finalCount]
+        
                 
         repo['houset_karamy.transformation1'].insert_many(finalCount)
         
