@@ -45,6 +45,7 @@ class transformation1(dml.Algorithm):
         
         #get rid of duplicates
         #insert into new database
+        finalCount = []
         finalCount = [x for x in totalCount if x not in finalCount]
         
                 
