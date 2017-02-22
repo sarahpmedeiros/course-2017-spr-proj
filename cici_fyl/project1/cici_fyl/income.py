@@ -11,8 +11,6 @@ class income(dml.Algorithm):
     reads = []
     writes = ['income','property','avg_income','income_property']
     
-
-
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
@@ -55,16 +53,11 @@ class income(dml.Algorithm):
             for l in i:
                 temp1.append(l)
 
-
-
-
         repo.dropCollection("property")
         repo.createCollection("property")
         repo['cici_fyl.property'].insert_many(temp1)
         repo['cici_fyl.property'].metadata({'complete':True})
         repo.dropCollection("property_2016")
-
-
 
         #Write avg_income and property_income
         incomedata = repo['cici_fyl.income'].find()
@@ -84,8 +77,6 @@ class income(dml.Algorithm):
         repo.dropCollection("property_income")
         repo.createCollection("property_income")
         repo['cici_fyl.property_income'].insert_many(m)
-
-
 
         repo.logout()
 
@@ -134,10 +125,6 @@ class income(dml.Algorithm):
                   }
                   )
 
-        # lost = doc.entity('dat:cici_fyl#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        # doc.wasAttributedTo(lost, this_script)
-        # doc.wasGeneratedBy(lost, get_lost, endTime)
-        # doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
         avg_income_data = doc.entity('dat:cici_fyl#avg_income', {prov.model.PROV_LABEL:'average income of MA cities', prov.model.PROV_TYPE:'ont:DataSet'})
         get_avg_income = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAttributedTo(avg_income_data, this_script)
@@ -156,9 +143,5 @@ class income(dml.Algorithm):
                   
         return doc
 
-#income.execute()
 doc = income.provenance()
-#print(doc.get_provn())
-# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
-## eof

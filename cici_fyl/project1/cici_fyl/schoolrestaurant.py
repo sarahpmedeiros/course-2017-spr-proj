@@ -26,8 +26,7 @@ class schoolrestaurant(dml.Algorithm):
         r = json.loads(response)
         repo.dropCollection("school")
         repo.createCollection("school")
-
-        
+       
         r=r["features"]
 
         repo['cici_fyl.school'].insert_many(r)
@@ -106,9 +105,5 @@ class schoolrestaurant(dml.Algorithm):
                   
         return doc
 
-#schoolrestaurant.execute()
 doc = schoolrestaurant.provenance()
-#print(doc.get_provn())
-# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
-## eof

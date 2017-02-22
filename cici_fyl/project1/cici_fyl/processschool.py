@@ -26,8 +26,6 @@ class processschool(dml.Algorithm):
         propertydata = repo['cici_fyl.property'].find()
         schooldata= repo['cici_fyl.school'].find()
 
-        # coor= methods.selectcoordinate(restaurantdata)
-
         x= methods.appendattribute(propertydata,"edu_score")
         y= methods.schoolinfo(schooldata)
         x= methods.edu_score(x,y,0.05)
@@ -83,10 +81,6 @@ class processschool(dml.Algorithm):
                   }
                   )
 
-        # lost = doc.entity('dat:cici_fyl#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        # doc.wasAttributedTo(lost, this_script)
-        # doc.wasGeneratedBy(lost, get_lost, endTime)
-        # doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
         pro_school_w = doc.entity('dat:cici_fyl/property_school', {prov.model.PROV_LABEL:'average income of MA cities', prov.model.PROV_TYPE:'ont:DataSet'})
         
         doc.wasAttributedTo(pro_school_w, this_script)
@@ -98,11 +92,8 @@ class processschool(dml.Algorithm):
                   
         return doc
 
-
-
-#processschool.execute()
 doc = processschool.provenance()
-#print(doc.get_provn())
+
 
 
 

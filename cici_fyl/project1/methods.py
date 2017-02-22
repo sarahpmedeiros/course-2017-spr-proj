@@ -29,13 +29,14 @@ def selectcoordinate(R):
 
 	return temp
 
+#Select needed info from school dataset
 def schoolinfo(R):
 	temp=[]
 	for l in R:
 		temp.append({"coordinates":l["geometry"]["coordinates"],"school_type":l["properties"]["SCH_TYPE"]})
 	return temp
 
-
+#Calculate the edu score based on the nearby school types and numbers
 def edu_score(R,school,distance):
 	for l in R:
 		if "location" in l:
@@ -115,6 +116,7 @@ def appendattribute(R,attriname):
 
 	return temp
 
+#Determine whether the property is in certain distance range
 def inrange(R,coordinates,distance,countingattrib,key):
 	for l in R:
 		if key in l:
@@ -140,8 +142,6 @@ def inrange(R,coordinates,distance,countingattrib,key):
 
 	return R 
 
-
- 
 def product(R, S):
 	return [(t,u) for t in R for u in S]
 

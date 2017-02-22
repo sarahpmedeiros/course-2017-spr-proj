@@ -66,17 +66,6 @@ class processrestaurant(dml.Algorithm):
         rest_data = doc.entity('dat:restaurant', {prov.model.PROV_LABEL:'Boston restaurant', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAssociatedWith(pro_rest_w, this_script)
 
-        # doc.usage(pro_rest_w, property_data, startTime, None,
-        #           {prov.model.PROV_TYPE:'ont:Retrieval',
-        #           'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-        #           }
-        #           )
-        # doc.usage(pro_rest_w, rest_data, startTime, None,
-        #           {prov.model.PROV_TYPE:'ont:Retrieval',
-        #           'ont:Query'
-        #           }
-        #           )
-
         pro_rest = doc.entity('dat:property_restaurant', {prov.model.PROV_LABEL:'Boston restaurant near properties', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(pro_rest, this_script)
         doc.wasGeneratedBy(pro_rest, pro_rest_w, endTime)
@@ -87,9 +76,8 @@ class processrestaurant(dml.Algorithm):
                   
         return doc
 
-#sprocessrestaurant.execute()
 doc = processrestaurant.provenance()
-#print(doc.get_provn())
+
 
 
 
