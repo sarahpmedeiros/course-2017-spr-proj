@@ -84,9 +84,9 @@ class funding_location(dml.Algorithm):
         P = product(nameLoc, nameFund)
         #print(P)
         S = select(P, lambda t: t[0]['Name'] == t[1]['Name'])
-        print(S)
+        #print(S)
         PR = project(S, lambda t: {'Name': t[0]['Name'], 'location': t[0]['location'], 'Funding': t[1]['Funding']})
-        print(PR)
+        #print(PR)
 
         repo.dropCollection('funding_location')
         repo.createCollection('funding_location')
@@ -139,13 +139,13 @@ class funding_location(dml.Algorithm):
         doc.wasDerivedFrom(loc_fund, funding, get_loc_fund, get_loc_fund, get_loc_fund)
         doc.wasDerivedFrom(loc_fund, location, get_loc_fund, get_loc_fund, get_loc_fund)
 
-        #repo.record(doc.serialize())
+        repo.record(doc.serialize())
         repo.logout()
                   
         return doc
         
-funding_location.execute()
+'''funding_location.execute()
 doc = funding_location.provenance()
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+print(json.dumps(json.loads(doc.serialize()), indent=4))'''
 
         

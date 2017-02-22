@@ -45,7 +45,7 @@ class retrieve(dml.Algorithm):
         repo.createCollection("funding")
         repo['hschurma_rcalleja.funding'].insert_many(r)
 
-        url = 'http://datamechanics.io/data/hshurma_rcalleja/SAT2008.json'
+        url = 'http://datamechanics.io/data/hshurma_rcalleja/SAT2014.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
@@ -155,14 +155,15 @@ class retrieve(dml.Algorithm):
         doc.wasAttributedTo(fund, this_script)
         doc.wasGeneratedBy(fund, get_fund, endTime)
         doc.wasDerivedFrom(fund, resource_fund, get_fund, get_fund, get_fund)
-        
+
+        repo.record(doc.serialize())
         repo.logout()
                   
         return doc
 
-retrieve.execute()
+'''retrieve.execute()
 doc = retrieve.provenance()
 print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+print(json.dumps(json.loads(doc.serialize()), indent=4))'''
 
 ## eof

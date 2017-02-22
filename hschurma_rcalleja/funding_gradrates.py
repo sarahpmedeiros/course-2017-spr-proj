@@ -81,7 +81,7 @@ class funding_gradrates(dml.Algorithm):
         P = prodThree(name_grad, nameFund, grads)
         S = select(P, lambda t: t[0]['Name'] == t[1]['Name'] == t[2]['Name'])
         PR = project(S, lambda t: {'Name': t[0]['Name'], 'GradRate': t[0]['GradRate'], 'Funding': t[1]['Funding'], 'GradNum': t[2]['GradNum']})
-        print(PR)
+        #print(PR)
 
         #Format = (School Name, Graduation Rate, Funding, Num Graduates)
 
@@ -133,13 +133,13 @@ class funding_gradrates(dml.Algorithm):
         doc.wasDerivedFrom(grad_fund, gradrates, get_grad_fund, get_grad_fund, get_grad_fund)
         doc.wasDerivedFrom(grad_fund, gradnums, get_grad_fund, get_grad_fund, get_grad_fund)
 
-        #repo.record(doc.serialize())
+        repo.record(doc.serialize())
         repo.logout()
                   
         return doc
         
-funding_gradrates.execute()
+'''funding_gradrates.execute()
 doc = funding_gradrates.provenance()
 #print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+print(json.dumps(json.loads(doc.serialize()), indent=4))'''
 
