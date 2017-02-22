@@ -3,7 +3,8 @@ import json
 import dml
 import prov.model
 import datetime
-import time
+import uuid
+
 class getIncomeByCensusTract(dml.Algorithm):
     contributor = 'skaram13_smedeiro'
     reads = []
@@ -41,14 +42,13 @@ class getIncomeByCensusTract(dml.Algorithm):
         repo.dropCollection("income")
         repo.createCollection("income")
         
-        # print (dbEntries)
         repo['skaram13_smedeiro.income'].insert_many(dbEntries)
 
         #test and print from database
         results = repo['skaram13_smedeiro.income'].find()
-        # print (results)
-        # for each in results:
-        #     print (each)
+        print (results)
+        for each in results:
+            print (each)
 
         repo.logout()
 
@@ -81,8 +81,6 @@ class getIncomeByCensusTract(dml.Algorithm):
 
         this_run = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        this_script = doc.agent('alg:skaram13_smedeiro#getIncomeByCensusTract', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
-
         income_resource = doc.entity('dus:?sort=desc&show=geo&required=income%2Cincome_moe&sumlevel=tract&year=all&where=geo%3A16000US2507000', {'prov:label':'Dataset with income, year, extended census tract, and moe', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_income = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
@@ -100,9 +98,9 @@ class getIncomeByCensusTract(dml.Algorithm):
                   
         return doc
 
-# getIncomeByCensusTract.execute()
-# doc = getIncomeByCensusTract.provenance()
-# print(doc.get_provn())
-# print(json.dumps(json.loads(doc.serialize()), indent=4))
+getIncomeByCensusTract.execute()
+doc = getIncomeByCensusTract.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
