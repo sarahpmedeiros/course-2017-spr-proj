@@ -20,7 +20,7 @@ class retrieveData(dml.Algorithm):
 
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
-        epo = client.repor
+        repo = client.repo
         repo.authenticate('cfortuna_snjan19', 'cfortuna_snjan19')
 
         ###### Importing Datasets and putting them inside the mongoDB database #####
@@ -114,11 +114,11 @@ class retrieveData(dml.Algorithm):
         PotHoles_resource = doc.entity('bdp:n65p-xaz7',{'prov:label':'PotHoles, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         Street_resource = doc.entity('dmg:ms23-5ubn.json',{'prov:label':'Street, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         
-        get_Bikes = doc.activity('log:uuid')+str(uuid.uuid4(), startTime, endTime)
-        get_Snow = doc.activity('log:uuid')+str(uuid.uuid4(), startTime, endTime)
-        get_Meters = doc.activity('log:uuid')+str(uuid.uuid4(), startTime, endTime)
-        get_PotHoles = doc.activity('log:uuid')+str(uuid.uuid4(), startTime, endTime)
-        get_Street = doc.activity('log:uuid')+str(uuid.uuid4(), startTime, endTime)
+        get_Bikes = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_Snow = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_Meters = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_PotHoles = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_Street = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_Bikes, this_script)
         doc.wasAssociatedWith(get_Snow, this_script)
@@ -163,8 +163,8 @@ class retrieveData(dml.Algorithm):
         return doc
 
 retrieveData.execute()
-doc = retrieveData.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# doc = retrieveData.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
