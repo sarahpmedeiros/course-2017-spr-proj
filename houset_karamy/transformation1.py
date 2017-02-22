@@ -41,17 +41,18 @@ class transformation1(dml.Algorithm):
         #get the final count for each in dictionary form
         totalCount = []
         for crime in crimeCounts:
-            totalCount.append({'district': crime[1], 'count': crime[0]})
+            if (crime not in totalCount):
+                totalCount.append({'district': crime[1], 'count': crime[0]})
         
         #get rid of duplicates
-        finalCount = []
-        for d in totalCount:
-            if (d not in finalCount):
-                finalCount.append({'district': d[1], 'count': d[0]})
+        #finalCount = []
+        #for d in totalCount:
+          #  if (d not in finalCount):
+           #     finalCount.append({'district': d[1], 'count': d[0]})
         
         
         #insert into new database        
-        repo['houset_karamy.transformation1'].insert_many(finalCount)
+        repo['houset_karamy.transformation1'].insert_many(totalCount)
         
         repo.logout()
 
