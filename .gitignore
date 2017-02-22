@@ -99,12 +99,5 @@ auth.json
 *.iml
 *.xml
 
-# Exclude csv & json files
-*.csv
-*.json
-
-#html
-*.html
-
 # exclude node_modules
 node_modules/
