@@ -100,7 +100,7 @@ class zipcodes(dml.Algorithm):
                   }
                   )
 
-        zipcodes = doc.entity("dat:houset_karamy#stationCrimeFreq", {prov.model.PROV_LABEL:"stationCrimeFreq", prov.model.PROV_TYPE:"ont:DataSet"})
+        zipcodes = doc.entity("dat:houset_karamy#zipcodes", {prov.model.PROV_LABEL:"zipcodes", prov.model.PROV_TYPE:"ont:DataSet"})
         doc.wasAttributedTo(zipcodes, this_script)
         doc.wasGeneratedBy(zipcodes, get_zipcodes, endTime)
         doc.wasDerivedFrom(zipcodes, resource, get_zipcodes, get_zipcodes, get_zipcodes)
