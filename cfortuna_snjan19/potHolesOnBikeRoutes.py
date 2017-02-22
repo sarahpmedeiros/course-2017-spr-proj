@@ -8,10 +8,10 @@ import csv
 import json
 import requests 
 
-class potHolesOnSnowRoutes(dml.Algorithm):
+class potHolesOnBikeRoutes(dml.Algorithm):
     contributor = 'cfortuna_snjan19'
-    reads = ['cfortuna_snjan19.SnowRoutes', 'cfortuna_snjan19.PotHoles']
-    writes = ['cfortuna_snjan19.PotHolesOnSnowRoutes']
+    reads = ['cfortuna_snjan19.BikeRoutes', 'cfortuna_snjan19.PotHoles']
+    writes = ['cfortuna_snjan19.PotHolesOnBikeRoutes']
 
     @staticmethod
     def execute(trial = False):
@@ -37,44 +37,70 @@ class potHolesOnSnowRoutes(dml.Algorithm):
 
         ###### Importing Datasets and putting them inside the mongoDB database #####
 
-        repo.dropCollection("PotHolesOnSnowRoutes")
-        repo.createCollection("PotHolesOnSnowRoutes")
+        repo.dropCollection("PotHolesOnBikeRoutes")
+        repo.createCollection("PotHolesOnBikeRoutes")
 
-        snowRoutes = repo['cfortuna_snjan19.SnowRoutes'].find()
+        bikeRoutes = repo['cfortuna_snjan19.BikeRoutes'].find()
         potholes = repo['cfortuna_snjan19.PotHoles'].find()
    
         ##### Perform transformations here #####
 
-        snowData = []
-        for element in snowRoutes:
-            snowData.append(element["properties"]["FULL_NAME"])
+        # Need to shorten street to st, etc
+        bikeData = []
+        for element in bikeRoutes:
+            route = element["properties"]["STREET_NAM"]
+            if "Avenue" in route:
+                route = route[:-3]
+                #print(route)
+            elif "Street" in route:
+                route = route[:-4]
+                #print(route)
+            elif "Drive" in route:
+                route = route[:-3]
+                #print(route)
+            elif "Road" in route:
+                route = route[:-3] + "d"
+                #print(route)
+            elif "Highway" in route:
+                route = route[:-6] + "wy"
+                #print(route)
+            elif "Boulevard" in route:
+                route = route[:-8] + "lvd"
+                #print(route)
 
-        snowData = removeDuplicates(snowData)
+            bikeData.append(route)
         
+        bikeData = removeDuplicates(bikeData)
+        #for i in bikeData:
+        #    print(i)
+
         potHoleData = []
         for element in potholes:
             if "location_street_name" in element:
                 potHoleData.append(element["location_street_name"])
 
-        potHoleSnowRoute = []
-        for snowRoute in snowData:
+        #for i in potHoleData:
+        #    print(i)
+
+        potHoleBikeRoute = []
+        for bikeRoute in bikeData:
             for potholeRoute in potHoleData:
-                if snowRoute in potholeRoute and snowRoute != " ":
-                    potHoleSnowRoute.append(snowRoute)
+                if bikeRoute in potholeRoute and bikeRoute != " ":
+                    potHoleBikeRoute.append(bikeRoute)
 
         counts = []
-        for route in potHoleSnowRoute:
-            counts.append((potHoleSnowRoute.count(route), route))
+        for route in potHoleBikeRoute:
+            counts.append((route, potHoleBikeRoute.count(route)))
 
-        #print(potHoleSnowRoute)
+        #print(counts)
         counts = removeDuplicates(counts)
         #print(counts)
 
         result = []
         for route in counts:
-            result.append( {'route': route[1], 'count': route[0]} )
+            result.append( {'route': route[0], 'count': route[1]} )
 
-        repo['cfortuna_snjan19.PotHolesOnSnowRoutes'].insert_many(result)
+        repo['cfortuna_snjan19.PotHolesOnBikeRoutes'].insert_many(result)
 
         repo.logout()
 
@@ -131,7 +157,7 @@ class potHolesOnSnowRoutes(dml.Algorithm):
                   
         return doc
 
-potHolesOnSnowRoutes.execute()
+potHolesOnBikeRoutes.execute()
 #doc = retrieveData.provenance()
 #print(doc.get_provn())
 #print(json.dumps(json.loads(doc.serialize()), indent=4))
