@@ -56,54 +56,37 @@ class incomeOfInsomnia(dml.Algorithm):
             repo = client.repo
             repo.authenticate('asambors_maxzm','asambors_maxzm')
 
-            
             #loads
             nosleep = repo['asambors_maxzm.nosleepma']
             ziptoincome = repo['asambors_maxzm.ziptoincome']
             zipcodetolatlong = repo['asambors_maxzm.zipcodetolatlong']
-
             
             #run select on the zip lat long dataset so that its only zip codes that are near boston
             selectedZipToLatLong = incomeOfInsomnia.select(zipcodetolatlong.find({},{'_id': False}), incomeOfInsomnia.zipIsNearBoston) 
 
-
             #run the same select on zip code to income
             selectedZipToIncome = incomeOfInsomnia.select(ziptoincome.find({},{'_id': False}), incomeOfInsomnia.zipIsNearBoston) 
 
-
             #now it is time to map the lat long zip codes to money
-
             #map all together
             allIncomeLatLongPairs = incomeOfInsomnia.product(selectedZipToLatLong,selectedZipToIncome)
 
             #now select right ones in a reduce style fashion
             onlyRealIncomeLatLongPairs = incomeOfInsomnia.select(allIncomeLatLongPairs,lambda t: int(t[0]['zip_code'])==int(t[1]['zip_code']))
-
             zipLatLongIncome = incomeOfInsomnia.project(onlyRealIncomeLatLongPairs, lambda t: {**t[0],**t[1]})
             
-
-
             #map each no sleep person to corosponding zip based on lat long  (this will also map to income because we mapped income to zip)
-            
             #product
-
             allCombos = incomeOfInsomnia.product(nosleep.find({},{'_id': False}),zipLatLongIncome)
-
 
             #project each keys lat and long to be coppied as part of the value
             projectedCombos = incomeOfInsomnia.project(allCombos, lambda t: (t[0]['uniqueid'],(t[0],t[1])))
 
-
             #agregate
             aggregatedData = incomeOfInsomnia.aggregate(projectedCombos,incomeOfInsomnia.pickCloserZip)
 
-
-
             #last project to proper form
-
-
-
-            #fucky data fixing
+            #Some data adjustment 
             incomeOfInsomniaData = []
             for (a,b) in aggregatedData:
                     try:
@@ -112,34 +95,22 @@ class incomeOfInsomnia(dml.Algorithm):
                     except TypeError:
                             print((a,b))
 
-
-
             print(incomeOfInsomniaData)
-
 
             repo.dropCollection("incomeofinsomnia")
             repo.createCollection("incomeofinsomnia")
             repo['asambors_maxzm.incomeofinsomnia'].insert_many(incomeOfInsomniaData)
             repo['asambors_maxzm.incomeofinsomnia'].metadata({'complete':True})
 
-            print("data is uploaded")
-
+            print("DATA IS UPLOADED")
 
             endTime = datetime.datetime.now
 
             return {"start":startTime,"end":endTime}
 
 
-
-
-
-
-
     @staticmethod
-    def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
-        # reads = ['asambors_maxzm.nosleep','asambors_maxzm.ziptoincome','asambors_maxzm.zipcodetolatlong']
-        # writes = ['asambors_maxzm.incomeofinsomnia']
-
+    def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None): 
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
@@ -161,9 +132,7 @@ class incomeOfInsomnia(dml.Algorithm):
         # DATAMECHANICS.IO DATA
         zip_to_income_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'Zip code to estimated income', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         lat_to_zip_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'Latitude, longitude to zip code', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-
-        # INCOME OF INSOMNIA RESOURCE
-        income_of_insomnia_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'What is the income of those who sleep less than 7 hours a night', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        income_of_insomnia_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'What is the income of those who sleep less than 7 hours a night', prov.model.PROV_TYPE:'ont:DataResource'})
 
         get_sleep = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime) 
         get_zip_to_income = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)  
