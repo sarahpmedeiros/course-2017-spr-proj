@@ -9,7 +9,7 @@ import math
 class incomeOfHospitals(dml.Algorithm):
         contributor = 'asambors_maxzm'
         reads = ['asambors_maxzm.hospitals','asambors_maxzm.ziptoincome']
-        writes = ['asambors_maxzm.incomeofinsomnia']
+        writes = ['asambors_maxzm.incomeofhospitals']
 
 
         def select(R, s):
@@ -57,6 +57,8 @@ class incomeOfHospitals(dml.Algorithm):
                 #map all the hospitals to the proper income
                 #product
 
+                print(hospitals.find())
+                
                 allCombos = incomeOfHospitals.product(hospitals.find({},{'_id': False}),ziptoincome)
 
                 #select ones with equal zip codes
