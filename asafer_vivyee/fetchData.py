@@ -21,40 +21,38 @@ class fetchData(dml.Algorithm):
 
     @staticmethod
     def store(repo, url, collection):
-        response = requests.get(url)
-        if response.status_code == 200:
-            response = urllib.request.urlopen(url).read().decode("utf-8")
-            response = json.loads(response)
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        response = json.loads(response)
+       
 
-            if (collection == 'asafer_vivyee.mbta_routes'):
-                routes = [ mode for mode in response['mode'] if mode['mode_name'] == 'Subway' or mode['mode_name'] == 'Bus' ]
-                routes = [ (mode['mode_name'], route['route_id']) for mode in routes for route in mode['route'] ]
+        if (collection == 'asafer_vivyee.mbta_routes'):
+            routes = [ mode for mode in response['mode'] if mode['mode_name'] == 'Subway' or mode['mode_name'] == 'Bus' ]
+            routes = [ (mode['mode_name'], route['route_id']) for mode in routes for route in mode['route'] ]
 
-                stop_url = 'http://realtime.mbta.com/developer/api/v2/stopsbyroute?api_key=' + dml.auth['services']['mbtadeveloperportal']['key']
-                stop_urls = {route:"{}&route={}&format=json".format(stop_url, route[1]) for route in routes}
-                stop_responses = {route:urllib.request.urlopen(stop_urls[route]).read().decode("utf-8") for route in stop_urls}
+            stop_url = 'http://realtime.mbta.com/developer/api/v2/stopsbyroute?api_key=' + dml.auth['services']['mbtadeveloperportal']['key']
+            stop_urls = {route:"{}&route={}&format=json".format(stop_url, route[1]) for route in routes}
+            stop_responses = {route:urllib.request.urlopen(stop_urls[route]).read().decode("utf-8") for route in stop_urls}
 
-                json_stops = []
-                for route, response in stop_responses.items():
-                    stops_by_route = {}
+            json_stops = []
+            for route, response in stop_responses.items():
+                stops_by_route = {}
 
-                    mode, route_id = route
+                mode, route_id = route
 
-                    stops_by_route['name'] = route_id
-                    stops_by_route['mode'] = mode
-                    stops_by_route['path'] = response
+                stops_by_route['name'] = route_id
+                stops_by_route['mode'] = mode
+                stops_by_route['path'] = response
 
-                    json_stops.append(stops_by_route)
+                json_stops.append(stops_by_route)
 
-                repo.dropPermanent(collection)
-                repo.createPermanent(collection)
-                repo[collection].insert_many(json_stops)
+            repo.dropPermanent(collection)
+            repo.createPermanent(collection)
+            repo[collection].insert_many(json_stops)
 
-            else:
-                data = [response.json()]
-                repo.dropPermanent(collection)
-                repo.createPermanent(collection)
-                repo[collection].insert_many(data)
+        else:
+            repo.dropPermanent(collection)
+            repo.createPermanent(collection)
+            repo[collection].insert_many(response)
 
     @staticmethod
     def execute(trial = False):
@@ -68,10 +66,10 @@ class fetchData(dml.Algorithm):
         cdc_token = dml.auth['services']['cdcdataportal']['token']
 
         datasets = {
-            'asafer_vivyee.orchards': 'https://data.cityofboston.gov/resource/8tmm-wjbw.json$$app_token=' + cityofboston_token,
-            'asafer_vivyee.corner_stores': 'https://data.cityofboston.gov/resource/ybm6-m5qd.json??app_token=' + cityofboston_token,
-            'asafer_vivyee.obesity': 'https://chronicdata.cdc.gov/resource/a2ye-t2pa.json??app_token=' + cdc_token,
-            'asafer_vivyee.nutrition_prog': 'https://data.cityofboston.gov/resource/ahjc-pw5e.json??app_token=' + cityofboston_token,
+            'asafer_vivyee.orchards': 'https://data.cityofboston.gov/resource/8tmm-wjbw.json?$$app_token=' + cityofboston_token,
+            'asafer_vivyee.corner_stores': 'https://data.cityofboston.gov/resource/ybm6-m5qd.json?$$app_token=' + cityofboston_token,
+            'asafer_vivyee.obesity': 'https://chronicdata.cdc.gov/resource/a2ye-t2pa.json?$$app_token=' + cdc_token,
+            'asafer_vivyee.nutrition_prog': 'https://data.cityofboston.gov/resource/ahjc-pw5e.json?$$app_token=' + cityofboston_token,
             'asafer_vivyee.mbta_routes': 'http://realtime.mbta.com/developer/api/v2/routes?api_key=' + mbta_key + '&format=json'
         }
 

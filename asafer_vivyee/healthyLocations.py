@@ -29,17 +29,6 @@ class healthyLocations(dml.Algorithm):
         return [(t,u) for t in R for u in S]
 
     @staticmethod
-    def location(loc):
-        return {'location': [loc[1]['location'][0], loc[1]['location'][1]], 'type': loc[0]}
-
-    @staticmethod
-    def has_location(x):
-        return 'location' in x
-        # return True
-
-
-
-    @staticmethod
     def execute(trial = False):
         startTime = datetime.datetime.now()
 
@@ -57,28 +46,20 @@ class healthyLocations(dml.Algorithm):
         repo.dropCollection('asafer_vivyee.healthy_locations')
         repo.createCollection('asafer_vivyee.healthy_locations')
 
-        for i in orchards.find():
-            if "location" in i:
-                loc = i['location']
-                area = {}
-                area['orchard'] = loc
-                repo['asafer_vivyee.healthy_locations'].insert(area)
+        # select data with location fields
+        orchard_locs = healthyLocations.select(orchards.find(), lambda x: 'map_locations' in x and 'coordinates' in x['map_locations'])
+        corner_stores_locs = healthyLocations.select(corner_stores.find(), lambda x: 'location' in x and 'coordinates' in x['location'])
+        nutrition_prog_locs = healthyLocations.select(nutrition_prog.find(), lambda x: 'location' in x and 'coordinates' in x['location'])
 
-        for i in corner_stores.find():
-            if "location" in i:
-                loc = i['location']
-                area = {}
-                area['store'] = loc
-                repo['asafer_vivyee.healthy_locations'].insert(area)
 
-        for i in nutrition_prog.find():
-            if "location" in i:
-                loc = i['location']
-                area = {}
-                area['prog'] = loc
-                repo['asafer_vivyee.healthy_locations'].insert(area)        
+        # reformat data using project
+        orchard_locs = healthyLocations.project(orchard_locs, lambda x: {'type': 'orchard', 'location': x['map_locations']['coordinates']})
+        corner_stores_locs = healthyLocations.project(corner_stores_locs, lambda x: {'type': 'store', 'location': x['location']['coordinates']})
+        nutrition_prog_locs = healthyLocations.project(nutrition_prog_locs, lambda x: {'type': 'prog', 'location': x['location']['coordinates']})
 
-        # repo['asafer_vivyee.healthy_locations'].insert_many(locations)
+        all_locs = orchard_locs + corner_stores_locs + nutrition_prog_locs
+
+        repo['asafer_vivyee.healthy_locations'].insert_many(all_locs)
         repo['asafer_vivyee.healthy_locations'].metadata({'complete': True})
 
         print('all uploaded')
