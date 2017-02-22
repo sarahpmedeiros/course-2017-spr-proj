@@ -1,6 +1,6 @@
 # mergeSchoolsHubway.py
 # clean up and merge Boston schools data set with Hubway Stations data set
-# to determine
+# for each school, determine the number of Hubway stations nearby
 
 import urllib.request
 import json
@@ -14,7 +14,7 @@ from geopy.distance import vincenty
 class mergeSchoolsHubway(dml.Algorithm):
     contributor = 'echogu_wei0496'
     reads = ['echogu_wei0496.MASchools', 'echogu_wei0496.HubwayStations']
-    writes = ['echogu_wei0496.mergeSchoolsHubway']
+    writes = ['echogu_wei0496.SchoolsHubway']
 
     @staticmethod
     def execute(trial = False):
@@ -59,7 +59,7 @@ class mergeSchoolsHubway(dml.Algorithm):
         product = transformData.product(BostonSchools, HubwayStations)
         product = [{'_id': item[0]['_id'],
                     'properties': item[0]['properties'],
-                    'location': item[0]['location'],                        # school locations coordinates
+                    'location': item[0]['location'],                        # school locations
                     'stations': item[1]['stations']} for item in product]   # Hubway stations location coordinates
 
         # aggregation: for each school, count the number of hubway stations within 500m walk
