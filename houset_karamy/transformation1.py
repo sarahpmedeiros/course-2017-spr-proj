@@ -10,17 +10,19 @@ class transformation1(dml.Algorithm):
     contributor = "houset_karamy"
     reads = ["houset_karamy.crimeReportsBoston"]
     writes = ["houset_karamy.transformation1"]
-    def removeDup(dic):
-        result = {}
-        for key,value in dic.items():
-            if key not in result.keys():
-                result[key] = value
-        return result
+
     
     @staticmethod
     def execute(trial = False):
         startTime = datetime.datetime.now()
-
+        
+        def removeDup(dic):
+            result = {}
+            for key,value in dic.items():
+                if key not in result.keys():
+                    result[key] = value
+            return result 
+        
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
