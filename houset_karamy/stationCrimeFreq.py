@@ -43,7 +43,7 @@ class stationCrimeFreq(dml.Algorithm):
         #putTogether = []
         for x in addresses:
             for y in bostonD:
-                if (y["district/neighborhood"][1] in x[0]):
+                if (y["district/neighborhood"][1] in x):
                     addresses.append(y["count"])
                     
 
