@@ -16,12 +16,6 @@ class transformation1(dml.Algorithm):
     def execute(trial = False):
         startTime = datetime.datetime.now()
         
-        def removeDup(dic):
-            result = {}
-            for key,value in dic.items():
-                if key not in result.keys():
-                    result[key] = value
-            return result 
         
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
@@ -50,8 +44,13 @@ class transformation1(dml.Algorithm):
             totalCount.append({'crime': crime[1], 'count': crime[0]})
         
         #get rid of duplicates
-        finalCount = removeDup(totalCount)
+        #finalCount = removeDup(totalCount)
         #insert into new database
+        finalCount = []
+        for x in totalCount:
+            if x not in finalCount:
+                finalCount.append({'crime':crime[1], 'count': crime[0]})
+                
         repo['houset_karamy.transformation1'].insert_many(finalCount)
         
         repo.logout()
