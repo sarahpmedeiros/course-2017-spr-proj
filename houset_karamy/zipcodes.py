@@ -7,7 +7,6 @@ import prov.model
 import datetime
 import uuid
 import math
-#from collections import defaultdict 
 
 class zipcodes(dml.Algorithm):
     contributor = 'houset_karamy'
@@ -47,17 +46,23 @@ class zipcodes(dml.Algorithm):
             else:
                 zipsBoston.append((st['st_name_std'], st['l_postcode']))
         
-        together = {}
-        for station in zipsStations:
-            together.update({station[0]: list()})
-
-
-
+        #put together
+        together = []
+        print(type(together))
         for station in zipsStations:
             for street in zipsBoston:
                 if(station[1] == street[1]):
-                    together[station[0]].append(street[0])
+                    if station[0] in together:
+                        together[station[0]].append(street[0])
+                    else:
+                        together.append({station[0]: street[0]})
 
+        # for station in zipsStations:
+        #     for street in zipsBoston:
+        #         if(station[1] == street[1]):
+        #             together[station[0]].append(street[0])
+
+        print(together)
         #insert into new database        
         repo['houset_karamy.zipcodes'].insert_many(together)
         
@@ -100,7 +105,7 @@ class zipcodes(dml.Algorithm):
                   }
                   )
 
-        zipcodes = doc.entity("dat:houset_karamy#zipcodes", {prov.model.PROV_LABEL:"zipcodes", prov.model.PROV_TYPE:"ont:DataSet"})
+        zipcodes = doc.entity("dat:houset_karamy#stationCrimeFreq", {prov.model.PROV_LABEL:"stationCrimeFreq", prov.model.PROV_TYPE:"ont:DataSet"})
         doc.wasAttributedTo(zipcodes, this_script)
         doc.wasGeneratedBy(zipcodes, get_zipcodes, endTime)
         doc.wasDerivedFrom(zipcodes, resource, get_zipcodes, get_zipcodes, get_zipcodes)
@@ -109,5 +114,5 @@ class zipcodes(dml.Algorithm):
                   
         return doc
 
-#zipcodes.execute()
-#doc = zipcodes.provenance()
+zipcodes.execute()
+doc = zipcodes.provenance()
