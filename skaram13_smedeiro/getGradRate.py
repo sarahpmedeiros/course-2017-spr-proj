@@ -27,9 +27,14 @@ class getGradRate(dml.Algorithm):
 		with open('2011 Graduation Report.csv', 'r') as f:
 			read_data = csv.reader(f)
 			for entry in read_data:
+				# print (entry[1], 'hi', ('{0:0>8}'.format(entry[1])))
+				name = entry[0][:6]
+				# print (name)
+				# org_code = ('{0:0>8}'.format(entry[1]))
 				org_code = entry[1]
 				percentGraduated = entry[3]
-				dictOfGradRates[org_code] = percentGraduated
+				if (name == 'Boston'):
+					dictOfGradRates[org_code] = percentGraduated
 
 
 				# print (dictOfGradRates)
@@ -70,7 +75,7 @@ class getGradRate(dml.Algorithm):
 		this_script = doc.agent('alg:skaram13_smedeiro#getGradRatesByOrgCodeFor2011', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
 		# Entities
-		# this is the data set that take the Grad reports from 
+		# this is the data set that we take the Grad reports from 
 		gradReport = doc.entity('dmg:skaram13_smedeiro#Graduation-Rate-Report-by-District-by-School',{'prov:label':'Graduation Report', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'CSV'})		
 		#this is the data set we create in this script
 		gradRates = doc.entity('dat:skaram13_smedeiro#GradRates',{'prov:label':'Percent graduated for 2011', prov.model.PROV_TYPE:'ont:DataSet'})
@@ -93,10 +98,10 @@ class getGradRate(dml.Algorithm):
 				  
 		return doc
 
-getGradRate.execute()
-doc = getGradRate.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# getGradRate.execute()
+# doc = getGradRate.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
 #  

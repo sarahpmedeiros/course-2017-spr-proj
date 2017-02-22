@@ -30,39 +30,69 @@ class combineTechAndGradRates(dml.Algorithm):
 		#  'city': 'Hyde Park', 'orgcode': '00350541', 'zipcode': '02136',
 		#   'schoolName': 'Another Course To College'}
 		schoolInfo = repo.skaram13_smedeiro.school.find()
-
-		dictOfTechRates={}
+		# print (type(techRates))
+		tmpDict={}
 		for entry in techRates:
-			dictOfTechRates = (entry)
+			tmpDict = (entry)
+		
+		dictOfTechRates = {}
+		for x in tmpDict:
+			key = x[-4:]
+			dictOfTechRates[key] = tmpDict[x]
+
 		# print (dictOfTechRates)
-		dictOfGradRates={}
+		tmpDict={}
 		for entry in gradRates:
-			dictOfGradRates = (entry)
+			tmpDict = (entry)
+
+		dictOfGradRates={}
+		for x in tmpDict:
+			key = x[-4:]
+			dictOfGradRates[key] = tmpDict[x]
+			# print (entry)
 		# print (dictOfGradRates)
-		listOfSchools = []
+		tmpList = []
 		for entry in schoolInfo:
-			# listOfSchools.append(entry)
-			print (entry['orgcode'])
+			# print (entry, 'here')
+			tmpList.append(entry)
 
-		# print (dictOfSchools)
+		dictOfCensusTracts = {}
+		for x in tmpList:
+			dictOfCensusTracts[(x['orgcode'])] = x['censusTract']
 
+		keysInCensusDict = (dictOfCensusTracts.keys())
 		keysInTechDict = (dictOfTechRates.keys())
 		keysInGradDict = (dictOfGradRates.keys())
-
+		# print (len(keysInGradDict))
+		# print (len(keysInTechDict))
 		keepList = []
+		# fail = []
 		for x in dictOfTechRates:
+			# print (x)
 			if x in keysInGradDict:
 				keepList.append(x)
+
 		for x in dictOfGradRates:
-			if x in keysInTechDict:
+			if x in keysInTechDict and x not in keepList:
 				keepList.append(x)
 
-		# print (keepList)
+
+		censusTractList = []
+		for x in keepList:
+			if x in dictOfCensusTracts:
+				censusTractList.append(x)
+		# for x in keysInCensusDict:
+		# 	if x not in keepList:
+		# 		print (x)
+
+		# print (len(keepList))
 		combinedList = []
 		for x in keepList:
-			combinedList.append({'org_code':x,'tech_rate':dictOfTechRates[x],'grad_rate':dictOfGradRates[x]})
-
-		print (combinedList)
+			if (x in censusTractList):
+				combinedList.append({'org_code':x,'tech_rate':dictOfTechRates[x],'grad_rate':dictOfGradRates[x], 'census_tract':dictOfCensusTracts[x]})
+			else:
+				combinedList.append({'org_code':x,'tech_rate':dictOfTechRates[x],'grad_rate':dictOfGradRates[x], 'census_tract':'-'})
+		print ((combinedList))
 		repo['skaram13_smedeiro.gradAndTechRatesByOrgCode'].insert_many(combinedList)
 		repo['skaram13_smedeiro.gradAndTechRatesByOrgCode'].metadata({'complete':True})
 		# print(repo['skaram13_smedeiro.techRates'].metadata())
@@ -126,10 +156,10 @@ class combineTechAndGradRates(dml.Algorithm):
 				  
 		return doc
 
-combineTechAndGradRates.execute()
-# doc = techAndGradRates.provenance()
-# # print(doc.get_provn())
+# combineTechAndGradRates.execute()
+# doc = combineTechAndGradRates.provenance()
+# print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
 
-# ## eof
+# # ## eof
 # 
