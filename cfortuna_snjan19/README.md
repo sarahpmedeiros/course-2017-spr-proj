@@ -1,5 +1,5 @@
 # Project 1: Purpose
-** Chloe Fortuna and Shahrez Jan**  
+#### Chloe Fortuna and Shahrez Jan 
 
 Boston's main resource is its people who mostly travel through bikes and automobiles. However, there can be many extraneous factors that can affect the speed and efficiency of commuting to work and school including potholes on the road and snowstorms. The purpose of this project is to determine the effects of potholes and snowstorms on the routes used by commuters, and in the future could be extended to create a more efficient route for commuting.
 
