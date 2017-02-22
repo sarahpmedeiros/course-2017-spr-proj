@@ -143,5 +143,4 @@ class income(dml.Algorithm):
                   
         return doc
 
-doc = income.provenance()
 

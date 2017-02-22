@@ -76,7 +76,6 @@ class processrestaurant(dml.Algorithm):
                   
         return doc
 
-doc = processrestaurant.provenance()
 
 
 

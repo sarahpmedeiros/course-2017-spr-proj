@@ -105,5 +105,4 @@ class schoolrestaurant(dml.Algorithm):
                   
         return doc
 
-doc = schoolrestaurant.provenance()
 

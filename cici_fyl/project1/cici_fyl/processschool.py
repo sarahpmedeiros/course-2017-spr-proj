@@ -92,7 +92,6 @@ class processschool(dml.Algorithm):
                   
         return doc
 
-doc = processschool.provenance()
 
 
 
