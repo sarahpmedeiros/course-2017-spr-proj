@@ -18,5 +18,5 @@ MASS Data Portal: Boston Streets
 To run the program:
 -------------------------
 ```
-python execute.py alice_bob
+python3 execute.py houset_karamy
 ```
