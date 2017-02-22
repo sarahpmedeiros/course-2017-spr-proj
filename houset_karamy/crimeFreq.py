@@ -6,10 +6,10 @@ import datetime
 import uuid
 import sodapy
 
-class transformation1(dml.Algorithm):
+class crimeFreq(dml.Algorithm):
     contributor = "houset_karamy"
-    reads = ["houset_karamy.crimeReportsBoston"]
-    writes = ["houset_karamy.transformation1"]
+    reads = ["houset_karamy.crimeReportsBoston", "houset_karamy.crimeReportsCambridge"]
+    writes = ["houset_karamy.crimeFreq"]
 
     
     @staticmethod
@@ -21,28 +21,36 @@ class transformation1(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate("houset_karamy", "houset_karamy")
-        repo.dropCollection("transformation1")
-        repo.createCollection("transformation1")
+        repo.dropCollection("crimeFreq")
+        repo.createCollection("crimeFreq")
 
 
         #import data we're using
-        crimes = repo['houset_karamy.crimeReportsBoston'].find()
+        crimesBoston = repo['houset_karamy.crimeReportsBoston'].find()
+        crimesCambridge = repo['houset_karamy.crimeReportsCambridge'].find()
         
         #get the different districts
         crimeDist = []
-        for district in crimes:
+        # crimedist2 = []
+        for district in crimesBoston:
             crimeDist.append(district["reptdistrict"])
+
+        for neighborhood in crimesCambridge:
+            crimeDist.append(neighborhood["neighborhood"])
             
-        #count the number of crimes in each district
+        #count the number of crimesBoston in each district
         crimeCounts = []
         for crime in crimeDist:
             crimeCounts.append((crimeDist.count(crime), crime))
+
+        # for crime in crimeDist:
+        #     crimeCounts.append((crimeDist.count(crime), crime))
         
         #get the final count for each in dictionary form
         totalCount = []
         for crime in crimeCounts:
             if (crime not in totalCount):
-                totalCount.append({'district': crime[1], 'count': crime[0]})
+                totalCount.append({'district/neighborhood': crime[1], 'count': crime[0]})
         
         #get rid of duplicates
         finalCount = []
@@ -50,8 +58,9 @@ class transformation1(dml.Algorithm):
             if (d not in finalCount):
                 finalCount.append(d)
         
+        print(finalCount)
         #insert into new database        
-        repo['houset_karamy.transformation1'].insert_many(totalCount)
+        repo['houset_karamy.crimeFreq'].insert_many(totalCount)
         
         repo.logout()
 
@@ -78,27 +87,27 @@ class transformation1(dml.Algorithm):
         doc.add_namespace("bdp", "https://data.cityofboston.gov/resource/")
 
         this_script = doc.agent("alg:houset_karamy#example", {prov.model.PROV_TYPE:prov.model.PROV["SoftwareAgent"], "ont:Extension":"py"})
-        resource = doc.entity("bdp:crime", {"prov:label":"Transformation1", prov.model.PROV_TYPE:"ont:DataResource", "ont:Extension":"json"})
-        get_transformation1 = doc.activity("log:uuid"+str(uuid.uuid4()), startTime, endTime)
+        resource = doc.entity("bdp:crime", {"prov:label":"crimeFreq", prov.model.PROV_TYPE:"ont:DataResource", "ont:Extension":"json"})
+        get_crimeFreq = doc.activity("log:uuid"+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_transformation1, this_script)
+        doc.wasAssociatedWith(get_crimeFreq, this_script)
 
-        doc.usage(get_transformation1, resource, startTime, None,
+        doc.usage(get_crimeFreq, resource, startTime, None,
                   {prov.model.PROV_TYPE:"ont:Retrieval"#,
                   #"ont:Query":"?type=Animal+fld_crime&$select=type,latitude,longitude,OPEN_DT"
                   }
                   )
 
-        transformation1 = doc.entity("dat:houset_karamy#transformation1", {prov.model.PROV_LABEL:"transformation1", prov.model.PROV_TYPE:"ont:DataSet"})
-        doc.wasAttributedTo(transformation1, this_script)
-        doc.wasGeneratedBy(transformation1, get_transformation1, endTime)
-        doc.wasDerivedFrom(transformation1, resource, get_transformation1, get_transformation1, get_transformation1)
+        crimeFreq = doc.entity("dat:houset_karamy#crimeFreq", {prov.model.PROV_LABEL:"crimeFreq", prov.model.PROV_TYPE:"ont:DataSet"})
+        doc.wasAttributedTo(crimeFreq, this_script)
+        doc.wasGeneratedBy(crimeFreq, get_crimeFreq, endTime)
+        doc.wasDerivedFrom(crimeFreq, resource, get_crimeFreq, get_crimeFreq, get_crimeFreq)
 
         repo.logout()
                   
         return doc
 
-transformation1.execute()
-doc = transformation1.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+crimeFreq.execute()
+doc = crimeFreq.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
