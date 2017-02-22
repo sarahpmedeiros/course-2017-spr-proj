@@ -46,7 +46,7 @@ class transformation1(dml.Algorithm):
         #get rid of duplicates
         finalCount = []
         for d in totalCount:
-            if (d[1] not in finalCount):
+            if (d not in finalCount):
                 finalCount.append({'district': d[1], 'count': d[0]})
         
         
