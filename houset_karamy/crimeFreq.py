@@ -108,7 +108,7 @@ class crimeFreq(dml.Algorithm):
                   
         return doc
 
-crimeFreq.execute()
-doc = crimeFreq.provenance()
+#crimeFreq.execute()
+#doc = crimeFreq.provenance()
 # print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
