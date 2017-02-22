@@ -53,24 +53,32 @@ class healthyLocations(dml.Algorithm):
         corner_stores = repo['asafer_vivyee.corner_stores']
         nutrition_prog = repo['asafer_vivyee.nutrition_prog']
 
-        # select only data with lcoation data
-        orchard_locs = healthyLocations.select(orchards.find({},{'_id': False}), healthyLocations.has_location)
-        corner_stores_locs = healthyLocations.select(corner_stores.find({}, {'_id': False}), healthyLocations.has_location)
-        nutrition_prog_locs = healthyLocations.select(nutrition_prog.find({}, {'_id': False}), healthyLocations.has_location)
-
-        # merge data using product
-        all_locs = healthyLocations.product(['orchard'], orchard_locs) + healthyLocations.product(['store'], corner_stores_locs) + healthyLocations.product(['prog'], nutrition_prog_locs)
-        # print("all locations:")
-        # print(all_locs)
-
-        # clean up data using project
-        locations = healthyLocations.project(all_locs, healthyLocations.location)
-
-        # print(locations)
 
         repo.dropCollection('asafer_vivyee.healthy_locations')
         repo.createCollection('asafer_vivyee.healthy_locations')
-        repo['asafer_vivyee.healthy_locations'].insert_many(locations)
+
+        for i in orchards.find():
+            if "location" in i:
+                loc = i['location']
+                area = {}
+                area['orchard'] = loc
+                repo['asafer_vivyee.healthy_locations'].insert(area)
+
+        for i in corner_stores.find():
+            if "location" in i:
+                loc = i['location']
+                area = {}
+                area['store'] = loc
+                repo['asafer_vivyee.healthy_locations'].insert(area)
+
+        for i in nutrition_prog.find():
+            if "location" in i:
+                loc = i['location']
+                area = {}
+                area['prog'] = loc
+                repo['asafer_vivyee.healthy_locations'].insert(area)        
+
+        # repo['asafer_vivyee.healthy_locations'].insert_many(locations)
         repo['asafer_vivyee.healthy_locations'].metadata({'complete': True})
 
         print('all uploaded')
