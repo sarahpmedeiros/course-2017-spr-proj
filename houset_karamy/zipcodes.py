@@ -34,15 +34,15 @@ class zipcodes(dml.Algorithm):
             zipsStations.append((station["name"],station["location_zip"]))
 
         #get the different street's zipcodes
-        zipsBoston = []
-        for z in streets:
-            zipsBoston.append(z["st_name_std"])
+        #zipsBoston = []
+        #for z in streets:
+            #zipsBoston.append(z["st_name_std"])
         
         #put together
         together = []
         for station in zipsStation:
-            for street in zipsBoston:
-                if(station[1] == street[1]):
+            for street in streets:
+                if(station[1] == street["l_postcode"]):
                     together.append({'station':station["name"], 'zip code': station["location_zip"], 'streets': street["st_name_std"]})
         
         
