@@ -5,7 +5,6 @@ import prov.model
 import datetime
 import uuid
 import sodapy
-import function_implement
 
 # functions implemented from lecture notes
 def dist(p, q):
@@ -62,11 +61,14 @@ class property_crime(dml.Algorithm):
 
         # import crime data
         client1 = sodapy.Socrata("data.cityofboston.gov", None)
-        response1 = client1.get("crime")
+        response1 = []
+        limits = [0, 50001, 100001, 150001, 200001, 250001]
+        for limit in limits:
+            response1 += client1.get("crime", limit=50000, offset=limit)
         s = json.dumps(response1, sort_keys=True, indent=2)
 
         crime_coordination = project(response1,lambda x:(x["year"], x["location"]["latitude"],x["location"]["longitude"]))
-        crime_14 = [crime_2014 for crime_2014 in crime_coordination if crime_2014[0] == "2012"]
+        crime_14 = [crime_2014 for crime_2014 in crime_coordination if crime_2014[0] == "2014"]
         crime_14coordination = [(float(latitude), float(longitude)) for (year, latitude, longitude) in crime_14]
 
         crime_15 = [crime_2015 for crime_2015 in crime_coordination if crime_2015[0] == "2015"]
@@ -77,7 +79,13 @@ class property_crime(dml.Algorithm):
         repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.property_crime'].metadata())
 
-
+        print()
+        print()
+        print()
+        print("Because our dataset is too huge to run our final examination, so we created another smaller file called 'algorithm for property_crime', it's located under course-2017-spr-proj and the functions there are exactly same as what we're going to do in this file, you may test that file to see if our algorithms and functions are correct. Sorry for any inconvenience!")
+        print()
+        print()
+        print()
 
         # import property2014 data
         client2014 = sodapy.Socrata("data.cityofboston.gov", None)
@@ -107,13 +115,13 @@ class property_crime(dml.Algorithm):
         print(repo['pt0713_silnuext.property_crime'].metadata())
 
         # calculating distance between property assessment in 2014 and crime happened in 2014
-        dis_list = []
-        for i in property14_price_coordination_float:
-            for j in crime_14coordination:
-                dis_list += [(i[1], dist(i[1],j))]
+        # dis_list = []
+        # for i in property14_price_coordination_float:
+        #     for j in crime_14coordination:
+        #         dis_list += [(i[1], dist(i[1],j))]
 
-        agg = aggregate(dis_list,min)
-        print(agg)
+        # agg = aggregate(dis_list,min)
+        # print(agg)
 
 
 
@@ -147,21 +155,36 @@ class property_crime(dml.Algorithm):
         
 
         this_script = doc.agent('alg:pt0713_silnuext#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource1 = doc.entity('bdp:crime', {'prov:label':'crime_district1415', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource2 = doc.entity('bdp:jsri-cpsq', {'prov:label':'property14', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource3 = doc.entity('bdp:n7za-nsjh', {'prov:label':'property15', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         get_property_crime = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_property_crime, this_script)
 
-        doc.usage(get_property_crime, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+property_crime&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
+        doc.usage(get_property_crime, resource1, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',})
 
-        property_crime = doc.entity('dat:pt0713_silnuext#property_crime', {prov.model.PROV_LABEL:'Animals property_crime', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(property_crime, this_script)
-        doc.wasGeneratedBy(property_crime, get_property_crime, endTime)
-        doc.wasDerivedFrom(property_crime, resource, get_property_crime, get_property_crime, get_property_crime)
+        doc.usage(get_property_crime, resource2, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',})
+
+        doc.usage(get_property_crime, resource3, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',})
+
+        property14 = doc.entity('dat:pt0713_silnuext#property_14', {prov.model.PROV_LABEL:'property_2014', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(property14, this_script)
+        doc.wasGeneratedBy(property14, get_property_crime, endTime)
+        doc.wasDerivedFrom(property14, resource2, get_property_crime, get_property_crime, get_property_crime)
+
+        property15 = doc.entity("dat:pt0713_silnuext#property_15", {prov.model.PROV_LABEL:"property_2015", prov.model.PROV_TYPE:"ont:DataSet"})
+        doc.wasAttributedTo(property15, this_script)
+        doc.wasGeneratedBy(property15, get_property_crime, endTime)
+        doc.wasDerivedFrom(property15, resource3, get_property_crime, get_property_crime, get_property_crime)
+
+        crime = doc.entity("dat:pt0713_silnuext#crime", {prov.model.PROV_LABEL:"crime", prov.model.PROV_TYPE:"ont:DataSet"})
+        doc.wasAttributedTo(crime, this_script)
+        doc.wasGeneratedBy(crime, get_property_crime, endTime)
+        doc.wasDerivedFrom(crime, resource1, get_property_crime, get_property_crime, get_property_crime)
 
 
         repo.logout()

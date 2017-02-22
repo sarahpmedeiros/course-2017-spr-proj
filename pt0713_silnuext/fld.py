@@ -6,15 +6,14 @@ import datetime
 import uuid
 import sodapy
 
-#prov check
+# PROV CHECK
+# https://data.mass.gov/dataset/FLD-Complaints/c5kv-hee8
+# https://data.mass.gov/resource/x99p-b88k.json
 
-# https://data.cityofboston.gov/Permitting/Property-Assessment-2015/yv8c-t43q
-# https://data.cityofboston.gov/resource/n7za-nsjh.json
-
-class property_2015(dml.Algorithm):
+class fld(dml.Algorithm):
     contributor = 'pt0713_silnuext'
-    reads = ['pt0713_silnuext.property_2015']
-    writes = ['pt0713_silnuext.property_2015']
+    reads = ['pt0713_silnuext.fld']
+    writes = ['pt0713_silnuext.fld']
 
     @staticmethod
     def execute(trial = False):
@@ -26,16 +25,14 @@ class property_2015(dml.Algorithm):
         repo = client.repo
         repo.authenticate('pt0713_silnuext', 'pt0713_silnuext')
 
-        client = sodapy.Socrata("data.cityofboston.gov", None)
-        response = client.get("n7za-nsjh")
-        #r = json.loads(response)
+        client = sodapy.Socrata("data.mass.gov", None)
+        response = client.get("x99p-b88k", limit=9787, offset=0)
         s = json.dumps(response, sort_keys=True, indent=2)
-        print(s)
-        repo.dropCollection("property_2015")
-        repo.createCollection("property_2015")
-        repo['pt0713_silnuext.property_2015'].insert_many(response)
-        repo['pt0713_silnuext.property_2015'].metadata({'complete':True})
-        print(repo['pt0713_silnuext.property_2015'].metadata())
+        repo.dropCollection("fld")
+        repo.createCollection("fld")
+        repo['pt0713_silnuext.fld'].insert_many(response)
+        repo['pt0713_silnuext.fld'].metadata({'complete':True})
+        print(repo['pt0713_silnuext.fld'].metadata())
 
         repo.logout()
 
@@ -59,29 +56,29 @@ class property_2015(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        doc.add_namespace('bdp', 'https://data.mass.gov/dataset')
 
-        this_script = doc.agent('alg:pt0713_silnuext#2015property(citygov)', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:n7za-nsjh', {'prov:label':'property15', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_property_2015 = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        this_script = doc.agent('alg:pt0713_silnuext#FLD(massdata)', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        resource = doc.entity('bdp:x99p-b88k', {'prov:label':'fld', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        get_fld = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_property_2015, this_script)
+        doc.wasAssociatedWith(get_fld, this_script)
 
-        doc.usage(get_property_2015, resource, startTime, None,
+        doc.usage(get_fld, resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',})
 
-        property_2015 = doc.entity('dat:pt0713_silnuext#property_2015', {prov.model.PROV_LABEL:'property_2015', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(property_2015, this_script)
-        doc.wasGeneratedBy(property_2015, get_property_2015, endTime)
-        doc.wasDerivedFrom(property_2015, resource, get_property_2015, get_property_2015, get_property_2015)
+        fld = doc.entity('dat:pt0713_silnuext#fld', {prov.model.PROV_LABEL:'fld', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(fld, this_script)
+        doc.wasGeneratedBy(fld, get_fld, endTime)
+        doc.wasDerivedFrom(fld, resource, get_fld, get_fld, get_fld)
 
 
         repo.logout()
                   
         return doc
 
-property_2015.execute()
-doc = property_2015.provenance()
+fld.execute()
+doc = fld.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 

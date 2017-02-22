@@ -26,10 +26,8 @@ class property_2014(dml.Algorithm):
         repo.authenticate('pt0713_silnuext', 'pt0713_silnuext')
 
         client = sodapy.Socrata("data.cityofboston.gov", None)
-        response = client.get("jsri-cpsq")
-        #r = json.loads(response)
+        response = client.get("jsri-cpsq", limit=164091, offset=0)
         s = json.dumps(response, sort_keys=True, indent=2)
-        print(s)
         repo.dropCollection("property_2014")
         repo.createCollection("property_2014")
         repo['pt0713_silnuext.property_2014'].insert_many(response)

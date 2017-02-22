@@ -77,22 +77,27 @@ class police_crime(dml.Algorithm):
 
         # import crime data      
         client1 = sodapy.Socrata("data.cityofboston.gov", None)
-        response1 = client1.get("crime")
+        response1 = []
+        limits = [0, 50001, 100001, 150001, 200001, 250001]
+        for limit in limits:
+            response1 += client1.get("crime", limit=50000, offset=limit)
         s = json.dumps(response1, sort_keys=True, indent=2)
 
         # getting DISTRICT column from crime dataset
-        crime_district = project(response1,lambda t:(t['reptdistrict']))
-        print(crime_district)
+        crime_district = project(response1,lambda t:([t.get("reptdistrict")]))
 
         # if a crime happens in police_district: count+1
         crime_in_police_district = 0
         for district in crime_district:
-            if district in districts:
+            if district[0] in districts:
                 crime_in_police_district += 1
+
+        print(crime_in_police_district)
 
         # count the final percentage of crime happens in police district / all of the crimes happen
         percentage_crime_in_police_district = crime_in_police_district / len(crime_district)
         print("The percentage of crime happens in police district is: ", percentage_crime_in_police_district)
+        print("Thus, our assumption about crime happens less in police districts is wrong.")
 
         repo['pt0713_silnuext.police_crime'].insert_many(response1)
         repo['pt0713_silnuext.police_crime'].metadata({'complete':True})

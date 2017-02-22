@@ -27,10 +27,11 @@ class crime(dml.Algorithm):
         repo.authenticate('pt0713_silnuext', 'pt0713_silnuext')
 
         client = sodapy.Socrata("data.cityofboston.gov", None)
-        response = client.get("crime")
-        #r = json.loads(response)
+        response = []
+        limits = [0, 50001, 100001, 150001, 200001, 250001]
+        for limit in limits:
+            response += client.get("crime", limit=50000, offset=limit)
         s = json.dumps(response, sort_keys=True, indent=2)
-        print(s)
         repo.dropCollection("crime")
         repo.createCollection("crime")
         repo['pt0713_silnuext.crime'].insert_many(response)

@@ -56,7 +56,7 @@ class fld_crime(dml.Algorithm):
 
         # import fld data
         client = sodapy.Socrata("data.mass.gov", None)
-        response = client.get("x99p-b88k")
+        response = client.get("x99p-b88k", limit=9787, offset=0)
         s = json.dumps(response, sort_keys=True, indent=2)
    
 
@@ -78,7 +78,10 @@ class fld_crime(dml.Algorithm):
 
         # import crime data
         client1 = sodapy.Socrata("data.cityofboston.gov", None)
-        response1 = client1.get("crime")
+        response1 = []
+        limits = [0, 50001, 100001, 150001, 200001, 250001]
+        for limit in limits:
+            response1 += client1.get("crime", limit=50000, offset=limit)
         s = json.dumps(response1, sort_keys=True, indent=2)
 
         crime_month = project(response1, lambda x: (x["year"], x["month"]))
@@ -144,14 +147,14 @@ class fld_crime(dml.Algorithm):
                   
 
         crime = doc.entity("dat:pt0713_silnuext#fld_crime", {prov.model.PROV_LABEL:"crime", prov.model.PROV_TYPE:"ont:DataSet"})
-        doc.wasAttributedTo(fld_crime, this_script)
-        doc.wasGeneratedBy(fld_crime, get_fld_crime, endTime)
-        doc.wasDerivedFrom(fld_crime, resource1, get_fld_crime, get_fld_crime, get_fld_crime)
+        doc.wasAttributedTo(crime, this_script)
+        doc.wasGeneratedBy(crime, get_fld_crime, endTime)
+        doc.wasDerivedFrom(crime, resource1, get_fld_crime, get_fld_crime, get_fld_crime)
 
         fld = doc.entity("dat:pt0713_silnuext#fld_crime", {prov.model.PROV_LABEL:"fld", prov.model.PROV_TYPE:"ont:DataSet"})
-        doc.wasAttributedTo(fld_crime, this_script)
-        doc.wasGeneratedBy(fld_crime, get_fld_crime, endTime)
-        doc.wasDerivedFrom(fld_crime, resource2, get_fld_crime, get_fld_crime, get_fld_crime)
+        doc.wasAttributedTo(fld, this_script)
+        doc.wasGeneratedBy(fld, get_fld_crime, endTime)
+        doc.wasDerivedFrom(fld, resource2, get_fld_crime, get_fld_crime, get_fld_crime)
 
 
         repo.logout()
