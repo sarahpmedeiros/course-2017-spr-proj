@@ -6,7 +6,7 @@ The datasets that we have chosen for this project are from the City of Boston Da
 To start off, and for the purpose of project 1, we have manipulated the data to count the number of crimes reported in each police district/neighborhood in order to see which areas have more crimes committed. We then used our new data set and retrieved the actual street address and police station's district name along with the count of crimes each has. We also got the name of the streets that are in each police station's district by linking through zip codes.
 
 ------------------------
-The 5 datasets used are:
+The datasets used are:
 ------------------------
 Cambridge Open Data Portal: Crime Reports, Police Car Routes, Police Walking Routes
 
