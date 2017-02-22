@@ -45,11 +45,15 @@ class closestMbtaObesity(dml.Algorithm):
         a = math.sin(dlat/2)**2 + (math.cos(stop_lat) * math.cos(obesity_lat) * math.sin(dlon/2)**2)
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
         d = 3961 * c
-        return {'obesity': obesity, 'stop': stop, 'distance': d}
+        return (obesity, (stop, d))
 
     @staticmethod
     def close_stop(info):
-        return info['distance'] <= 1
+        return info[1][1] <= 1
+
+    @staticmethod
+    def convert_to_dictionary(info):
+	return {'obesity': info[0], 'stops': info[1]}
 
     @staticmethod
     def get_stops(info):
@@ -89,7 +93,13 @@ class closestMbtaObesity(dml.Algorithm):
         # find all places within a mile
         filtered_stops = closestMbtaObesity.select(distances, closestMbtaObesity.close_stop)
 
-        repo['asafer_vivyee.obesity_mbta'].insert_many(filtered_stops)
+        # aggregate stops by location they're close to
+        stops_by_location = closestMbtaObesity.aggregate(filtered_stops, lambda x: x)
+
+        # convert to dictionary format
+        stops_by_location_dict = closestMbtaObesity.project(stops_by_location, closestMbtaObesity.convert_to_dict)
+
+        repo['asafer_vivyee.obesity_mbta'].insert_many(stops_by_location_dict)
         repo['asafer_vivyee.obesity_mbta'].metadata({'complete': True})
 
         print('all uploaded')
