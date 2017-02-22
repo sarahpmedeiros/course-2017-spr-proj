@@ -133,24 +133,38 @@ class retrieveData(dml.Algorithm):
         doc.usage(get_Street,Street_resource,startTime, None,{prov.model.PROV_TYPE:'ont:Retrieval','ont:Query':'?type=Massachusetts+Detailed+Streets+with+Labels'})
 
 
-        
-        lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
+        Bikes = doc.entity('dat:cfortuna_snjan19#Bikes', {prov.model.PROV_LABEL:'Biking Routes', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(Bikes, this_script)
+        doc.wasGeneratedBy(Bikes, get_Bikes, endTime)
+        doc.wasDerivedFrom(Bikes, Bikes_resource, get_Bikes, get_Bikes, get_Bikes)
 
-        found = doc.entity('dat:alice_bob#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(found, this_script)
-        doc.wasGeneratedBy(found, get_found, endTime)
-        doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
+        Snow = doc.entity('dat:cfortuna_snjan19#Snow', {prov.model.PROV_LABEL:'Snow Emergency Routes', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(Snow, this_script)
+        doc.wasGeneratedBy(Snow, get_Snow, endTime)
+        doc.wasDerivedFrom(Snow, Snow_resource, get_Snow, get_Snow, get_Snow)
+
+        Meters = doc.entity('dat:cfortuna_snjan19#Meters', {prov.model.PROV_LABEL:'Parking Meters', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(Meters, this_script)
+        doc.wasGeneratedBy(Meters, get_Meters, endTime)
+        doc.wasDerivedFrom(Meters, Meters_resource, get_Meters, get_Meters, get_Meters)
+
+        PotHoles = doc.entity('dat:cfortuna_snjan19#PotHoles', {prov.model.PROV_LABEL:'PotHoles Requests', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(PotHoles, this_script)
+        doc.wasGeneratedBy(PotHoles, get_PotHoles, endTime)
+        doc.wasDerivedFrom(PotHoles, PotHoles_resource, get_PotHoles, get_PotHoles, get_PotHoles)
+
+        Street = doc.entity('dat:cfortuna_snjan19#Street', {prov.model.PROV_LABEL:'Street Names', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(Street, this_script)
+        doc.wasGeneratedBy(Street, get_Street, endTime)
+        doc.wasDerivedFrom(Street, Street_resource, get_Street, get_Street, get_Street)
 
         repo.logout()
                   
         return doc
 
-# retrieveData.execute()
-# doc = retrieveData.provenance()
-# print(doc.get_provn())
-# print(json.dumps(json.loads(doc.serialize()), indent=4))
+retrieveData.execute()
+doc = retrieveData.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
