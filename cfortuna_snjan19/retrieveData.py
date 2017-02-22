@@ -20,7 +20,7 @@ class retrieveData(dml.Algorithm):
 
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
-        repo = client.repo
+        epo = client.repor
         repo.authenticate('cfortuna_snjan19', 'cfortuna_snjan19')
 
         ###### Importing Datasets and putting them inside the mongoDB database #####
@@ -100,25 +100,40 @@ class retrieveData(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:alice_bob#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_found = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_lost = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_found, this_script)
-        doc.wasAssociatedWith(get_lost, this_script)
-        doc.usage(get_found, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-        doc.usage(get_lost, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
+        #ADD EXTRA DATA SOURCES
+        doc.add_namespace('bdp', 'https://data.cityofboston.gov/') # portal to city of Boston Data
+        doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/') # Boston Open Data
+        doc.add_namespace('dmg', 'https://data.mass.gov/resource/') #Portal to Data Mass Gov 
 
+
+        this_script = doc.agent('alg:cfortuna_snjan19#retrieveData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        Bikes_resource = doc.entity('bod:d02c9d2003af455fbc37f550cc53d3a4_0.geojson',{'prov:label':'Existing Bike Network, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        Snow_resource = doc.entity('bod:4f3e4492e36f4907bcd307b131afe4a5_0.geojson',{'prov:label':'Snow Emergency Route, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        Meters_resource = doc.entity('bod:962da9bb739f440ba33e746661921244_9.geojson',{'prov:label':'Parking Meters, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        PotHoles_resource = doc.entity('bdp:n65p-xaz7',{'prov:label':'PotHoles, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        Street_resource = doc.entity('dmg:ms23-5ubn.json',{'prov:label':'Street, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        
+        get_Bikes = doc.activity('log:uuid')+str(uuid.uuid4(), startTime, endTime)
+        get_Snow = doc.activity('log:uuid')+str(uuid.uuid4(), startTime, endTime)
+        get_Meters = doc.activity('log:uuid')+str(uuid.uuid4(), startTime, endTime)
+        get_PotHoles = doc.activity('log:uuid')+str(uuid.uuid4(), startTime, endTime)
+        get_Street = doc.activity('log:uuid')+str(uuid.uuid4(), startTime, endTime)
+
+        doc.wasAssociatedWith(get_Bikes, this_script)
+        doc.wasAssociatedWith(get_Snow, this_script)
+        doc.wasAssociatedWith(get_Meters, this_script)
+        doc.wasAssociatedWith(get_PotHoles, this_script)
+        doc.wasAssociatedWith(get_Street, this_script)
+
+        doc.usage(get_Bikes,Bikes_resource, startTime, None,{prov.model.PROV_TYPE:'ont:Retrieval','ont:Query':'?type=Existing+Bike+Network'})
+        doc.usage(get_Snow,Snow_resource, startTime, None,{prov.model.PROV_TYPE:'ont:Retrieval','ont:Query':'?type=Snow+Emergency+Route'})
+        doc.usage(get_Meters,Meters_resource,startTime, None,{prov.model.PROV_TYPE:'ont:Retrieval','ont:Query':'?type=Parking+Meters'})
+        doc.usage(get_PotHoles,PotHoles_resource,startTime, None,{prov.model.PROV_TYPE:'ont:Retrieval','ont:Query':'?type=Requests+for+Pothole+Repair'})
+        doc.usage(get_Street,Street_resource,startTime, None,{prov.model.PROV_TYPE:'ont:Retrieval','ont:Query':'?type=Massachusetts+Detailed+Streets+with+Labels'})
+
+
+        
         lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(lost, this_script)
         doc.wasGeneratedBy(lost, get_lost, endTime)
@@ -133,9 +148,9 @@ class retrieveData(dml.Algorithm):
                   
         return doc
 
-retrieveData.execute()
-#doc = retrieveData.provenance()
-#print(doc.get_provn())
-#print(json.dumps(json.loads(doc.serialize()), indent=4))
+# retrieveData.execute()
+# doc = retrieveData.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
