@@ -13,3 +13,10 @@ Cambridge Open Data Portal: Crime Reports, Police Car Routes, Police Walking Rou
 City of Boston Data Portal: Crime Reports, Police Stations
 
 MASS Data Portal: Boston Streets
+
+-------------------------
+To run the program:
+-------------------------
+```
+python execute.py alice_bob
+```
