@@ -142,10 +142,12 @@ class incomeOfInsomnia(dml.Algorithm):
         doc.wasAssociatedWith(get_sleep, this_script)
         doc.wasAssociatedWith(get_zip_to_income, this_script)
         doc.wasAssociatedWith(get_lat_to_zip, this_script) 
+        doc.wasAssociatedWith(get_income_of_insomnia, this_script)
 
         doc.usage(get_sleep, sleep_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_zip_to_income, zip_to_income_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_lat_to_zip, lat_to_zip_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_income_of_insomnia, income_of_insomnia_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
 
         Sleep = doc.entity('dat:asambors_maxzm#nosleepma', {prov.model.PROV_LABEL:'Sleeping less than 7 hours among adults aged >=18 years', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(Sleep, this_script)

@@ -36,11 +36,6 @@ class zipEnergyUse(dml.Algorithm):
     	return [p(t) for t in R]
 
     @staticmethod
-    def filter_hospital_attr(hospital):
-    	return {'name': hospital['name'],
-    			'local':hospital['local']}
-
-    @staticmethod
     def has_metrics(hospital):
     	if hospital['site_energy_use'] != 'Not Available':
     		return True 
@@ -119,6 +114,9 @@ class zipEnergyUse(dml.Algorithm):
             document describing that invocation event.
         '''
 
+     	# reads = ['asambors_maxzm.zipcodetolatlong', 'asambors_maxzm.energywater', 'asambors_maxzm.hospitals']
+    	# writes = ['asambors_maxzm.zipenergyuse']
+
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
@@ -129,42 +127,30 @@ class zipEnergyUse(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         
-        # ADD THREE DATA SOURCES
+        # ADD BDP
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/') # Boston Data Portal
-        doc.add_namespace('datm', 'http://datamechanics.io/data/') # datamechanics.io
-        doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/') # CDC Data Portal
 
-        this_script = doc.agent('alg:asambors_maxzm#fetchData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:asambors_maxzm#zipEnergyUse', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
         # BOSTON DATA PORTAL
         hospitals_resource = doc.entity('bdp:u6fv-m8v4', {'prov:label':'Hospital Locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         energy_resource = doc.entity('bdp:vxhe-ma3y', {'prov:label':'Building Energy and Water Use Metrics', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
-        # CDC DATA
-        sleep_resource = doc.entity('cdc:eqbn-8mpz', {'prov:label':'Sleeping less than 7 hours among adults aged >=18 years', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        
         # DATAMECHANICS.IO DATA
-        zip_to_income_resource = doc.entity('datm:asambors_maxzm', {'prov:label':'Zip code to estimated income', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        lat_to_zip_resource = doc.entity('datm:asambors_maxzm', {'prov:label':'Latitude, longitude to zip code', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        zip_energy_use_resource = doc.entity('dat:asambors_maxzm', {'prov:label':'Aggregated amount of energy used in a given neighborhood of hospitals', prov.model.PROV_TYPE:'ont:DataResource'})
 
         get_hospitals = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_energy = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)  
-        get_sleep = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime) 
-        get_zip_to_income = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)  
-        get_lat_to_zip = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime) 
+        get_energy = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)   
+        get_zip_energy_use = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime) 
 
         doc.wasAssociatedWith(get_hospitals, this_script)
         doc.wasAssociatedWith(get_energy, this_script)
-        doc.wasAssociatedWith(get_sleep, this_script)
-        doc.wasAssociatedWith(get_zip_to_income, this_script)
-        doc.wasAssociatedWith(get_lat_to_zip, this_script)
+        doc.wasAssociatedWith(get_zip_energy_use, this_script)
 
         doc.usage(get_hospitals, hospitals_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_energy, energy_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.usage(get_sleep, sleep_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.usage(get_zip_to_income, zip_to_income_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.usage(get_lat_to_zip, lat_to_zip_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-
+        doc.usage(get_zip_energy_use, zip_energy_use_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        
         Hospitals = doc.entity('dat:asambors_maxzm#hospitals', {prov.model.PROV_LABEL:'Hospital Locations', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(Hospitals, this_script)
         doc.wasGeneratedBy(Hospitals, get_hospitals, endTime)
@@ -175,20 +161,10 @@ class zipEnergyUse(dml.Algorithm):
         doc.wasGeneratedBy(Energy, get_energy, endTime)
         doc.wasDerivedFrom(Energy, energy_resource, get_energy, get_energy, get_energy)
 
-        Sleep = doc.entity('dat:asambors_maxzm#nosleepma', {prov.model.PROV_LABEL:'Sleeping less than 7 hours among adults aged >=18 years', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(Sleep, this_script)
-        doc.wasGeneratedBy(Sleep, get_sleep, endTime)
-        doc.wasDerivedFrom(Sleep, sleep_resource, get_sleep, get_sleep, get_sleep)
-
-        ZipToIncome = doc.entity('dat:asambors_maxzm#ziptoincome', {prov.model.PROV_LABEL:'Zip code to estimated income', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(ZipToIncome, this_script)
-        doc.wasGeneratedBy(ZipToIncome, get_zip_to_income, endTime)
-        doc.wasDerivedFrom(ZipToIncome, zip_to_income_resource, get_zip_to_income, get_zip_to_income, get_zip_to_income)
-
-        ZipcodeToLatLong = doc.entity('dat:asambors_maxzm#zipcodetolatlong', {prov.model.PROV_LABEL:'Latitude, longitude to zip code', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(ZipcodeToLatLong, this_script)
-        doc.wasGeneratedBy(ZipcodeToLatLong, get_lat_to_zip, endTime)
-        doc.wasDerivedFrom(ZipcodeToLatLong, lat_to_zip_resource, get_lat_to_zip, get_lat_to_zip, get_lat_to_zip)
+        ZipEnergyUse = doc.entity('dat:asambors_maxzm#zipenergyuse', {prov.model.PROV_LABEL:'Aggregated amount of energy used in a given neighborhood of hospitals', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(ZipEnergyUse, this_script)
+        doc.wasGeneratedBy(ZipEnergyUse, get_zip_energy_use, endTime)
+        doc.wasDerivedFrom(ZipEnergyUse, zip_energy_use_resource, get_zip_energy_use, get_zip_energy_use, get_zip_energy_use)
 
         repo.logout()
                   
@@ -196,4 +172,6 @@ class zipEnergyUse(dml.Algorithm):
 
 
 zipEnergyUse.execute()
-
+doc = zipEnergyUse.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
