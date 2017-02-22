@@ -125,16 +125,20 @@ class closestMbtaObesity(dml.Algorithm):
         # datamechanics.io data
         obesity_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Obesity Among Adults', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         mbta_routes_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'MBTA Routes', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        obesity_mbta_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Closest MBTA stops to Obese areas', prov.model.PROV_TYPE:'ont:DataResource'})
 
         get_obesity = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime) # LOL
         get_mbta_routes = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        get_obesity_mbta = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_obesity, this_script)
         doc.wasAssociatedWith(get_mbta_routes, this_script)
+        doc.wasAssociatedWith(get_obesity_mbta, this_script)
 
         doc.usage(get_obesity, obesity_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_mbta_routes, mbta_routes_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-    
+        doc.usage(get_obesity_mbta, obesity_mbta_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+
         obesity = doc.entity('dat:asafer_vivyee#obesity', {prov.model.PROV_LABEL:'Obesity Among Adults', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(obesity, this_script)
         doc.wasGeneratedBy(obesity, get_obesity, endTime)
@@ -144,6 +148,11 @@ class closestMbtaObesity(dml.Algorithm):
         doc.wasAttributedTo(mbta_routes, this_script)
         doc.wasGeneratedBy(mbta_routes, get_mbta_routes, endTime)
         doc.wasDerivedFrom(mbta_routes, mbta_routes_resource, get_mbta_routes, get_mbta_routes, get_mbta_routes)
+
+        obesity_mbta = doc.entity('dat:asafer_vivyee#obesity_mbta', {prov.model.PROV_LABEL:'Closest MBTA stops to Obese areas', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(obesity_mbta, this_script)
+        doc.wasGeneratedBy(obesity_mbta, get_obesity_mbta, endTime)
+        doc.wasDerivedFrom(obesity_mbta, obesity_mbta_resource, get_obesity_mbta, get_obesity_mbta, get_obesity_mbta)
 
         repo.logout()
 
