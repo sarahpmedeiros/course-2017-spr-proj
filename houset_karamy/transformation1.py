@@ -17,11 +17,6 @@ class transformation1(dml.Algorithm):
         
         startTime = datetime.datetime.now()
         
-        def removeDuplicates(seq):
-            seen = set()
-            seen_add = seen.add
-            return [x for x in seq if not (x in seen or seen_add(x)) and x != " "]
-        
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
@@ -49,11 +44,13 @@ class transformation1(dml.Algorithm):
             totalCount.append({'district': crime[1], 'count': crime[0]})
         
         #get rid of duplicates
-        #insert into new database
         finalCount = []
-        finalCount = removeDuplicates(totalCount)
+        for d in totalCount:
+            if (d[1] not in finalCount):
+                finalCount.append({'district': crime[1], 'count': crime[0]})
         
-                
+        
+        #insert into new database        
         repo['houset_karamy.transformation1'].insert_many(finalCount)
         
         repo.logout()
