@@ -9,7 +9,9 @@ import math
 
 class stationCrimeFreq(dml.Algorithm):
     contributor = 'houset_karamy'
-    reads = ['houset_karamy.crimeFreq', 'houset_karamy.policeStations']
+    # reads = ['houset_karamy.crimeFreq', 'houset_karamy.policeStations']
+    reads = ['houset_karamy.policeStations']
+
     writes = ['houset_karamy.stationCrimeFreq']
 
     @staticmethod
@@ -27,34 +29,38 @@ class stationCrimeFreq(dml.Algorithm):
         crimeF = repo['houset_karamy.crimeFreq'].find()
         stations = repo['houset_karamy.policeStations'].find()
 
-        #get the different districts' addresses
-        addresses= []
+        #get the different districts' police addresses
+        policeAddresses= []
         for district in stations:
-            addresses.append((district["name"], district["location_location"]))
+            policeAddresses.append((district["name"], district["location_location"]))
 
         #get all Boston districts and count
         bostonD =[]
         for dist in crimeF:
             if (dist["district/neighborhood"][0] == "Boston"):
                 bostonD.append(dist)
-                
+
             
         #count the number of crimesBoston in each district
-        #putTogether = []
-        for x in addresses:
-            for y in bostonD:
-                if (y["district/neighborhood"][1] in x):
-                    addresses.append(y["count"])
+
+        total = []
+        for address in policeAddresses:
+            for district in bostonD:
+                # print(address[0])
+                if (district["district/neighborhood"][1] in address[0]):
+                    total.append({'station': address, 'count': district['count']})
+      
                     
 
         #get rid of duplicates
-#       finalCount = []
-#        for d in totalCount:
-#            if (d not in finalCount):
-#                finalCount.append(d)
+        # finalCount = []
+        # for d in totalCount:
+        #    if (d not in finalCount):
+        #        finalCount.append(d)
         
-        #insert into new database        
-        repo['houset_karamy.stationCrimeFreq'].insert_many(addresses)
+        #insert into new database 
+        # print(total)       
+        repo['houset_karamy.stationCrimeFreq'].insert_many(total)
         
         repo.logout()
 
@@ -95,7 +101,7 @@ class stationCrimeFreq(dml.Algorithm):
         stationCrimeFreq = doc.entity("dat:houset_karamy#stationCrimeFreq", {prov.model.PROV_LABEL:"stationCrimeFreq", prov.model.PROV_TYPE:"ont:DataSet"})
         doc.wasAttributedTo(stationCrimeFreq, this_script)
         doc.wasGeneratedBy(stationCrimeFreq, get_stationCrimeFreq, endTime)
-        doc.wasDerivedFrom(stationCrimeFreq, resource, get_stationCrimeFreq, get_cstationCrimeFreq, get_stationCrimeFreq)
+        doc.wasDerivedFrom(stationCrimeFreq, resource, get_stationCrimeFreq, get_stationCrimeFreq, get_stationCrimeFreq)
 
         repo.logout()
                   
