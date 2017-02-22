@@ -46,9 +46,9 @@ class getIncomeByCensusTract(dml.Algorithm):
 
         #test and print from database
         results = repo['skaram13_smedeiro.income'].find()
-        print (results)
-        for each in results:
-            print (each)
+#        print (results)
+#        for each in results:
+#            print (each)
 
         repo.logout()
 
@@ -97,10 +97,10 @@ class getIncomeByCensusTract(dml.Algorithm):
         repo.logout()
                   
         return doc
-
-getIncomeByCensusTract.execute()
-doc = getIncomeByCensusTract.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#
+#getIncomeByCensusTract.execute()
+#doc = getIncomeByCensusTract.provenance()
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

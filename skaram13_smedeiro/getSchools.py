@@ -7,7 +7,7 @@ import datetime
 import uuid
 import csv
 import time
-with open("../auth.json") as jsonFile:
+with open("auth.json") as jsonFile:
     data = json.load(jsonFile)
     api_key = data['services']['Census Data']['key']
 
@@ -137,10 +137,10 @@ class getSchools(dml.Algorithm):
                   
         return doc
 
-getSchools.execute()
-print("Done!")
-doc = getSchools.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#getSchools.execute()
+#print("Done!")
+#doc = getSchools.provenance()
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
