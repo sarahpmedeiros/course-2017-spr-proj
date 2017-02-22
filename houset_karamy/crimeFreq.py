@@ -33,10 +33,10 @@ class crimeFreq(dml.Algorithm):
         crimeDist = []
         # crimedist2 = []
         for district in crimesBoston:
-            crimeDist.append(district["reptdistrict"])
+            crimeDist.append("Boston", district["reptdistrict"])
 
         for neighborhood in crimesCambridge:
-            crimeDist.append(neighborhood["neighborhood"])
+            crimeDist.append("Cambridge", neighborhood["neighborhood"])
             
         #count the number of crimesBoston in each district
         crimeCounts = []
