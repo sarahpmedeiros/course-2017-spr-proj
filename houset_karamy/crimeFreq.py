@@ -60,7 +60,7 @@ class crimeFreq(dml.Algorithm):
         
         print(finalCount)
         #insert into new database        
-        repo['houset_karamy.crimeFreq'].insert_many(totalCount)
+        repo['houset_karamy.crimeFreq'].insert_many(finalCount)
         
         repo.logout()
 
