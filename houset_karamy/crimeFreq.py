@@ -58,7 +58,7 @@ class crimeFreq(dml.Algorithm):
             if (d not in finalCount):
                 finalCount.append(d)
         
-        print(finalCount)
+#         print(finalCount)
         #insert into new database        
         repo['houset_karamy.crimeFreq'].insert_many(finalCount)
         
