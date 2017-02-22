@@ -29,9 +29,9 @@ class transformation1(dml.Algorithm):
         crimes = repo['houset_karamy.crimeReportsBoston'].find()
         
         #get the different districts
-        crimeTypes = []
-        for crime in crimes:
-            crimeTypes.append(crime["reptdistrict"])
+        crimeDist = []
+        for district in crimes:
+            crimeDist.append(district["reptdistrict"])
             
         #count the number of crimes in each district
         crimeCounts = []
@@ -41,7 +41,7 @@ class transformation1(dml.Algorithm):
         #get the final count for each in dictionary form
         totalCount = []
         for crime in crimeCounts:
-            totalCount.append({'crime': crime[1], 'count': crime[0]})
+            totalCount.append({'district': crime[1], 'count': crime[0]})
         
         #get rid of duplicates
         #finalCount = removeDup(totalCount)
@@ -49,7 +49,7 @@ class transformation1(dml.Algorithm):
         finalCount = []
         for x in totalCount:
             if x not in finalCount:
-                finalCount.append({'crime':crime[1], 'count': crime[0]})
+                finalCount.append({'crime':x[1], 'count': x[0]})
                 
         repo['houset_karamy.transformation1'].insert_many(finalCount)
         
