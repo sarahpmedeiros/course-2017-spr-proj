@@ -1,0 +1,2 @@
+# Narrative (Project 1)
+Using the data sets that we chose, we want to map the location of adult obesity and how that correlates to easy access to nutrition programs, healthy stores, etc. We will create a transportation map using the MBTA routes and stops data, which we combine. We will combine data on health related programs, stores and orchards to find areas with access to healthy goods and information. We will then use all of these datasets to find whether these programs and shops are located in areas that need it most (where obesity is dominant).
