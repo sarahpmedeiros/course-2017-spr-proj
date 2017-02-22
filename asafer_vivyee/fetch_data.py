@@ -23,10 +23,35 @@ class FetchData(dml.Algorithm):
     def store(repo, url, collection):
         response = requests.get(url)
         if response.status_code == 200:
-            data = [response.json()]
-            repo.dropPermanent(collection)
-            repo.createPermanent(collection)
-            repo[collection].insert_many(data)
+            if (collection == 'asafer_vivyee.mbta_routes'):
+                routes = [ mode for mode in response['mode'] if mode['mode_name'] == 'Subway' or mode['mode_name'] == 'Bus' ]
+                routes = [ (mode['mode_name'], route['route_id']) for mode in routes for route in mode['route'] ]
+
+                stop_url = 'http://realtime.mbta.com/developer/api/v2/stopsbyroute?api_key=' + dml.auth['services']['mbtadeveloperportal']['key']
+                stop_urls = {route:"{}&route={}&format=json".format(stop_url, route[1]) for route in routes}
+                stop_responses = {route:urllib.requests.get(stop_urls[route]) for route in stop_urls}
+
+                json_stops = []
+                for route, response in responses.items():
+                    stops_by_route = {}
+
+                    mode, route_id = route
+
+                    stops_by_route['name'] = route_id
+                    stops_by_route['mode'] = mode
+                    stops_by_route['path'] = response
+
+                    json_stops.append(stops_by_route)
+
+                repo.dropPermanent(collection)
+                repo.createPermanent(collection)
+                repo[collection].insert_many(json_stops)
+
+            else:
+                data = [response.json()]
+                repo.dropPermanent(collection)
+                repo.createPermanent(collection)
+                repo[collection].insert_many(data)
 
     @staticmethod
     def execute(trial = False):
@@ -58,7 +83,6 @@ class FetchData(dml.Algorithm):
 
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
-        # IDK WHAT ANY OF THIS DOES LOLLLLLLL
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
