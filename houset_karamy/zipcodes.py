@@ -109,5 +109,5 @@ class zipcodes(dml.Algorithm):
                   
         return doc
 
-zipcodes.execute()
-doc = zipcodes.provenance()
+#zipcodes.execute()
+#doc = zipcodes.provenance()
