@@ -47,7 +47,7 @@ class transformation1(dml.Algorithm):
         finalCount = []
         for d in totalCount:
             if (d[1] not in finalCount):
-                finalCount.append({'district': crime[1], 'count': crime[0]})
+                finalCount.append({'district': d[1], 'count': d[0]})
         
         
         #insert into new database        
