@@ -10,7 +10,13 @@ class transformation1(dml.Algorithm):
     contributor = "houset_karamy"
     reads = ["houset_karamy.crimeReportsBoston"]
     writes = ["houset_karamy.transformation1"]
-
+    def removeDup(dic):
+        result = {}
+        for key,value in dic.items():
+            if key not in result.keys():
+                result[key] = value
+        return result
+    
     @staticmethod
     def execute(trial = False):
         startTime = datetime.datetime.now()
@@ -37,10 +43,12 @@ class transformation1(dml.Algorithm):
             crimeCounts.append((crimeTypes.count(crime), crime))
         
         #get the final count for each in dictionary form
-        finalCount = []
+        totalCount = []
         for crime in crimeCounts:
-            finalCount.append({'crime': crime[1], 'count': crime[0]})
+            totalCount.append({'crime': crime[1], 'count': crime[0]})
         
+        #get rid of duplicates
+        finalCount = removeDup(totalCount)
         #insert into new database
         repo['houset_karamy.transformation1'].insert_many(finalCount)
         
