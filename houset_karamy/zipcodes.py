@@ -40,7 +40,7 @@ class zipcodes(dml.Algorithm):
         
         #put together
         together = []
-        for station in zipsStation:
+        for station in zipsStations:
             for street in streets:
                 if(station[1] == street["l_postcode"]):
                     together.append({'station':station["name"], 'zip code': station["location_zip"], 'streets': street["st_name_std"]})
