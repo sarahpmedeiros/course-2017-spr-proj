@@ -7,7 +7,7 @@ import prov.model
 import datetime
 import uuid
 import math
-from collections import defaultdict 
+#from collections import defaultdict 
 
 class zipcodes(dml.Algorithm):
     contributor = 'houset_karamy'
