@@ -18,7 +18,7 @@ class closestMbtaHealth(dml.Algorithm):
 
     @staticmethod
     def aggregate(R, f):
-        keys = {r[0] for r in R}
+        keys = [r[0] for r in R]
         return [(key, f([v for (k,v) in R if k == key])) for key in keys]
 
     @staticmethod
@@ -45,11 +45,15 @@ class closestMbtaHealth(dml.Algorithm):
         a = math.sin(dlat/2)**2 + (math.cos(stop_lat) * math.cos(healthy_lat) * math.sin(dlon/2)**2)
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
         d = 3961 * c
-        return {'healthy_locations': healthy, 'stop': stop, 'distance': d}
+        return (healthy, (stop, d))
 
     @staticmethod
     def close_stop(info):
-        return info['distance'] <= 2
+        return info[1][1] <= 2
+
+    @staticmethod
+    def convert_to_dictionary(info):
+            return {'healthy_locations': info[0], 'stops': info[1]}
 
     @staticmethod
     def get_stops(info):
@@ -89,7 +93,13 @@ class closestMbtaHealth(dml.Algorithm):
         # find all places within a mile
         filtered_stops = closestMbtaHealth.select(distances, closestMbtaHealth.close_stop)
 
-        repo['asafer_vivyee.health_mbta'].insert_many(filtered_stops)
+        # aggregate stops by location they're close to
+        stops_by_location = closestMbtaHealth.aggregate(filtered_stops, lambda x: x)
+
+        # convert to dictionary format
+        stops_by_location_dict = closestMbtaHealth.project(stops_by_location, closestMbtaHealth.convert_to_dictionary)
+
+        repo['asafer_vivyee.health_mbta'].insert_many(stops_by_location_dict)
         repo['asafer_vivyee.health_mbta'].metadata({'complete': True})
 
         print('all uploaded')
