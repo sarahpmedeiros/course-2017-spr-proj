@@ -70,53 +70,87 @@ class project1(dml.Algorithm):
         
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
-        '''
-        Create the provenance document describing everything happening
-        in this script. Each run of the script will generate a new
-        document describing that invocation event.
-        '''
-        
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('jspinell_mpinheir', 'jspinell_mpinheir')
             
-        doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
-        doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
-        doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
-        doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/') # boston data portal
-        doc.add_namespace('cdp', 'https://data.cambridgema.gov/resource/') #cambridge data portal
-
+        doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')
+        doc.add_namespace('dat', 'http://datamechanics.io/data/')
+        doc.add_namespace('ont', 'http://datamechanics.io/ontology#')
+        doc.add_namespace('log', 'http://datamechanics.io/log/')
+        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        doc.add_namespace('ageRanges','http://datamechanics.io/data/jspinell_mpinheir/AgeRanges.json') 
+        doc.add_namespace('crimeRate','http://datamechanics.io/data/jspinell_mpinheir/CrimeRate.json')
+        doc.add_namespace('housingRates','http://datamechanics.io/data/jspinell_mpinheir/HousingRates.json')
+        doc.add_namespace('educationCosts','http://datamechanics.io/data/jspinell_mpinheir/EducationCosts.json')
+        doc.add_namespace('neighborhoods','http://datamechanics.io/data/jspinell_mpinheir/neighborhoods.json')
+        
+    
+    
         this_script = doc.agent('alg:jspinell_mpinheir#project1', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_found = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_lost = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_found, this_script)
-        doc.wasAssociatedWith(get_lost, this_script)
-        doc.usage(get_found, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-        doc.usage(get_lost, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-
-        lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-
-        found = doc.entity('dat:alice_bob#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(found, this_script)
-        doc.wasGeneratedBy(found, get_found, endTime)
-        doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
-
+    
+           
+        ageRanges_resource = doc.entity('http://datamechanics.io/data/jspinell_mpinheir/AgeRanges.json', {'prov:label':'Population by Age Ranges', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        crimeRates_resource = doc.entity('http://datamechanics.io/data/jspinell_mpinheir/CrimeRate.json', {'prov:label':'Crime Rates by Zip Code', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        housingRates_resource = doc.entity('http://datamechanics.io/data/jspinell_mpinheir/HousingRates.json', {'prov:label':'Housing Rates by Zip Code', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        educationCosts_resource = doc.entity('http://datamechanics.io/data/jspinell_mpinheir/EducationCosts.json', {'prov:label':'Education Data by Zip Code', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        neighborhoods_resource = doc.entity('http://datamechanics.io/data/jspinell_mpinheir/neighborhoods.json', {'prov:label':'Neighborhoods to Zip Codes', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+    
+            
+        this_ageRanges = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        this_crimeRates = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        this_housingRates = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        this_educationCosts = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        this_neighborhoods = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        
+    
+           
+        doc.wasAssociatedWith(this_ageRanges, this_script)
+        doc.wasAssociatedWith(this_crimeRates, this_script)
+        doc.wasAssociatedWith(this_housingRates, this_script)
+        doc.wasAssociatedWith(this_educationCosts, this_script)
+        doc.wasAssociatedWith(this_neighborhoods, this_script)
+        
+    
+           
+        doc.usage(this_ageRanges, ageRanges_resource,startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(this_crimeRates, crimeRates_resource,startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(this_housingRates, housingRates_resource,startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(this_educationCosts, educationCosts_resource,startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(this_neighborhoods, neighborhoods_resource,startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        
+    
+        ageRanges = doc.entity('dat:jspinell_mpinheir#ageRanges', {prov.model.PROV_LABEL:'Population by Age Ranges', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(ageRanges, this_script)
+        doc.wasGeneratedBy(ageRanges, this_ageRanges, endTime)
+        doc.wasDerivedFrom(ageRanges, ageRanges_resource, this_ageRanges,this_ageRanges, this_ageRanges)
+    
+        crimeRates = doc.entity('dat:jspinell_mpinheir#crimeRates', {prov.model.PROV_LABEL:'Crime Rates by Zip Code', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(crimeRates, this_script)
+        doc.wasGeneratedBy(crimeRates, this_crimeRates, endTime)
+        doc.wasDerivedFrom(crimeRates, crimeRates_resource, this_crimeRates,this_crimeRates, this_crimeRates)
+    
+        housingRates = doc.entity('dat:jspinell_mpinheir#housingRates', {prov.model.PROV_LABEL:'Housing Rates by Zip Code', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(housingRates, this_script)
+        doc.wasGeneratedBy(housingRates, this_housingRates, endTime)
+        doc.wasDerivedFrom(housingRates, housingRates_resource, this_housingRates,this_housingRates, this_housingRates)
+    
+        educationCosts = doc.entity('dat:jspinell_mpinheir#educationCosts', {prov.model.PROV_LABEL:'Education Data by Zip Code', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(educationCosts, this_script)
+        doc.wasGeneratedBy(educationCosts, this_educationCosts, endTime)
+        doc.wasDerivedFrom(educationCosts, educationCosts_resource, this_educationCosts,this_educationCosts, this_educationCosts)
+    
+        neighborhoods = doc.entity('dat:jspinell_mpinheir#neighborhoods', {prov.model.PROV_LABEL:'Neighborhoods to Zip Codes', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(neighborhoods, this_script)
+        doc.wasGeneratedBy(neighborhoods, this_neighborhoods, endTime)
+        doc.wasDerivedFrom(neighborhoods, neighborhoods_resource, this_neighborhoods,this_neighborhoods, this_neighborhoods)
+    
+      
+        #repo.record(doc.serialize())
+        
         repo.logout()
-                  
+    
         return doc
 
 """

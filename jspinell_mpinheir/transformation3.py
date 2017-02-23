@@ -169,54 +169,38 @@ class transformation3(dml.Algorithm):
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''
-        Create the provenance document describing everything happening
-        in this script. Each run of the script will generate a new
-        document describing that invocation event.
-        '''
-        
+            Create the provenance document describing everything happening
+            in this script. Each run of the script will generate a new
+            document describing that invocation event.
+            '''
+
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('jspinell_mpinheir', 'jspinell_mpinheir')
-            
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/') # boston data portal
-        doc.add_namespace('cdp', 'https://data.cambridgema.gov/resource/') #cambridge data portal
+        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:jspinell_mpinheir#project1', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:wc8w-nujj', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_found = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_lost = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_found, this_script)
-        doc.wasAssociatedWith(get_lost, this_script)
-        doc.usage(get_found, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-        doc.usage(get_lost, resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                  }
-                  )
-
-        lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(lost, this_script)
-        doc.wasGeneratedBy(lost, get_lost, endTime)
-        doc.wasDerivedFrom(lost, resource, get_lost, get_lost, get_lost)
-
-        found = doc.entity('dat:alice_bob#found', {prov.model.PROV_LABEL:'Animals Found', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(found, this_script)
-        doc.wasGeneratedBy(found, get_found, endTime)
-        doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
+        this_script = doc.agent('alg:jspinell_mpinheir#transformation3', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        ageByTier = doc.entity('dat:jspinell_mpinheir#ageRanges', {prov.model.PROV_LABEL:'Age By Tier', prov.model.PROV_TYPE:'ont:DataSet'})
+        this_ageByTier = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        
+        doc.wasAssociatedWith(this_ageByTier, this_script)
+        
+        doc.used(this_ageByTier, ageByTier, startTime)
+        doc.wasAttributedTo(ageByTier, this_script)
+        doc.wasGeneratedBy(ageByTier, this_ageByTier, endTime)
+        
+        #repo.record(doc.serialize())
 
         repo.logout()
                   
         return doc
     
+
 """
 transformation3.execute()
 doc = transformation3.provenance()
