@@ -87,8 +87,6 @@ The `auth.json` file should remain empty and should not be submitted. When you a
     }
 }
 ```
-<<<<<<< HEAD
-=======
 
 ## Running the execution script for a contributed project.
 
@@ -96,4 +94,3 @@ To execute all the algorithms for a particular contributor (e.g., `alice_bob`) i
 ```
 python execute.py alice_bob
 ```
->>>>>>> upstream/master
