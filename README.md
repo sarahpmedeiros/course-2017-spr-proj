@@ -1,12 +1,100 @@
+# course-2017-spr-proj
 Project repository for the course project in the Spring 2017 iteration of the Data Mechanics course at Boston University.
 
-Write a short narrative and justification (5-10 sentences) explaining how these data sets can be combined to answer an interesting question or solve a problem.
+In this project, you will implement platform components that can obtain a some data sets from web services of your choice, and platform components that combine these data sets into at least two additional derived data sets. These components will interct with the backend repository by inserting and retrieving data sets as necessary. They will also satisfy a standard interface by supporting specified capabilities (such as generation of dependency information and provenance records).
 
-We were interested in using data to see if certain privileges, namely healthy food options, correlated with certain socioeconomic and healthly living trends. We wanted to look at things like the locations of community gardens, food pantries, and farmers' markets as indications of healthier options in certain areas (by looking at available amounts by zip code). We then would try to crossreference this with the demographics of certain areas to see what food options people in different socioeconomic situations have. We also thought that medical situations (heart attacks, worse nutrition leading to injury, etc) might also give relevant information on the quality of the areas around these healthier options. 
-Following intuition, we are hoping to see some sort of correlation between healthier eating options and healthier populations and in turn higher living standard (more affluent areas might tend to have the luxury of healthier options, and perhaps the ability to be more eat locally sourced foods for example). As for the medical events, perhaps we might see a higher amount of medical issues related to worse nutrition (a disposition to cardiovascular issues, shorter life expecancy). Though we may need more data, we hope to see if there's a positive correlation between the healthy choices and higher standards of living. Though it may not prove causation, the data could be used to inform infrastructure, or even businesses (offering more healthy options depending on the results).
+**This project description will be updated as we continue work on the infrastructure.**
 
-Transformation 1: 
-In this first transformation we took the food pantries and community gardens and grouped them according to zipcodes and aggregated them. And then we combined the lists into a new set by using projection to isolate the important data, selection to get the relevant data, product to match up data by zipcode, and then projection and selection for formatting. After the transformations, the data shows the zipcode, the number of community gardens and food pantries per areas.
+## MongoDB infrastructure
 
-Transformation 2:
-In this second transformation we took farmers market data and found the location of the farmers market closest to Boston in the form area,[lat,long]. Then we did K means to find the farmers market centers around Boston. 
+### Setting up
+
+We have committed setup scripts for a MongoDB database that will set up the database and collection management functions that ensure users sharing the project data repository can read everyone's collections but can only write to their own collections. Once you have installed your MongoDB instance, you can prepare it by first starting `mongod` _without authentication_:
+```
+mongod --dbpath "<your_db_path>"
+```
+If you're setting up after previously running `setup.js`, you may want to reset (i.e., delete) the repository as follows.
+```
+mongo reset.js
+```
+Next, make sure your user directories (e.g., `alice_bob` if Alice and Bob are working together on a team) are present in the same location as the `setup.js` script, open a separate terminal window, and run the script:
+```
+mongo setup.js
+```
+Your MongoDB instance should now be ready. Stop `mongod` and restart it, enabling authentication with the `--auth` option:
+```
+mongod --auth --dbpath "<your_db_path>"
+```
+
+### Working on data sets with authentication
+
+With authentication enabled, you can start `mongo` on the repository (called `repo` by default) with your user credentials:
+```
+mongo repo -u alice_bob -p alice_bob --authenticationDatabase "repo"
+```
+However, you should be unable to create new collections using `db.createCollection()` in the default `repo` database created for this project:
+```
+> db.createCollection("EXAMPLE");
+{
+  "ok" : 0,
+  "errmsg" : "not authorized on repo to execute command { create: \"EXAMPLE\" }",
+  "code" : 13
+}
+```
+Instead, load the server-side functions so that you can use the customized `createCollection()` function, which creates a collection that can be read by everyone but written only by you:
+```
+> db.loadServerScripts();
+> var EXAMPLE = createCollection("EXAMPLE");
+```
+Notice that this function also prefixes the user name to the name of the collection (unless the prefix is already present in the name supplied to the function).
+```
+> EXAMPLE
+alice_bob.EXAMPLE
+> db.alice_bob.EXAMPLE.insert({value:123})
+WriteResult({ "nInserted" : 1 })
+> db.alice_bob.EXAMPLE.find()
+{ "_id" : ObjectId("56b7adef3503ebd45080bd87"), "value" : 123 }
+```
+If you do not want to run `db.loadServerScripts()` every time you open a new terminal, you can use a `.mongorc.js` file in your home directory to store any commands or calls you want issued whenever you run `mongo`.
+
+## Other required libraries and tools
+
+You will need the latest versions of the PROV, DML, and Protoql Python libraries. If you have `pip` installed, the following should install the latest versions automatically:
+```
+pip install prov --upgrade --no-cache-dir
+pip install dml --upgrade --no-cache-dir
+pip install protoql --upgrade --no-cache-dir
+```
+If you are having trouble installing `lxml` in a Windows environment, you could try retrieving it [here](http://www.lfd.uci.edu/~gohlke/pythonlibs/).
+
+Note that you may need to use `python -m pip install <library>` to avoid issues if you have multiple versions of `pip` and Python on your system.
+
+## Formatting the `auth.json` file
+
+The `auth.json` file should remain empty and should not be submitted. When you are running your algorithms, you should use the file to store your credentials for any third-party data resources, APIs, services, or repositories that you use. An example of the contents you might store in your `auth.json` file is as follows:
+```
+{
+    "services": {
+        "cityofbostondataportal": {
+            "service": "https://data.cityofboston.gov/",
+            "username": "alice_bob@example.org",
+            "token": "XxXXXXxXxXxXxxXXXXxxXxXxX",
+            "key": "xxXxXXXXXXxxXXXxXXXXXXxxXxxxxXXxXxxX"
+        },
+        "mbtadeveloperportal": {
+            "service": "http://realtime.mbta.com/",
+            "username": "alice_bob",
+            "token": "XxXX-XXxxXXxXxXXxXxX_x",
+            "key": "XxXX-XXxxXXxXxXXxXxx_x"
+        }
+    }
+}
+```
+To access the contents of the `auth.json` file after you have loaded the `dml` library, use `dml.auth`.
+
+## Running the execution script for a contributed project.
+
+To execute all the algorithms for a particular contributor (e.g., `alice_bob`) in an order that respects their explicitly specified data flow dependencies, you can run the following from the root directory:
+```
+python execute.py alice_bob
+```
