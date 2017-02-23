@@ -72,12 +72,12 @@ class example(dml.Algorithm):
                   {prov.model.PROV_TYPE:'ont:Retrieval',
                   'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
                   }
-              )
+                  )
         doc.usage(get_lost, resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
                   'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
                   }
-              )
+                  )
 
         lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(lost, this_script)
@@ -94,9 +94,8 @@ class example(dml.Algorithm):
         return doc
 
 example.execute()
-# doc = example.provenance()
-# print(doc.get_provn())
-
-#print(json.dumps(json.loads(doc.serialize()), indent=4))
+doc = example.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
