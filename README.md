@@ -1,10 +1,12 @@
-# course-2017-spr-proj
-Project repository for the course project in the Spring 2017 iteration of the Data Mechanics course at Boston University.
+#CS591 Project Proposal
+####Sean Zhang & Martin Yim
 
-In this project, you will implement platform components that can obtain a some data sets from web services of your choice, and platform components that combine these data sets into at least two additional derived data sets. These components will interct with the backend repository by inserting and retrieving data sets as necessary. They will also satisfy a standard interface by supporting specified capabilities (such as generation of dependency information and provenance records).
 
-**This project description will be updated as we continue work on the infrastructure.**
+  We are interested in identifying clusters of locations where parking tickets have been issued in Boston in the past. We are hoping to identify relationships between areas prone to being ticketed, and the area's characteristics (vehicle ownership, affluence, etc).
+  
+  We plan to use the K-Means algorithm to identify areas prone to more parking tickets (based on volume of tickets issued). By then relating these clusters with information such as property values in the area and vehicle tax (as a proxy for vehicle ownership) by zipcode, we hope to find areas where the supply of parking is not meeting the demand (hence, parking tickets). We could then use this information to share with the city of Boston to determine where more parking could be provided to meet citizens' parking needs. 
 
+<<<<<<< HEAD
 ## MongoDB infrastructure
 
 ### Setting up
@@ -98,3 +100,6 @@ To execute all the algorithms for a particular contributor (e.g., `alice_bob`) i
 ```
 python execute.py alice_bob
 ```
+=======
+  Conversely, we are also hoping to use the data that we've gathered to find new locations in the city that could be an area of dense illegal parking in the future, based on car ownership, property value, and public transportation convenience. These areas may be under-enforced, and could yield revenue for the city, but may also prove to be areas which need consideration for more parking as well.
+>>>>>>> caf02f094ba0bc99018114af0d7f09d50d8fe602
