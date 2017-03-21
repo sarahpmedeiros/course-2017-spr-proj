@@ -8,9 +8,9 @@ import requests
 import math
 
 class closestMbtaHealth(dml.Algorithm):
-    contributor = 'asafer_vivyee'
-    reads = ['asafer_vivyee.healthy_locations', 'asafer_vivyee.mbta_routes']
-    writes = ['asafer_vivyee.health_mbta']
+    contributor = 'asafer_asambors_maxzm_vivyee'
+    reads = ['asafer_asambors_maxzm_vivyee.healthy_locations', 'asafer_asambors_maxzm_vivyee.mbta_routes']
+    writes = ['asafer_asambors_maxzm_vivyee.health_mbta']
 
     @staticmethod
     def select(R, s):
@@ -69,14 +69,14 @@ class closestMbtaHealth(dml.Algorithm):
         #set up the datebase connection
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('asafer_vivyee','asafer_vivyee')
+        repo.authenticate('asafer_asambors_maxzm_vivyee','asafer_asambors_maxzm_vivyee')
 
         #loads
-        healthy_locations = repo['asafer_vivyee.healthy_locations']
-        mbta_routes = repo['asafer_vivyee.mbta_routes']
+        healthy_locations = repo['asafer_asambors_maxzm_vivyee.healthy_locations']
+        mbta_routes = repo['asafer_asambors_maxzm_vivyee.mbta_routes']
 
-        repo.dropCollection('asafer_vivyee.health_mbta')
-        repo.createCollection('asafer_vivyee.health_mbta')
+        repo.dropCollection('asafer_asambors_maxzm_vivyee.health_mbta')
+        repo.createCollection('asafer_asambors_maxzm_vivyee.health_mbta')
 
         # get all stops by location
         stops = closestMbtaHealth.project(mbta_routes.find(), closestMbtaHealth.get_stops)
@@ -99,8 +99,8 @@ class closestMbtaHealth(dml.Algorithm):
         # convert to dictionary format
         stops_by_location_dict = closestMbtaHealth.project(stops_by_location, closestMbtaHealth.convert_to_dictionary)
 
-        repo['asafer_vivyee.health_mbta'].insert_many(stops_by_location_dict)
-        repo['asafer_vivyee.health_mbta'].metadata({'complete': True})
+        repo['asafer_asambors_maxzm_vivyee.health_mbta'].insert_many(stops_by_location_dict)
+        repo['asafer_asambors_maxzm_vivyee.health_mbta'].metadata({'complete': True})
 
         print('all uploaded')
 
@@ -114,18 +114,18 @@ class closestMbtaHealth(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('asafer_vivyee', 'asafer_vivyee')
+        repo.authenticate('asafer_asambors_maxzm_vivyee', 'asafer_asambors_maxzm_vivyee')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
 
-        this_script = doc.agent('alg:asafer_vivyee#health_mbta', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:asafer_asambors_maxzm_vivyee#health_mbta', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
         # datamechanics.io data
-        healthy_locations_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Aggregate of Health related locations', prov.model.PROV_TYPE:'ont:DataResource'})
-        mbta_routes_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'MBTA Routes', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        health_mbta_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Closest MBTA stops to Health locations', prov.model.PROV_TYPE:'ont:DataResource'})
+        healthy_locations_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'Aggregate of Health related locations', prov.model.PROV_TYPE:'ont:DataResource'})
+        mbta_routes_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'MBTA Routes', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        health_mbta_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'Closest MBTA stops to Health locations', prov.model.PROV_TYPE:'ont:DataResource'})
 
         get_healthy_locations = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime) # LOL
         get_mbta_routes = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
@@ -139,17 +139,17 @@ class closestMbtaHealth(dml.Algorithm):
         doc.usage(get_mbta_routes, mbta_routes_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_health_mbta, health_mbta_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
 
-        healthy_locations = doc.entity('dat:asafer_vivyee#healthy_locations', {prov.model.PROV_LABEL:'Aggregate of Health related locations', prov.model.PROV_TYPE:'ont:DataSet'})
+        healthy_locations = doc.entity('dat:asafer_asambors_maxzm_vivyee#healthy_locations', {prov.model.PROV_LABEL:'Aggregate of Health related locations', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(healthy_locations, this_script)
         doc.wasGeneratedBy(healthy_locations, get_healthy_locations, endTime)
         doc.wasDerivedFrom(healthy_locations, healthy_locations_resource, get_healthy_locations, get_healthy_locations, get_healthy_locations)
 
-        mbta_routes = doc.entity('dat:asafer_vivyee#mbta_routes', {prov.model.PROV_LABEL:'MBTA Routes', prov.model.PROV_TYPE:'ont:DataSet'})
+        mbta_routes = doc.entity('dat:asafer_asambors_maxzm_vivyee#mbta_routes', {prov.model.PROV_LABEL:'MBTA Routes', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(mbta_routes, this_script)
         doc.wasGeneratedBy(mbta_routes, get_mbta_routes, endTime)
         doc.wasDerivedFrom(mbta_routes, mbta_routes_resource, get_mbta_routes, get_mbta_routes, get_mbta_routes)
 
-        health_mbta = doc.entity('dat:asafer_vivyee#health_mbta', {prov.model.PROV_LABEL:'Closest MBTA stops to Health locations', prov.model.PROV_TYPE:'ont:DataSet'})
+        health_mbta = doc.entity('dat:asafer_asambors_maxzm_vivyee#health_mbta', {prov.model.PROV_LABEL:'Closest MBTA stops to Health locations', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(health_mbta, this_script)
         doc.wasGeneratedBy(health_mbta, get_health_mbta, endTime)
         doc.wasDerivedFrom(health_mbta, health_mbta_resource, get_health_mbta, get_health_mbta, get_health_mbta)
