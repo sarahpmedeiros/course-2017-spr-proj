@@ -126,12 +126,6 @@ class healthyLocations(dml.Algorithm):
         repo.logout()
 
         return doc
-
-
-healthyLocations.execute()
-doc = healthyLocations.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
         
 
 

@@ -92,6 +92,8 @@ class closestMbtaHealth(dml.Algorithm):
         
         # find all places within a mile
         filtered_stops = closestMbtaHealth.select(distances, closestMbtaHealth.close_stop)
+        print('filtered stops len is', len(filtered_stops))
+        print('******')
 
         # aggregate stops by location they're close to
         stops_by_location = closestMbtaHealth.aggregate(filtered_stops, lambda x: x)
@@ -157,12 +159,6 @@ class closestMbtaHealth(dml.Algorithm):
         repo.logout()
 
         return doc
-
-
-closestMbtaHealth.execute()
-doc = closestMbtaHealth.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
         
 
 

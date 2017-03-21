@@ -157,12 +157,6 @@ class closestMbtaObesity(dml.Algorithm):
         repo.logout()
 
         return doc
-
-
-closestMbtaObesity.execute()
-doc = closestMbtaObesity.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
         
 
 
