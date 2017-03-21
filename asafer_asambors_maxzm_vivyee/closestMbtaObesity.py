@@ -8,9 +8,9 @@ import requests
 import math
 
 class closestMbtaObesity(dml.Algorithm):
-    contributor = 'asafer_vivyee'
-    reads = ['asafer_vivyee.obesity', 'asafer_vivyee.mbta_routes']
-    writes = ['asafer_vivyee.obesity_mbta']
+    contributor = 'asafer_asambors_maxzm_vivyee'
+    reads = ['asafer_asambors_maxzm_vivyee.obesity', 'asafer_asambors_maxzm_vivyee.mbta_routes']
+    writes = ['asafer_asambors_maxzm_vivyee.obesity_mbta']
 
     @staticmethod
     def select(R, s):
@@ -69,14 +69,14 @@ class closestMbtaObesity(dml.Algorithm):
         #set up the datebase connection
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('asafer_vivyee','asafer_vivyee')
+        repo.authenticate('asafer_asambors_maxzm_vivyee','asafer_asambors_maxzm_vivyee')
 
         #loads
-        obesity = repo['asafer_vivyee.obesity']
-        mbta_routes = repo['asafer_vivyee.mbta_routes']
+        obesity = repo['asafer_asambors_maxzm_vivyee.obesity']
+        mbta_routes = repo['asafer_asambors_maxzm_vivyee.mbta_routes']
 
-        repo.dropCollection('asafer_vivyee.obesity_mbta')
-        repo.createCollection('asafer_vivyee.obesity_mbta')
+        repo.dropCollection('asafer_asambors_maxzm_vivyee.obesity_mbta')
+        repo.createCollection('asafer_asambors_maxzm_vivyee.obesity_mbta')
 
         # get all stops by location
         stops = closestMbtaObesity.project(mbta_routes.find(), closestMbtaObesity.get_stops)
@@ -99,8 +99,8 @@ class closestMbtaObesity(dml.Algorithm):
         # convert to dictionary format
         stops_by_location_dict = closestMbtaObesity.project(stops_by_location, closestMbtaObesity.convert_to_dictionary)
 
-        repo['asafer_vivyee.obesity_mbta'].insert_many(stops_by_location_dict)
-        repo['asafer_vivyee.obesity_mbta'].metadata({'complete': True})
+        repo['asafer_asambors_maxzm_vivyee.obesity_mbta'].insert_many(stops_by_location_dict)
+        repo['asafer_asambors_maxzm_vivyee.obesity_mbta'].metadata({'complete': True})
 
         print('all uploaded')
 
@@ -114,18 +114,18 @@ class closestMbtaObesity(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('asafer_vivyee', 'asafer_vivyee')
+        repo.authenticate('asafer_asambors_maxzm_vivyee', 'asafer_asambors_maxzm_vivyee')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
 
-        this_script = doc.agent('alg:asafer_vivyee#obesity_mbta', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:asafer_asambors_maxzm_vivyee#obesity_mbta', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
         # datamechanics.io data
-        obesity_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Obesity Among Adults', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        mbta_routes_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'MBTA Routes', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        obesity_mbta_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Closest MBTA stops to Obese areas', prov.model.PROV_TYPE:'ont:DataResource'})
+        obesity_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'Obesity Among Adults', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        mbta_routes_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'MBTA Routes', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        obesity_mbta_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'Closest MBTA stops to Obese areas', prov.model.PROV_TYPE:'ont:DataResource'})
 
         get_obesity = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime) # LOL
         get_mbta_routes = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
@@ -139,17 +139,17 @@ class closestMbtaObesity(dml.Algorithm):
         doc.usage(get_mbta_routes, mbta_routes_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_obesity_mbta, obesity_mbta_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
 
-        obesity = doc.entity('dat:asafer_vivyee#obesity', {prov.model.PROV_LABEL:'Obesity Among Adults', prov.model.PROV_TYPE:'ont:DataSet'})
+        obesity = doc.entity('dat:asafer_asambors_maxzm_vivyee#obesity', {prov.model.PROV_LABEL:'Obesity Among Adults', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(obesity, this_script)
         doc.wasGeneratedBy(obesity, get_obesity, endTime)
         doc.wasDerivedFrom(obesity, obesity_resource, get_obesity, get_obesity, get_obesity)
 
-        mbta_routes = doc.entity('dat:asafer_vivyee#mbta_routes', {prov.model.PROV_LABEL:'MBTA Routes', prov.model.PROV_TYPE:'ont:DataSet'})
+        mbta_routes = doc.entity('dat:asafer_asambors_maxzm_vivyee#mbta_routes', {prov.model.PROV_LABEL:'MBTA Routes', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(mbta_routes, this_script)
         doc.wasGeneratedBy(mbta_routes, get_mbta_routes, endTime)
         doc.wasDerivedFrom(mbta_routes, mbta_routes_resource, get_mbta_routes, get_mbta_routes, get_mbta_routes)
 
-        obesity_mbta = doc.entity('dat:asafer_vivyee#obesity_mbta', {prov.model.PROV_LABEL:'Closest MBTA stops to Obese areas', prov.model.PROV_TYPE:'ont:DataSet'})
+        obesity_mbta = doc.entity('dat:asafer_asambors_maxzm_vivyee#obesity_mbta', {prov.model.PROV_LABEL:'Closest MBTA stops to Obese areas', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(obesity_mbta, this_script)
         doc.wasGeneratedBy(obesity_mbta, get_obesity_mbta, endTime)
         doc.wasDerivedFrom(obesity_mbta, obesity_mbta_resource, get_obesity_mbta, get_obesity_mbta, get_obesity_mbta)

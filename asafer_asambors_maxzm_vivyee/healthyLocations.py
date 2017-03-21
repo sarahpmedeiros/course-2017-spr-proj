@@ -7,9 +7,9 @@ import uuid
 import requests
 
 class healthyLocations(dml.Algorithm):
-    contributor = 'asafer_vivyee'
-    reads = ['asafer_vivyee.orchards', 'asafer_vivyee.corner_stores', 'asafer_vivyee.nutrition_prog']
-    writes = ['asafer_vivyee.healthy_locations']
+    contributor = 'asafer_asambors_maxzm_vivyee'
+    reads = ['asafer_asambors_maxzm_vivyee.orchards', 'asafer_asambors_maxzm_vivyee.corner_stores', 'asafer_asambors_maxzm_vivyee.nutrition_prog']
+    writes = ['asafer_asambors_maxzm_vivyee.healthy_locations']
 
     @staticmethod
     def select(R, s):
@@ -35,16 +35,16 @@ class healthyLocations(dml.Algorithm):
         #set up the datebase connection
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('asafer_vivyee','asafer_vivyee')
+        repo.authenticate('asafer_asambors_maxzm_vivyee','asafer_asambors_maxzm_vivyee')
 
         #loads
-        orchards = repo['asafer_vivyee.orchards']
-        corner_stores = repo['asafer_vivyee.corner_stores']
-        nutrition_prog = repo['asafer_vivyee.nutrition_prog']
+        orchards = repo['asafer_asambors_maxzm_vivyee.orchards']
+        corner_stores = repo['asafer_asambors_maxzm_vivyee.corner_stores']
+        nutrition_prog = repo['asafer_asambors_maxzm_vivyee.nutrition_prog']
 
 
-        repo.dropCollection('asafer_vivyee.healthy_locations')
-        repo.createCollection('asafer_vivyee.healthy_locations')
+        repo.dropCollection('asafer_asambors_maxzm_vivyee.healthy_locations')
+        repo.createCollection('asafer_asambors_maxzm_vivyee.healthy_locations')
 
         # select data with location fields
         orchard_locs = healthyLocations.select(orchards.find(), lambda x: 'map_locations' in x and 'coordinates' in x['map_locations'])
@@ -59,8 +59,8 @@ class healthyLocations(dml.Algorithm):
 
         all_locs = orchard_locs + corner_stores_locs + nutrition_prog_locs
 
-        repo['asafer_vivyee.healthy_locations'].insert_many(all_locs)
-        repo['asafer_vivyee.healthy_locations'].metadata({'complete': True})
+        repo['asafer_asambors_maxzm_vivyee.healthy_locations'].insert_many(all_locs)
+        repo['asafer_asambors_maxzm_vivyee.healthy_locations'].metadata({'complete': True})
 
         print('all uploaded')
 
@@ -74,19 +74,19 @@ class healthyLocations(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('asafer_vivyee', 'asafer_vivyee')
+        repo.authenticate('asafer_asambors_maxzm_vivyee', 'asafer_asambors_maxzm_vivyee')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         
-        this_script = doc.agent('alg:asafer_vivyee#healthyLocations', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:asafer_asambors_maxzm_vivyee#healthyLocations', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         
         # datamechanics.io data
-        orchards_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Urban Orchard Locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        corner_stores_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Healthy Corner Store Locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        nutrition_prog_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Community Culinary and Nutrition Programs', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        healthy_locations_resource = doc.entity('dat:asafer_vivyee', {'prov:label': 'Aggregate of Health related locations', prov.model.PROV_TYPE:'ont:DataResource'})
+        orchards_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'Urban Orchard Locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        corner_stores_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'Healthy Corner Store Locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        nutrition_prog_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'Community Culinary and Nutrition Programs', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        healthy_locations_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'Aggregate of Health related locations', prov.model.PROV_TYPE:'ont:DataResource'})
 
         get_orchards = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
         get_corner_stores = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
@@ -103,22 +103,22 @@ class healthyLocations(dml.Algorithm):
         doc.usage(get_nutrition_prog, nutrition_prog_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_healthy_locations, healthy_locations_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
 
-        orchards = doc.entity('dat:asafer_vivyee#orchards', {prov.model.PROV_LABEL:'Urban Orchard Locations', prov.model.PROV_TYPE:'ont:DataSet'})
+        orchards = doc.entity('dat:asafer_asambors_maxzm_vivyee#orchards', {prov.model.PROV_LABEL:'Urban Orchard Locations', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(orchards, this_script)
         doc.wasGeneratedBy(orchards, get_orchards, endTime)
         doc.wasDerivedFrom(orchards, orchards_resource, get_orchards, get_orchards, get_orchards)
 
-        corner_stores = doc.entity('dat:asafer_vivyee#corner_stores', {prov.model.PROV_LABEL:'Healthy Corner Store Locations', prov.model.PROV_TYPE:'ont:DataSet'})
+        corner_stores = doc.entity('dat:asafer_asambors_maxzm_vivyee#corner_stores', {prov.model.PROV_LABEL:'Healthy Corner Store Locations', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(corner_stores, this_script)
         doc.wasGeneratedBy(corner_stores, get_corner_stores, endTime)
         doc.wasDerivedFrom(corner_stores, corner_stores_resource, get_corner_stores, get_corner_stores, get_corner_stores)
 
-        nutrition_prog = doc.entity('dat:asafer_vivyee#nutrition_prog', {prov.model.PROV_LABEL:'Community Culinary and Nutrition Programs', prov.model.PROV_TYPE:'ont:DataSet'})
+        nutrition_prog = doc.entity('dat:asafer_asambors_maxzm_vivyee#nutrition_prog', {prov.model.PROV_LABEL:'Community Culinary and Nutrition Programs', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(nutrition_prog, this_script)
         doc.wasGeneratedBy(nutrition_prog, get_nutrition_prog, endTime)
         doc.wasDerivedFrom(nutrition_prog, nutrition_prog_resource, get_nutrition_prog, get_nutrition_prog, get_nutrition_prog)
 
-        healthy_locations = doc.entity('dat:asafer_vivyee#healthy_locations', {prov.model.PROV_LABEL:'Aggregate of Health related locations', prov.model.PROV_TYPE:'ont:DataSet'})
+        healthy_locations = doc.entity('dat:asafer_asambors_maxzm_vivyee#healthy_locations', {prov.model.PROV_LABEL:'Aggregate of Health related locations', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(healthy_locations, this_script)
         doc.wasGeneratedBy(healthy_locations, get_healthy_locations, endTime)
         doc.wasDerivedFrom(healthy_locations, healthy_locations_resource, get_healthy_locations, get_healthy_locations, get_healthy_locations)
