@@ -81,47 +81,25 @@ class healthyLocations(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         
         this_script = doc.agent('alg:asafer_asambors_maxzm_vivyee#healthyLocations', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        
-        # datamechanics.io data
-        orchards_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'Urban Orchard Locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        corner_stores_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'Healthy Corner Store Locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        nutrition_prog_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'Community Culinary and Nutrition Programs', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        healthy_locations_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label': 'Aggregate of Health related locations', prov.model.PROV_TYPE:'ont:DataResource'})
 
-        get_orchards = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
-        get_corner_stores = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
-        get_nutrition_prog = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        # datamechanics.io data
         get_healthy_locations = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_orchards, this_script)
-        doc.wasAssociatedWith(get_corner_stores, this_script)
-        doc.wasAssociatedWith(get_nutrition_prog, this_script)
         doc.wasAssociatedWith(get_healthy_locations, this_script)
 
-        doc.usage(get_orchards, orchards_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.usage(get_corner_stores, corner_stores_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.usage(get_nutrition_prog, nutrition_prog_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.usage(get_healthy_locations, healthy_locations_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-
         orchards = doc.entity('dat:asafer_asambors_maxzm_vivyee#orchards', {prov.model.PROV_LABEL:'Urban Orchard Locations', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(orchards, this_script)
-        doc.wasGeneratedBy(orchards, get_orchards, endTime)
-        doc.wasDerivedFrom(orchards, orchards_resource, get_orchards, get_orchards, get_orchards)
-
         corner_stores = doc.entity('dat:asafer_asambors_maxzm_vivyee#corner_stores', {prov.model.PROV_LABEL:'Healthy Corner Store Locations', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(corner_stores, this_script)
-        doc.wasGeneratedBy(corner_stores, get_corner_stores, endTime)
-        doc.wasDerivedFrom(corner_stores, corner_stores_resource, get_corner_stores, get_corner_stores, get_corner_stores)
-
         nutrition_prog = doc.entity('dat:asafer_asambors_maxzm_vivyee#nutrition_prog', {prov.model.PROV_LABEL:'Community Culinary and Nutrition Programs', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(nutrition_prog, this_script)
-        doc.wasGeneratedBy(nutrition_prog, get_nutrition_prog, endTime)
-        doc.wasDerivedFrom(nutrition_prog, nutrition_prog_resource, get_nutrition_prog, get_nutrition_prog, get_nutrition_prog)
-
+        
         healthy_locations = doc.entity('dat:asafer_asambors_maxzm_vivyee#healthy_locations', {prov.model.PROV_LABEL:'Aggregate of Health related locations', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.usage(get_healthy_locations, orchards, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_healthy_locations, corner_stores, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_healthy_locations, nutrition_prog, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.wasAttributedTo(healthy_locations, this_script)
         doc.wasGeneratedBy(healthy_locations, get_healthy_locations, endTime)
-        doc.wasDerivedFrom(healthy_locations, healthy_locations_resource, get_healthy_locations, get_healthy_locations, get_healthy_locations)
+        doc.wasDerivedFrom(healthy_locations, orchards, get_healthy_locations, get_healthy_locations, get_healthy_locations)
+        doc.wasDerivedFrom(healthy_locations, corner_stores, get_healthy_locations, get_healthy_locations, get_healthy_locations)
+        doc.wasDerivedFrom(healthy_locations, nutrition_prog, get_healthy_locations, get_healthy_locations, get_healthy_locations)
 
         repo.logout()
 
