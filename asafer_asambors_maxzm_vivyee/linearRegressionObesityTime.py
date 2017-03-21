@@ -22,8 +22,9 @@ class linearRegressionObesityTime(dml.Algorithm):
 
 
                 #loads
-                obesity_time = repo['asafer_asambors_maxzm_vivyee.obesty_time']
+                obesity_time = repo['asafer_asambors_maxzm_vivyee.obesty_time'].find()
 
+                obesity = [x['time'],x['obesity'] for x in obesity_time]
 
                 return {"start":startTime, "end":endtime}
 
