@@ -99,10 +99,6 @@ class retrieveData(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
         doc.add_namespace('bps', 'http://datamechanics.io/data/_bps_transportation_challenge/')
-        # doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/') # City of Boston Maps Open Data
-        # doc.add_namespace('cdp', 'https://data.cambridgema.gov/resource/') # City of Cambridge Cambridge Open Data Portal
-        # doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/') # City Of Boston Data Portal
-        # doc.add_namespace('mod', 'http://maps-massgis.opendata.arcgis.com/datasets/') #MassGIS Open Data
 
         # define entity to represent resources
         this_script = doc.agent('alg:echogu_wei0496#retrieveData', {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
@@ -163,9 +159,9 @@ class retrieveData(dml.Algorithm):
 
         return doc
 
-retrieveData.execute()
-doc = retrieveData.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# retrieveData.execute()
+# doc = retrieveData.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
