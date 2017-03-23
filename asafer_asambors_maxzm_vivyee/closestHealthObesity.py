@@ -45,11 +45,13 @@ class closestHealthObesity(dml.Algorithm):
         a = math.sin(dlat/2)**2 + (math.cos(obesity_lat) * math.cos(healthy_lat) * math.sin(dlon/2)**2)
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
         d = 3961 * c
-        return (healthy, (obesity, d))
+        return (obesity, (healthy, d))
 
     @staticmethod
-    def close_stop(info):
-        return info[1][1] <= 2
+    def closest(info):
+        obesity, health_locations = info
+        closest_health = min(health_locations, key = lambda t: t[1])
+        return (obesity, closest_health)
 
     @staticmethod
     def convert_to_dictionary(info):
@@ -76,17 +78,18 @@ class closestHealthObesity(dml.Algorithm):
 
         # calculate distance for healthy loc b/w every obesity location
         distances = closestHealthObesity.project(all_combos, closestHealthObesity.calculate_distance)
-## decide if this is necessary (why not aggregate and then pick closest) ##        
-        # find all places within a mile from each other
-        filtered_distances = closestHealthObesity.select(distances, closestHealthObesity.close_stop)
 
         # aggregate obesity locations by healthy location they're close to
-        obesity_by_health = closestHealthObesity.aggregate(filtered_distances, lambda x: x)
+        # format: [(o, [(h, d), (h2, d2), (h3, d3)]), (o2, [(h, d1.1), ...])...]
+        obesity_by_health = closestHealthObesity.aggregate(distances, lambda x: x)
+
+        # for each obesity location, keep only the closest healthy location
+        obesity_by_closest = closestHealthObesity.project(obesity_by_health, closestHealthObesity.closest)
 
         # convert to dictionary format
-        obesity_by_health_dict = closestHealthObesity.project(obesity_by_health, closestHealthObesity.convert_to_dictionary)
+        obesity_by_closest_dict = closestHealthObesity.project(obesity_by_closest, closestHealthObesity.convert_to_dictionary)
 
-        repo['asafer_asambors_maxzm_vivyee.health_obesity'].insert_many(obesity_by_health_dict)
+        repo['asafer_asambors_maxzm_vivyee.health_obesity'].insert_many(obesity_by_closest_dict)
         repo['asafer_asambors_maxzm_vivyee.health_obesity'].metadata({'complete': True})
 
         print('all uploaded')
