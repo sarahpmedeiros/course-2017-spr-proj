@@ -9,7 +9,7 @@ import math
 
 class closestHealthObesity(dml.Algorithm):
     contributor = 'asafer_asambors_maxzm_vivyee'
-    reads = ['asafer_asambors_maxzm_vivyee.healthy_locations', 'asafer_asambors_maxzm_vivyee.obesity']
+    reads = ['asafer_asambors_maxzm_vivyee.health_mbta', 'asafer_asambors_maxzm_vivyee.obesity_mbta']
     writes = ['asafer_asambors_maxzm_vivyee.health_obesity']
 
     @staticmethod
@@ -67,14 +67,18 @@ class closestHealthObesity(dml.Algorithm):
         repo.authenticate('asafer_asambors_maxzm_vivyee','asafer_asambors_maxzm_vivyee')
 
         #loads
-        healthy_locations = repo['asafer_asambors_maxzm_vivyee.healthy_locations']
-        obesity = repo['asafer_asambors_maxzm_vivyee.obesity']
+        #healthy_locations = repo['asafer_asambors_maxzm_vivyee.healthy_locations']
+        #obesity = repo['asafer_asambors_maxzm_vivyee.obesity']
+        health_mbta = repo['asafer_asambors_maxzm_vivyee.health_mbta']
+        obesity_mbta = repo['asafer_asambors_maxzm_vivyee.obesity_mbta']
 
         repo.dropCollection('asafer_asambors_maxzm_vivyee.health_obesity')
         repo.createCollection('asafer_asambors_maxzm_vivyee.health_obesity')
 
         # map all obesity locations with all healthy locations
-        all_combos = closestHealthObesity.product(healthy_locations.find(), obesity.find())
+
+        #all_combos = closestHealthObesity.product(healthy_locations.find(), obesity.find())
+        all_combos = closestHealthObesity.product(health_mbta.find(), obesity_mbta.find())
 
         # calculate distance for healthy loc b/w every obesity location
         distances = closestHealthObesity.project(all_combos, closestHealthObesity.calculate_distance)
