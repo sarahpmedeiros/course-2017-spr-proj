@@ -58,10 +58,6 @@ class shortestMbtaPath(dml.Algorithm):
                         prev_lat = eval(stop['stop_lat'])
                         prev_stop = stop['stop_id']
 
-                    break
-
-
-
         print('all uploaded')
 
         endTime = datetime.datetime.now
@@ -82,5 +78,3 @@ class shortestMbtaPath(dml.Algorithm):
         repo.logout()
 
         return doc
-
-shortestMbtaPath.execute()
