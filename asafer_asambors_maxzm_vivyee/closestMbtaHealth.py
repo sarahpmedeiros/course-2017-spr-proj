@@ -59,6 +59,8 @@ class closestMbtaHealth(dml.Algorithm):
     def get_stops(info):
         stops = []
         for i in info['path']['direction']:
+            for stop in i['stop']:
+                stop['mode'] = info['mode']
             stops += i['stop']
         return stops
 
@@ -93,11 +95,8 @@ class closestMbtaHealth(dml.Algorithm):
         # find all places within a mile
         filtered_stops = closestMbtaHealth.select(distances, closestMbtaHealth.close_stop)
 
-        # aggregate stops by location they're close to
-        stops_by_location = closestMbtaHealth.aggregate(filtered_stops, lambda x: x)
-
         # convert to dictionary format
-        stops_by_location_dict = closestMbtaHealth.project(stops_by_location, closestMbtaHealth.convert_to_dictionary)
+        stops_by_location_dict = closestMbtaHealth.project(filtered_stops, closestMbtaHealth.convert_to_dictionary)
 
         repo['asafer_asambors_maxzm_vivyee.health_mbta'].insert_many(stops_by_location_dict)
         repo['asafer_asambors_maxzm_vivyee.health_mbta'].metadata({'complete': True})

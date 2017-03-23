@@ -59,6 +59,9 @@ class closestMbtaObesity(dml.Algorithm):
     def get_stops(info):
         stops = []
         for i in info['path']['direction']:
+            for stop in i['stop']:
+                stop['mode'] = info['mode']
+
             stops += i['stop']
         return stops
 
@@ -93,11 +96,8 @@ class closestMbtaObesity(dml.Algorithm):
         # find all places within a mile
         filtered_stops = closestMbtaObesity.select(distances, closestMbtaObesity.close_stop)
 
-        # aggregate stops by location they're close to
-        stops_by_location = closestMbtaObesity.aggregate(filtered_stops, lambda x: x)
-
         # convert to dictionary format
-        stops_by_location_dict = closestMbtaObesity.project(stops_by_location, closestMbtaObesity.convert_to_dictionary)
+        stops_by_location_dict = closestMbtaObesity.project(filtered_stops, closestMbtaObesity.convert_to_dictionary)
 
         repo['asafer_asambors_maxzm_vivyee.obesity_mbta'].insert_many(stops_by_location_dict)
         repo['asafer_asambors_maxzm_vivyee.obesity_mbta'].metadata({'complete': True})
