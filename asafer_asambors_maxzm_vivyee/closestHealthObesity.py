@@ -79,12 +79,8 @@ class closestHealthObesity(dml.Algorithm):
         # calculate distance for healthy loc b/w every obesity location
         distances = closestHealthObesity.project(all_combos, closestHealthObesity.calculate_distance)
 
-        # aggregate obesity locations by healthy location they're close to
-        # format: [(o, [(h, d), (h2, d2), (h3, d3)]), (o2, [(h, d1.1), ...])...]
-        obesity_by_health = closestHealthObesity.aggregate(distances, lambda x: x)
-
         # for each obesity location, keep only the closest healthy location
-        obesity_by_closest = closestHealthObesity.project(obesity_by_health, closestHealthObesity.closest)
+        obesity_by_closest = closestHealthObesity.project(distances, closestHealthObesity.closest)
 
         # convert to dictionary format
         obesity_by_closest_dict = closestHealthObesity.project(obesity_by_closest, closestHealthObesity.convert_to_dictionary)
