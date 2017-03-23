@@ -24,7 +24,15 @@ class linearRegressionObesityTime(dml.Algorithm):
                 #loads
                 obesity_time = repo['asafer_asambors_maxzm_vivyee.obesity_time'].find()
 
-                obesity = [(x['time'],x['obesity']) for x in obesity_time]
+                obesity_time_tuples = [[a['time'],a['data_value']] for a in obesity_time]
+
+                X = [:,0] # x will be the time it takes to get to a healthy location
+                Y = [:,1] # y is going to be the obesity percent
+
+                # we are going to run a linear regression that predicts the current level of obesity given how long it takes to get somewhere healthy
+
+
+
 
                 return {"start":startTime, "end":endtime}
 
