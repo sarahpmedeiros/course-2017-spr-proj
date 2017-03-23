@@ -3,6 +3,7 @@ import prov.model
 import datetime
 import networkx as nx
 import uuid
+import math
 
 class shortestMbtaPath(dml.Algorithm):
     contributor = 'asafer_asambors_maxzm_vivyee'
@@ -37,21 +38,27 @@ class shortestMbtaPath(dml.Algorithm):
         G = nx.DiGraph()
 
         # Add edges, will create nodes u and v if not already in the graph
+        # weight = distance / mpm = total time it takes from point 1 to 2
         for route in mbta_routes:
             if route['mode'] == 'Subway':
                 mpm = 30 / 60          # miles per minute
-                prev_lat = 0
-                prev_lon = 0
-                prev_stop = ''
-                for i in range(len(route['path'])):
-                    stop = route['path'][i]
-                    if i > 0:
-                        d = shortestMbtaPath.calculate_distance(prev_lat, prev_lon, eval(stop['stop_lat']), eval(stop['stop_lon']))
-                        w = d / mpm
-                        G.add_edge(prev_stop, stop['stop_id'], weight=w)
-                    prev_lon = eval(stop['stop_lon'])
-                    prev_lat = eval(stop['stop_lat'])
-                    prev_stop = stop['stop_id']
+                for direction in route['path']['direction']:
+                    prev_lat = 0
+                    prev_lon = 0
+                    prev_stop = ''
+
+                    for i in range(len(direction['stop'])):
+                        stop = direction['stop'][i]
+                        if i > 0:
+                            d = shortestMbtaPath.calculate_distance(prev_lat, prev_lon, eval(stop['stop_lat']), eval(stop['stop_lon']))
+                            w = d / mpm
+                            G.add_edge(prev_stop, stop['stop_id'], weight=w)
+                            # print('current stop:', stop['stop_id'], '; last_stop:', prev_stop, '; weight:', w)
+                        prev_lon = eval(stop['stop_lon'])
+                        prev_lat = eval(stop['stop_lat'])
+                        prev_stop = stop['stop_id']
+
+                    break
 
 
 
@@ -75,3 +82,5 @@ class shortestMbtaPath(dml.Algorithm):
         repo.logout()
 
         return doc
+
+shortestMbtaPath.execute()
