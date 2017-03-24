@@ -32,11 +32,11 @@ class closestHealthObesity(dml.Algorithm):
     @staticmethod
     def calculate_distance(info):
         healthy, obesity = info
-        healthy_lat = float(healthy['location'][0])
-        healthy_lon = float(healthy['location'][1])
+        healthy_lat = float(healthy['healthy_locations']['location'][0])
+        healthy_lon = float(healthy['healthy_locations']['location'][1])
 
-        obesity_lat = float(obesity['geolocation']['latitude'])
-        obesity_lon = float(obesity['geolocation']['longitude'])
+        obesity_lat = float(obesity['obesity']['geolocation']['latitude'])
+        obesity_lon = float(obesity['obesity']['geolocation']['longitude'])
 
         # formula from: http://andrew.hedges.name/experiments/haversine/
         # used R = 3961 miles
@@ -50,6 +50,7 @@ class closestHealthObesity(dml.Algorithm):
     @staticmethod
     def closest(info):
         obesity, health_locations = info
+        print('healthy_locations:\n', health_locations[1])
         closest_health = min(health_locations, key = lambda t: t[1])
         return (obesity, closest_health)
 
@@ -114,7 +115,7 @@ class closestHealthObesity(dml.Algorithm):
 
         return doc
         
-
+closestHealthObesity.execute()
 
 
 
