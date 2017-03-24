@@ -31,8 +31,16 @@ class linearRegressionObesityTime(dml.Algorithm):
 
                 # we are going to run a linear regression that predicts the current level of obesity given how long it takes to get somewhere healthy
 
+                meanX = sum(X)*1.0/len(X)
+                meanY = sum(Y)*1.0/len(Y)
 
+                varX = sum([(v-meanX)**2 for v in X])
+                varY = sum([(v-meanY)**2 for v in Y])
 
+                minYHatCov = sum([(X[i]-meanX)*(Y[i]-meanY) for i in range(len(Y))])
+
+                B1 = minYHatCov/varX
+                B0 = meanY-B1*meanX
 
                 return {"start":startTime, "end":endtime}
 
