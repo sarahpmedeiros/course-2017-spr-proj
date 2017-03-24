@@ -42,12 +42,20 @@ class linearRegressionObesityTime(dml.Algorithm):
                 B1 = minYHatCov/varX
                 B0 = meanY-B1*meanX
 
-                stats = {"B1":B1,"B0":B0}
-
+                #analysis on regression
                 MSE = sum([(Y[i]-(B1*X[i]+B0)**2) for i in range(len(X))])*1.0/len(X)
                 RMSE = MSE**.5
 
-                return {"start":startTime, "end":endtime, "MSE" : MSE, "RMSE":RMSE}
+                #send data up
+                stats = {"B1":B1,"B0":B0, "MSE" : MSE, "RMSE":RMSE}
+                repo.dropCollection('asafer_asambors_maxzm_vivyee.obesity_time_linear_reagression_data')
+                repo.createCollection('asafer_asambors_maxzm_vivyee.obesity_time_linear_reagression_data')
+
+                repo['asafer_asambors_maxzm_vivyee.obesity_time_linear_reagression_data'].insert(stats)
+                repo['asafer_asambors_maxzm_vivyee.obesity_time_linear_reagression_data'].metadata({'complete': True})
+
+                endTime = datetime.datetime.now()
+                return {"start":startTime, "end":endtime}
 
 
 @staticmethod
