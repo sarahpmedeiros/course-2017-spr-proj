@@ -58,6 +58,8 @@ class shortestMbtaPath(dml.Algorithm):
                         prev_lat = eval(stop['stop_lat'])
                         prev_stop = stop['stop_id']
 
+        # nx.dijkstra_path(G, source, target)
+
         print('all uploaded')
 
         endTime = datetime.datetime.now

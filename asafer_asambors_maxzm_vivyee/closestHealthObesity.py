@@ -49,10 +49,8 @@ class closestHealthObesity(dml.Algorithm):
 
     @staticmethod
     def closest(info):
-        obesity, health_locations = info
-        print('healthy_locations:\n', health_locations[1])
-        closest_health = min(health_locations, key = lambda t: t[1])
-        return (obesity, closest_health)
+        closest_health = min(info, key = lambda t: t[1])
+        return closest_health
 
     @staticmethod
     def convert_to_dictionary(info):
@@ -85,7 +83,7 @@ class closestHealthObesity(dml.Algorithm):
         distances = closestHealthObesity.project(all_combos, closestHealthObesity.calculate_distance)
 
         # for each obesity location, keep only the closest healthy location
-        obesity_by_closest = closestHealthObesity.project(distances, closestHealthObesity.closest)
+        obesity_by_closest = closestHealthObesity.aggregate(distances, closestHealthObesity.closest)
 
         # convert to dictionary format
         obesity_by_closest_dict = closestHealthObesity.project(obesity_by_closest, closestHealthObesity.convert_to_dictionary)
@@ -115,8 +113,6 @@ class closestHealthObesity(dml.Algorithm):
 
         return doc
         
-closestHealthObesity.execute()
-
 
 
 
