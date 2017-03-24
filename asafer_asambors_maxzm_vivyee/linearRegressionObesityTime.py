@@ -42,9 +42,15 @@ class linearRegressionObesityTime(dml.Algorithm):
                 B1 = minYHatCov/varX
                 B0 = meanY-B1*meanX
 
-                return {"start":startTime, "end":endtime}
+                stats = {"B1":B1,"B0":B0}
 
-        @staticmethod
+                MSE = sum([(Y[i]-(B1*X[i]+B0)**2) for i in range(len(X))])*1.0/len(X)
+                RMSE = MSE**.5
+
+                return {"start":startTime, "end":endtime, "MSE" : MSE, "RMSE":RMSE}
+
+
+@staticmethod
         def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
                 #TODO write this :/
 
