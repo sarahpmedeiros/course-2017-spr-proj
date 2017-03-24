@@ -53,7 +53,11 @@ class closestMbtaObesity(dml.Algorithm):
 
     @staticmethod
     def convert_to_dictionary(info):
-        return {'obesity': info[0], 'stops': info[1]}
+        new_stops = []
+        for stop, distance in info:
+            new_stops.append(stop)
+
+        return new_stops
 
     @staticmethod
     def get_stops(info):
@@ -97,8 +101,9 @@ class closestMbtaObesity(dml.Algorithm):
         filtered_stops = closestMbtaObesity.select(distances, closestMbtaObesity.close_stop)
 
         # convert to dictionary format
-        stops_by_location_dict = closestMbtaObesity.project(filtered_stops, closestMbtaObesity.convert_to_dictionary)
-
+        stops_by_location_dict = closestMbtaObesity.aggregate(filtered_stops, closestMbtaObesity.convert_to_dictionary)
+        stops_by_location_dict = closestMbtaObesity.project(stops_by_location_dict, lambda x: {'obesity': x[0], 'stops': x[1]})
+    
         repo['asafer_asambors_maxzm_vivyee.obesity_mbta'].insert_many(stops_by_location_dict)
         repo['asafer_asambors_maxzm_vivyee.obesity_mbta'].metadata({'complete': True})
 
@@ -143,7 +148,7 @@ class closestMbtaObesity(dml.Algorithm):
         return doc
         
 
-
+# closestMbtaObesity.execute()
 
 
 

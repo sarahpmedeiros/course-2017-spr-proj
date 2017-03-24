@@ -53,7 +53,11 @@ class closestMbtaHealth(dml.Algorithm):
 
     @staticmethod
     def convert_to_dictionary(info):
-            return {'healthy_locations': info[0], 'stops': info[1]}
+        new_stops = []
+        for stop, distance in info:
+            new_stops.append(stop)
+
+        return new_stops
 
     @staticmethod
     def get_stops(info):
@@ -96,7 +100,8 @@ class closestMbtaHealth(dml.Algorithm):
         filtered_stops = closestMbtaHealth.select(distances, closestMbtaHealth.close_stop)
 
         # convert to dictionary format
-        stops_by_location_dict = closestMbtaHealth.project(filtered_stops, closestMbtaHealth.convert_to_dictionary)
+        stops_by_location_dict = closestMbtaHealth.aggregate(filtered_stops, closestMbtaHealth.convert_to_dictionary)
+        stops_by_location_dict = closestMbtaHealth.project(stops_by_location_dict, lambda x: {'healthy_locations': x[0], 'stops': x[1]})
 
         repo['asafer_asambors_maxzm_vivyee.health_mbta'].insert_many(stops_by_location_dict)
         repo['asafer_asambors_maxzm_vivyee.health_mbta'].metadata({'complete': True})
@@ -143,7 +148,7 @@ class closestMbtaHealth(dml.Algorithm):
         
 
 
-
+# closestMbtaHealth.execute()
 
 
 
