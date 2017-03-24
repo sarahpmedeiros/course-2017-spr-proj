@@ -4,11 +4,43 @@ import datetime
 import networkx as nx
 import uuid
 import math
+import sys
 
 class shortestMbtaPath(dml.Algorithm):
     contributor = 'asafer_asambors_maxzm_vivyee'
-    reads = ['asafer_asambors_maxzm_vivyee.health_mbta', 'asafer_asambors_maxzm_vivyee.obesity_mbta', 'asafer_asambors_maxzm_vivyee.mbta_routes']
-    writes = ['asafer_asambors_maxzm_vivyee.shortest_mbta_paths']
+    reads = ['asafer_asambors_maxzm_vivyee.health_obesity', 'asafer_asambors_maxzm_vivyee.mbta_routes']
+    writes = ['asafer_asambors_maxzm_vivyee.shortestMbtaPath']
+
+    @staticmethod
+    def project(R, p, G):
+        return [p(t, G) for t in R]
+
+    @staticmethod
+    def get_closest_path(info, G):
+        obesity_stops = [ stop['stop_id'] for stop in info['obesity_locations']['stops'] if stop['mode'] == 'Subway' ]
+        healthy_stops = [ stop['stop_id'] for stop in info['healthy_locations']['stops'] if stop['mode'] == 'Subway' ]
+        
+        # print('obesity stops length:', len(obesity_stops))
+        # print('healthy stops length:', len(obesity_stops))
+
+        min_times = []
+        for o_stop in obesity_stops:
+            for h_stop in healthy_stops:
+                try:
+                    time = nx.dijkstra_path_length(G, o_stop, h_stop)
+                    min_times.append(time)
+                except nx.NetworkXNoPath:
+                    # print('no path found')
+                    pass
+
+        if len(min_times) == 0:
+            info['min_travel_time'] = sys.maxsize
+        else:
+            info['min_travel_time'] = min(min_times)
+        print(min_times)
+        # print('info is\n' + str(info))
+        return info
+
 
     @staticmethod
     def calculate_distance(lat_1, lon_1, lat_2, lon_2):
@@ -31,9 +63,7 @@ class shortestMbtaPath(dml.Algorithm):
         repo.authenticate('asafer_asambors_maxzm_vivyee','asafer_asambors_maxzm_vivyee')
         
         mbta_routes = repo['asafer_asambors_maxzm_vivyee.mbta_routes'].find()
-
-        repo.dropCollection('asafer_asambors_maxzm_vivyee.shortest_mbta_paths')
-        repo.createCollection('asafer_asambors_maxzm_vivyee.shortest_mbta_paths')
+        health_obesity = repo['asafer_asambors_maxzm_vivyee.health_obesity'].find()
 
         G = nx.DiGraph()
 
@@ -42,10 +72,12 @@ class shortestMbtaPath(dml.Algorithm):
         for route in mbta_routes:
             if route['mode'] == 'Subway':
                 mpm = 30 / 60          # miles per minute
+                # print('directions are', len(route['path']['direction']))
                 for direction in route['path']['direction']:
                     prev_lat = 0
                     prev_lon = 0
                     prev_stop = ''
+                    # print(direction['stop'])
 
                     for i in range(len(direction['stop'])):
                         stop = direction['stop'][i]
@@ -57,8 +89,16 @@ class shortestMbtaPath(dml.Algorithm):
                         prev_lon = eval(stop['stop_lon'])
                         prev_lat = eval(stop['stop_lat'])
                         prev_stop = stop['stop_id']
+        
+        # project
 
-        # nx.dijkstra_path(G, source, target)
+        health_obesity_times = shortestMbtaPath.project(health_obesity, shortestMbtaPath.get_closest_path, G)
+        # nx.dijkstra_path_length(G, source, target)
+        repo.dropCollection('asafer_asambors_maxzm_vivyee.shortestMbtaPath')
+        repo.createCollection('asafer_asambors_maxzm_vivyee.shortestMbtaPath')
+
+        repo['asafer_asambors_maxzm_vivyee.shortestMbtaPath'].insert_many(health_obesity_times)
+        repo['asafer_asambors_maxzm_vivyee.shortestMbtaPath'].metadata({'complete': True})
 
         print('all uploaded')
 
@@ -80,3 +120,7 @@ class shortestMbtaPath(dml.Algorithm):
         repo.logout()
 
         return doc
+
+
+shortestMbtaPath.execute()
+
