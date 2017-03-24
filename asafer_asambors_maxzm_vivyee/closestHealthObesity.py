@@ -54,7 +54,7 @@ class closestHealthObesity(dml.Algorithm):
 
     @staticmethod
     def convert_to_dictionary(info):
-            return {'obesity_locations': info[0], 'healthy_locations': info[1]}
+        return {'obesity_locations': info[0], 'healthy_locations': info[1][0]}
 
     @staticmethod
     def execute(trial = False):
