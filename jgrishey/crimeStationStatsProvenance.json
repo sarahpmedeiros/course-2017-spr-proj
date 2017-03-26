@@ -1,0 +1,85 @@
+{
+    "prefix": {
+        "alg": "http://datamechanics.io/algorithm/",
+        "dat": "http://datamechanics.io/data/",
+        "ont": "http://datamechanics.io/ontology#",
+        "log": "http://datamechanics.io/log/"
+    },
+    "agent": {
+        "alg:jgrishey#crimeStationStats": {
+            "prov:type": {
+                "$": "prov:SoftwareAgent",
+                "type": "prov:QUALIFIED_NAME"
+            },
+            "ont:Extension": "py"
+        }
+    },
+    "entity": {
+        "dat:jgrishey#redlineStations": {
+            "prov:label": "MongoDB Request",
+            "prov:type": "ont:DataSet",
+            "ont:Extension": "mongoDB"
+        },
+        "dat:jgrishey#crime": {
+            "prov:label": "MongoDB Request",
+            "prov:type": "ont:DataSet",
+            "ont:Extension": "mongoDB"
+        },
+        "dat:jgrishey#crimeStationStats": {
+            "prov:label": "Red Line Crime Data",
+            "prov:type": "ont:DataSet"
+        }
+    },
+    "activity": {
+        "log:uuid0ca82120-ccbc-4160-b145-4d40fce92a83": {}
+    },
+    "wasAssociatedWith": {
+        "_:id1": {
+            "prov:activity": "log:uuid0ca82120-ccbc-4160-b145-4d40fce92a83",
+            "prov:agent": "alg:jgrishey#crimeStationStats"
+        }
+    },
+    "used": {
+        "_:id2": {
+            "prov:activity": "log:uuid0ca82120-ccbc-4160-b145-4d40fce92a83",
+            "prov:entity": "dat:jgrishey#redlineStations",
+            "prov:type": "ont:Retrieval"
+        },
+        "_:id3": {
+            "prov:activity": "log:uuid0ca82120-ccbc-4160-b145-4d40fce92a83",
+            "prov:entity": "dat:jgrishey#crime",
+            "prov:type": "ont:Retrieval"
+        },
+        "_:id4": {
+            "prov:activity": "log:uuid0ca82120-ccbc-4160-b145-4d40fce92a83",
+            "prov:entity": "dat:jgrishey#redlineStations",
+            "prov:type": "ont:Computation"
+        },
+        "_:id5": {
+            "prov:activity": "log:uuid0ca82120-ccbc-4160-b145-4d40fce92a83",
+            "prov:entity": "dat:jgrishey#crime",
+            "prov:type": "ont:Computation"
+        }
+    },
+    "wasAttributedTo": {
+        "_:id6": {
+            "prov:entity": "dat:jgrishey#crimeStationStats",
+            "prov:agent": "alg:jgrishey#crimeStationStats"
+        }
+    },
+    "wasGeneratedBy": {
+        "_:id7": {
+            "prov:entity": "dat:jgrishey#crimeStationStats",
+            "prov:activity": "log:uuid0ca82120-ccbc-4160-b145-4d40fce92a83"
+        }
+    },
+    "wasDerivedFrom": {
+        "_:id8": {
+            "prov:generatedEntity": "dat:jgrishey#crimeStationStats",
+            "prov:usedEntity": "dat:jgrishey#crime",
+            "prov:activity": "dat:jgrishey#redlineStations",
+            "prov:generation": "log:uuid0ca82120-ccbc-4160-b145-4d40fce92a83",
+            "prov:usage": "log:uuid0ca82120-ccbc-4160-b145-4d40fce92a83"
+        }
+    }
+}
