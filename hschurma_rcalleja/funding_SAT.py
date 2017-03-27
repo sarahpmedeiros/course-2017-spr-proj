@@ -87,7 +87,7 @@ class funding_SAT(dml.Algorithm):
         S = select(P, lambda t: t[0]['Name'] == t[1]['Name'])
         #print(S)
         PR = project(S, lambda t: {'Name': t[0]['Name'], 'NumTesting': t[0]['NumTesting'], 'Reading': t[0]['Reading'], 'Math': t[0]['Math'], 'Writing': t[0]['Writing'], 'Funding': t[1]['Funding']})
-        #print(PR)
+        print(PR)
 
         repo.dropCollection('funding_SAT')
         repo.createCollection('funding_SAT')

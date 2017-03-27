@@ -32,3 +32,8 @@ This file uses the data from the Funding data set and the Location data set and 
 
 ###funding_SAT.py
 This file uses the data from the Funding data set and the SAT data set and uses transformation to create a data set containing 'School Name', 'School Funding', 'School SAT Data'
+
+Data Sets
+SAT: Want: 2008-2016 Need: 2009, 2010, 2012, 2013
+Funding: Want: 2008-2016 Need: 2008-2016
+Grad Rates: Want: 2008-2012
