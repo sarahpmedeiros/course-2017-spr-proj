@@ -33,11 +33,11 @@ class closestMbtaHealth(dml.Algorithm):
     @staticmethod
     def calculate_distance(info):
         healthy, stop = info
-        healthy_lat = np.radians(float(healthy['location'][0]))
-        healthy_lon = np.radians(float(healthy['location'][1]))
+        healthy_lat = healthy['location'][0]
+        healthy_lon = healthy['location'][1]
 
-        stop_lat = np.radians(float(stop['stop_lat']))
-        stop_lon = np.radians(float(stop['stop_lon']))
+        stop_lat = stop['stop_lat']
+        stop_lon = stop['stop_lon']
 
         # formula from: http://andrew.hedges.name/experiments/haversine/
         # used R = 3961 miles
@@ -70,6 +70,17 @@ class closestMbtaHealth(dml.Algorithm):
         return stops
 
     @staticmethod
+    def change_radians(info):
+        if 'stop_lat' in info:
+            info['stop_lat'] = np.radians(float(info['stop_lat']))
+            info['stop_lon'] = np.radians(float(info['stop_lon']))
+        else:
+            info['location'][0] = np.radians(float(info['location'][0]))
+            info['location'][1] = np.radians(float(info['location'][1]))
+
+        return info
+
+    @staticmethod
     def execute(trial = False):
         startTime = datetime.datetime.now()
 
@@ -79,7 +90,7 @@ class closestMbtaHealth(dml.Algorithm):
         repo.authenticate('asafer_asambors_maxzm_vivyee','asafer_asambors_maxzm_vivyee')
 
         #loads
-        healthy_locations = repo['asafer_asambors_maxzm_vivyee.healthy_locations']
+        healthy_locations = repo['asafer_asambors_maxzm_vivyee.healthy_locations'].find()
         mbta_routes = repo['asafer_asambors_maxzm_vivyee.mbta_routes']
 
         repo.dropCollection('asafer_asambors_maxzm_vivyee.health_mbta')
@@ -91,8 +102,11 @@ class closestMbtaHealth(dml.Algorithm):
         for stop in stops:
             all_stops += stop
 
+        all_stops = closestMbtaHealth.project(all_stops, closestMbtaHealth.change_radians)
+        healthy_locations = closestMbtaHealth.project(healthy_locations, closestMbtaHealth.change_radians)
+
         # map all stops with all locations
-        all_combos = closestMbtaHealth.product(healthy_locations.find(), all_stops)
+        all_combos = closestMbtaHealth.product(healthy_locations, all_stops)
 
         # calculate distance for healthy loc b/w every stop
         distances = closestMbtaHealth.project(all_combos, closestMbtaHealth.calculate_distance)

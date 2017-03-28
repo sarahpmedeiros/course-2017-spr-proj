@@ -57,11 +57,6 @@ class shortestMbtaPath(dml.Algorithm):
     def calculate_distance(lat_1, lon_1, lat_2, lon_2):
         # formula from: http://andrew.hedges.name/experiments/haversine/
         # used R = 3961 miles
-        lat_2 = math.radians(lat_2)
-        lat_1 = math.radians(lat_1)
-        lon_1 = math.radians(lon_1)
-        lon_2 = math.radians(lon_2)
-
         R = 3961.0
         dlon = lon_1 - lon_2
         dlat = lat_1 - lat_2

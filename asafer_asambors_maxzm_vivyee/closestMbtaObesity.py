@@ -33,11 +33,12 @@ class closestMbtaObesity(dml.Algorithm):
     @staticmethod
     def calculate_distance(info):
         obesity, stop = info
-        obesity_lat = np.radians(float(obesity['geolocation']['latitude']))
-        obesity_lon = np.radians(float(obesity['geolocation']['longitude']))
 
-        stop_lat = np.radians(float(stop['stop_lat']))
-        stop_lon = np.radians(float(stop['stop_lon']))
+        obesity_lat = obesity['geolocation']['latitude']
+        obesity_lon = obesity['geolocation']['longitude']
+
+        stop_lat = stop['stop_lat']
+        stop_lon = stop['stop_lon']
 
         # formula from: http://andrew.hedges.name/experiments/haversine/
         # used R = 3961 miles
@@ -46,6 +47,7 @@ class closestMbtaObesity(dml.Algorithm):
         a = math.sin(dlat/2)**2 + (math.cos(stop_lat) * math.cos(obesity_lat) * math.sin(dlon/2)**2)
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
         d = 3961 * c
+
         return (obesity, (stop, d))
 
     @staticmethod
@@ -71,6 +73,17 @@ class closestMbtaObesity(dml.Algorithm):
         return stops
 
     @staticmethod
+    def change_radians(info):
+        if 'stop_lat' in info:
+            info['stop_lat'] = np.radians(float(info['stop_lat']))
+            info['stop_lon'] = np.radians(float(info['stop_lon']))
+        else:
+            info['geolocation']['latitude'] = np.radians(float(info['geolocation']['latitude']))
+            info['geolocation']['longitude'] = np.radians(float(info['geolocation']['longitude']))
+
+        return info
+
+    @staticmethod
     def execute(trial = False):
         startTime = datetime.datetime.now()
 
@@ -80,7 +93,7 @@ class closestMbtaObesity(dml.Algorithm):
         repo.authenticate('asafer_asambors_maxzm_vivyee','asafer_asambors_maxzm_vivyee')
 
         #loads
-        obesity = repo['asafer_asambors_maxzm_vivyee.obesity']
+        obesity = repo['asafer_asambors_maxzm_vivyee.obesity'].find()
         mbta_routes = repo['asafer_asambors_maxzm_vivyee.mbta_routes']
 
         repo.dropCollection('asafer_asambors_maxzm_vivyee.obesity_mbta')
@@ -91,9 +104,13 @@ class closestMbtaObesity(dml.Algorithm):
         all_stops = []
         for stop in stops:
             all_stops += stop
+        
+        all_stops = closestMbtaObesity.project(all_stops, closestMbtaObesity.change_radians)
+        obesity = closestMbtaObesity.project(obesity, closestMbtaObesity.change_radians)
+        # print('len of obesity is:', len(obesity))
 
         # map all stops with all locations
-        all_combos = closestMbtaObesity.product(obesity.find(), all_stops)
+        all_combos = closestMbtaObesity.product(obesity, all_stops)
 
         # calculate distance for obesity b/w every stop
         distances = closestMbtaObesity.project(all_combos, closestMbtaObesity.calculate_distance)
