@@ -9,7 +9,7 @@ import sys
 class shortestMbtaPath(dml.Algorithm):
     contributor = 'asafer_asambors_maxzm_vivyee'
     reads = ['asafer_asambors_maxzm_vivyee.health_obesity', 'asafer_asambors_maxzm_vivyee.mbta_routes']
-    writes = ['asafer_asambors_maxzm_vivyee.shortestMbtaPath']
+    writes = ['asafer_asambors_maxzm_vivyee.health_obesity']
 
     @staticmethod
     def project(R, p, G):
@@ -20,8 +20,7 @@ class shortestMbtaPath(dml.Algorithm):
         obesity_stops = [ stop['stop_id'] for stop in info['obesity_locations']['stops'] if stop['mode'] == 'Subway' ]
         healthy_stops = [ stop['stop_id'] for stop in info['healthy_locations']['stops'] if stop['mode'] == 'Subway' ]
         
-        # print('obesity stops length:', len(obesity_stops))
-        # print('healthy stops length:', len(obesity_stops))
+        # print('obesity stops length:', len(obesity_stops), 'healthy stops length:', len(obesity_stops))
 
         min_times = []
         for o_stop in obesity_stops:
@@ -37,7 +36,8 @@ class shortestMbtaPath(dml.Algorithm):
             info['min_travel_time'] = sys.maxsize
         else:
             info['min_travel_time'] = min(min_times)
-        print(min_times)
+            print('YAY')
+        # print(min_times)
         # print('info is\n' + str(info))
         return info
 
@@ -81,10 +81,15 @@ class shortestMbtaPath(dml.Algorithm):
 
                     for i in range(len(direction['stop'])):
                         stop = direction['stop'][i]
+                        if 'Park Street' in stop['stop_name']:
+                            print(stop['stop_name'])
+                            print(stop['stop_id'])
+
                         if i > 0:
                             d = shortestMbtaPath.calculate_distance(prev_lat, prev_lon, eval(stop['stop_lat']), eval(stop['stop_lon']))
                             w = d / mpm
                             G.add_edge(prev_stop, stop['stop_id'], weight=w)
+                            G.add_edge(stop['stop_id'], prev_stop, weight=w)
                             # print('current stop:', stop['stop_id'], '; last_stop:', prev_stop, '; weight:', w)
                         prev_lon = eval(stop['stop_lon'])
                         prev_lat = eval(stop['stop_lat'])
@@ -94,11 +99,11 @@ class shortestMbtaPath(dml.Algorithm):
 
         health_obesity_times = shortestMbtaPath.project(health_obesity, shortestMbtaPath.get_closest_path, G)
         # nx.dijkstra_path_length(G, source, target)
-        repo.dropCollection('asafer_asambors_maxzm_vivyee.shortestMbtaPath')
-        repo.createCollection('asafer_asambors_maxzm_vivyee.shortestMbtaPath')
+        repo.dropCollection('asafer_asambors_maxzm_vivyee.health_obesity')
+        repo.createCollection('asafer_asambors_maxzm_vivyee.health_obesity')
 
-        repo['asafer_asambors_maxzm_vivyee.shortestMbtaPath'].insert_many(health_obesity_times)
-        repo['asafer_asambors_maxzm_vivyee.shortestMbtaPath'].metadata({'complete': True})
+        repo['asafer_asambors_maxzm_vivyee.health_obesity'].insert_many(health_obesity_times)
+        repo['asafer_asambors_maxzm_vivyee.health_obesity'].metadata({'complete': True})
 
         print('all uploaded')
 
