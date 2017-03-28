@@ -6,7 +6,7 @@ import datetime
 import uuid
 import requests
 import math
-import numpy from np
+import numpy as np
 
 class closestMbtaHealth(dml.Algorithm):
     contributor = 'asafer_asambors_maxzm_vivyee'
