@@ -7,7 +7,6 @@ import dml
 import prov.model
 import datetime
 import uuid
-#import sodapy
 
 class retrieveData(dml.Algorithm):
     contributor = 'echogu_wei0496'
@@ -159,7 +158,7 @@ class retrieveData(dml.Algorithm):
 
         return doc
 
-# retrieveData.execute()
+retrieveData.execute()
 # doc = retrieveData.provenance()
 # print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
