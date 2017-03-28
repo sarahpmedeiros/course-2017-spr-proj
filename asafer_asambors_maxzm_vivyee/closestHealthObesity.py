@@ -6,6 +6,7 @@ import datetime
 import uuid
 import requests
 import math
+import numpy as np
 
 class closestHealthObesity(dml.Algorithm):
     contributor = 'asafer_asambors_maxzm_vivyee'
@@ -32,11 +33,11 @@ class closestHealthObesity(dml.Algorithm):
     @staticmethod
     def calculate_distance(info):
         healthy, obesity = info
-        healthy_lat = float(healthy['healthy_locations']['location'][0])
-        healthy_lon = float(healthy['healthy_locations']['location'][1])
+        healthy_lat = np.radians(float(healthy['healthy_locations']['location'][0]))
+        healthy_lon = np.radians(float(healthy['healthy_locations']['location'][1]))
 
-        obesity_lat = float(obesity['obesity']['geolocation']['latitude'])
-        obesity_lon = float(obesity['obesity']['geolocation']['longitude'])
+        obesity_lat = np.radians(float(obesity['obesity']['geolocation']['latitude']))
+        obesity_lon = np.radians(float(obesity['obesity']['geolocation']['longitude']))
 
         # formula from: http://andrew.hedges.name/experiments/haversine/
         # used R = 3961 miles

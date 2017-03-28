@@ -16,6 +16,10 @@ class shortestMbtaPath(dml.Algorithm):
         return [p(t, G) for t in R]
 
     @staticmethod
+    def select(R, s):
+        return [t for t in R if s(t)]
+
+    @staticmethod
     def get_closest_path(info, G):
         obesity_stops = [ stop['stop_id'] for stop in info['obesity_locations']['stops'] if stop['mode'] == 'Subway' ]
         healthy_stops = [ stop['stop_id'] for stop in info['healthy_locations']['stops'] if stop['mode'] == 'Subway' ]
@@ -134,7 +138,8 @@ class shortestMbtaPath(dml.Algorithm):
         # project
 
         health_obesity_times = shortestMbtaPath.project(health_obesity, shortestMbtaPath.get_closest_path, G)
-        health_obesity_times_tuples = shortestMbtaPath.project(health_obesity_times, shortestMbtaPath.get_tuples, G)
+        health_obesity_times_tuples = shortestMbtaPath.select(health_obesity_times, lambda x: 'data_value' in x['obesity_locations']['obesity'])
+        health_obesity_times_tuples = shortestMbtaPath.project(health_obesity_times_tuples, shortestMbtaPath.get_tuples, G)
         # nx.dijkstra_path_length(G, source, target)
         repo.dropCollection('asafer_asambors_maxzm_vivyee.health_obesity')
         repo.createCollection('asafer_asambors_maxzm_vivyee.health_obesity')
@@ -146,7 +151,7 @@ class shortestMbtaPath(dml.Algorithm):
         repo.createCollection('asafer_asambors_maxzm_vivyee.obesity_time')
 
         repo['asafer_asambors_maxzm_vivyee.obesity_time'].insert_many(health_obesity_times_tuples)
-        repo['asafer_asambors_maxzm_vivyee'].metadata({'complete': True})
+        repo['asafer_asambors_maxzm_vivyee.obesity_time'].metadata({'complete': True})
 
         print('all uploaded')
 
@@ -185,5 +190,5 @@ class shortestMbtaPath(dml.Algorithm):
         return doc
 
 
-shortestMbtaPath.execute()
+# shortestMbtaPath.execute()
 

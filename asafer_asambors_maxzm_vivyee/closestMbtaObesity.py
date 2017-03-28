@@ -6,6 +6,7 @@ import datetime
 import uuid
 import requests
 import math
+import numpy as np
 
 class closestMbtaObesity(dml.Algorithm):
     contributor = 'asafer_asambors_maxzm_vivyee'
@@ -32,11 +33,11 @@ class closestMbtaObesity(dml.Algorithm):
     @staticmethod
     def calculate_distance(info):
         obesity, stop = info
-        obesity_lat = math.radians(float(obesity['geolocation']['latitude']))
-        obesity_lon = math.radians(float(obesity['geolocation']['longitude']))
+        obesity_lat = np.radians(float(obesity['geolocation']['latitude']))
+        obesity_lon = np.radians(float(obesity['geolocation']['longitude']))
 
-        stop_lat = math.radians(float(stop['stop_lat']))
-        stop_lon = math.radians(float(stop['stop_lon']))
+        stop_lat = np.radians(float(stop['stop_lat']))
+        stop_lon = np.radians(float(stop['stop_lon']))
 
         # formula from: http://andrew.hedges.name/experiments/haversine/
         # used R = 3961 miles
@@ -148,7 +149,7 @@ class closestMbtaObesity(dml.Algorithm):
         return doc
         
 
-# closestMbtaObesity.execute()
+closestMbtaObesity.execute()
 
 
 
