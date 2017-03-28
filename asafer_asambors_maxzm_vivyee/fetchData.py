@@ -90,6 +90,8 @@ class fetchData(dml.Algorithm):
 
         endTime = datetime.datetime.now()
 
+        print('all uploaded')
+
         return {"start":startTime, "end":endTime}
 
     @staticmethod
