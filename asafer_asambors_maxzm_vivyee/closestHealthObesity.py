@@ -109,6 +109,22 @@ class closestHealthObesity(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
 
+        this_script = doc.agent('alg:asafer_asambors_maxzm_vivyee#closestHealthObesity', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+
+        get_closest_health_obesity = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+
+        doc.wasAssociatedWith(get_closest_health_obesity, this_script)
+
+        health_mbta = doc.entity('dat:asafer_asambors_maxzm_vivyee#health_mbta', {prov.model.PROV_LABEL:'Closest MBTA stops to Health locations', prov.model.PROV_TYPE:'ont:DataSet'})
+        obesity_mbta = doc.entity('dat:asafer_asambors_maxzm_vivyee#obesity_mbta', {prov.model.PROV_LABEL:'Closest MBTA stops to Obese areas', prov.model.PROV_TYPE:'ont:DataSet'})
+        health_obesity = doc.entity('dat:asafer_asambors_maxzm_vivyee#health_obesity', {prov.model.PROV_LABEL:'Closest healthy location to an obese area', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.usage(get_closest_health_obesity, health_mbta, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_closest_health_obesity, obesity_mbta, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.wasAssociatedTo(health_obesity, this_script)
+        doc.wasGeneratedBy(health_obesity, get_closest_health_obesity, endTime)
+        doc.wasDerivedFrom(health_obesity, health_mbta, get_closest_health_obesity, get_closest_health_obesity, get_closest_health_obesity)
+        doc.wasDerivedFrom(health_obesity, obesity_mbta, get_closest_health_obesity, get_closest_health_obesity, get_closest_health_obesity)
+
         repo.logout()
 
         return doc

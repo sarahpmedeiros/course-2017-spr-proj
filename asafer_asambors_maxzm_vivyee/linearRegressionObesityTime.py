@@ -9,7 +9,7 @@ import requests
 class linearRegressionObesityTime(dml.Algorithm):
         contributor = 'asafer_asambors_maxzm_vivyee'
         reads = ['asager_asambors_maxzm_vivyee.obesity_time']
-        writes = ['asager_asambors_maxzm_vivyee.obesity_time_linear_reagression_data']
+        writes = ['asager_asambors_maxzm_vivyee.obesity_time_linear_regression_data']
 
         @staticmethod
         def execute(trial=False):
@@ -19,7 +19,6 @@ class linearRegressionObesityTime(dml.Algorithm):
                 client = dml.pymongo.MongoClient()
                 repo = client.repo
                 repo.authenticate('asafer_asambors_maxzm_vivyee','asafer_asambors_maxzm_vivyee')
-
 
                 #loads
                 obesity_time = repo['asafer_asambors_maxzm_vivyee.obesity_time'].find()
@@ -48,17 +47,44 @@ class linearRegressionObesityTime(dml.Algorithm):
 
                 #send data up
                 stats = {"B1":B1,"B0":B0, "MSE" : MSE, "RMSE":RMSE}
-                repo.dropCollection('asafer_asambors_maxzm_vivyee.obesity_time_linear_reagression_data')
-                repo.createCollection('asafer_asambors_maxzm_vivyee.obesity_time_linear_reagression_data')
+                repo.dropCollection('asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data')
+                repo.createCollection('asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data')
 
-                repo['asafer_asambors_maxzm_vivyee.obesity_time_linear_reagression_data'].insert(stats)
-                repo['asafer_asambors_maxzm_vivyee.obesity_time_linear_reagression_data'].metadata({'complete': True})
+                repo['asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data'].insert(stats)
+                repo['asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data'].metadata({'complete': True})
 
                 endTime = datetime.datetime.now()
                 return {"start":startTime, "end":endtime}
 
 
-@staticmethod
+        @staticmethod
         def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
-                #TODO write this :/
+                # Set up the database connection.
+                client = dml.pymongo.MongoClient()
+                repo = client.repo
+                repo.authenticate('asafer_asambors_maxzm_vivyee', 'asafer_asambors_maxzm_vivyee')
+                doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
+                doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
+                doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
+                doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
+                
+                this_script = doc.agent('alg:asafer_asambors_maxzm_vivyee#linearRegressionObesityTime', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+
+                get_linear_regression_obesity_time = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+
+                doc.wasAssociatedWith(get_linear_regression_obesity_time, this_script)
+
+                obesity_time = doc.entity('dat:asafer_asambors_maxzm_vivyee#obesity_time', {prov.model.PROV_LABEL:'Time to get to a healthy location from an obese area (percentage)', prov.model.PROV_TYPE:'ont:DataSet'})
+                obesity_time_linear_regression = doc.entity('dat:asafer_asambors_maxzm_vivyee#obesity_time_linear_regression', {prov.model.PROV_LABEL:'Linear regression on time to get to a healthy location from an obese area (percentage)', prov.model.PROV_TYPE:'ont:DataSet'})
+
+                doc.usage(get_linear_regression_obesity_time, obesity_time, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+                doc.wasAttributedTo(obesity_time_linear_regression, this_script)
+                doc.wasGeneratedBy(obesity_time_linear_regression, get_linear_regression_obesity_time, endTime)
+                doc.wasDerivedFrom(obesity_time_linear_regression, obesity_time, get_linear_regression_obesity_time, get_linear_regression_obesity_time, get_linear_regression_obesity_time)
+
+                repo.logout()
+
+                return doc
+
+
 
