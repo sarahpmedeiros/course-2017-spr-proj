@@ -56,9 +56,8 @@ class funding_gradrates(dml.Algorithm):
         for i in range(len(funding)):
             nameFund.append({'Name': funding[i]["FIELD2"].strip(), 'Funding': funding[i]["FIELD13"].strip()})
 
-
         #list size of graduation data
-        size = list(repo.hschurma_rcalleja.graduation.aggregate([{"$project": { "item":1, "numEntries": { "$size": "$data"}}}]))
+        '''size = list(repo.hschurma_rcalleja.graduation.aggregate([{"$project": { "item":1, "numEntries": { "$size": "$data"}}}]))
         s = size[0]['numEntries']
 
         #create list of (school name, num students graduated)
@@ -68,27 +67,38 @@ class funding_gradrates(dml.Algorithm):
             school = list(repo.hschurma_rcalleja.graduation.aggregate([{"$project": { "school": { "$arrayElemAt": ["$data", i]}}}]))
             if (school[0]['school'][13] == "All Colleges" and school[0]['school'][14] == "All Students"):
                 grads.append({'Name': school[0]['school'][12], 'GradNum': school[0]['school'][15]})
+        '''
         
         #list of grad rates
-        gradrates = list(repo.hschurma_rcalleja.gradrates.aggregate([{"$project":{"_id":0, "FIELD1":1, "FIELD10":1}}]))
+        gradrates = list(repo.hschurma_rcalleja.gradrates.aggregate([{"$project":{"_id":0, "FIELD1":1, "2008":1, "2009":1, "2010":1, "2011":1, "2012":1, "2013":1, "2014":1, "2015":1, "2016":1}}]))
 
+        print(gradrates)
         #project into list of (school name, grad rate)
         name_grad = []
         for i in gradrates:
-            name_grad.append({'Name': i['FIELD1'], 'GradRate': i['FIELD10']})
+            name_grad.append({'Name': i['FIELD1'], 'GradRates': {'2008':i['2008'], '2009':i['2009'], '2010':i['2010'], '2011':i['2011'], '2012':i['2012'], '2013':i['2013'], '2014':i['2014'], '2015':i['2015'], '2016':i['2016']}})
 
+
+        P = product(name_grad, nameFund)
+        S = select(P, lambda t: t[0]['Name'] == t[1]['Name'])
+        PR = project(S, lambda t: {'Name': t[0]['Name'], 'Funding': t[1]['Funding'], 'Graduation Rates': t[0]['GradRates']})
+
+        #database collection containing 'Name', 'Funding', 'Grad Rates' {2008...2015}
+        print(PR)
+        
+        '''
         #Product, selection, and projection
         P = prodThree(name_grad, nameFund, grads)
         S = select(P, lambda t: t[0]['Name'] == t[1]['Name'] == t[2]['Name'])
-        PR = project(S, lambda t: {'Name': t[0]['Name'], 'GradRate': t[0]['GradRate'], 'Funding': t[1]['Funding'], 'GradNum': t[2]['GradNum']})
+        PR = project(S, lambda t: {'Name': t[0]['Name'], 'Graduation Rates': t[0]['Graduation Rates'], 'Funding': t[1]['Funding'], 'GradNum': t[2]['GradNum']})
         #print(PR)
-
+        '''
         #Format = (School Name, Graduation Rate, Funding, Num Graduates)
-
+    
         repo.dropCollection('funding_gradrates')
         repo.createCollection('funding_gradrates')
         repo['hschurma_rcalleja.funding_gradrates'].insert(PR)
-
+        
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''Create the provenance document describing everything happening
@@ -138,8 +148,8 @@ class funding_gradrates(dml.Algorithm):
                   
         return doc
         
-'''funding_gradrates.execute()
-doc = funding_gradrates.provenance()
+funding_gradrates.execute()
+#doc = funding_gradrates.provenance()
 #print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))'''
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
 

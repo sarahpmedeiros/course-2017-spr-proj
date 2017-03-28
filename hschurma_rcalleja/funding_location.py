@@ -144,8 +144,8 @@ class funding_location(dml.Algorithm):
                   
         return doc
         
-'''funding_location.execute()
-doc = funding_location.provenance()
+funding_location.execute()
+'''doc = funding_location.provenance()
 print(json.dumps(json.loads(doc.serialize()), indent=4))'''
 
         
