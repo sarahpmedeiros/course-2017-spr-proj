@@ -66,7 +66,7 @@ class funding_SAT(dml.Algorithm):
         SATschools = []
         for i in range(2,SATlen):
             temp = SAT[i]
-            SATschools.append({'Name': temp['FIELD1'].strip(), 'NumTesting': temp['FIELD2'], 'Reading': temp['FIELD3'], 'Math': temp['FIELD4'], 'Writing': temp['FIELD5']})
+            SATschools.append({'Name': temp['School'].strip(), 'NumTesting': temp['Test Takers'], 'Reading': temp['Critical Reading'], 'Math': temp['Mathematics'], 'Writing': temp['Writing']})
 
         #print(SATschools)
         # Dict of School name and Funding
@@ -143,6 +143,6 @@ class funding_SAT(dml.Algorithm):
         return doc
 
 
-'''funding_SAT.execute()
-doc = funding_SAT.provenance()'''
+funding_SAT.execute()
+#doc = funding_SAT.provenance()'''
 
