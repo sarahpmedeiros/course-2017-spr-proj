@@ -29,7 +29,7 @@ class shortestMbtaPath(dml.Algorithm):
                     time = nx.dijkstra_path_length(G, o_stop, h_stop)
                     min_times.append(time)
                 except nx.NetworkXNoPath:
-                    # print('no path found')
+                    print('no path found')
                     pass
 
         if len(min_times) == 0:
@@ -100,8 +100,8 @@ class shortestMbtaPath(dml.Algorithm):
                             if key == stop['stop_name'][:len(key)]:
                                 # add edge for transfer
                                 for t in transfers[key]:
-                                    nx.add_edge(t, stop['stop_id'], weight=10)
-                                    nx.add_edge(stop['stop_id'], t, weight=10)
+                                    G.add_edge(t, stop['stop_id'], weight=10)
+                                    G.add_edge(stop['stop_id'], t, weight=10)
 
                                 transfers[key].append(stop['stop_id'])
 
