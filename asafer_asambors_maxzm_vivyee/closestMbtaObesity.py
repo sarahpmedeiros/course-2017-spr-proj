@@ -149,7 +149,7 @@ class closestMbtaObesity(dml.Algorithm):
         return doc
         
 
-closestMbtaObesity.execute()
+# closestMbtaObesity.execute()
 
 
 
