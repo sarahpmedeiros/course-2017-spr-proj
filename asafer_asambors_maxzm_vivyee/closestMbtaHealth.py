@@ -50,7 +50,7 @@ class closestMbtaHealth(dml.Algorithm):
 
     @staticmethod
     def close_stop(info):
-        return info[1][1] <= 2
+        return info[1][1] <= 1
 
     @staticmethod
     def convert_to_dictionary(info):
