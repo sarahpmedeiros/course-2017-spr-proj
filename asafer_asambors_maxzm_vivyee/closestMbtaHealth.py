@@ -32,11 +32,11 @@ class closestMbtaHealth(dml.Algorithm):
     @staticmethod
     def calculate_distance(info):
         healthy, stop = info
-        healthy_lat = float(healthy['location'][0])
-        healthy_lon = float(healthy['location'][1])
+        healthy_lat = math.radians(float(healthy['location'][0]))
+        healthy_lon = math.radians(float(healthy['location'][1]))
 
-        stop_lat = float(stop['stop_lat'])
-        stop_lon = float(stop['stop_lon'])
+        stop_lat = math.radians(float(stop['stop_lat']))
+        stop_lon = math.radians(float(stop['stop_lon']))
 
         # formula from: http://andrew.hedges.name/experiments/haversine/
         # used R = 3961 miles

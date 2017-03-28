@@ -32,11 +32,11 @@ class closestMbtaObesity(dml.Algorithm):
     @staticmethod
     def calculate_distance(info):
         obesity, stop = info
-        obesity_lat = float(obesity['geolocation']['latitude'])
-        obesity_lon = float(obesity['geolocation']['longitude'])
+        obesity_lat = math.radians(float(obesity['geolocation']['latitude']))
+        obesity_lon = math.radians(float(obesity['geolocation']['longitude']))
 
-        stop_lat = float(stop['stop_lat'])
-        stop_lon = float(stop['stop_lon'])
+        stop_lat = math.radians(float(stop['stop_lat']))
+        stop_lon = math.radians(float(stop['stop_lon']))
 
         # formula from: http://andrew.hedges.name/experiments/haversine/
         # used R = 3961 miles
