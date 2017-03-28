@@ -149,7 +149,7 @@ class closestMbtaHealth(dml.Algorithm):
         
 
 
-# closestMbtaHealth.execute()
+closestMbtaHealth.execute()
 
 
 
