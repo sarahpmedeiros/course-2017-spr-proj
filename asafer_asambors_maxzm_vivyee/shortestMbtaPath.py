@@ -9,7 +9,7 @@ import sys
 class shortestMbtaPath(dml.Algorithm):
     contributor = 'asafer_asambors_maxzm_vivyee'
     reads = ['asafer_asambors_maxzm_vivyee.health_obesity', 'asafer_asambors_maxzm_vivyee.mbta_routes']
-    writes = ['asafer_asambors_maxzm_vivyee.health_obesity']
+    writes = ['asafer_asambors_maxzm_vivyee.health_obesity', 'asafer_asambors_maxzm_vivyee.obesity_time']
 
     @staticmethod
     def project(R, p, G):
@@ -39,7 +39,14 @@ class shortestMbtaPath(dml.Algorithm):
             # print(info)
         # print(min_times)
         # print('info is\n' + str(info))
-        return info
+        return info\
+
+    @staticmethod
+    def get_tuples(info, G):
+        data = eval(info['obesity_locations']['obesity']['data_value'])
+        time = info['min_travel_time']
+
+        return {'data_value': data, 'time': time}
 
 
     @staticmethod
@@ -127,12 +134,19 @@ class shortestMbtaPath(dml.Algorithm):
         # project
 
         health_obesity_times = shortestMbtaPath.project(health_obesity, shortestMbtaPath.get_closest_path, G)
+        health_obesity_times_tuples = shortestMbtaPath.project(health_obesity_times, shortestMbtaPath.get_tuples, G)
         # nx.dijkstra_path_length(G, source, target)
         repo.dropCollection('asafer_asambors_maxzm_vivyee.health_obesity')
         repo.createCollection('asafer_asambors_maxzm_vivyee.health_obesity')
 
         repo['asafer_asambors_maxzm_vivyee.health_obesity'].insert_many(health_obesity_times)
         repo['asafer_asambors_maxzm_vivyee.health_obesity'].metadata({'complete': True})
+
+        repo.dropCollection('asafer_asambors_maxzm_vivyee.obesity_time')
+        repo.createCollection('asafer_asambors_maxzm_vivyee.obesity_time')
+
+        repo['asafer_asambors_maxzm_vivyee.obesity_time'].insert_many(health_obesity_times_tuples)
+        repo['asafer_asambors_maxzm_vivyee'].metadata({'complete': True})
 
         print('all uploaded')
 
