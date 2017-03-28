@@ -53,7 +53,7 @@ class retrieve(dml.Algorithm):
         repo.createCollection("SAT")
         repo['hschurma_rcalleja.SAT'].insert_many(r)
 
-        url = 'http://datamechanics.io/data/hshurma_rcalleja/gradrates06_15.json'
+        url = 'http://datamechanics.io/data/hshurma_rcalleja/gradrates06_16.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
@@ -90,7 +90,7 @@ class retrieve(dml.Algorithm):
         resource_loc = doc.entity('bdp:e29s-ympv', {'prov:label':'Boston Public Schools', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_grad = doc.entity('bdp:wgrya-vhq5', {'prov:label':'Graduates Attending College', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_SAT = doc.entity('dat:hschurma_rcalleja/SAT2014.json', {'prov:label':'BPS SAT Scores', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        resource_g_rates = doc.entity('dat:hschurma_rcalleja/gradrates06_15', {'prov:label':'BPS Graduation Rates', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource_g_rates = doc.entity('dat:hschurma_rcalleja/gradrates06_16', {'prov:label':'BPS Graduation Rates', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_fund = doc.entity('dat:hschurma_rcalleja/funding.json', {'prov:label':'BPS Funding', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_loc = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
@@ -156,14 +156,14 @@ class retrieve(dml.Algorithm):
         doc.wasGeneratedBy(fund, get_fund, endTime)
         doc.wasDerivedFrom(fund, resource_fund, get_fund, get_fund, get_fund)
 
-        repo.record(doc.serialize())
+        #repo.record(doc.serialize())
         repo.logout()
                   
         return doc
 
-#retrieve.execute()
-#doc = retrieve.provenance()
-#print(doc.get_provn())
-#print(json.dumps(json.loads(doc.serialize()), indent=4))
+retrieve.execute()
+doc = retrieve.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
