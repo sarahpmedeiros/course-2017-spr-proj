@@ -6,6 +6,7 @@ import datetime
 import uuid
 import requests
 import numpy as np
+import math
 
 class linearRegressionObesityTime(dml.Algorithm):
         contributor = 'asafer_asambors_maxzm_vivyee'
