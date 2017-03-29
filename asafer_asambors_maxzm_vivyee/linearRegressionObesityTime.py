@@ -55,7 +55,9 @@ class linearRegressionObesityTime(dml.Algorithm):
                 repo['asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data'].metadata({'complete': True})
 
                 endTime = datetime.datetime.now()
-                return {"start":startTime, "end":endtime}
+
+                print('all uploaded: linearRegressionObesityTime')
+                return {"start":startTime, "end":endTime}
 
 
         @staticmethod
@@ -88,4 +90,4 @@ class linearRegressionObesityTime(dml.Algorithm):
                 return doc
 
 
-
+# linearRegressionObesityTime.execute()
