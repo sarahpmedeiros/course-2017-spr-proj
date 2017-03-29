@@ -92,7 +92,7 @@ class closestHealthObesity(dml.Algorithm):
         repo['asafer_asambors_maxzm_vivyee.health_obesity'].insert_many(obesity_by_closest_dict)
         repo['asafer_asambors_maxzm_vivyee.health_obesity'].metadata({'complete': True})
 
-        print('all uploaded: clos')
+        print('all uploaded: closestHealthObesity')
 
         endTime = datetime.datetime.now
 
