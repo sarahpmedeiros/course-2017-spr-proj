@@ -14,6 +14,7 @@ for i in range(len(shapes)):
 for i in range(len(shapes)):
 	shape = shapes[i].points
 	coor[i] = [shape]
+#print(shape)
 
 inProj = Proj(init='epsg:26986')
 outProj = Proj(init='epsg:4326')
@@ -26,10 +27,14 @@ for i in range(len(coor)):
 		#print(x2[0])
 		coor[i][j] = (y2[1], x2[0])
 		#print(x2, y2)
+a = [var[0] for var in r.records()]
+print(a)
 
-coor1 = []
-for w in range(len(coor)):
- 	 coor1 += tuple(coor[w])
+#print(coor1)
+#print(len(coor))
 
-print(coor1)
-print(len(coor))
+
+#geo = [var.points for var in shapes]
+#(zip[0],geo[0])
+# b = {}
+# b[zip[0]] = geo[0]
