@@ -90,4 +90,4 @@ class linearRegressionObesityTime(dml.Algorithm):
                 return doc
 
 
-linearRegressionObesityTime.execute()
+# linearRegressionObesityTime.execute()
