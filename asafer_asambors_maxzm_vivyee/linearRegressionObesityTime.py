@@ -9,8 +9,8 @@ import numpy as np
 
 class linearRegressionObesityTime(dml.Algorithm):
         contributor = 'asafer_asambors_maxzm_vivyee'
-        reads = ['asager_asambors_maxzm_vivyee.obesity_time']
-        writes = ['asager_asambors_maxzm_vivyee.obesity_time_linear_regression_data']
+        reads = ['asafer_asambors_maxzm_vivyee.obesity_time']
+        writes = ['asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data']
 
         @staticmethod
         def execute(trial=False):
