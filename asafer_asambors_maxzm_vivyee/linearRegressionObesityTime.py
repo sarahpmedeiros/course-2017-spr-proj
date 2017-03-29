@@ -44,7 +44,7 @@ class linearRegressionObesityTime(dml.Algorithm):
                 B0 = meanY-B1*meanX
 
                 #analysis on regression
-                MSE = sum([(Y[i]-(B1*X[i]+B0)**2) for i in range(len(X))])*1.0/len(X)
+                MSE = sum([(Y[i]-(B1*X[i]+B0))**2 for i in range(len(X))])*1.0/len(X)
                 RMSE = math.sqrt(MSE)
 
                 #send data up
