@@ -58,6 +58,8 @@ class linearRegressionObesityTime(dml.Algorithm):
                 endTime = datetime.datetime.now()
 
                 print('all uploaded: linearRegressionObesityTime')
+
+                print(stats)
                 return {"start":startTime, "end":endTime}
 
 
