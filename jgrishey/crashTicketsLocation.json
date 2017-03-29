@@ -1,0 +1,62 @@
+{
+    "Cambridgeport": {
+        "tickets": 89,
+        "crashes": 40
+    },
+    "East Cambridge": {
+        "tickets": 54,
+        "crashes": 17
+    },
+    "Strawberry Hill": {
+        "tickets": 2,
+        "crashes": 4
+    },
+    "Cambridge": {
+        "tickets": 177,
+        "crashes": 30
+    },
+    "Inner Belt": {
+        "tickets": 5,
+        "crashes": 5
+    },
+    "Avon Hill": {
+        "tickets": 17,
+        "crashes": 15
+    },
+    "Huron Village": {
+        "tickets": 7,
+        "crashes": 7
+    },
+    "Old Cambridge": {
+        "tickets": 133,
+        "crashes": 27
+    },
+    "Spring Hill": {
+        "tickets": 4,
+        "crashes": 1
+    },
+    "Coolidge Hill": {
+        "tickets": 2,
+        "crashes": 3
+    },
+    "North Cambridge": {
+        "tickets": 8,
+        "crashes": 5
+    },
+    "West Somerville": {
+        "tickets": 2,
+        "crashes": 2
+    },
+    "Mount Auburn": {
+        "tickets": 0,
+        "crashes": 2
+    },
+    "East Arlington": {
+        "tickets": 0,
+        "crashes": 1
+    },
+    "Larchwood": {
+        "tickets": 0,
+        "crashes": 1
+    }
+}
