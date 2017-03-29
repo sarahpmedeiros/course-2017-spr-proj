@@ -52,7 +52,7 @@ class closestMbtaObesity(dml.Algorithm):
 
     @staticmethod
     def close_stop(info):
-        return info[1][1] <= 1
+        return info[1][1] <= 0.25
 
     @staticmethod
     def convert_to_dictionary(info):
@@ -125,7 +125,7 @@ class closestMbtaObesity(dml.Algorithm):
         repo['asafer_asambors_maxzm_vivyee.obesity_mbta'].insert_many(stops_by_location_dict)
         repo['asafer_asambors_maxzm_vivyee.obesity_mbta'].metadata({'complete': True})
 
-        print('all uploaded')
+        print('all uploaded: closestMbtaObesity')
 
         endTime = datetime.datetime.now
 

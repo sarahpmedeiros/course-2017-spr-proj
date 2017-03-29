@@ -5,7 +5,6 @@ import prov.model
 import datetime
 import uuid
 import requests
-import numpy as np
 
 class linearRegressionObesityTime(dml.Algorithm):
         contributor = 'asafer_asambors_maxzm_vivyee'
@@ -26,8 +25,8 @@ class linearRegressionObesityTime(dml.Algorithm):
 
                 obesity_time_tuples = [[a['time'],a['data_value']] for a in obesity_time]
 
-                X = np.array(obesity_time_tuples)[:,0] # x will be the time it takes to get to a healthy location
-                Y = np.array(obesity_time_tuples)[:,1] # y is going to be the obesity percent
+                X = [:,0] # x will be the time it takes to get to a healthy location
+                Y = [:,1] # y is going to be the obesity percent
 
                 # we are going to run a linear regression that predicts the current level of obesity given how long it takes to get somewhere healthy
 

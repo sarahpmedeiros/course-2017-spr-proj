@@ -50,7 +50,7 @@ class closestMbtaHealth(dml.Algorithm):
 
     @staticmethod
     def close_stop(info):
-        return info[1][1] <= 1
+        return info[1][1] <= 0.25
 
     @staticmethod
     def convert_to_dictionary(info):
@@ -121,7 +121,7 @@ class closestMbtaHealth(dml.Algorithm):
         repo['asafer_asambors_maxzm_vivyee.health_mbta'].insert_many(stops_by_location_dict)
         repo['asafer_asambors_maxzm_vivyee.health_mbta'].metadata({'complete': True})
 
-        print('all uploaded')
+        print('all uploaded: closestMbtaHealth')
 
         endTime = datetime.datetime.now
 

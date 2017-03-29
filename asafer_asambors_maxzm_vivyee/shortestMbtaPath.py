@@ -148,7 +148,7 @@ class shortestMbtaPath(dml.Algorithm):
         repo['asafer_asambors_maxzm_vivyee.obesity_time'].insert_many(health_obesity_times_tuples)
         repo['asafer_asambors_maxzm_vivyee.obesity_time'].metadata({'complete': True})
 
-        print('all uploaded')
+        print('all uploaded: shortestMbtaPath')
 
         endTime = datetime.datetime.now
 

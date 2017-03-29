@@ -62,7 +62,7 @@ class healthyLocations(dml.Algorithm):
         repo['asafer_asambors_maxzm_vivyee.healthy_locations'].insert_many(all_locs)
         repo['asafer_asambors_maxzm_vivyee.healthy_locations'].metadata({'complete': True})
 
-        print('all uploaded')
+        print('all uploaded: healthyLocations')
 
         endTime = datetime.datetime.now
 

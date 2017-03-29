@@ -92,7 +92,7 @@ class closestHealthObesity(dml.Algorithm):
         repo['asafer_asambors_maxzm_vivyee.health_obesity'].insert_many(obesity_by_closest_dict)
         repo['asafer_asambors_maxzm_vivyee.health_obesity'].metadata({'complete': True})
 
-        print('all uploaded')
+        print('all uploaded: clos')
 
         endTime = datetime.datetime.now
 
@@ -121,7 +121,7 @@ class closestHealthObesity(dml.Algorithm):
         health_obesity = doc.entity('dat:asafer_asambors_maxzm_vivyee#health_obesity', {prov.model.PROV_LABEL:'Closest healthy location to an obese area', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.usage(get_closest_health_obesity, health_mbta, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_closest_health_obesity, obesity_mbta, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.wasAssociatedTo(health_obesity, this_script)
+        doc.wasAttributedTo(health_obesity, this_script)
         doc.wasGeneratedBy(health_obesity, get_closest_health_obesity, endTime)
         doc.wasDerivedFrom(health_obesity, health_mbta, get_closest_health_obesity, get_closest_health_obesity, get_closest_health_obesity)
         doc.wasDerivedFrom(health_obesity, obesity_mbta, get_closest_health_obesity, get_closest_health_obesity, get_closest_health_obesity)
