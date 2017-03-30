@@ -1,3 +1,4 @@
+## Project 1
 # Datasets we are using
 1. CDC500 - https://chronicdata.cdc.gov/500-Cities/500-Cities-Local-Data-for-Better-Health/6vp6-wxuq
 2. Higher Education Dataset - https://inventory.data.gov/dataset/032e19b4-5a90-41dc-83ff-6e4cd234f565/resource/38625c3d-5388-4c16-a30f-d105432553a4
@@ -17,3 +18,8 @@ The first dataset (created by transformation0.py) is a dataset that has all reco
 The second dataset (created by transformation1.py) is a dataset that has all the people in Boston and Cambridge who sleep less than 7 hours and maps them to the nearest colleges/universities in Boston/Cambridge. We expect that these areas are populated by almost college students exclusively and therefore will have many people who sleep less than 7 hours.
 
 The third dataset (created by transformation2.py) is a dataset that has the obesity rates of people in Boston and maps them to pools and "healthy corner stores" nearest to them. We want to see whether being close to either or both of these facilities reduce obesity rates, and could signal that there should be more of these facilities around.
+
+
+## Project 2
+
+Correlation between number of hospitals and rate of doctor visits; sleep rates and distance from universities
