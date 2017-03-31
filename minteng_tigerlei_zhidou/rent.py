@@ -4,16 +4,22 @@ import dml
 import prov.model
 import datetime 
 import uuid
+import sys
+
+TRIAL_LIMIT = 5000
 
 class rent(dml.Algorithm):
     contributor = 'minteng_tigerlei_zhidou'
     reads = []
-    writes = ['minteng_tigerlei_zhidou.rent', 'minteng_tigerlei_zhidou.location','minteng_tigerlei_zhidou.salary']
+    writes = ['minteng_tigerlei_zhidou.rent']
 
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets.'''
         startTime = datetime.datetime.now()
+        if trial:
+            print(" Now you are running trial mode")
+
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
@@ -38,7 +44,10 @@ class rent(dml.Algorithm):
 
         #new dataset 1: Rent Data
         url='http://datamechanics.io/data/minteng_zhidou/rent.txt'
-        rents = urllib.request.urlopen(url).readlines()
+        if trial:
+            rents = urllib.request.urlopen(url).readlines(TRIAL_LIMIT)
+        else:
+            rents = urllib.request.urlopen(url).readlines()
         rent=[]
         for r in rents[1:]:
             s=str(r).split(',')
@@ -100,8 +109,12 @@ class rent(dml.Algorithm):
                   
         return doc
 
-# project1.execute()
-# doc = project1.provenance()
-# print(doc.get_provn())
+if 'trial' in sys.argv:
+    rent.execute(True)
+# else:
+#     rent.execute()
+
+# doc = rent.provenance()
+# # print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
 

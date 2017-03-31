@@ -4,23 +4,35 @@ import dml
 import prov.model
 import datetime 
 import uuid
+import sys
+
+TRIAL_LIMIT = 5000
+
 class location(dml.Algorithm):
     contributor = 'minteng_tigerlei_zhidou'
     reads = []
-    writes = ['minteng_tigerlei_zhidou.rent', 'minteng_tigerlei_zhidou.location','minteng_tigerlei_zhidou.salary']
+    writes = ['minteng_tigerlei_zhidou.location']
 
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets.'''
         startTime = datetime.datetime.now()
+
+        if trial:
+            print(" Now you are running trial mode")
+
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('minteng_tigerlei_zhidou', 'minteng_tigerlei_zhidou')
         
+        limit = 50000
         #new dataset 2: location data with key: (location, tag), tag: food, transport and crime
         ####food data
-        url='https://data.cityofboston.gov/resource/fdxy-gydq.json?$limit=50000'
+        if trial: 
+            limit = TRIAL_LIMIT
+
+        url='https://data.cityofboston.gov/resource/fdxy-gydq.json?$limit='+ str(limit)
         response = urllib.request.urlopen(url).read().decode("utf-8")
         food=json.loads(response)
         food_info=[]
@@ -39,7 +51,10 @@ class location(dml.Algorithm):
         
         ###transport data
         url='http://datamechanics.io/data/minteng_zhidou/stops.txt'
-        stops = urllib.request.urlopen(url).readlines()
+        if trial:
+            stops = urllib.request.urlopen(url).readlines(TRIAL_LIMIT)
+        else:
+            stops = urllib.request.urlopen(url).readlines()
         transport=[]
         for stop in stops[1:]:
             s=str(stop).split(',')
@@ -53,9 +68,14 @@ class location(dml.Algorithm):
             transport.append(temp)
         
         ###safety/crime data
-        crime=[]    
-        url='https://data.cityofboston.gov/resource/29yf-ye7n.json?$limit=50000&$offset='
-        for i in range(1, 15000, 5000):
+        crime=[]  
+        record = 175000
+
+        if trial:
+            limit = TRIAL_LIMIT
+            record = 5000
+        url='https://data.cityofboston.gov/resource/29yf-ye7n.json?$limit='+ str(limit)+ '&$offset='
+        for i in range(1, record, limit):
             response = urllib.request.urlopen(url+str(i)).read().decode("utf-8")
             crime_info=json.loads(response)
             for c in crime_info:
@@ -140,3 +160,11 @@ class location(dml.Algorithm):
         repo.logout()
                   
         return doc
+
+if 'trial' in sys.argv:
+    location.execute(True)
+# else:
+#     location.execute()
+# doc = location.provenance()
+# #print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))

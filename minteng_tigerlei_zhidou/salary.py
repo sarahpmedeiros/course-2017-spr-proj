@@ -5,15 +5,22 @@ import prov.model
 import datetime 
 import uuid
 from collections import defaultdict
+import sys
+
+TRIAL_LIMIT = 5000
+
 class salary(dml.Algorithm):
     contributor = 'minteng_tigerlei_zhidou'
     reads = []
-    writes = ['minteng_tigerlei_zhidou.rent', 'minteng_tigerlei_zhidou.location','minteng_tigerlei_zhidou.salary']
+    writes = ['minteng_tigerlei_zhidou.salary']
 
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets.'''
         startTime = datetime.datetime.now()
+
+        if trial:
+            print(" Now you are running trial mode")
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
@@ -21,6 +28,10 @@ class salary(dml.Algorithm):
 
         #new dataset 3: Salary data
         salary=[]
+        limit = 50000
+        if trial:
+            limit = TRIAL_LIMIT
+
         map={'2014':'ntv7-hwjm.json', '2015':'bejm-5s9g.json'}
         for year in map:
             url='https://data.cityofboston.gov/resource/'+map[year]+'?$limit=50000'
@@ -115,4 +126,12 @@ class salary(dml.Algorithm):
 
         repo.logout()       
         return doc
+
+if 'trial' in sys.argv:
+    salary.execute(True)
+# else:
+#     salary.execute()
+# doc = salary.provenance()
+# #print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 

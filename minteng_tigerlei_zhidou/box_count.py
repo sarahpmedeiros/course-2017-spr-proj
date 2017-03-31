@@ -4,21 +4,27 @@ import dml
 import prov.model
 import datetime 
 import uuid
+import sys
+
+TRIAL_LIMIT = 5000
 
 class box_count(dml.Algorithm):
     contributor = 'minteng_tigerlei_zhidou'
-    reads = []
-    writes = ['minteng_tigerlei_zhidou.rent', 'minteng_tigerlei_zhidou.location','minteng_tigerlei_zhidou.salary']
+    reads = ['minteng_tigerlei_zhidou.location']
+    writes = ['minteng_tigerlei_zhidou.box_count']
 
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets.'''
         startTime = datetime.datetime.now()
+        
+        if trial:
+            print(" Now you are running trial mode")
+
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('minteng_tigerlei_zhidou', 'minteng_tigerlei_zhidou')
-
 
         #get the boston bound
         import googlemaps
@@ -120,8 +126,12 @@ class box_count(dml.Algorithm):
                   
         return doc
 
-#box_count.execute()
-#doc = box_count.provenance()
-#print(doc.get_provn())
-#print(json.dumps(json.loads(doc.serialize()), indent=4))
+if 'trial' in sys.argv:
+    box_count.execute(True)
+# else:
+#     box_count.execute()
+
+# doc = box_count.provenance()
+# #print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
