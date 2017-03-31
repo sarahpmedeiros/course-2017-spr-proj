@@ -126,10 +126,19 @@ class box_count(dml.Algorithm):
             return "Not found", "Not found"
 
         for i in result:
-            center=[0.5*(i['box'][0][0]+i['box'][1][0]),.5*(i['box'][0][1]+i['box'][1][1])]
+            #center=[0.5*(i['box'][0][0]+i['box'][1][0]),.5*(i['box'][0][1]+i['box'][1][1])]
+            box=i['box']
+            a=repo['minteng_tigerlei_zhidou.location'].find({'type':'crime','location':{'$geoWithin':{ '$box': box}}})
+            x=[]
+            y=[]
+            for j in a:
+                x.append(j['location'][0])
+                y.append(j['location'][1])
+            center=[sum(x)/len(x),sum(y)/len(y)]
             zipcode=(gmaps.reverse_geocode(center)[0]['formatted_address'].split()[-2].replace(",",""))
-            if(len(zipcode))<5:
-                zipcode='Not found'
+            #if(len(zipcode))<5:
+            #    zipcode='Not found'
+            #print(zipcode)
             i['postal_code']=zipcode
             i['area'],i['avg_rent']=find_rent(zipcode)
         rr=[]
@@ -152,7 +161,7 @@ class box_count(dml.Algorithm):
                 i['grade']['rent']=2
             elif i['grade']['rent']==5:
                 i['grade']['rent']=1
-
+        
         repo.dropCollection("box_count")
         repo.createCollection("box_count")
         repo['minteng_tigerlei_zhidou.box_count'].insert_many(result)
