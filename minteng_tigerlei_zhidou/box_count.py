@@ -10,14 +10,14 @@ TRIAL_LIMIT = 5000
 
 class box_count(dml.Algorithm):
     contributor = 'minteng_tigerlei_zhidou'
-    reads = ['minteng_tigerlei_zhidou.location']
+    reads = ['minteng_tigerlei_zhidou.location', 'minteng_tigerlei_zhidou.rent']
     writes = ['minteng_tigerlei_zhidou.box_count']
 
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets.'''
         startTime = datetime.datetime.now()
-        
+        print("box_count start!")
         if trial:
             print(" Now you are running trial mode")
 
@@ -156,8 +156,8 @@ class box_count(dml.Algorithm):
         repo.dropCollection("box_count")
         repo.createCollection("box_count")
         repo['minteng_tigerlei_zhidou.box_count'].insert_many(result)
-        repo['minteng_tigerlei_zhidou.box_count'].metadata({'complete':True})
-        print(repo['minteng_tigerlei_zhidou.box_count'].metadata())
+
+        print("End!")
         
         repo.logout()
         endTime = datetime.datetime.now()
@@ -180,38 +180,27 @@ class box_count(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('dbr', 'http://datamechanics.io/data/')
         
         this_script = doc.agent('alg:minteng_tigerlei_zhidou#box_count', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         
         ### data : box_count
         #derive from location
-        box_count_resource = doc.entity('dbr:minteng_tigerlei_zhidou#location', {'prov:label':'Locations with tag and infomation', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        box_count_resource = doc.entity('dat:minteng_tigerlei_zhidou#location', {'prov:label':'Locations with tag and infomation', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        box_count_resource2 = doc.entity('dat:minteng_tigerlei_zhidou#rent', {'prov:label':'Rent data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        box_count = doc.entity('dat:minteng_tigerlei_zhidou#box_count', {prov.model.PROV_LABEL:'box count and grade', prov.model.PROV_TYPE:'ont:DataSet'})
         
         get_box_count = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
         doc.wasAssociatedWith(get_box_count, this_script)
         doc.usage(get_box_count, box_count_resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'})
 
-
-        box_count = doc.entity('dat:minteng_tigerlei_zhidou#box_count', {prov.model.PROV_LABEL:'box count and grade', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.usage(get_box_count, box_count_resource2, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'})
+       
         doc.wasAttributedTo(box_count, this_script)
         doc.wasGeneratedBy(box_count, get_box_count, endTime)
         doc.wasDerivedFrom(box_count, box_count_resource, get_box_count, get_box_count, get_box_count)
-
-
-        #derive from rent
-        box_count_resource2 = doc.entity('dbr:minteng_tigerlei_zhidou#rent', {'prov:label':'Rent data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        
-        get_box_count = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_box_count, this_script)
-        doc.usage(get_box_count, box_count_resource2, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval'})
-
-
-        box_count = doc.entity('dat:minteng_tigerlei_zhidou#box_count', {prov.model.PROV_LABEL:'box count and grade', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(box_count, this_script)
-        doc.wasGeneratedBy(box_count, get_box_count, endTime)
         doc.wasDerivedFrom(box_count, box_count_resource2, get_box_count, get_box_count, get_box_count)
         repo.logout()
                   

@@ -17,6 +17,8 @@ class rent(dml.Algorithm):
     def execute(trial = False):
         '''Retrieve some data sets.'''
         startTime = datetime.datetime.now()
+        print("rent start!")
+
         if trial:
             print(" Now you are running trial mode")
 
@@ -30,12 +32,25 @@ class rent(dml.Algorithm):
             # find the everage location coordinate
             city = city.replace(' ','+')
             url = "https://maps.googleapis.com/maps/api/geocode/json?address="+city+",+Boston,+MA&key="+key
-            response = urllib.request.urlopen(url).read().decode("utf-8")
+            while True:
+                try:
+                    response = urllib.request.urlopen(url).read().decode("utf-8")
+                except:
+                    pass
+                else: 
+                    break
             crime_info=json.loads(response)
             loc = crime_info['results'][0]['geometry']['location']
             
             url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+str(loc['lat'])+","+str(loc['lng'])+"&key="+key
-            response = urllib.request.urlopen(url).read().decode("utf-8")
+            
+            while True:
+                try:
+                    response = urllib.request.urlopen(url).read().decode("utf-8")
+                except:
+                    pass
+                else: 
+                    break
             crime_info=json.loads(response)
             
             for i in crime_info['results'][0]['address_components']:
@@ -61,8 +76,8 @@ class rent(dml.Algorithm):
         repo.dropCollection("rent")
         repo.createCollection("rent")
         repo['minteng_tigerlei_zhidou.rent'].insert_many(rent)
-        repo['minteng_tigerlei_zhidou.rent'].metadata({'complete':True})
-        print(repo['minteng_tigerlei_zhidou.rent'].metadata())
+
+        print("End!")
         
         
         repo.logout()
@@ -86,12 +101,12 @@ class rent(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('dbr', 'http://datamechanics.io/data/')
+
         
         this_script = doc.agent('alg:minteng_tigerlei_zhidou#rent', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         
         ### data 1: rent
-        rent_resource = doc.entity('dbr:minteng_tigerlei_zhidou#rent', {'prov:label':'City Average Rent', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'txt'})
+        rent_resource = doc.entity('dat:minteng_tigerlei_zhidou#rent', {'prov:label':'City Average Rent', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'txt'})
         
         get_rent = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(get_rent, this_script)

@@ -19,6 +19,8 @@ class salary(dml.Algorithm):
         '''Retrieve some data sets.'''
         startTime = datetime.datetime.now()
 
+        print("salary start!")
+
         if trial:
             print(" Now you are running trial mode")
         # Set up the database connection.
@@ -70,8 +72,8 @@ class salary(dml.Algorithm):
         repo.dropCollection("salary")
         repo.createCollection("salary")
         repo['minteng_tigerlei_zhidou.salary'].insert_many(salary1)
-        repo['minteng_tigerlei_zhidou.salary'].metadata({'complete':True})
-        print(repo['minteng_tigerlei_zhidou.salary'].metadata())
+
+        print("End!")
         
         repo.logout()
 

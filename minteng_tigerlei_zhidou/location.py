@@ -10,13 +10,15 @@ TRIAL_LIMIT = 5000
 
 class location(dml.Algorithm):
     contributor = 'minteng_tigerlei_zhidou'
-    reads = []
+    reads = ['minteng_tigerlei_zhidou.crime']
     writes = ['minteng_tigerlei_zhidou.location']
 
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets.'''
         startTime = datetime.datetime.now()
+
+        print("location start!")
 
         if trial:
             print(" Now you are running trial mode")
@@ -67,34 +69,22 @@ class location(dml.Algorithm):
                 continue
             transport.append(temp)
         
-        ###safety/crime data
+        ###crime data
         crime=[]  
-        record = 175000
 
-        if trial:
-            limit = TRIAL_LIMIT
-            record = 5000
-        url='https://data.cityofboston.gov/resource/29yf-ye7n.json?$limit='+ str(limit)+ '&$offset='
-        for i in range(1, record, limit):
-            response = urllib.request.urlopen(url+str(i)).read().decode("utf-8")
-            crime_info=json.loads(response)
-            for c in crime_info:
-                try:
-                    temp={}
-                    temp['location']=c['location']['coordinates'][::-1]
-                    temp['type'] = 'crime'
-                    temp['street']=c['street']
-                    crime.append(temp)
-                except KeyError:
-                    continue
+        for item in repo['minteng_tigerlei_zhidou.crime'].find({'year':{'$eq':2016}}):
+            temp={}
+            temp['type'] = item['type']
+            temp['location'] = item['location']
+            temp['year'] = item['year']
+            crime.append(temp)
 
         temp=food_info+transport+crime
         union = [t for t in temp if 0 not in t['location']]
         repo.dropCollection("location")
         repo.createCollection("location")
         repo['minteng_tigerlei_zhidou.location'].insert_many(union)
-        repo['minteng_tigerlei_zhidou.location'].metadata({'complete':True})
-        print(repo['minteng_tigerlei_zhidou.location'].metadata())
+        print("End!")
         
         repo.logout()
 
@@ -120,12 +110,12 @@ class location(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bd', 'https://data.cityofboston.gov/resource/')
-        doc.add_namespace('bds', 'http://datamechanics.io/data/')
+
         
         this_script = doc.agent('alg:minteng_tigerlei_zhidou#location', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         
         ### data 2: transport
-        transport_resource = doc.entity('bds:minteng_tigerlei_zhidou#stop', {'prov:label':'MBTA Stops', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'txt'})
+        transport_resource = doc.entity('dat:minteng_tigerlei_zhidou#stop', {'prov:label':'MBTA Stops', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'txt'})
         get_transport = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(get_transport, this_script)
         doc.usage(get_transport, transport_resource, startTime, None,
@@ -137,11 +127,11 @@ class location(dml.Algorithm):
         doc.usage(get_food, food_resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval','ont:Query':'?$select=address,city,businessname,location,zip'})
         ### data 4: safety/crime
-        crime_resource = doc.entity('bd:fqn4-4qap', {'prov:label':'Crime Incident Reports', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        crime_resource = doc.entity('dat:minteng_tigerlei_zhidou#crime', {'prov:label':'crime incidents in boston', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         get_crime = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(get_crime, this_script)
         doc.usage(get_crime, crime_resource, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval','ont:Query':'?$select=location,street'})
+                  {prov.model.PROV_TYPE:'ont:Retrieval'})
        
 
         ### new data 2: location
