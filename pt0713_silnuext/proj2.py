@@ -9,6 +9,7 @@ import uuid
 import sodapy
 
 
+# implementation of schemas from course notes
 
 def union(R, S):
     return R + S
@@ -33,13 +34,7 @@ def aggregate(R, f):
     return [(key, f([v for (k,v) in R if k == key])) for key in keys]
 
 
-
-
-
-
-
-
-
+# getting zipcode data from local directory/internet
 
 myshp = open("zipcodes_nt/ZIPCODES_NT_POLY.shp", "rb")
 mydbf = open("zipcodes_nt/ZIPCODES_NT_POLY.dbf", "rb")
@@ -62,28 +57,23 @@ for i in range(len(zipcode)):
 #print(zip_to_coor)
 
 
+# function of checking whether a point is inside a polygon
+# implemented online on
 
-def pip(x,y,poly):
-    x += 75
-    y += 75
-    print(poly)
-    poly = [(point[0] + 75, point[1] + 75) for point in poly]
-    print(x)
-    print(y)
-    print(poly)
+def pip(x, y, poly):
     n = len(poly)
     inside = False
     p1x,p1y = poly[0]
     for i in range(n+1):
-        p2x,p2y = poly[i % n]
-        if y > min(p1y,p2y):
-            if y <= max(p1y,p2y):
-                if x <= max(p1x,p2x):
+        p2x, p2y = poly[i % n]
+        if y > min(p1y, p2y):
+            if y <= max(p1y, p2y):
+                if x <= max(p1x, p2x):
                     if p1y != p2y:
-                        xints = (y-p1y)*(p2x-p1x)/(p2y-p1y)+p1x
+                        xints = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
                     if p1x == p2x or x <= xints:
                         inside = not inside
-        p1x,p1y = p2x,p2y
+        p1x, p1y = p2x, p2y
     return inside
 
 
@@ -113,11 +103,12 @@ class proj2(dml.Algorithm):
             response1 += client1.get("crime", limit=50000, offset=limit)
         s = json.dumps(response1, sort_keys=True, indent=2)
 
+        # getting coordination of crimes happened in 2014
         crime_coordination = project(response1,lambda x:(x["year"], x["location"]["latitude"],x["location"]["longitude"]))
         crime_14 = [crime_2014 for crime_2014 in crime_coordination if crime_2014[0] == "2014"]
         crime_14coordination = [(float(latitude), float(longitude)) for (year, latitude, longitude) in crime_14]
         
-
+        # getting coordination of crimes happened in 2015
         crime_15 = [crime_2015 for crime_2015 in crime_coordination if crime_2015[0] == "2015"]
         crime_15coordination = [(float(latitude), float(longitude)) for (year, latitude, longitude) in crime_15]
 
@@ -130,8 +121,9 @@ class proj2(dml.Algorithm):
         response2014 = client2014.get("jsri-cpsq")
         s = json.dumps(response2014, sort_keys=True, indent=2)
 
+        # getting coordination of properties that in the dataset of property assessment of 2014
         property14_price_coordination = project(response2014, lambda x: (x["av_total"],x["location"]))
-        property14_coordination = [(float(a[1][1:13]), float(a[1][-14:-1])) for a in property14_price_coordination]
+        property14_coordination = [eval(a[1]) for a in property14_price_coordination]
         property14_price_coordination_float = [(int(price[0]), coordination) for price in property14_price_coordination for coordination in property14_coordination]
 
         repo['pt0713_silnuext.property_crime'].insert_many(response2014)
@@ -144,25 +136,19 @@ class proj2(dml.Algorithm):
         response2015 = client2015.get("n7za-nsjh")
         s = json.dumps(response2015, sort_keys=True, indent=2)
 
+        # getting coordination of properties that in the dataset of property assessment of 2015
         property15_price_coordination = project(response2015, lambda x: (x["av_total"],x["location"]))
-        def convert(a):
-        	print(a)
-        	return float(a[1][1:13])
         property15_coordination = [eval(a[1]) for a in property15_price_coordination]
         property15_price_coordination_float = [(int(price[0]), coordination) for price in property15_price_coordination for coordination in property15_coordination]
-       # print(property15_coordination)
+        print(property15_coordination)
         repo['pt0713_silnuext.property_crime'].insert_many(response2015)
         repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.property_crime'].metadata())
-
-
-       
+ 
         repo.logout()
 
         endTime = datetime.datetime.now()
-
         return {"start":startTime, "end":endTime}
-
 
 
     @staticmethod
@@ -215,7 +201,6 @@ class proj2(dml.Algorithm):
         doc.wasAttributedTo(crime, this_script)
         doc.wasGeneratedBy(crime, get_property_crime, endTime)
         doc.wasDerivedFrom(crime, resource1, get_property_crime, get_property_crime, get_property_crime)
-
 
         repo.logout()
                   
