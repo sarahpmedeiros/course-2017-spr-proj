@@ -47,6 +47,7 @@ coor = [x.points for x in shapes]
 inProj = Proj(init='epsg:26986')
 outProj = Proj(init='epsg:4326')
 zip_to_coor = {}
+print(zip_to_coor)
 
 for i in range(len(zipcode)):
 	for j in range(len(coor[i])):
@@ -60,7 +61,7 @@ for i in range(len(zipcode)):
 # function of checking whether a point is inside a polygon
 # implemented online on
 
-def pip(x, y, poly):
+def polygon(x, y, poly):
     n = len(poly)
     inside = False
     p1x,p1y = poly[0]
@@ -75,6 +76,8 @@ def pip(x, y, poly):
                         inside = not inside
         p1x, p1y = p2x, p2y
     return inside
+
+
 
 
 
@@ -126,9 +129,20 @@ class proj2(dml.Algorithm):
         property14_coordination = [eval(a[1]) for a in property14_price_coordination]
         property14_price_coordination_float = [(int(price[0]), coordination) for price in property14_price_coordination for coordination in property14_coordination]
 
+
+        #print(property14_price_coordination_float)
         repo['pt0713_silnuext.property_crime'].insert_many(response2014)
         repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.property_crime'].metadata())
+
+
+        # correspond zipcode to property_14 (project2)
+
+        zipcode_property14 = [{} for i in range(len(property14_price_coordination_float)) if polygon(property14_price_coordination_float[i][1][0],property14_price_coordination_float[i][1][1],)]
+
+        def zip_code_property14():
+            mylist = []
+            return 0
 
 
         # import property2015 data
