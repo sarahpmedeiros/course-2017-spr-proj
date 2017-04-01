@@ -46,6 +46,7 @@ class crime(dml.Algorithm):
                     temp['location']=c['location']['coordinates'][::-1]
                     temp['type'] = 'crime'
                     temp['year'] = int(c['year'])
+                    temp['month'] = int(c['month'])
                     crime.append(temp)
                 except KeyError:
                     continue
@@ -66,6 +67,7 @@ class crime(dml.Algorithm):
                     temp['location']=[float(c['location']['latitude']), float(c['location']['longitude'])]
                     temp['type'] = 'crime'
                     temp['year'] = int(c['year'])
+                    temp['month'] = int(c['month'])
                     crime.append(temp)
                 except KeyError:
                     continue
