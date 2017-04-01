@@ -117,4 +117,4 @@ class transformation1(dml.Algorithm):
 
         return doc
 
-
+transformation1.execute()

@@ -64,6 +64,15 @@ class transformation0(dml.Algorithm):
 
             locations[idx]['doctorVisits'].append(i)
 
+        # print(visits[0])
+        # print(locations[0]['doctorVisits'][0])
+        c = 0
+        for i in visits:
+            if 'data_value' in i:
+                print(i['data_value'])
+
+
+
 
         repo.dropPermanent("hospitals_doctor_visits")
         repo.createPermanent("hospitals_doctor_visits")
@@ -109,4 +118,4 @@ class transformation0(dml.Algorithm):
 
         return doc
 
-
+transformation0.execute()

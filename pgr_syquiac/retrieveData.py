@@ -177,3 +177,4 @@ class retrieveData(dml.Algorithm):
         return doc
 
 ## eof
+retrieveData.execute()
