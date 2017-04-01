@@ -7,7 +7,7 @@ from scipy import stats
 class crimeAnalysis(dml.Algorithm):
     contributor = 'minteng_tigerlei_zhidou'
     reads = ['minteng_tigerlei_zhidou.crime', 'minteng_tigerlei_zhidou.box_count']
-
+    writes = []
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets.'''
