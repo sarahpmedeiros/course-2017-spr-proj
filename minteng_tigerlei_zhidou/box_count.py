@@ -5,6 +5,7 @@ import prov.model
 import datetime 
 import uuid
 import sys
+import googlemaps
 
 TRIAL_LIMIT = 5000
 
@@ -27,9 +28,7 @@ class box_count(dml.Algorithm):
         repo.authenticate('minteng_tigerlei_zhidou', 'minteng_tigerlei_zhidou')
 
         #get the boston bound
-        import googlemaps
-        api_key='AIzaSyCAZ-b2oPtcqrw1NNQ_jK2JhHptVmMKwgI'
-        gmaps = googlemaps.Client(key=api_key)
+        gmaps = googlemaps.Client(key = dml.auth['services']['googlemapsportal']['key'])
         geocode_result = gmaps.geocode('boston')
         bound=geocode_result[0]['geometry']['bounds']
         lat_range=[bound['southwest']['lat'],bound['northeast']['lat']]
@@ -217,8 +216,8 @@ class box_count(dml.Algorithm):
 
 if 'trial' in sys.argv:
     box_count.execute(True)
-# else:
-#     box_count.execute()
+else:
+    box_count.execute()
 
 # doc = box_count.provenance()
 # #print(doc.get_provn())

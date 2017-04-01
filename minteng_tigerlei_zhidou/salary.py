@@ -131,8 +131,8 @@ class salary(dml.Algorithm):
 
 if 'trial' in sys.argv:
     salary.execute(True)
-# else:
-#     salary.execute()
+else:
+    salary.execute()
 # doc = salary.provenance()
 # #print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))

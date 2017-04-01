@@ -1,10 +1,7 @@
 import urllib.request
-import json
-import dml
-import prov.model
-import datetime 
-import uuid
-import sys
+import json, googlemaps
+import dml, prov.model, uuid
+import datetime, sys 
 
 TRIAL_LIMIT = 5000
 
@@ -26,34 +23,16 @@ class rent(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('minteng_tigerlei_zhidou', 'minteng_tigerlei_zhidou')
-
+        gmaps = googlemaps.Client(key = dml.auth['services']['googlemapsportal']['key'])
 
         def getPostalCode(city, key):
             # find the everage location coordinate
             city = city.replace(' ','+')
-            url = "https://maps.googleapis.com/maps/api/geocode/json?address="+city+",+Boston,+MA&key="+key
-            while True:
-                try:
-                    response = urllib.request.urlopen(url).read().decode("utf-8")
-                except:
-                    pass
-                else: 
-                    break
-            crime_info=json.loads(response)
-            loc = crime_info['results'][0]['geometry']['location']
-            
-            url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+str(loc['lat'])+","+str(loc['lng'])+"&key="+key
-            
-            while True:
-                try:
-                    response = urllib.request.urlopen(url).read().decode("utf-8")
-                except:
-                    pass
-                else: 
-                    break
-            crime_info=json.loads(response)
-            
-            for i in crime_info['results'][0]['address_components']:
+            loc = gmaps.geocode(city + ', Boston, MA')[0]
+            loc = loc['geometry']['location']
+            crime_info = gmaps.reverse_geocode((loc['lat'], loc['lng']))
+
+            for i in crime_info[0]['address_components']:
                 if 'postal_code' in i['types']: break
             return i['long_name']
 
@@ -126,8 +105,8 @@ class rent(dml.Algorithm):
 
 if 'trial' in sys.argv:
     rent.execute(True)
-# else:
-#     rent.execute()
+else:
+    rent.execute()
 
 # doc = rent.provenance()
 # # print(doc.get_provn())
