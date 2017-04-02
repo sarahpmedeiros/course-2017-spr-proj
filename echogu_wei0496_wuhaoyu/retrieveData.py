@@ -25,9 +25,9 @@ class retrieveData(dml.Algorithm):
         repo.authenticate('echogu_wei0496_wuhaoyu', 'echogu_wei0496_wuhaoyu')
 
         # buses
-        url = 'http://datamechanics.io/data/_bps_transportation_challenge/buses.json'
+        url = 'http://datamechanics.io/data/_bps_transportation_challenge/buses.geojson'
         response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
+        r = json.loads(response)['features']
         repo.dropCollection("buses")
         repo.createCollection("buses")
         repo['echogu_wei0496_wuhaoyu.buses'].insert_many(r)
@@ -40,7 +40,7 @@ class retrieveData(dml.Algorithm):
         r = json.loads(response)
         repo.dropCollection("grade_safe_distance")
         repo.createCollection("grade_safe_distance")
-        repo['echogu_wei0496_wuhaoyu.grade_safe_distance'].insert(r)
+        repo['echogu_wei0496_wuhaoyu.grade_safe_distance'].insert_one(r)
         repo['echogu_wei0496_wuhaoyu.grade_safe_distance'].metadata({'complete': True})
         print(repo['echogu_wei0496_wuhaoyu.grade_safe_distance'].metadata())
 
@@ -55,9 +55,9 @@ class retrieveData(dml.Algorithm):
         print(repo['echogu_wei0496_wuhaoyu.safety_scores'].metadata())
 
         # schools
-        url = 'http://datamechanics.io/data/_bps_transportation_challenge/schools.json'
+        url = 'http://datamechanics.io/data/_bps_transportation_challenge/schools-real.geojson'
         response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
+        r = json.loads(response)['features']
         repo.dropCollection("schools")
         repo.createCollection("schools")
         repo['echogu_wei0496_wuhaoyu.schools'].insert_many(r)
@@ -65,9 +65,9 @@ class retrieveData(dml.Algorithm):
         print(repo['echogu_wei0496_wuhaoyu.schools'].metadata())
 
         # students
-        url = 'http://datamechanics.io/data/_bps_transportation_challenge/students.json'
+        url = 'http://datamechanics.io/data/_bps_transportation_challenge/students-simulated.geojson'
         response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
+        r = json.loads(response)['features']
         repo.dropCollection("students")
         repo.createCollection("students")
         repo['echogu_wei0496_wuhaoyu.students'].insert_many(r)
@@ -158,7 +158,7 @@ class retrieveData(dml.Algorithm):
 
         return doc
 
-# retrieveData.execute()
+retrieveData.execute()
 # doc = retrieveData.provenance()
 # print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
