@@ -9,7 +9,7 @@ import datetime
 import uuid
 from geopy.distance import vincenty
 from echogu_wei0496_wuhaoyu import transformData
-from echogu_wei0496_wuhaoyu import MST
+#from echogu_wei0496_wuhaoyu import MST
 
 class optimizeBusYards(dml.Algorithm):
     contributor = 'echogu_wei0496_wuhaoyu'
@@ -66,20 +66,20 @@ class optimizeBusYards(dml.Algorithm):
                 pass
 
         # group each student by their assigned schools
-        bus_yards = optimizeRoute.__group(students, buses)
+        bus_yards = optimizeBusYards.__group(students, buses)
         repo.dropCollection('echogu_wei0496_wuhaoyu.bus_yards')
         repo.createCollection('echogu_wei0496_wuhaoyu.bus_yards')
         repo['echogu_wei0496_wuhaoyu.bus_yards'].insert_many(bus_yards)
         repo['echogu_wei0496_wuhaoyu.bus_yards'].metadata({'complete': True})
         print(repo['echogu_wei0496_wuhaoyu.buses'].metadata())
-        #print(bus_yards[0])
+        print(bus_yards[0])
 
         # fixied the capacity of the buses, and send the students' locations
         # as coordinates and convert them to a graph, find the MST.
         # First, group the student belongs to the same school
-        projection_students = transformData.project(students, lambda t: (t['Assigned School'], [t['Latitude'], t['Longitude'], t['_id']]))
-        result = MST.find_mst(projection_students)
-        print(result[0])
+        # projection_students = transformData.project(students, lambda t: (t['Assigned School'], [t['Latitude'], t['Longitude'], t['_id']]))
+        # result = MST.find_mst(projection_students)
+        # print(result[0])
 
         endTime = datetime.datetime.now()
 
@@ -131,7 +131,7 @@ class optimizeBusYards(dml.Algorithm):
         projection_students = transformData.project(students, lambda t:(t['Assigned School'], [t['Latitude'], t['Longitude']]))
         # Now we have the centroid information of pick up location for every students
         # of each individual school
-        student_locations = transformData.aggregate(projection_students, optimizeRoute.__cal_centroid)
+        student_locations = transformData.aggregate(projection_students, optimizeBusYards.__cal_centroid)
         # Now we need to compute the distance between each bus yard and centroid and find the min
         closest_yard = []
         for i in range(0, len(student_locations)):
