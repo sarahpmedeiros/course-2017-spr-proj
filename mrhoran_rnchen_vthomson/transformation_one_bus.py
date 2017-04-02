@@ -23,11 +23,11 @@ import time
 # this transformation will check how many comm gardens and food pantries there are for each area
 # we want to take (zipcode, #comm gardens) (zipcode, #food pantries) --> (area, #food pantries#comm gardens)
 
-class transformation_one(dml.Algorithm):
+class transformation_one_bus(dml.Algorithm):
 
     contributor = 'mrhoran_rnchen'
 
-    reads = ['mrhoran_rnchen_vthomson.student',
+    reads = ['mrhoran_rnchen_vthomson.students',
              'mrhoran_rnchen_vthomson.buses']
 
     writes = ['mrhoran_rnchen_vthomson.student_per_school',
@@ -44,11 +44,13 @@ class transformation_one(dml.Algorithm):
         
         repo.authenticate('mrhoran_rnchen_vthomson', 'mrhoran_rnchen_vthomson')
         
-        X = project([x for x in repo.mrhoran_rnchen_vthomson.student.find({})], get_students)
+        X = project([x for x in repo.mrhoran_rnchen_vthomson.students.find({})], get_students)
 
-        #A = project(X, lambda t: (t[3], (t[5], t[1])), 1)
+        X2 = project(X, lambda t: (t[0], 1))
 
-        agg_student = aggregate(X, sum)
+        X3 = aggregate(X2, sum)
+        
+        students_per_school = project(select(product(X,X3), lambda t: t[0][0] == t[1][0]), lambda t: (t[0][0],(t[0][1], t[1][1])))
         
         #commgarden_zip_count = (project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1]))))
                 
@@ -57,19 +59,24 @@ class transformation_one(dml.Algorithm):
 
         #print(commgarden_zip_count)
 
-        repo.mrhoran_rnchen_vthomson.student_per_school.insert(dict(student_per_school))
+        repo.mrhoran_rnchen_vthomson.student_per_school.insert(dict(students_per_school))
 
 ############################
         
         Y = project([p for p in repo.mrhoran_rnchen_vthomson.buses.find({})], get_buses)
 
-        bus_per_yard_count = aggregate(Y,sum)
+        Y2 = project(Y, lambda t: (t[0], 1))
 
+        Y3 = aggregate(Y2, sum)
+
+        bus_per_school = project(select(product(Y,Y3), lambda t: t[0][0] == t[1][0]), lambda t: (t[0][0],(t[0][1], t[1][1])))
+
+        #print(bus_per_school[0])
            
         repo.dropCollection('buses_per_yard')
         repo.createCollection('buses_per_yard')
         
-        repo.mrhoran_rnchen_vthomson.buses_per_yard.insert(dict(buses_per_yard))
+        repo.mrhoran_rnchen_vthomson.buses_per_yard.insert(dict(bus_per_school))
        
 ##        # combine them to make a new data set like (zip, (comm,1), (foodp, 1))
 ##
@@ -120,35 +127,35 @@ class transformation_one(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         #doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('dat:mrhoran_rnchen_vthomson#transformation_one', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('dat:mrhoran_rnchen_vthomson#transformation_one_bus', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
         resource1 = doc.entity('dat:_bps_transportation_challenge/buses.json', {'prov:label':'Bus Yard Aggregation', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_buses_per_yard = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_buses, this_script)
+        doc.wasAssociatedWith(get_buses_per_yard, this_script)
 
-        doc.usage(get_buses, resource1, startTime, None,
+        doc.usage(get_buses_per_yard, resource1, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'
                   #'ont:Query':'location, area, coordinates, zip_code' #?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
                   }
                   )
 
            # label section might be wrong
-        resource2 = doc.entity('dat:_bps_transportation_challenge/schools.json', {'prov:label':'Student Aggregation', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource2 = doc.entity('dat:_bps_transportation_challenge/students.json', {'prov:label':'Student Aggregation', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_student_per_school = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_students, this_script)
+        doc.wasAssociatedWith(get_student_per_school, this_script)
 
-        doc.usage(get_students, resource1, startTime, None,
+        doc.usage(get_student_per_school, resource2, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'
                   #'ont:Query':'location, area, coordinates, zip_code' #?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
                   }
                   )
         student_per_school = doc.entity('dat:mrhoran_rnchen_vthomson#student_per_school', {prov.model.PROV_LABEL:'Students per school', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
         doc.wasAttributedTo(student_per_school, this_script)
-        doc.wasGeneratedBy(student_per_school, get_students, endTime)
+        doc.wasGeneratedBy(student_per_school, get_student_per_school, endTime)
         doc.wasDerivedFrom(student_per_school, resource2, get_student_per_school, get_student_per_school, get_student_per_school)
 
     
@@ -177,11 +184,13 @@ def product(R, S):
 
 def get_students(student): # want to return the coordinates of the towns in and around Boston
 
-    lat = student['School Latitude']
-    long = student['School Longitude']
-    name = student['Assigned School']
+    name = student["Assigned School"]
+    
+    if(student["Assigned School"] == "Sr. Kennedy School"):
 
-    return((name, (lat,long)), 1)
+        name = "Sr Kennedy School"
+        
+    return([name, (student["School Longitude"], student["School Latitude"])])
 
 def get_buses(bus): # want to return the coordinates of the towns in and around Boston
 
@@ -189,10 +198,10 @@ def get_buses(bus): # want to return the coordinates of the towns in and around 
     long = bus['Bus Yard Longitude']
     name =  bus['Bus Yard']
 
-    return((name, (lat,long)), 1)
+    return([name, (lat,long)])
 
-transformation_one.execute()
-doc = transformation_one.provenance()
+transformation_one_bus.execute()
+doc = transformation_one_bus.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
