@@ -5,16 +5,15 @@ import datetime
 import uuid
 import ast
 import sodapy
+import urllib.request
 
 class getData(dml.Algorithm):
 
     contributor = 'mrhoran_rnchen_vthomson'
     reads = []
-    writes = ['mrhoran_rnchen.community_gardens',
-              'mrhoran_rnchen.food_pantries',
-              'mrhoran_rnchen.demographics',
-              'mrhoran_rnchen.medical_events',
-              'mrhoran_rnchen.farmers_market']
+    writes = ['mrhoran_rnchen_vthomson.buses',
+              'mrhoran_rnchen_vthomson.schools',
+              'mrhoran_rnchen_vthomson.students']
 
     @staticmethod
     def execute(trial = False):
@@ -34,27 +33,43 @@ class getData(dml.Algorithm):
         
         bus_datasets = {
 
-            "buses": "buses",
-            "schools":"schools",     
-            "students": "students"
+            "buses": "buses.json",
+            "schools":"schools.json",     
+            "students": "students.json"
 
 	}
 
 	### DATASETS UPLOADS #################################
         
-        for dataset in city_of_boston_datasets:
-
-            client = sodapy.Socrata("http://datamechanics.io/data/_bps_transportation_challenge", None)
-            response = (client.get(bus_datasets[dataset], limit=1000))
-            
-            print(json.dumps(response, sort_keys=True, indent=2))
-            s = json.dumps(response, sort_keys=True, indent=2)
+        url = 'http://datamechanics.io/data/_bps_transportation_challenge/buses.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8") #maybe change
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("buses")
+        repo.createCollection("buses")
+        repo['mrhoran_rnchen_vthomson.buses'].insert_many(r)
+        repo['mrhoran_rnchen_vthomson.buses'].metadata({'complete':True})
         
-            repo.dropCollection(dataset)
-            repo.createCollection(dataset)
-            repo['mrhoran_rnchen_vthomson.' + dataset].insert_many(response)
-            repo['mrhoran_rnchen_vthomson.'+ dataset].metadata({'complete':True})
-            print(type(repo['mrhoran_rnchen_vthomson.'+dataset].metadata()))
+        url = 'http://datamechanics.io/data/_bps_transportation_challenge/schools.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8") #maybe change
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("schools")
+        repo.createCollection("schools")
+        repo['mrhoran_rnchen_vthomson.schools'].insert_many(r)
+        repo['mrhoran_rnchen_vthomson.schools'].metadata({'complete':True})
+
+        
+        url = 'http://datamechanics.io/data/_bps_transportation_challenge/students.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8") #maybe change
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("students")
+        repo.createCollection("students")
+        repo['mrhoran_rnchen_vthomson.students'].insert_many(r)
+        repo['mrhoran_rnchen_vthomson.students'].metadata({'complete':True})
+
+
 
         repo.logout()
 
@@ -66,11 +81,14 @@ class getData(dml.Algorithm):
     
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
-        '''
+            '''
             Create the provenance document describing everything happening
             in this script. Each run of the script will generate a new
             document describing that invocation event.
             '''
+            return doc
+
+
 """
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
@@ -172,7 +190,6 @@ class getData(dml.Algorithm):
         repo.logout()
   """
                 
-        return doc
 
 getData.execute()
 doc = getData.provenance()
