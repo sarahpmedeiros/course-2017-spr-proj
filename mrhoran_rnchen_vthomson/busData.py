@@ -8,7 +8,7 @@ import sodapy
 
 class getData(dml.Algorithm):
 
-    contributor = 'mrhoran_rnchen'
+    contributor = 'mrhoran_rnchen_vthomson'
     reads = []
     writes = ['mrhoran_rnchen.community_gardens',
               'mrhoran_rnchen.food_pantries',
@@ -25,84 +25,36 @@ class getData(dml.Algorithm):
 
         repo = client.repo
         
-        repo.authenticate('mrhoran_rnchen', 'mrhoran_rnchen')
+        repo.authenticate('mrhoran_rnchen_vthomson', 'mrhoran_rnchen_vthomson')
     
         #with open('../auth.json') as json_data:
             #credentials = json.load(json_data)
 
         cred = dml.auth
         
-        city_of_boston_datasets = {
+        bus_datasets = {
 
-            "community_gardens": "rdqf-ter7",#'https://data.cityofboston.gov/resource/rdqf-ter7.json',
-            "food_pantries":"4tie-bhxw" #'https://data.cityofboston.gov/resource/4tie-bhxw.json'
-            }
+            "buses": "buses",
+            "schools":"schools",     
+            "students": "students"
 
-        
-        city_of_cambrige_datasets = {
+	}
 
-            "demographics": "phr4-6r29",#"https://data.cambridgema.gov/resource/phr4-6r29.json",
-            "medical_events": "x4ex-qvpn" #"https://data.cambridgema.gov/resource/x4ex-qvpn.json" # really huge maybe break up at some point
-            } 
-        
-
-	### DATASETS FROM CITY OF BOSTON DATA PORTAL #################################
-        
-        token = cred['services']['cityofbostondataportal']['token']
+	### DATASETS UPLOADS #################################
         
         for dataset in city_of_boston_datasets:
 
-            client = sodapy.Socrata("data.cityofboston.gov", None)
-            response = (client.get(city_of_boston_datasets[dataset], limit=1000))
+            client = sodapy.Socrata("http://datamechanics.io/data/_bps_transportation_challenge", None)
+            response = (client.get(bus_datasets[dataset], limit=1000))
             
             print(json.dumps(response, sort_keys=True, indent=2))
             s = json.dumps(response, sort_keys=True, indent=2)
         
             repo.dropCollection(dataset)
             repo.createCollection(dataset)
-            repo['mrhoran_rnchen.' + dataset].insert_many(response)
-            repo['mrhoran_rnchen.'+ dataset].metadata({'complete':True})
-            print(type(repo['mrhoran_rnchen.'+dataset].metadata()))
-
-
-
-        ### DATASETS FROM CAMBRIDE DATA PORTAL ########################################
-
-           
-        #token2 = cred['services']['cityofcambridgedataportal']['token']
-
-
-        for dataset in city_of_cambrige_datasets:
-
-            client = sodapy.Socrata("data.cambridgema.gov", token)
-            response = client.get(city_of_cambrige_datasets[dataset], limit=1000)
-            print(json.dumps(response, sort_keys=True, indent=2))
-            
-            s = json.dumps(response, sort_keys=True, indent=2)
-            
-            repo.dropCollection(dataset)
-            repo.createCollection(dataset)
-            repo['mrhoran_rnchen.'+dataset].insert_many(response)
-            repo['mrhoran_rnchen.'+dataset].metadata({'complete':True})
-            print(repo['mrhoran_rnchen.'+dataset].metadata())
-
-
-        ## DATASETS FROM MASSDATA PORTAL ###############################################
-
-        #if you need the url for any reason : "https://data.mass.gov/resource/66t5-f563.json"
-
-        client = sodapy.Socrata("data.mass.gov", token)
-        response = client.get('66t5-f563', limit=1000)
-        print(json.dumps(response, sort_keys=True, indent=2))
-            
-        s = json.dumps(response, sort_keys=True, indent=2)
-            
-        repo.dropCollection('farmers_market')
-        repo.createCollection('farmers_market')
-        repo['mrhoran_rnchen.farmers_market'].insert_many(response)
-        repo['mrhoran_rnchen.farmers_market'].metadata({'complete':True})
-
-        print(repo['mrhoran_rnchenfarmers_market'].metadata())
+            repo['mrhoran_rnchen_vthomson.' + dataset].insert_many(response)
+            repo['mrhoran_rnchen_vthomson.'+ dataset].metadata({'complete':True})
+            print(type(repo['mrhoran_rnchen_vthomson.'+dataset].metadata()))
 
         repo.logout()
 
@@ -119,7 +71,7 @@ class getData(dml.Algorithm):
             in this script. Each run of the script will generate a new
             document describing that invocation event.
             '''
-
+"""
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
@@ -218,12 +170,13 @@ class getData(dml.Algorithm):
         doc.wasDerivedFrom(farmers_market, resource4, get_farmers_markets, get_farmers_markets, get_farmers_markets)
 
         repo.logout()
-                  
+  """
+                
         return doc
 
 getData.execute()
 doc = getData.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
