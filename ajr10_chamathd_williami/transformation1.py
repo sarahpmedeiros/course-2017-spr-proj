@@ -25,8 +25,11 @@ class transformation1(dml.Algorithm):
         repo.createCollection(colName)
 
         # Operational code here:
-        
-        
+        nhood_data = repo["ajr10_chamathd_williami.neighborhood_sea_level_data"].find({}, {"center_x": 1, "center_y": 1}).limit(50)
+        centers = []
+        for nhood in nhood_data:
+            centers += [[nhood["center_x"], nhood["center_y"]]]
+        print(centers)
         
         # Logout and end
         repo.logout()
