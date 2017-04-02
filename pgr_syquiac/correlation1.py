@@ -21,7 +21,7 @@ import scipy.stats
 class correlation1(dml.Algorithm):
     contributor = 'pgr_syquiac'
     reads = ['pgr_syquiac.hospitals_doctor_visits']
-    writes = ['pgr_syquiac.hospitals_doctor_correlation']
+    writes = ['pgr_syquiac.visit_rate_distance']
 
     @staticmethod
     def execute(trial = False):
@@ -34,30 +34,40 @@ class correlation1(dml.Algorithm):
 
         visits = repo.pgr_syquiac.hospitals_doctor_visits.find()
 
-        # Append pairs of visit rates, distance to here
-        visit_rate_distance = []
+        # Append tuples of (distance_nearest_hospital, rate_of_checkup, name_of_hospital) to here
+        rates = []
 
         # just prints how many data points each one has
         # for i in visits:
         # 	print(len(i['doctorVisits']))
         # print(visits[0])
 
-        # get the distance of each data point from the hospital
+        # get the distance of each data point from their closest hospital
         # get the rate of people going to the doctor for a checkup
-        # find that correlation 
+        # Create a data structure of the form (distance, rate, name)
         for i in visits:
         	for j in i['doctorVisits']:
         		rate_distance = vincenty(j['geolocation']['coordinates'], i['location']['coordinates']).miles
-        		if 'data_value' in j and rate_distance > 2:
-        			visit_rate_distance.append((rate_distance, float(j['data_value'])))
+        		if 'data_value' in j and rate_distance:
+        			rates.append({'distance_nearest_hospital': rate_distance, 'rate_of_checkup': float(j['data_value']), 'name_of_hospital': i['name']})
 
-        dist = [x for (x, y) in visit_rate_distance]
-        rate = [y for (x, y) in visit_rate_distance]
+        repo.dropPermanent("visit_rate_distance")
+        repo.createPermanent("visit_rate_distance")
+        repo['pgr_syquiac.visit_rate_distance'].insert_many(rates)
+        print("Inserted new collection!")
 
 
-        math = scipy.stats.pearsonr(dist, rate)
-        print(math[0])
-        print(math[1])
+
+        print("Calculating correlation coefficient and p-value...")
+        x = []
+        y = []
+        for i in rates:
+        	x.append(i['distance_nearest_hospital'])
+        	y.append(i['rate_of_checkup'])
+
+        math = scipy.stats.pearsonr(x, y)
+        print("Correlation coefficient is " + str(math[0]))
+        print("P-value is " + str(math[1]))
 
 
     @staticmethod

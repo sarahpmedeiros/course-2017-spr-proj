@@ -64,12 +64,12 @@ class transformation0(dml.Algorithm):
 
             locations[idx]['doctorVisits'].append(i)
 
-        # print(visits[0])
-        # print(locations[0]['doctorVisits'][0])
-        c = 0
-        for i in visits:
-            if 'data_value' in i:
-                print(i['data_value'])
+        print(visits[0])
+        print(locations[0])
+        # c = 0
+        # for i in visits:
+        #     if 'data_value' in i:
+        #         print(i['data_value'])
 
 
 
