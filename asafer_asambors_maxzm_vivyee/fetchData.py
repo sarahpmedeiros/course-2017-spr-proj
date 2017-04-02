@@ -9,7 +9,7 @@ import requests
 class fetchData(dml.Algorithm):
     contributor = 'asafer_asambors_maxzm_vivyee'
     reads = []
-    writes = ['asafer_asambors_maxzm_vivyee.orchards', 'asafer_asambors_maxzm_vivyee.corner_stores', 'asafer_asambors_maxzm_vivyee.obesity', 'asafer_asambors_maxzm_vivyee.nutrition_prog', 'asafer_asambors_maxzm_vivyee.mbta_routes']
+    writes = ['asafer_asambors_maxzm_vivyee.orchards', 'asafer_asambors_maxzm_vivyee.corner_stores', 'asafer_asambors_maxzm_vivyee.obesity', 'asafer_asambors_maxzm_vivyee.nutrition_prog', 'asafer_asambors_maxzm_vivyee.mbta_routes', 'asafer_asambors_maxzm_vivyee.control']
 
     @staticmethod
     def setup():
@@ -81,6 +81,7 @@ class fetchData(dml.Algorithm):
             'asafer_asambors_maxzm_vivyee.obesity': 'https://chronicdata.cdc.gov/resource/ahrt-wk9b.json?$offset=13908&$limit=177',
             'asafer_asambors_maxzm_vivyee.nutrition_prog': 'https://data.cityofboston.gov/resource/ahjc-pw5e.json?$$app_token=' + cityofboston_token,
             'asafer_asambors_maxzm_vivyee.mbta_routes': 'http://realtime.mbta.com/developer/api/v2/routes?api_key=' + mbta_key + '&format=json'
+            'asafer_asambors_maxzm_vivyee.control': 'https://data.cityofboston.gov/api/views/94qr-huhe/rows.json?accessType=DOWNLOAD'
         }
 
         for collection, url in datasets.items():
