@@ -151,10 +151,10 @@ class location(dml.Algorithm):
                   
         return doc
 
-if 'trial' in sys.argv:
-    location.execute(True)
-else:
-    location.execute()
+# if 'trial' in sys.argv:
+#     location.execute(True)
+# else:
+#     location.execute()
 # doc = location.provenance()
 # #print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))

@@ -129,10 +129,10 @@ class salary(dml.Algorithm):
         repo.logout()       
         return doc
 
-if 'trial' in sys.argv:
-    salary.execute(True)
-else:
-    salary.execute()
+# if 'trial' in sys.argv:
+#     salary.execute(True)
+# else:
+#     salary.execute()
 # doc = salary.provenance()
 # #print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))

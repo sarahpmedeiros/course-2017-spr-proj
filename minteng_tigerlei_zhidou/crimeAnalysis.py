@@ -46,4 +46,4 @@ class crimeAnalysis(dml.Algorithm):
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):  
         return doc
 
-crimeAnalysis.execute()
+# crimeAnalysis.execute()

@@ -122,10 +122,10 @@ class crime(dml.Algorithm):
                   
         return doc
 
-if 'trial' in sys.argv:
-    crime.execute(True)
-else:
-    crime.execute()
+# if 'trial' in sys.argv:
+#     crime.execute(True)
+# else:
+#     crime.execute()
 # doc = location.provenance()
 # #print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))

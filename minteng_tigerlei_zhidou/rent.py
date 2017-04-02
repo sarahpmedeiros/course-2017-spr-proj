@@ -103,10 +103,10 @@ class rent(dml.Algorithm):
                   
         return doc
 
-if 'trial' in sys.argv:
-    rent.execute(True)
-else:
-    rent.execute()
+# if 'trial' in sys.argv:
+#     rent.execute(True)
+# else:
+#     rent.execute()
 
 # doc = rent.provenance()
 # # print(doc.get_provn())

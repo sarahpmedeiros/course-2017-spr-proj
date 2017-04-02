@@ -214,10 +214,10 @@ class box_count(dml.Algorithm):
                   
         return doc
 
-if 'trial' in sys.argv:
-    box_count.execute(True)
-else:
-    box_count.execute()
+# if 'trial' in sys.argv:
+#     box_count.execute(True)
+# else:
+#     box_count.execute()
 
 # doc = box_count.provenance()
 # #print(doc.get_provn())
