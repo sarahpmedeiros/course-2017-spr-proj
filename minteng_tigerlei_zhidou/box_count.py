@@ -100,17 +100,17 @@ class box_count(dml.Algorithm):
             r1=get_grade(r['count']['crime'],c)
             r2=get_grade(r['count']['food'],f)
             r3=get_grade(r['count']['transport'],t)
-            r['grade']={'crime':r1,'food':r2, 'transport':r3}
+            r['grade']={'safety':r1,'food':r2, 'transport':r3}
         #reverse grade for crime:
         for i in result:
-            if i['grade']['crime']==1:
-                i['grade']['crime']=5
-            elif i['grade']['crime']==2:
-                i['grade']['crime']=4
-            elif i['grade']['crime']==4:
-                i['grade']['crime']=2
-            elif i['grade']['crime']==5:
-                i['grade']['crime']=1
+            if i['grade']['safety']==1:
+                i['grade']['safety']=5
+            elif i['grade']['safety']==2:
+                i['grade']['safety']=4
+            elif i['grade']['safety']==4:
+                i['grade']['safety']=2
+            elif i['grade']['safety']==5:
+                i['grade']['safety']=1
         #find the rent and the grade for rent
         def find_rent(zipcode):
             rent=repo['minteng_tigerlei_zhidou.rent'].find()
