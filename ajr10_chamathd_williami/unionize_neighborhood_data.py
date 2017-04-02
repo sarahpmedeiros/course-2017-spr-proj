@@ -7,10 +7,10 @@ import datetime
 import uuid
 
 class unionize_neighborhood_data(dml.Algorithm):
-    contributor = 'chamathd'
-    reads = ['chamathd.neighborhood_pop_boston', \
-              'chamathd.neighborhood_pop_cambridge']
-    writes = ['chamathd.neighborhood_pop']
+    contributor = 'ajr10_chamathd_williami'
+    reads = ['ajr10_chamathd_williami.neighborhood_pop_boston', \
+              'ajr10_chamathd_williami.neighborhood_pop_cambridge']
+    writes = ['ajr10_chamathd_williami.neighborhood_pop']
 
     @staticmethod
     def execute(trial = False):
@@ -20,17 +20,17 @@ class unionize_neighborhood_data(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('chamathd', 'chamathd')
+        repo.authenticate('ajr10_chamathd_williami', 'ajr10_chamathd_williami')
 
         # Perform initialization for the new repository
-        colName = "chamathd.neighborhood_pop"
+        colName = "ajr10_chamathd_williami.neighborhood_pop"
         repo.dropCollection(colName)
         repo.createCollection(colName)
 
         # Retrieve data from the Boston neighborhood collection
         print("Retrieving data from the Boston neighborhood collection")
 
-        boston_nhood_col = repo["chamathd.neighborhood_pop_boston"].find().limit(50)
+        boston_nhood_col = repo["ajr10_chamathd_williami.neighborhood_pop_boston"].find().limit(50)
 
         print("Inserting Boston data into collection", colName)
         for nhood in boston_nhood_col:
@@ -48,7 +48,7 @@ class unionize_neighborhood_data(dml.Algorithm):
         # Retrieve data from the Cambridge neighborhood collection
         print("Retrieving data from the Cambridge neighborhood collection")
 
-        cambridge_nhood_col = repo["chamathd.neighborhood_pop_cambridge"].find().limit(50)
+        cambridge_nhood_col = repo["ajr10_chamathd_williami.neighborhood_pop_cambridge"].find().limit(50)
 
         print("Inserting Cambridge data into collection", colName)
         for nhood in cambridge_nhood_col:
@@ -88,16 +88,16 @@ class unionize_neighborhood_data(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('chamathd', 'chamathd')
+        repo.authenticate('ajr10_chamathd_williami', 'ajr10_chamathd_williami')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('cha', 'chamathd')
+        doc.add_namespace('acw', 'ajr10_chamathd_williami')
 
-        this_script = doc.agent('alg:chamathd#unionize_neighborhood_data', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        neighborhood_pop_boston_res = doc.entity('cha:neighborhood_pop_boston', {'prov:label':'Boston Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        neighborhood_pop_cambridge_res = doc.entity('cha:neighborhood_pop_cambridge', {'prov:label':'Cambridge Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        this_script = doc.agent('alg:ajr10_chamathd_williami#unionize_neighborhood_data', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        neighborhood_pop_boston_res = doc.entity('acw:neighborhood_pop_boston', {'prov:label':'Boston Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        neighborhood_pop_cambridge_res = doc.entity('acw:neighborhood_pop_cambridge', {'prov:label':'Cambridge Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_neighborhood_pop_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_neighborhood_pop_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
@@ -116,7 +116,7 @@ class unionize_neighborhood_data(dml.Algorithm):
                   }
                   )
 
-        neighborhood_pop = doc.entity('dat:chamathd#neighborhood_pop', {prov.model.PROV_LABEL:'Unionized Boston-Area Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataSet'})
+        neighborhood_pop = doc.entity('dat:ajr10_chamathd_williami#neighborhood_pop', {prov.model.PROV_LABEL:'Unionized Boston-Area Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(neighborhood_pop, this_script)
         doc.wasGeneratedBy(neighborhood_pop, get_neighborhood_pop_boston, endTime)
         doc.wasGeneratedBy(neighborhood_pop, get_neighborhood_pop_cambridge, endTime)

@@ -1,4 +1,4 @@
-import urllib.request
+import requests
 import json
 import dml
 import prov.model
@@ -6,10 +6,10 @@ import datetime
 import uuid
 
 class fetch_sea_level_data(dml.Algorithm):
-    contributor = 'chamathd'
+    contributor = 'ajr10_chamathd_williami'
     reads = []
-    writes = ['chamathd.sea_level_five', \
-              'chamathd.sea_level_seven']
+    writes = ['ajr10_chamathd_williami.sea_level_five', \
+              'ajr10_chamathd_williami.sea_level_seven']
 
     @staticmethod
     def execute(trial = False):
@@ -19,15 +19,15 @@ class fetch_sea_level_data(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('chamathd', 'chamathd')
+        repo.authenticate('ajr10_chamathd_williami', 'ajr10_chamathd_williami')
 
         # Sea level data for 5-foot rise
         print("Fetching five-foot sea level data from Boston ArcGIS Open Data")
 
-        colName = "chamathd.sea_level_five"
+        colName = "ajr10_chamathd_williami.sea_level_five"
         
         url = "http://bostonopendata-boston.opendata.arcgis.com/datasets/4ebe1cce95c04125a89315615724f4b9_0.geojson"
-        response = urllib.request.urlopen(url).read().decode("utf-8")
+        response = requests.get(url).text
         
         r = json.loads(response)
         
@@ -42,10 +42,10 @@ class fetch_sea_level_data(dml.Algorithm):
         # Sea level data for 7.5-foot rise
         print("Fetching seven-foot sea level data from Boston ArcGIS Open Data")
 
-        colName = "chamathd.sea_level_seven"
+        colName = "ajr10_chamathd_williami.sea_level_seven"
         
         url = "http://bostonopendata-boston.opendata.arcgis.com/datasets/bfe3e93c27004a69921b629b92cd1f9f_0.geojson"
-        response = urllib.request.urlopen(url).read().decode("utf-8")
+        response = requests.get(url).text
         
         r = json.loads(response)
         
@@ -74,14 +74,14 @@ class fetch_sea_level_data(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('chamathd', 'chamathd')
+        repo.authenticate('ajr10_chamathd_williami', 'ajr10_chamathd_williami')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
 
-        this_script = doc.agent('alg:chamathd#fetch_sea_level_data', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:ajr10_chamathd_williami#fetch_sea_level_data', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         sea_level_five_res = doc.entity('bod:4ebe1cce95c04125a89315615724f4b9_0.geojson', {'prov:label':'Sea Level Rise Plus 5 Feet', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         sea_level_seven_res = doc.entity('bod:bfe3e93c27004a69921b629b92cd1f9f_0.geojson', {'prov:label':'Sea Level Rise Plus 7.5 Feet', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
@@ -102,12 +102,12 @@ class fetch_sea_level_data(dml.Algorithm):
                   }
                   )
 
-        sea_level_five = doc.entity('dat:chamathd#sea_level_five', {prov.model.PROV_LABEL:'Sea Level Rise Plus 5 Feet', prov.model.PROV_TYPE:'ont:DataSet'})
+        sea_level_five = doc.entity('dat:ajr10_chamathd_williami#sea_level_five', {prov.model.PROV_LABEL:'Sea Level Rise Plus 5 Feet', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(sea_level_five, this_script)
         doc.wasGeneratedBy(sea_level_five, get_sea_level_five, endTime)
         doc.wasDerivedFrom(sea_level_five, sea_level_five_res, get_sea_level_five, get_sea_level_five, get_sea_level_five)
 
-        sea_level_seven = doc.entity('dat:chamathd#sea_level_seven', {prov.model.PROV_LABEL:'Sea Level Rise Plus 7.5 Feet', prov.model.PROV_TYPE:'ont:DataSet'})
+        sea_level_seven = doc.entity('dat:ajr10_chamathd_williami#sea_level_seven', {prov.model.PROV_LABEL:'Sea Level Rise Plus 7.5 Feet', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(sea_level_seven, this_script)
         doc.wasGeneratedBy(sea_level_seven, get_sea_level_seven, endTime)
         doc.wasDerivedFrom(sea_level_seven, sea_level_seven_res, get_sea_level_seven, get_sea_level_seven, get_sea_level_seven)

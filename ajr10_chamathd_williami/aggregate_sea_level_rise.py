@@ -8,11 +8,11 @@ import uuid
 from shapely.geometry import shape
 
 class aggregate_sea_level_rise(dml.Algorithm):
-    contributor = 'chamathd'
-    reads = ['chamathd.neighborhood_info', \
-             'chamathd.sea_level_five', \
-             'chamathd.sea_level_seven']
-    writes = ['chamathd.neighborhood_sea_level_data']
+    contributor = 'ajr10_chamathd_williami'
+    reads = ['ajr10_chamathd_williami.neighborhood_info', \
+             'ajr10_chamathd_williami.sea_level_five', \
+             'ajr10_chamathd_williami.sea_level_seven']
+    writes = ['ajr10_chamathd_williami.neighborhood_sea_level_data']
 
     @staticmethod
     def execute(trial = False):
@@ -22,21 +22,21 @@ class aggregate_sea_level_rise(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('chamathd', 'chamathd')
+        repo.authenticate('ajr10_chamathd_williami', 'ajr10_chamathd_williami')
 
         # Perform initialization for the new repository
-        colName = "chamathd.neighborhood_sea_level_data"
+        colName = "ajr10_chamathd_williami.neighborhood_sea_level_data"
         repo.dropCollection(colName)
         repo.createCollection(colName)
 
         # Retrieve data from the neighborhood info collection
         print("Retrieving data from the neighborhood info collection")
-        nhood_info_col = repo["chamathd.neighborhood_info"].find().limit(50)
+        nhood_info_col = repo["ajr10_chamathd_williami.neighborhood_info"].find().limit(50)
         print()
 
         # Retrieve polygon data for 7.5-foot sea level rise
         print("Retrieving polygon data from the Boston neighborhood area collection")
-        sea_level_seven_col = repo["chamathd.sea_level_seven"].find().limit(0)
+        sea_level_seven_col = repo["ajr10_chamathd_williami.sea_level_seven"].find().limit(0)
         print()
 
         # Iterate through each neighborhood
@@ -56,7 +56,7 @@ class aggregate_sea_level_rise(dml.Algorithm):
 
             # Retrieve polygon data for 5-foot sea level rise
             print("Testing", nhood["name"], "against 5-foot sea level rise")
-            sea_level_five_col = repo["chamathd.sea_level_five"].find().limit(0)
+            sea_level_five_col = repo["ajr10_chamathd_williami.sea_level_five"].find().limit(0)
             intersect = False
             intersectArea = 0
             intersectRatio = 0.0
@@ -82,7 +82,7 @@ class aggregate_sea_level_rise(dml.Algorithm):
 
             # Retrieve polygon data for 7.5-foot sea level rise
             print("Testing", nhood["name"], "against 7.5-foot sea level rise")
-            sea_level_seven_col = repo["chamathd.sea_level_seven"].find().limit(0)
+            sea_level_seven_col = repo["ajr10_chamathd_williami.sea_level_seven"].find().limit(0)
             intersect = False
             intersectArea = 0
             intersectRatio = 0.0
@@ -134,17 +134,17 @@ class aggregate_sea_level_rise(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('chamathd', 'chamathd')
+        repo.authenticate('ajr10_chamathd_williami', 'ajr10_chamathd_williami')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('cha', 'chamathd')
+        doc.add_namespace('acw', 'ajr10_chamathd_williami')
 
-        this_script = doc.agent('alg:chamathd#aggregate_sea_level_rise', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        neighborhood_info_res = doc.entity('cha:neighborhood_info', {'prov:label':'Boston-Area Neighborhood Information', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        sea_level_five_res = doc.entity('cha:sea_level_five', {'prov:label':'Sea Level Rise Plus 5 Feet', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        sea_level_seven_res = doc.entity('cha:sea_level_seven', {'prov:label':'Sea Level Rise Plus 7.5 Feet', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        this_script = doc.agent('alg:ajr10_chamathd_williami#aggregate_sea_level_rise', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        neighborhood_info_res = doc.entity('acw:neighborhood_info', {'prov:label':'Boston-Area Neighborhood Information', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        sea_level_five_res = doc.entity('acw:sea_level_five', {'prov:label':'Sea Level Rise Plus 5 Feet', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        sea_level_seven_res = doc.entity('acw:sea_level_seven', {'prov:label':'Sea Level Rise Plus 7.5 Feet', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_neighborhood_info = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_sea_level_five = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
@@ -170,7 +170,7 @@ class aggregate_sea_level_rise(dml.Algorithm):
                   }
                   )
 
-        neighborhood_sea_level_data = doc.entity('dat:chamathd#neighborhood_sea_level_data', {prov.model.PROV_LABEL:'Boston-Area Neighborhood Sea Level Data', prov.model.PROV_TYPE:'ont:DataSet'})
+        neighborhood_sea_level_data = doc.entity('dat:ajr10_chamathd_williami#neighborhood_sea_level_data', {prov.model.PROV_LABEL:'Boston-Area Neighborhood Sea Level Data', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(neighborhood_sea_level_data, this_script)
         doc.wasGeneratedBy(neighborhood_sea_level_data, get_neighborhood_info, endTime)
         doc.wasGeneratedBy(neighborhood_sea_level_data, get_sea_level_five, endTime)

@@ -1,4 +1,4 @@
-import urllib.request
+import requests
 import sodapy
 import json
 import dml
@@ -7,10 +7,10 @@ import datetime
 import uuid
 
 class fetch_neighborhood_pop_data(dml.Algorithm):
-    contributor = 'chamathd'
+    contributor = 'ajr10_chamathd_williami'
     reads = []
-    writes = ['chamathd.neighborhood_pop_boston', \
-              'chamathd.neighborhood_pop_cambridge']
+    writes = ['ajr10_chamathd_williami.neighborhood_pop_boston', \
+              'ajr10_chamathd_williami.neighborhood_pop_cambridge']
 
     @staticmethod
     def execute(trial = False):
@@ -20,15 +20,15 @@ class fetch_neighborhood_pop_data(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('chamathd', 'chamathd')
+        repo.authenticate('ajr10_chamathd_williami', 'ajr10_chamathd_williami')
 
         # Neighborhood population data for the Boston area from collected data sources
         print("Fetching Boston population data from Data Mechanics resource")
 
-        colName = "chamathd.neighborhood_pop_boston"
+        colName = "ajr10_chamathd_williami.neighborhood_pop_boston"
 
-        url = "http://datamechanics.io/data/chamathd/boston_neighborhood_census.json"
-        response = urllib.request.urlopen(url).read().decode("utf-8")
+        url = "http://datamechanics.io/data/ajr10_chamathd_williami/boston_neighborhood_census.json"
+        response = requests.get(url).text
         
         r = json.loads(response)
         
@@ -43,7 +43,7 @@ class fetch_neighborhood_pop_data(dml.Algorithm):
         # Neighborhood population data for the Cambridge area from Cambridge Open Data
         print("Fetching Cambridge population data from Cambridge Open Data")
 
-        colName = "chamathd.neighborhood_pop_cambridge"
+        colName = "ajr10_chamathd_williami.neighborhood_pop_cambridge"
 
         socrataClient = sodapy.Socrata("data.cambridgema.gov", None)
         response = socrataClient.get("vacj-bzri", limit=50)
@@ -74,15 +74,15 @@ class fetch_neighborhood_pop_data(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('chamathd', 'chamathd')
+        repo.authenticate('ajr10_chamathd_williami', 'ajr10_chamathd_williami')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('cma', 'https://data.cambridgema.gov/resource/')
 
-        this_script = doc.agent('alg:chamathd#fetch_neighborhood_pop_data', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        neighborhood_pop_boston_res = doc.entity('dat:chamathd/boston_neighborhood_census.json', {'prov:label':'Boston Neighborhood Census', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        this_script = doc.agent('alg:ajr10_chamathd_williami#fetch_neighborhood_pop_data', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        neighborhood_pop_boston_res = doc.entity('dat:ajr10_chamathd_williami/boston_neighborhood_census.json', {'prov:label':'Boston Neighborhood Census', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         neighborhood_pop_cambridge_res = doc.entity('cma:vacj-bzri', {'prov:label':'2010 Cambridge Census Data by Neighborhood', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_neighborhood_pop_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
@@ -102,12 +102,12 @@ class fetch_neighborhood_pop_data(dml.Algorithm):
                   }
                   )
 
-        neighborhood_pop_boston = doc.entity('dat:chamathd#neighborhood_pop_boston', {prov.model.PROV_LABEL:'Boston Open Budget - Neighborhood Boundaries', prov.model.PROV_TYPE:'ont:DataSet'})
+        neighborhood_pop_boston = doc.entity('dat:ajr10_chamathd_williami#neighborhood_pop_boston', {prov.model.PROV_LABEL:'Boston Open Budget - Neighborhood Boundaries', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(neighborhood_pop_boston, this_script)
         doc.wasGeneratedBy(neighborhood_pop_boston, get_neighborhood_pop_boston, endTime)
         doc.wasDerivedFrom(neighborhood_pop_boston, neighborhood_pop_boston_res, get_neighborhood_pop_boston, get_neighborhood_pop_boston, get_neighborhood_pop_boston)
 
-        neighborhood_pop_cambridge = doc.entity('dat:chamathd#neighborhood_pop_cambridge', {prov.model.PROV_LABEL:'Cambridge Neighborhood Polygons', prov.model.PROV_TYPE:'ont:DataSet'})
+        neighborhood_pop_cambridge = doc.entity('dat:ajr10_chamathd_williami#neighborhood_pop_cambridge', {prov.model.PROV_LABEL:'Cambridge Neighborhood Polygons', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(neighborhood_pop_cambridge, this_script)
         doc.wasGeneratedBy(neighborhood_pop_cambridge, get_neighborhood_pop_cambridge, endTime)
         doc.wasDerivedFrom(neighborhood_pop_cambridge, neighborhood_pop_cambridge_res, get_neighborhood_pop_cambridge, get_neighborhood_pop_cambridge, get_neighborhood_pop_cambridge)
