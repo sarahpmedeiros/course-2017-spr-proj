@@ -109,6 +109,6 @@ class rent(dml.Algorithm):
 #     rent.execute()
 
 # doc = rent.provenance()
-# # print(doc.get_provn())
+# print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
 

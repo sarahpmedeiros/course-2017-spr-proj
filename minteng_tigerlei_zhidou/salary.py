@@ -134,6 +134,6 @@ class salary(dml.Algorithm):
 # else:
 #     salary.execute()
 # doc = salary.provenance()
-# #print(doc.get_provn())
+# print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
 

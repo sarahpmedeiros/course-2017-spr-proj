@@ -47,6 +47,7 @@ class crime(dml.Algorithm):
                     temp['type'] = 'crime'
                     temp['year'] = int(c['year'])
                     temp['month'] = int(c['month'])
+                    temp['date'] = c['occurred_on_date'].split('T')[0]
                     crime.append(temp)
                 except KeyError:
                     continue
@@ -68,6 +69,7 @@ class crime(dml.Algorithm):
                     temp['type'] = 'crime'
                     temp['year'] = int(c['year'])
                     temp['month'] = int(c['month'])
+                    temp['date'] = c['fromdate'].split('T')[0]
                     crime.append(temp)
                 except KeyError:
                     continue
@@ -127,5 +129,5 @@ class crime(dml.Algorithm):
 # else:
 #     crime.execute()
 # doc = location.provenance()
-# #print(doc.get_provn())
+# print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
