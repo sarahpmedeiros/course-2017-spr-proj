@@ -9,12 +9,10 @@ import time
 
 # this transformation will check how many comm gardens and food pantries there are for each area
 # we want to take (zipcode, #comm gardens) (zipcode, #food pantries) --> (area, #food pantries#comm gardens)
-# I think this is a selection and aggregation
 
 class transformation_one(dml.Algorithm):
 
     contributor = 'mrhoran_rnchen'
-<<<<<<< HEAD
 
     reads = ['mrhoran_rnchen.community_gardens',
              'mrhoran_rnchen.food_pantries']
@@ -23,10 +21,6 @@ class transformation_one(dml.Algorithm):
               'mrhoran_rnchen.commgarden_zip_count',
               'mrhoran_rnchen.garden_pantry_agg']
 
-=======
-    reads = ['mrhoran_rnchen.community_gardens','mrhoran_rnchen.food_pantries']
-    writes = ['mrhoran_rnchen.healthy_options', 'commgarden_zip_count', 'foodpantry_zip_count', 'garden_pantry_agg']
->>>>>>> d960b1546ee2323b26395896e04b80f63ba792bc
     @staticmethod
     def execute(trial = False):
         
@@ -45,16 +39,6 @@ class transformation_one(dml.Algorithm):
         repo.dropCollection('commgarden_zip_count')
         repo.createCollection('commgarden_zip_count')
 
-<<<<<<< HEAD
-=======
-        commgarden_zip_count = project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1])))
-
-        repo.dropCollection('commgarden_zip_count')
-        repo.createCollection('commgarden_zip_count')
-        repo['mrhoran_rnchen.commgarden_zip_count'].insert_many(dict(commgarden_zip_count))
-      
-	#insert, insert_many, or insertMany? 
->>>>>>> d960b1546ee2323b26395896e04b80f63ba792bc
         #print(commgarden_zip_count)
 
         repo.mrhoran_rnchen.commgarden_zip_count.insert(dict(commgarden_zip_count))
@@ -134,13 +118,13 @@ class transformation_one(dml.Algorithm):
                   )
 
            # label section might be wrong
-        resource2 = doc.entity('bdp:rdqf-ter7', {'prov:label':'Food Pantries', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource2 = doc.entity('bdp:4tie-bhxw', {'prov:label':'Food Pantries', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_food_pantries = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_food_pantries, this_script)
 
-        doc.usage(get_community_gardens, resource1, startTime, None,
+        doc.usage(get_food_pantries, resource1, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'
                   #'ont:Query':'location, area, coordinates, zip_code' #?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
                   }
