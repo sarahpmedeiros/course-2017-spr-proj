@@ -2,7 +2,9 @@ import json
 import dml
 import prov.model
 import datetime
+import random
 import uuid
+from sklearn.cluster import KMeans
 
 class transformation1(dml.Algorithm):
     contributor = 'ajr10_chamathd_williami'
@@ -29,7 +31,10 @@ class transformation1(dml.Algorithm):
         centers = []
         for nhood in nhood_data:
             centers += [[nhood["center_x"], nhood["center_y"]]]
-        print(centers)
+
+        print("Running kmeans...")
+        kmeans = KMeans(n_clusters=8, random_state=0).fit(centers)
+        print(kmeans.cluster_centers_)
         
         # Logout and end
         repo.logout()
