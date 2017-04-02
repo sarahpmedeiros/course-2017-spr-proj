@@ -59,7 +59,11 @@ class transformation_one_bus(dml.Algorithm):
 
         #print(commgarden_zip_count)
 
+<<<<<<< HEAD
         repo.mrhoran_rnchen_vthomson.student_per_school.insert(dict(students_per_school))
+=======
+        repo.mrhoran_rnchen_vthomson.student_per_school.insert(dict(agg_student))
+>>>>>>> bacab34ffa3e17ec03b77a200d724bd1c9aedf7b
 
 ############################
         
@@ -76,7 +80,11 @@ class transformation_one_bus(dml.Algorithm):
         repo.dropCollection('buses_per_yard')
         repo.createCollection('buses_per_yard')
         
+<<<<<<< HEAD
         repo.mrhoran_rnchen_vthomson.buses_per_yard.insert(dict(bus_per_school))
+=======
+        repo.mrhoran_rnchen_vthomson.buses_per_yard.insert(dict(bus_per_yard_count))
+>>>>>>> bacab34ffa3e17ec03b77a200d724bd1c9aedf7b
        
 ##        # combine them to make a new data set like (zip, (comm,1), (foodp, 1))
 ##
