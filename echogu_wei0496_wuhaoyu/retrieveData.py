@@ -101,11 +101,11 @@ class retrieveData(dml.Algorithm):
 
         # define entity to represent resources
         this_script = doc.agent('alg:echogu_wei0496_wuhaoyu#retrieveData', {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
-        resource_buses = doc.entity('bps:buses', {'prov:label': 'buses', prov.model.PROV_TYPE: 'ont:DataResource', 'ont:Extension': 'json'})
+        resource_buses = doc.entity('bps:buses', {'prov:label': 'buses', prov.model.PROV_TYPE: 'ont:DataResource', 'ont:Extension': 'geojson'})
         resource_grade_safe_distance = doc.entity('bps:grade_safe_distance', {'prov:label': 'grade_safe_distance', prov.model.PROV_TYPE: 'ont:DataResource', 'ont:Extension': 'json'})
         resource_safety_scores = doc.entity('bps:safety_scores', {'prov:label': 'safety_scores', prov.model.PROV_TYPE: 'ont:DataResource', 'ont:Extension': 'json'})
-        resource_schools = doc.entity('bps:schools', {'prov:label': 'schools', prov.model.PROV_TYPE: 'ont:DataResource', 'ont:Extension': 'json'})
-        resource_students = doc.entity('bps:students', {'prov:label': 'students', prov.model.PROV_TYPE: 'ont:DataResource', 'ont:Extension': 'json'})
+        resource_schools = doc.entity('bps:schools-real', {'prov:label': 'schools', prov.model.PROV_TYPE: 'ont:DataResource', 'ont:Extension': 'geojson'})
+        resource_students = doc.entity('bps:students-simulated', {'prov:label': 'students', prov.model.PROV_TYPE: 'ont:DataResource', 'ont:Extension': 'geojson'})
 
         # define activity to represent invocation of the script
         get_buses = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
