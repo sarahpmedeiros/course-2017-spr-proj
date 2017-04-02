@@ -12,7 +12,6 @@ import uuid
 from geopy.distance import vincenty
 from heapq import heappush, heappop
 from echogu_wei0496_wuhaoyu import transformData
-# from echogu_wei0496_wuhaoyu import MST
 
 class optimizeBusRoute(dml.Algorithm):
     contributor = 'echogu_wei0496_wuhaoyu'
