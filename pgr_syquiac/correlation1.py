@@ -31,7 +31,6 @@ class correlation1(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('pgr_syquiac', 'pgr_syquiac')
-        print("hello")
 
         visits = repo.pgr_syquiac.hospitals_doctor_visits.find()
 
@@ -41,7 +40,7 @@ class correlation1(dml.Algorithm):
         # just prints how many data points each one has
         # for i in visits:
         # 	print(len(i['doctorVisits']))
-        print(visits[0])
+        # print(visits[0])
 
         # get the distance of each data point from the hospital
         # get the rate of people going to the doctor for a checkup
@@ -49,13 +48,17 @@ class correlation1(dml.Algorithm):
         for i in visits:
         	for j in i['doctorVisits']:
         		rate_distance = vincenty(j['geolocation']['coordinates'], i['location']['coordinates']).miles
-        		if 'data_value' in j:
-        			visit_rate_distance.append((rate_distance, j['data_value']))
+        		if 'data_value' in j and rate_distance > 2:
+        			visit_rate_distance.append((rate_distance, float(j['data_value'])))
 
-        print(visit_rate_distance)
+        dist = [x for (x, y) in visit_rate_distance]
+        rate = [y for (x, y) in visit_rate_distance]
 
-        math = scipy.stats.pearsonr(visit_rate_distance[0], visit_rate_distance[1])
+
+        math = scipy.stats.pearsonr(dist, rate)
         print(math[0])
+        print(math[1])
+
 
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
