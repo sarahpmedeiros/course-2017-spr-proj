@@ -31,8 +31,7 @@ class transformation_one_bus(dml.Algorithm):
              'mrhoran_rnchen_vthomson.buses']
 
     writes = ['mrhoran_rnchen_vthomson.student_per_school',
-              'mrhoran_rnchen_vthomson.buses_per_yard',
-              'mrhoran_rnchen_vthomson.average_distance_students']
+              'mrhoran_rnchen_vthomson.buses_per_yard']
 
     @staticmethod
     def execute(trial = False):
@@ -50,49 +49,23 @@ class transformation_one_bus(dml.Algorithm):
         X2 = project(X, lambda t: (t[0], 1))
 
         X3 = aggregate(X2, sum)
-
-        # 72 is the average # of buses we think we need
         
-        students_per_school = project(select(product(X,X3), lambda t: t[0][0] == t[1][0]), lambda t: (t[0][0],(t[0][1], t[1][1], (t[1][1]/72))))
-                        
+        students_per_school = project(select(product(X,X3), lambda t: t[0][0] == t[1][0]), lambda t: (t[0][0],(t[0][1], t[1][1])))
+        
+        #commgarden_zip_count = (project(aggregate(X, sum), lambda t: (t[0], ('comm_gardens',t[1]))))
+                
         repo.dropCollection('student_per_school')
         repo.createCollection('student_per_school')
 
+        #print(commgarden_zip_count)
+
+<<<<<<< HEAD
         repo.mrhoran_rnchen_vthomson.student_per_school.insert(dict(students_per_school))
+=======
+        repo.mrhoran_rnchen_vthomson.student_per_school.insert(dict(agg_student))
+>>>>>>> bacab34ffa3e17ec03b77a200d724bd1c9aedf7b
 
-        # buses needed for school
-        
 ############################
-## FIND THE AVERAGE # CASE DISTANCE BETWEEN STUDENTS ** (MAYBE WORST CASE DISTANCE)
-
-        A = project([x for x in repo.mrhoran_rnchen_vthomson.students.find({})], find_location_students)
-
-        # now we have start_time , (lat,long) for every student now we want to preform average to find average distance per school start time
-        # idea here is to see what conditions buses are like for differents start times
-        
-        # also want to keep track of the worst distance between a student (possibly)
-       
-        b = select(product(A,A), lambda t: t[0][0][0] == t[1][0][0])
-
-        c = project(b, lambda t: (t[0][0], dist(t[0][1],t[1][1])))
-
-        d = project(b, lambda t: (t[0][0], 1))
-
-        g = aggregate(c, sum)
-
-        f = aggregate(d, sum)
-
-        project(select(product(f,g), lambda t: (t[0][0] == t[1][0])), lambda t: (t[0][0], (t[1][1]/t[0][1])))
-
-        repo.dropCollection('average_distance_students')
-        repo.createCollection('average_distance_students')
-
-        repo.mrhoran_rnchen_vthomson.student_per_school.insert(dict(average_distance_students))
-        
-    
-##########################
-
-        ## number of buses per yard
         
         Y = project([p for p in repo.mrhoran_rnchen_vthomson.buses.find({})], get_buses)
 
@@ -107,9 +80,35 @@ class transformation_one_bus(dml.Algorithm):
         repo.dropCollection('buses_per_yard')
         repo.createCollection('buses_per_yard')
         
+<<<<<<< HEAD
         repo.mrhoran_rnchen_vthomson.buses_per_yard.insert(dict(bus_per_school))
-
-
+=======
+        repo.mrhoran_rnchen_vthomson.buses_per_yard.insert(dict(bus_per_yard_count))
+>>>>>>> bacab34ffa3e17ec03b77a200d724bd1c9aedf7b
+       
+##        # combine them to make a new data set like (zip, (comm,1), (foodp, 1))
+##
+##        temp = product(commgarden_zip_count, foodpantry_zip_count)
+##
+##        result = project(select(temp, lambda t: t[0][0] == t[1][0]), lambda t: (t[0][0], t[0][1], t[1][1]))
+##
+##        for z in commgarden_zip_count:
+##            if z[0] not in result:
+##                 result.append((z[0],z[1],('food_pantry',0)))
+##
+##        for p in foodpantry_zip_count:
+##            if p[0] not in result:
+##                 result.append((p[0],('comm_gardens',0),p[1]))
+##
+##        #print(result)
+##
+##        Y = project(result, lambda t: (t[0], (t[1], t[2])))
+##
+##        repo.dropCollection('garden_pantry_agg')
+##        repo.createCollection('garden_pantry_agg')
+##
+##        repo.mrhoran_rnchen.garden_pantry_agg.insert(dict(Y))
+       
         repo.logout()
 
         endTime = datetime.datetime.now()
@@ -176,10 +175,6 @@ class transformation_one_bus(dml.Algorithm):
                   
         return doc
 
-def dist(p, q):
-    (x1,y1) = p
-    (x2,y2) = q
-    return (x1-x2)**2 + (y1-y2)**2
 
 def aggregate(R, f):
     keys = {r[0] for r in R}
@@ -194,14 +189,6 @@ def project(R, p):
 def product(R, S):
     return [(t,u) for t in R for u in S]
 
-def find_location_students(student):
-
-    lat = float(student["Latitude"])
-    long = float(student["Longitude"])
-    school_start_time = ["Current School Start Time"]
-
-    return([school_start_time, (lat,long)])
-    
 
 def get_students(student): # want to return the coordinates of the towns in and around Boston
 
