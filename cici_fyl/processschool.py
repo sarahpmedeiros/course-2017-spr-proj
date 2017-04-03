@@ -10,8 +10,6 @@ class processschool(dml.Algorithm):
     contributor = 'cici_fyl'
     reads = ['school', 'property']
     writes = ['property_school']
-    
-
 
     @staticmethod
     def execute(trial = False):
@@ -91,22 +89,3 @@ class processschool(dml.Algorithm):
         repo.logout()
                   
         return doc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
