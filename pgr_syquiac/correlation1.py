@@ -2,7 +2,7 @@
 Pauline Ramirez & Carlos Syquia
 correlation1.py
 
-Calculates the correlation between x and y 
+Calculates the correlation between x and y
 
 '''
 
@@ -90,8 +90,34 @@ class correlation1(dml.Algorithm):
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
         doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/')
 
+        this_script = doc.agent(
+            'alg:pgr_syquiac#correlation1',
+            {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'}
+        )
+        resourceVisitsHospitals = doc.entity(
+            'dat:pgr_syquiac#visitsHospitals',
+            {'prov:label':'Visits Hospitals', prov.model.PROV_TYPE:'ont:DataSet'}
+        )
+        this_run = doc.activity(
+            'log:a'+str(uuid.uuid4()), startTime, endTime,
+            {prov.model.PROV_TYPE:'ont:Computation'}
+        )
+        doc.wasAssociatedWith(this_run, this_script)
+        doc.used(this_run, resourceVisitsHospitals, startTime)
+
+        correlationVisitsHospitals = doc.entity(
+            'dat:pgr_syquiac#correlation1',
+            {prov.model.PROV_LABEL:'Correlation Visits Hospitals', prov.model.PROV_TYPE:'ont:DataSet'}
+        )
+        doc.wasAttributedTo(correlationVisitsHospitals, this_script)
+        doc.wasGeneratedBy(correlationVisitsHospitals, this_run, endTime)
+        doc.wasDerivedFrom(correlationVisitsHospitals, resourceVisitsHospitals, this_run, this_run, this_run)
 
         repo.logout()
 
         return doc
+
 correlation1.execute()
+doc = correlation1.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))

@@ -1,8 +1,8 @@
 '''
 Pauline Ramirez & Carlos Syquia
-correlation1.py
+correlation2.py
 
-Calculates the correlation between x and y 
+Calculates the correlation between sleep ratese and proximity to a university
 
 '''
 
@@ -18,7 +18,7 @@ from geopy.distance import vincenty
 from geopy.geocoders import Nominatim
 import scipy.stats
 
-class correlation1(dml.Algorithm):
+class correlation2(dml.Algorithm):
     contributor = 'pgr_syquiac'
     reads = ['pgr_syquiac.sleep_rates_universities']
     writes = ['pgr_syquiac.sleep_universities']
@@ -36,10 +36,10 @@ class correlation1(dml.Algorithm):
         # print(sleep[2])
         # print(sleep[0])
 
-      	
+
         # for i in sleep:
         # 	print(len(i['sleepRates']))
-        
+
 
 
          # Append tuples of (dist_closest_uni, sleep_rate, name_of_closest_uni)
@@ -60,7 +60,7 @@ class correlation1(dml.Algorithm):
         repo.createPermanent("sleep_universities")
         repo['pgr_syquiac.sleep_universities'].insert_many(rates)
         print("Inserted new collection!")
-        
+
 
         print("Calculating correlation coefficient and p-value...")
         x = []
@@ -92,10 +92,35 @@ class correlation1(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
-        doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/')
 
+        this_script = doc.agent(
+            'alg:pgr_syquiac#correlation2',
+            {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'}
+        )
+        resourceSleepUniversities = doc.entity(
+            'dat:pgr_syquiac#sleepUniversities',
+            {'prov:label':'Sleep Universities', prov.model.PROV_TYPE:'ont:DataSet'}
+        )
+        this_run = doc.activity(
+            'log:a'+str(uuid.uuid4()), startTime, endTime,
+            {prov.model.PROV_TYPE:'ont:Computation'}
+        )
+        doc.wasAssociatedWith(this_run, this_script)
+        doc.used(this_run, resourceSleepUniversities, startTime)
+
+        correlationSleepUniversities = doc.entity(
+            'dat:pgr_syquiac#correlation2',
+            {prov.model.PROV_LABEL:'Correlation Sleep Universities', prov.model.PROV_TYPE:'ont:DataSet'}
+        )
+        doc.wasAttributedTo(correlationSleepUniversities, this_script)
+        doc.wasGeneratedBy(correlationSleepUniversities, this_run, endTime)
+        doc.wasDerivedFrom(correlationSleepUniversities, resourceSleepUniversities, this_run, this_run, this_run)
 
         repo.logout()
 
         return doc
-correlation1.execute()
+
+correlation2.execute()
+doc = correlation2.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
