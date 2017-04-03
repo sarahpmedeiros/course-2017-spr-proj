@@ -116,7 +116,7 @@ For example, block 27```[[42.34893792999999, -71.0586156], [42.36623191999999, -
 From the graph below we could see the trend of block 27 in the consistent four years(2013-2016) are in similar mode.
 ![block27](http://datamechanics.io/data/minteng_zhidou/Block27.png) 
 
-Therefore, we fit all the data in four year to find a common pattern of block 27 which could be used to 
+Because this data of these four year have strong linear relationship, there is a high probability that their criminal records have the same tendency through the entire year. Therefore, we fit all the data in four year to find a common pattern of block 27. Now assume, 2016-2017 still could maintain such strong linear relationship, and then we could use this fitting funtion to simulate the trend of crime of block 27 in this year.
 ![fitting](http://datamechanics.io/data/minteng_zhidou/fitting.png) 
 
 
