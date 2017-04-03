@@ -50,13 +50,15 @@ class assignStudents(dml.Algorithm):
             num_students = len(item[1][0])
             num_buses = math.ceil(num_students / bus_capacity)
             print(str(school) + ": ", num_students, "students,", num_buses, "buses")
-            # k-means clustering algorithm (#means = #buses)
+            # k-means clustering algorithm for k = num_buses
             random_points = [(random.uniform(42.2, 42.4), random.uniform(-71.0, -71.2)) for x in range(num_buses)]
-            students_points = [(student[1], student[2]) for student in item[1][0]]
-            students_means = assignStudents.k_means(random_points, students_points)
-            print("k-means:", students_means)
+            students_points = [(student[1], student[2], student[0]) for student in item[1][0]]
+            kmeans = assignStudents.k_means(random_points, students_points)
+            means = kmeans[0]
+            means_students = kmeans[1]
+            print("k-means:", means)
 
-            final = assignStudents.assign_students(students_means, students_points)
+            final = assignStudents.assign_students(means, students_points)
             results.append(final)
 
         # stores the means and their corresponding students in the collection
@@ -131,6 +133,12 @@ class assignStudents(dml.Algorithm):
         (x, y) = p
         return (x / c, y / c)
 
+    def eq_tuples(a, b):
+        return abs(a[0] - b[0]) < 0.001 and abs(a[1] - b[1]) < 0.001
+
+    def eq_points(a, b):
+        return abs(a - b) < 0.001
+
     def k_means(M, P):
         OLD = []
         count = 0
@@ -139,8 +147,8 @@ class assignStudents(dml.Algorithm):
             # [Changes needed] check if diff b/t 2 pts < 0.001
             if(count == 10):
                 break
-            MPD = [(m, p, assignStudents.dist(m, p)) for (m, p) in transformData.product(M, P)]
-            PDs = [(p, assignStudents.dist(m, p)) for (m, p, d) in MPD]
+            MPD = [(m, p, assignStudents.dist(m, p[:2])) for (m, p) in transformData.product(M, P)]
+            PDs = [(p, assignStudents.dist(m, p[:2])) for (m, p, d) in MPD]
             PD = transformData.aggregate(PDs, min)
             MP = [(m, p) for ((m, p, d), (p2, d2)) in transformData.product(MPD, PD) if p == p2 and d == d2]
             MT = transformData.aggregate(MP, assignStudents.plus)
@@ -153,15 +161,17 @@ class assignStudents(dml.Algorithm):
         return sorted(M)
 
     def assign_students(M, P):
-        MPD = [(m, p, assignStudents.dist(m, p)) for (m, p) in transformData.product(M, P)]
-        PDs = [(p, assignStudents.dist(m, p)) for (m, p, d) in MPD]
+        MPD = [(m, p, assignStudents.dist(m, p[:2])) for (m, p) in transformData.product(M, P)]
+        PDs = [(p, assignStudents.dist(m, p)[:2]) for (m, p, d) in MPD]
         PD = transformData.aggregate(PDs, min)
 
         final = []
         for mean in M:
             result = []
             students_count = 0
+
             for i in PD:
+                print(i)
                 if (students_count >= bus_capacity):
                     print("Bus is full.")
                     break

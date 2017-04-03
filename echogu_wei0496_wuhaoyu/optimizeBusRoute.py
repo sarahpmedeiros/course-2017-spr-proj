@@ -15,7 +15,7 @@ from echogu_wei0496_wuhaoyu import transformData
 
 class optimizeBusRoute(dml.Algorithm):
     contributor = 'echogu_wei0496_wuhaoyu'
-    reads = ['echogu_wei0496_wuhaoyu.bus_yards', 'echogu_wei0496_wuhaoyu.students', 'echogu_wei0496_wuhaoyu.schools']
+    reads = ['echogu_wei0496_wuhaoyu.assigned_students']
     writes = ['echogu_wei0496_wuhaoyu.bus_routes']
 
     @staticmethod
@@ -30,27 +30,28 @@ class optimizeBusRoute(dml.Algorithm):
         repo.authenticate('echogu_wei0496_wuhaoyu', 'echogu_wei0496_wuhaoyu')
 
         # loads the collection
-        raw_students = repo['echogu_wei0496_wuhaoyu.students'].find()
-
-        students = []
-        for item in raw_students:
+        raw_assigned_students = repo['echogu_wei0496_wuhaoyu.assigned_students'].find()
+        assigned_students = []
+        for item in raw_assigned_students:
             try:
-                students.append({'_id': item['_id'],
-                                  'Latitude': item['Latitude'],
-                                  'Longitude': item['Longitude'],
-                                  'School Latitude': item['School Latitude'],
-                                  'Assigned School': item['Assigned School'],
-                                  'School Longitude': item['School Longitude']})
+                assigned_students.append({'Aggregated_Points': item['Aggregated_Points'],
+                                 'Points': item['Points']})
             except:
                 pass
 
         # fixied the capacity of the buses, and send the students' locations
         # as coordinates and convert them to a graph, find the MST.
         # First, group the student belongs to the same school
-        projection_students = transformData.project(students, lambda t: (t['Assigned School'], [t['Latitude'], t['Longitude'], t['_id']]))
-        result = optimizeBusRoute.__find_mst(projection_students)
-        print(result[0])
+        # projection_students = transformData.project(assigned_students, lambda t: (t['Assigned School'], [t['Latitude'], t['Longitude'], t['_id']]))
+        result = optimizeBusRoute.__find_mst(assigned_students)
 
+        repo.dropCollection('echogu_wei0496_wuhaoyu.final_route')
+        repo.createCollection('echogu_wei0496_wuhaoyu.final_route')
+        for i in result:
+            print(i)
+            repo['echogu_wei0496_wuhaoyu.final_route'].insert_one(i)
+        repo['echogu_wei0496_wuhaoyu.final_route'].metadata({'complete': True})
+        print(repo['echogu_wei0496_wuhaoyu.final_route'].metadata())
         endTime = datetime.datetime.now()
 
         return {"start":startTime, "end":endTime}
@@ -101,36 +102,37 @@ class optimizeBusRoute(dml.Algorithm):
 
     # convert the original input into format
     @staticmethod
-    def __find_mst(input):
-        res = transformData.aggregate(input, optimizeBusRoute.__cal_MST)
-        return res
+    def __find_mst(assigned_students):
+        final_res = []
+        for i in assigned_students:
+            Points = i['Points']
+            K_points = i['Aggregated_Points'][0]
+            final = []
+            results = []
+            for j in Points:
+                results.append([j["Latitude"],j["Longitude"],j['Student_id']])
+            #print("printing results")
+            #print(results)
+            res = optimizeBusRoute.__cal_MST(results)
+            for k in res[0]:
+                final.append({
+                    'Student_id': results[k][2],
+                    'Latitude': results[k][0],
+                    'Longitude': results[k][1]})
+
+            final_res.append({
+                'Aggregated_Points':K_points,
+                'Pickup_sequence': final})
+        return final_res
 
     @staticmethod
-    def __cal_MST(*points):
-        # n is the capacity of the school bus! Change it here
-        # For a standard bus the capacity is 72, we assume 10 here for faster running time
-        n = 10
-
-        points = points[0]
+    def __cal_MST(points):
         # construct a adjacency matrix
-        # Yield successive n-sized chunks from the input
-        result = []
-        for i in range(0, len(points), n):
-            capacity = (points[i:i + n])
-            ## issue: when capacity contains only one student, there is a bug
-            if(len(capacity) != 1):
-                adjacency_matrix = optimizeBusRoute.__generate_graph(capacity)
-                result += optimizeBusRoute.__Prim(adjacency_matrix)
-                # This is the pick up sequence of the student's index
-                ''' sequence = result[0]
-                    Total_dis = result[1]
-                    pickup_sequence = str(capacity[0][2])
-                    for i in range(1, len(sequence)):
-                        pickup_sequence += (' -> ' + str(capacity[i][2]))
-                    print('The pick up sequence is ' + pickup_sequence)
-                    print('The total travel distance of the route is ' + str(Total_dis) + 'miles')
-                    print('*******************************************************************')
-                '''
+        # issue: when capacity contains only one student, there is a bug'''
+        if(len(points) != 1):
+            # construct a adjacency matrix
+            adjacency_matrix = optimizeBusRoute.__generate_graph(points)
+            result = optimizeBusRoute.__Prim(adjacency_matrix)
         return result
 
     # Initialization the adjacency matrix for the tree
@@ -142,27 +144,6 @@ class optimizeBusRoute(dml.Algorithm):
             for j in range(i+1, len(points)):
                 adjacency_matrix[i][j] = optimizeBusRoute.distance(points[i][0:2], points[j][0:2])
                 adjacency_matrix[j][i] = adjacency_matrix[i][j]
-        return adjacency_matrix
-
-    # Initialization the adjacency list for the tree
-    # Complete graphs on n vertices, where the vertices are points chosen uniformly at random inside the unit
-    # square. (That is, the points are (x, y), with x and y each a real number chosen uniformly at random from
-    # [0, 1].) The weight of an edge is the Euclidean distance between its endpoints.
-    @staticmethod
-    def __generate_graph2(n):
-        # initialize the adjacency matrix
-        adjacency_matrix = [[100 for y in range(n)] for x in range(n)]
-
-        # initailize the x,y value for all vertices
-        x = [random.uniform(0, 1) for x in range(n)]
-        y = [random.uniform(0, 1) for y in range(n)]
-
-        # compute the euclidean distanace and initialize the weight
-        for i in range(n - 1):
-            for j in range(i + 1, n):
-                adjacency_matrix[i][j] = math.sqrt((x[i] - x[j]) ** 2 + (y[i] - y[j]) ** 2)
-                adjacency_matrix[j][i] = adjacency_matrix[i][j]
-
         return adjacency_matrix
 
     # Run MST Prim's Algorithm
@@ -204,7 +185,6 @@ class optimizeBusRoute(dml.Algorithm):
                         # Since it's not efficient to lookup and modify existing tuples in the heap
                         # We can just insert the new tuple, upon removal we still have the lowest edge
                         heappush(heap,[G[u[1]][v],v])
-
         return S, result
 
     @staticmethod
