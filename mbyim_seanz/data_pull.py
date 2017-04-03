@@ -9,7 +9,7 @@ import requests
 class data_pull(dml.Algorithm):
     contributor = 'mbyim_seanz'
     reads = []
-    writes = ['mbyim_seanz.vehicle_tax', 'mbyim_seanz.parking_tickets', 'mbyim_seanz.mbta_stops', 'mbyim_seanz.property_assessments', 'mbyim_seanz.snow_parking']
+    writes = ['mbyim_seanz.parking_tickets', 'mbyim_seanz.mbta_stops', 'mbyim_seanz.property_assessments', 'mbyim_seanz.snow_parking'] #'mbyim_seanz.vehicle_tax'
 
     @staticmethod
     def execute(trial = False):
@@ -34,6 +34,7 @@ class data_pull(dml.Algorithm):
         print(repo['mbyim_seanz.parking_tickets'].metadata())
 
         #Vehicle Excise Tax Info------------------------------------------------------------------------------------------------------------------------------------------
+        '''
         # url = 'https://data.cityofboston.gov/resource/ww9y-x77a.json?$select=zip'
         url = 'https://data.cityofboston.gov/resource/ww9y-x77a.json?$limit=1000000'
         response = urllib.request.urlopen(url).read().decode("utf-8")
@@ -44,6 +45,7 @@ class data_pull(dml.Algorithm):
         repo['mbyim_seanz.vehicle_tax'].insert_many(r)
         repo['mbyim_seanz.vehicle_tax'].metadata({'complete':True})
         print(repo['mbyim_seanz.vehicle_tax'].metadata())
+        '''
 
         #MBTA Info------------------------------------------------------------------------------------------------------------------------------------------
         #MBTA API key Info
@@ -144,29 +146,32 @@ class data_pull(dml.Algorithm):
         doc.add_namespace('mbta', 'http://realtime.mbta.com/developer/api/v2/stopsbyroute')
 
         this_script = doc.agent('alg:mbyim_seanz#data_pull', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource_vehicle_tax = doc.entity('bdp:ww9y-x77a', {'prov:label':'Vehicle Tax', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        #resource_vehicle_tax = doc.entity('bdp:ww9y-x77a', {'prov:label':'Vehicle Tax', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_parking_tickets = doc.entity('bdp:cpdb-ie6e', {'prov:label':'Parking Tickets', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_mbta_stops = doc.entity('mbta:filler', {'prov:label':'MBTA Stops', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_property_assessments = doc.entity('bdp:jsri-cpsq', {'prov:label':'Property Assessments 2014', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_snow_parking = doc.entity('dat:mbyim_seanz/SnowParking.json', {'prov:label':'Snow Parking', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
-        get_vehicle_tax = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        #get_vehicle_tax = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_parking_tickets = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_mbta_stops = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_property_assessments = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_snow_parking = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_vehicle_tax, this_script)
+        #doc.wasAssociatedWith(get_vehicle_tax, this_script)
         doc.wasAssociatedWith(get_parking_tickets, this_script)
         doc.wasAssociatedWith(get_mbta_stops, this_script)
         doc.wasAssociatedWith(get_property_assessments, this_script)
         doc.wasAssociatedWith(get_snow_parking, this_script)
 
+        '''
         doc.usage(get_vehicle_tax, resource_vehicle_tax, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
                   'ont:Query':'?$select=zip' #not sure what this does
                   }
         )
+        '''
+
         doc.usage(get_parking_tickets, resource_parking_tickets, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
                   'ont:Query':'?$select=ticket_loc,violation1'
@@ -194,10 +199,13 @@ class data_pull(dml.Algorithm):
         doc.wasGeneratedBy(parking_tickets, get_parking_tickets, endTime)
         #doc.wasDerivedFrom(parking_tickets, resource, get_parking_tickets, get_parking_tickets, get_parking_tickets)
 
+
+        '''
         vehicle_tax = doc.entity('dat:mbyim_seanz#vehicle_tax', {prov.model.PROV_LABEL:'Vehicle Tax', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(vehicle_tax, this_script)
         doc.wasGeneratedBy(vehicle_tax, get_vehicle_tax, endTime)
         #doc.wasDerivedFrom(vehicle_tax, resource, get_vehicle_tax, get_vehicle_tax, get_vehicle_tax)
+        '''
 
         mbta_stops = doc.entity('dat:mbyim_seanz#mbta_stops', {prov.model.PROV_LABEL:'MBTA Stops', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(mbta_stops, this_script)
