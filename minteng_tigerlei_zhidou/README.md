@@ -59,14 +59,27 @@ To run it:
 ```python
 python3 <filename>.py trial
 ```
-## Problem 1
+## Problem 1: Optimization
 Following the idea of project 1, our goal is to find a best office location for a new company. Since a detailed coordinate is meaningless, we try to find a suitable area. Project 1 has helped us gather all the licensed restaurants/ crime incidents/ MBTA stops/ rent price in boston area. We gonna maximize ```#restaurant```, ```#MBTA stops``` and minimize ```#crime incidents``` and ```rent price```. 
 
-We use googlemaps api to find the left bottom/ right top coordinates of boston area. With these coordinates, we could build a big rectangle containing boston area. Then we separate this rectangle into 10 x 10 grids(user could set this scale manually). Removing those blank grids outside of boston area, we have 35 grids left. Each grid represents a possible target area which contains a suitable place for opening a company. 
+We use googlemaps api to find the left bottom/ right top coordinates of boston area. With these coordinates, we could build a big rectangle containing boston area. Then we separate this rectangle into 10 x 10 grids(user could set this scale manually). Removing those blank grids outside of boston area, we have 52 grids left. Each grid represents a possible target area which contains a suitable place for opening a company. 
 
-Therefore, we could count the number of restaurant/ crime incidents/ MBTA stops(including buses and subway) in every grid and evaluate these numbers by mapping them into scores from 1-5. And according to the center coordinate of this grid, googlemaps api could help us to find it belongs to which area(like Allston/ Back Bay/ Fenway/...). Then our database would search and find matched rent price, which also should be mapped into reversed scores from 1-5. Then we get the tuple of ratings for each grid in the format of 
+![boston_grid](http://datamechanics.io/data/minteng_zhidou/Boston_grid.png)
+
+Therefore, we could count the number of restaurant/ crime incidents/ MBTA stops(including buses and subway) in every grid and evaluate these numbers by mapping them into scores from 1-5. And according to the center coordinate of this grid, googlemaps api could help us to find it belongs to which area(like Allston/ Back Bay/ Fenway/...). 
+
+![box_count](http://datamechanics.io/data/minteng_zhidou/map_with_label.png) 
+
+Then our database would search and find matched rent price, which also should be mapped into reversed scores from 1-5. Then we get the tuple of ratings for each grid in the format of 
 ```
 (transport, food, safety, rent)
 ```
-User could customized rating due to their preference in ```Result_Example.ipynb```. We provide an example that our algorithm rank all 35 grid area according to user's requirement and provide top 5 choices as well as its bound coordinates, area name & zipcode, average rent and ratings.
+User could customize rating due to their preference in ```Result_Example.ipynb```. We provide an example that our algorithm rank all 52 grid area according to user's requirement and provide top 5 choices as well as its bound coordinates, area name & zipcode, average rent and ratings.
 
+## Problem 2: Statistical Analysis
+After finding ideal area for a new company, we would like to dig deeper into those areas such as trend of crime incidents. For each block(grid), we could count the number of crime incidents of each month in different years(2013- 2016). We build a matrix with ```year``` x  ```#blocks``` x ```#month```(5 x 52 x 12). Then we calculate **correlation coefficient** and **p-value** for each block so that we could compare them in consistent years. We find that for some blocks, these **correlation coefficient** are close to 0 and **p-value** are close to 1, which means for these blocks, their crime incidents in consistent years are not related. However, we have the ability to do reasonable prediction for those blocks which have high **correlation coefficient** and low **p-value** year by year.  
+
+
+![fitting](http://datamechanics.io/data/minteng_zhidou/fitting.png) 
+
+![block27](http://datamechanics.io/data/minteng_zhidou/Block27.png) 
