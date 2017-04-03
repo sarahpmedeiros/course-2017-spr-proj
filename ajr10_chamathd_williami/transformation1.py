@@ -57,6 +57,7 @@ def closest_point_on_border(border, pt):
     d = pol_ext.project(point)
     p = pol_ext.interpolate(d)
     closest_point_coords = list(p.coords)[0]
+    return closest_point_coords
 
 class transformation1(dml.Algorithm):
     contributor = 'ajr10_chamathd_williami'
