@@ -100,12 +100,6 @@ class transformation1(dml.Algorithm):
             k += 1
 
         means = k_means(points, seeds)
-        for seed in seeds:
-            for mean in means:
-                if seed == means:
-                    print("Found duplicate between seeds and means")
-        print(len(seeds))
-        print(means)
         
         # Logout and end
         repo.logout()
