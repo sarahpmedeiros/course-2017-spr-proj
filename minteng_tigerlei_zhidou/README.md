@@ -60,7 +60,7 @@ To run it:
 python3 <filename>.py trial
 ```
 ## Problem 1: Optimization
-Following the idea of project 1, our goal is to find a best office location for a new company. Since a detailed coordinate is meaningless, we try to find a suitable area. Project 1 has helped us gather all the licensed restaurants/ crime incidents/ MBTA stops/ rent price in boston area. We gonna find the best area that maximize ```#restaurant```, ```#MBTA stops``` and minimize ```#crime incidents``` and ```rent price```. 
+Following the idea of project 1, our goal is to find a best office location for a new company. Since a detailed coordinate is meaningless, we try to find a suitable area. Project 1 has helped us gather all the licensed restaurants/ crime incidents/ MBTA stops/ rent price in boston area. We gonna find the best area that maximize **```#restaurant```**, **```#MBTA stops```** and minimize **```#crime incidents```** and **```rent price```**. 
 
 We use googlemaps api to find the left bottom/ right top coordinates of boston area. With these coordinates, we could build a big rectangle containing boston area. Then we separate this rectangle into 10 x 10 grids(user could set this scale manually). Removing those blank grids which don't contain any useful data, we have 52 grids left. Each grid represents a possible target area which contains a suitable place for opening a company. 
 
@@ -74,7 +74,7 @@ Then our database would search and find matched rent price, which also should be
 ```
 (transport, food, safety, rent) 
 ```
-User could customize rating due to their preference in ```Result_Example.ipynb```. We provide an example that our algorithm rank all 52 grid area according to user's requirement of grades: ```(3, 4, 3, 4)``` and provide top choices as well as its bound coordinates, area name & zipcode, average rent and ratings.
+User could customize rating due to their preference in ```Result_Example.ipynb```. We provide an example that our algorithm rank all 52 grid area according to user's requirement of grades: **```(3, 4, 3, 4)```** and provide top choices as well as its bound coordinates, area name & zipcode, average rent and ratings.
 ```
 Top fitted areas:
 Bound: [[42.2622102, -71.0835318], [42.2793753, -71.0566365]]
@@ -98,18 +98,25 @@ Area: Jamaica Plain 02130    Avg rent: 2214
 Grades: {'safety': 3, 'rent': 3, 'food': 5, 'transport': 2} 
 ```
 ## Problem 2: Statistical Analysis
-After finding ideal area for a new company, we would like to dig deeper into those areas to explore the trend of crime incidents. 
+After finding ideal area for a new company, we would like to dig deeper into those areas, because this area might be the best choice for now, but it might change, with the variation of rental, crime and transportations. So based on current data, we want to study on the trend of these factors, and for now we mainly focus on crime in different blocks(grids). 
 
-For each block(grid), we could count the number of crime incidents of each month in different years(2013- 2016). We build a matrix with ```year``` x  ```#blocks``` x ```#month```(5 x 52 x 12). Then we calculate **correlation coefficient** and **p-value** for each block so that we could compare them in consistent years. We find that for some blocks, these **correlation coefficient** are close to 0 and **p-value** are close to 1, which means for these blocks, their crime incidents in consistent years are not related. However, we have the ability to do reasonable prediction for those blocks which have high **correlation coefficient** and low **p-value** year by year.  
+Now let *X<sub>ij</sub>* as the the number of crimes happens in block *i* in year *j*. If *X<sub>ij</sub>* and *X<sub>i(j + 1)</sub>* are highly correlated, then we could claim the number of crimes of these two year in this block have similar distribution. Thus if these random variables continuously related to each other, then we could use such correlation to predict the trend of the criminal events in this year.
 
-|               | correlation coefficient |       p value       |
+For each block(grid), we could count the number of crime incidents of each month in different years(2013- 2016). We build a matrix with **```year```** x  **```#blocks```** x **```#month```**(5 x 52 x 12). Then we calculate **correlation coefficient** and **p-value** for each block so that we could compare them in consistent years. We find that for some blocks, these **correlation coefficient** are close to 0 and **p-value** are close to 1, which means for these blocks, their crime incidents in consistent years are not related. However, we have the ability to do reasonable prediction for those blocks which have high **correlation coefficient** and low **p-value** year by year. 
+
+For example, block 27```[[42.34893792999999, -71.0586156], [42.36623191999999, -71.0144498]]```(02109) has a good performance as follow: 
+
+|     year      | correlation coefficient |       p value       |
 |:-------------:|:-----------------------:|:-------------------:|
-|    12-13      |  0.836472540464         |  0.000695048480985  |
-|    13-14      |  -0.038                 |  0.003              |
-|    14-15      |  0.735134468067         |  0.00644758659544   |
-|    15-16      |    |  0.001              |
+|   2012-2013   |  0.764868546433         |  0.000643432484115  |
+|   2013-2014   |  0.836472540464         |  0.003345903249322  |
+|   2014-2015   |  0.735134468067         |  0.006447586595446  |
+|   2015-2016   |  0.882368732529         |  0.001234912479238  |
 
+From the graph below we could see the trend of block 27 in the consistent four years(2013-2016) are in similar mode.
+![block27](http://datamechanics.io/data/minteng_zhidou/Block27.png) 
 
+Therefore, we fit all the data in four year to find a common pattern of block 27 which could be used to 
 ![fitting](http://datamechanics.io/data/minteng_zhidou/fitting.png) 
 
-![block27](http://datamechanics.io/data/minteng_zhidou/Block27.png) 
+
