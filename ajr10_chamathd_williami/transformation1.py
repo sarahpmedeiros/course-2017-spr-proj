@@ -4,7 +4,7 @@ import prov.model
 import datetime
 import random
 import uuid
-from sklearn.cluster import KMeans
+from numpy.random import choice
 
 # Credit to professor Lapets for these functions
 
@@ -33,7 +33,7 @@ def aggregate(R, f):
 
 def k_means(P,M):
     OLD = []
-    while OLD != M:
+    for x in range(1000):
         OLD = M
 
         MPD = [(m, p, dist(m,p)) for (m, p) in product(M, P)]
@@ -70,13 +70,42 @@ class transformation1(dml.Algorithm):
 
         # Operational code here:
         nhood_data = repo["ajr10_chamathd_williami.neighborhood_sea_level_data"].find({}, {"center_x": 1, "center_y": 1}).limit(50)
-        centers = []
+        points = []
         for nhood in nhood_data:
-            centers += [[nhood["center_x"], nhood["center_y"]]]
+            points += [(nhood["center_x"], nhood["center_y"])]
 
-        print("Running kmeans...")
-        kmeans = KMeans(n_clusters=8, random_state=0).fit(centers)
-        print(kmeans.cluster_centers_)
+        # Run k-means++ to generate good seed values
+        seeds = []
+        centers = points.copy()
+        random.shuffle(centers)
+        seeds += [centers.pop()]
+        k = 1
+        while k < 12:
+            distances = []
+            for index in range(len(centers)):
+                min_dist = dist(centers[index], seeds[0])
+                for seed in seeds:
+                    distance = dist(centers[index], seed)
+                    if distance < min_dist:
+                        min_dist = distance
+                D = min_dist ** 2
+                distances += [D]
+            total_prob = sum(distances)
+            probs = []
+            for distance in distances:
+                prob = distance / total_prob
+                probs += [prob]
+            index = choice(list(range(len(centers))), 1, probs)[0]
+            seeds += [centers.pop(index)]
+            k += 1
+
+        means = k_means(points, seeds)
+        for seed in seeds:
+            for mean in means:
+                if seed == means:
+                    print("Found duplicate between seeds and means")
+        print(len(seeds))
+        print(means)
         
         # Logout and end
         repo.logout()
