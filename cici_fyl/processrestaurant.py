@@ -10,8 +10,6 @@ class processrestaurant(dml.Algorithm):
     contributor = 'cici_fyl'
     reads = ['property', 'restaurant']
     writes = ['property_restaurant']
-    
-
 
     @staticmethod
     def execute(trial = False):
@@ -75,23 +73,3 @@ class processrestaurant(dml.Algorithm):
         repo.logout()
                   
         return doc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
