@@ -8,9 +8,9 @@ import datetime
 import uuid
 
 class neighborhoodstatistics(dml.Algorithm):
-	contributor = 'jguerero_mgarcia7'
-	reads = ['jguerero_mgarcia7.population', 'jguerero_mgarcia7.foodsources', 'jguerero_mgarcia7.obesityperneighborhood']
-	writes = ['jguerero_mgarcia7.neighborhoodstatistics']
+	contributor = 'cxiao_jchew1_jguerero_mgarcia7'
+	reads = ['cxiao_jchew1_jguerero_mgarcia7.population', 'cxiao_jchew1_jguerero_mgarcia7.foodsources', 'cxiao_jchew1_jguerero_mgarcia7.obesityperneighborhood']
+	writes = ['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics']
 
 	@staticmethod
 	def execute(trial = False):
@@ -20,12 +20,12 @@ class neighborhoodstatistics(dml.Algorithm):
 		# Set up the database connection.
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
-		repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
+		repo.authenticate('cxiao_jchew1_jguerero_mgarcia7', 'cxiao_jchew1_jguerero_mgarcia7')
 
 		#create cursors to be able to go through the data
-		population_cursor = repo['jguerero_mgarcia7.population'].find()
-		foodsources_cursor = repo['jguerero_mgarcia7.foodsources'].find()
-		obesity_cursor = repo['jguerero_mgarcia7.obesityperneighborhood'].find()
+		population_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.population'].find()
+		foodsources_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.foodsources'].find()
+		obesity_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.obesityperneighborhood'].find()
 
 		#list for dictionarys (temp_stats) of neighborhood statistics
 		nstats = []
@@ -96,9 +96,9 @@ class neighborhoodstatistics(dml.Algorithm):
 
 		repo.dropCollection("neighborhoodstatistics")
 		repo.createCollection("neighborhoodstatistics")
-		repo['jguerero_mgarcia7.neighborhoodstatistics'].insert_many(nstats)
-		repo['jguerero_mgarcia7.neighborhoodstatistics'].metadata({'complete':True})
-		print(repo['jguerero_mgarcia7.neighborhoodstatistics'].metadata())
+		repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics'].insert_many(nstats)
+		repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics'].metadata({'complete':True})
+		print(repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics'].metadata())
 
 		repo.logout()
 
@@ -117,13 +117,13 @@ class neighborhoodstatistics(dml.Algorithm):
 		# Set up the database connection.
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
-		repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
+		repo.authenticate('cxiao_jchew1_jguerero_mgarcia7', 'cxiao_jchew1_jguerero_mgarcia7')
 		doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
-		doc.add_namespace('dat', 'http://datamechanics.io/data/jguerero_mgarcia7') # The data sets are in <user>#<collection> format.
+		doc.add_namespace('dat', 'http://datamechanics.io/data/cxiao_jchew1_jguerero_mgarcia7') # The data sets are in <user>#<collection> format.
 		doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
 		doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
 
-		this_script = doc.agent('alg:jguerero_mgarcia7#neighborhoodstatistics', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+		this_script = doc.agent('alg:cxiao_jchew1_jguerero_mgarcia7#neighborhoodstatistics', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 		foodsources_resource = doc.entity('dat:foodsources', {'prov:label':'Food Sources', prov.model.PROV_TYPE:'ont:DataResource'})
 		pop_resource = doc.entity('dat:population', {'prov:label':'Boston Demographics', prov.model.PROV_TYPE:'ont:DataResource'})
 		obesity_resource = doc.entity('dat:obesityperneighborhood', {'prov:label':'Obesity Statistics per Neighborhood', prov.model.PROV_TYPE:'ont:DataResource'})
@@ -140,7 +140,7 @@ class neighborhoodstatistics(dml.Algorithm):
 				  {prov.model.PROV_TYPE:'ont:Computation'}
 				  )
 
-		neighborhoodstatistics = doc.entity('dat:jguerero_mgarcia7#neighborhoodstatistics', {prov.model.PROV_LABEL:'Statistics per neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
+		neighborhoodstatistics = doc.entity('dat:cxiao_jchew1_jguerero_mgarcia7#neighborhoodstatistics', {prov.model.PROV_LABEL:'Statistics per neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
 		doc.wasAttributedTo(neighborhoodstatistics, this_script)
 		doc.wasGeneratedBy(neighborhoodstatistics, get_neighborhoodstatistics, endTime)
 

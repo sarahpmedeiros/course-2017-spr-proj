@@ -8,9 +8,9 @@ import datetime
 import uuid
 
 class foodsources(dml.Algorithm):
-	contributor = 'jguerero_mgarcia7'
-	reads = ['jguerero_mgarcia7.farmersmarkets', 'jguerero_mgarcia7.supermarkets', 'jguerero_mgarcia7.allcornerstores']
-	writes = ['jguerero_mgarcia7.foodsources']
+	contributor = 'cxiao_jchew1_jguerero_mgarcia7'
+	reads = ['cxiao_jchew1_jguerero_mgarcia7.farmersmarkets', 'cxiao_jchew1_jguerero_mgarcia7.supermarkets', 'cxiao_jchew1_jguerero_mgarcia7.allcornerstores']
+	writes = ['cxiao_jchew1_jguerero_mgarcia7.foodsources']
 
 	@staticmethod
 	def execute(trial = False):
@@ -20,12 +20,12 @@ class foodsources(dml.Algorithm):
 		# Set up the database connection.
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
-		repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
+		repo.authenticate('cxiao_jchew1_jguerero_mgarcia7', 'cxiao_jchew1_jguerero_mgarcia7')
 
 		#cursors for all information in datasetss
-		farmersmarkets_data_cursor = repo['jguerero_mgarcia7.farmersmarkets'].find()
-		supermarkets_data_cursor = repo['jguerero_mgarcia7.supermarkets'].find()
-		cornerstores_data_cursor = repo['jguerero_mgarcia7.allcornerstores'].find()
+		farmersmarkets_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.farmersmarkets'].find()
+		supermarkets_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.supermarkets'].find()
+		cornerstores_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.allcornerstores'].find()
 
 		combined_dataset = []
 		temp = {'Neighborhood': 0, 'Type': 0, 'Name': 0, 'Address': 0, 'Zipcode': 0, 'Coordinates': 0} 
@@ -90,9 +90,9 @@ class foodsources(dml.Algorithm):
 
 		repo.dropCollection("foodsources")
 		repo.createCollection("foodsources")
-		repo['jguerero_mgarcia7.foodsources'].insert_many(combined_dataset)
-		repo['jguerero_mgarcia7.foodsources'].metadata({'complete':True})
-		print(repo['jguerero_mgarcia7.foodsources'].metadata())
+		repo['cxiao_jchew1_jguerero_mgarcia7.foodsources'].insert_many(combined_dataset)
+		repo['cxiao_jchew1_jguerero_mgarcia7.foodsources'].metadata({'complete':True})
+		print(repo['cxiao_jchew1_jguerero_mgarcia7.foodsources'].metadata())
 
 		repo.logout()
 
@@ -111,13 +111,13 @@ class foodsources(dml.Algorithm):
 		# Set up the database connection.
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
-		repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
+		repo.authenticate('cxiao_jchew1_jguerero_mgarcia7', 'cxiao_jchew1_jguerero_mgarcia7')
 		doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
 		doc.add_namespace('dat', 'http://datamechanics.io/data/jguereo_mgarcia7') # The data sets are in <user>#<collection> format.
 		doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
 		doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
 
-		this_script = doc.agent('alg:jguerero_mgarcia7#foodsources', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+		this_script = doc.agent('alg:cxiao_jchew1_jguerero_mgarcia7#foodsources', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 		
 		allcornerstores_resource = doc.entity('dat:allcornerstores', {'prov:label':'Corner Stores', prov.model.PROV_TYPE:'ont:DataSet'})
 		supermarkets_resource = doc.entity('dat:supermarkets', {'prov:label':'Supermarkets', prov.model.PROV_TYPE:'ont:DataSet'})
@@ -137,7 +137,7 @@ class foodsources(dml.Algorithm):
 		  {prov.model.PROV_TYPE:'ont:Computation'}
 		  )
 
-		foodsources = doc.entity('dat:jguerero_mgarcia7#foodsources', {prov.model.PROV_LABEL:'Sources of food per neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
+		foodsources = doc.entity('dat:cxiao_jchew1_jguerero_mgarcia7#foodsources', {prov.model.PROV_LABEL:'Sources of food per neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
 		doc.wasAttributedTo(foodsources, this_script)
 		doc.wasGeneratedBy(foodsources, get_foodsources, endTime)
 
