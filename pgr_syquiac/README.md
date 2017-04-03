@@ -22,4 +22,10 @@ The third dataset (created by transformation2.py) is a dataset that has the obes
 
 ## Project 2
 
-Correlation between number of hospitals and rate of doctor visits; sleep rates and distance from universities
+With correlation1.py and correlation2.py, we want to find out if we are able to attribute certain behaviors, in this case lack of sleep and annual check ups, to a characteristic of where one resides.
+
+In correlation1.py, we find the correlation coefficient and p-value between whether someone in Boston visited their doctor for an annual check up within the last year and their proximity to a hospital. We also give the user the option to restrict the distance from the hospital to see if there is a correlation between people who live within, say, a 1 mile radius of the hospital. Using this data, if there is a negative correlation between distance from the hospital and going to the doctors for an annual check up, we can determine whether people a given distance away from the hospital need to be given better access to their doctors.
+
+In correlation2.py, we find the correlation coefficient and p-value between lack of sleep (defined as less than 7 hours of sleep) and one's proximity to a university. Similar to correlation1, the user can adjust the radius from the university and get the correlation coefficient from people within that radius.
+
+Both correlation1 and correlation2 give us a p-value, meaning we can determine whether the correlation is statistically significant (at least by current statistics standards) not only for the entire dataset but for given proximities from a university/hospital as well.

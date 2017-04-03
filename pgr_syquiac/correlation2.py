@@ -2,7 +2,7 @@
 Pauline Ramirez & Carlos Syquia
 correlation2.py
 
-Calculates the correlation between sleep ratese and proximity to a university
+Calculates the correlation between sleep rates and proximity to a university
 
 '''
 

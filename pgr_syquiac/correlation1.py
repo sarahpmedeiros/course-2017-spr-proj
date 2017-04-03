@@ -2,7 +2,7 @@
 Pauline Ramirez & Carlos Syquia
 correlation1.py
 
-Calculates the correlation between x and y
+Calculates the correlation between annual check ups and distance from a hospital
 
 '''
 
