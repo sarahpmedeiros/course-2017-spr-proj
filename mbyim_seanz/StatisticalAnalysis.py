@@ -114,13 +114,11 @@ class StatisticalAnalysis(dml.Algorithm):
 
 		results = sm.OLS(price_data, regression_data).fit()
 
-		print("HERE")
+
 		rsquared = results._results.rsquared.tolist()
 		params = results._results.params.tolist()
 		conf_int = results._results.conf_int().tolist()
-		print("TYPE:")
-		print(type(conf_int))
-		print(type(conf_int[1]))
+
 		pvalues = results._results.pvalues.tolist()
 		tvalues = results._results.tvalues.tolist()
 
@@ -130,7 +128,7 @@ class StatisticalAnalysis(dml.Algorithm):
 		stats_jsons['conf_int'] = conf_int
 		stats_jsons['pvalues'] = pvalues
 		stats_jsons['tvalues'] = tvalues
-		print(stats_jsons)
+		
 
 		stats_jsons = [stats_jsons]
 		string_fix = json.dumps(stats_jsons)
@@ -178,7 +176,6 @@ class StatisticalAnalysis(dml.Algorithm):
 		plt.ylabel('Average Number of Floors')
 		plt.savefig('number_floors_graph')
 	
-		print("DONE")
 
 	@staticmethod
 	def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
@@ -214,9 +211,7 @@ class StatisticalAnalysis(dml.Algorithm):
 		return doc
 
 
-StatisticalAnalysis.execute()
-doc = StatisticalAnalysis.provenance()
-print('finished statistical analysis')
+
 
 
 
