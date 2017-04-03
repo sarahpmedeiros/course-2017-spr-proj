@@ -38,11 +38,11 @@ class correlation1(dml.Algorithm):
         rates = []
 
         # Let the user choose the max distance from each hospital
-        radius = input("Please enter a radius in miles, or press enter to observe all data points: ")
+        distance = input("Please enter a distance in miles, or press enter to observe all data points: ")
 
-        if not radius == '':
-        	radius = float(radius)
-        	print("Observing data points within a " + str(radius) + " mile radius of their nearest hospital...")
+        if not distance == '':
+        	distance = float(distance)
+        	print("Observing data points within a " + str(distance) + " mile distance of their nearest hospital...")
 
 
         # get the distance of each data point from their closest hospital
@@ -56,14 +56,14 @@ class correlation1(dml.Algorithm):
 	        	for j in i['doctorVisits']:
 	        		rate_distance = vincenty(j['geolocation']['coordinates'], i['location']['coordinates']).miles
 	        		if 'data_value' in j:
-	        			# If the user doesn't decide a radius then add all the data points
-	        			if radius == '':
+	        			# If the user doesn't decide a distance then add all the data points
+	        			if distance == '':
 	        				rates.append({'distance_nearest_hospital': rate_distance,
 	        				'rate_of_checkup': float(j['data_value']), 'name_of_hospital': i['name']})
 	        				count += 1
 	        			# Otherwise add all the data points within the specified distance
 	        			else:
-	        				if rate_distance < radius:
+	        				if rate_distance < distance:
 	        					rates.append({'distance_nearest_hospital': rate_distance,
 	        					'rate_of_checkup': float(j['data_value']), 'name_of_hospital': i['name']})
 	        					count += 1

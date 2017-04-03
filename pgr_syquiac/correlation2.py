@@ -36,11 +36,11 @@ class correlation2(dml.Algorithm):
 
 
         # Let the user choose the max distance from each hospital
-        radius = input("Please enter a radius in miles, or press enter to observe all data points: ")
+        distance = input("Please enter a distance in miles, or press enter to observe all data points: ")
 
-        if not radius == '':
-        	radius = float(radius)
-        	print("Observing data points within a " + str(radius) + " mile radius of their nearest university...")
+        if not distance == '':
+        	distance = float(distance)
+        	print("Observing data points within a " + str(distance) + " mile distance of their nearest university...")
 
          # Append tuples of (dist_closest_uni, sleep_rate, name_of_closest_uni)
         rates = []
@@ -57,14 +57,15 @@ class correlation2(dml.Algorithm):
 		        	for j in i['sleepRates']:
 		        		rate_distance = vincenty(j['geolocation']['coordinates'], i['coordinates']).miles
 		        		if 'data_value' in j:
-		        			if radius == '':
+		        			if distance == '':
+		        				count += 1
 		        				rates.append({'distance_closest_uni': rate_distance,
-		        			 	'sleep_rate': float(j['data_value']), 'name_of_closest_uni': i['FIELD2']})
-		        			 	count += 1
-		        			else: 
-		        			 	if rate_distance < radius:
-		        			 		rates.append({'distance_closest_uni': rate_distance,
 		        			 		'sleep_rate': float(j['data_value']), 'name_of_closest_uni': i['FIELD2']})
+		        			 	
+		        			else: 
+		        			 	if rate_distance < distance:
+		        			 		rates.append({'distance_closest_uni': rate_distance,
+		        			 			'sleep_rate': float(j['data_value']), 'name_of_closest_uni': i['FIELD2']})
 		        			 		count += 1
 
         repo.dropPermanent("sleep_universities")
