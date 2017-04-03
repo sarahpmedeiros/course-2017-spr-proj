@@ -7,6 +7,7 @@ import prov.model
 import datetime
 import uuid
 import sodapy
+import rtree
 
 
 # implementation of schemas from course notes
@@ -47,7 +48,6 @@ coor = [x.points for x in shapes]
 inProj = Proj(init='epsg:26986')
 outProj = Proj(init='epsg:4326')
 zip_to_coor = {}
-print(zip_to_coor)
 
 for i in range(len(zipcode)):
 	for j in range(len(coor[i])):
@@ -55,11 +55,9 @@ for i in range(len(zipcode)):
 		x2, y2 = transform(inProj, outProj, x1, y1)
 		coor[i][j] = (y2, x2)
 		zip_to_coor[zipcode[i]] = coor[i]
-#print(zip_to_coor)
-
 
 # function of checking whether a point is inside a polygon
-# implemented online on
+# implemented online on http://geospatialpython.com/2011/01/point-in-polygon.html
 
 def polygon(x, y, poly):
     n = len(poly)
@@ -76,8 +74,6 @@ def polygon(x, y, poly):
                         inside = not inside
         p1x, p1y = p2x, p2y
     return inside
-
-
 
 
 
@@ -138,11 +134,19 @@ class proj2(dml.Algorithm):
 
         # correspond zipcode to property_14 (project2)
 
-        zipcode_property14 = [{} for i in range(len(property14_price_coordination_float)) if polygon(property14_price_coordination_float[i][1][0],property14_price_coordination_float[i][1][1],)]
-
         def zip_code_property14():
-            mylist = []
-            return 0
+            rtidx = rtree.index.Index()
+            rtidx = zip_to_coor
+            property14_zip = {}
+            for zipcode in zip_to_coor:
+                for i in range(len(property14_price_coordination_float)):
+                    if polygon(property14_price_coordination_float[i][1][0], property14_price_coordination_float[i][1][1], zip_to_coor[zipcode]):
+                        if zipcode not in property14_zip:
+                            property14_zip[zipcode] = property14_price_coordination_float[i]
+                        else:
+                            property14_zip[zipcode] += property14_price_coordination_float[i]
+            return property14_zip
+        print(zip_code_property14())
 
 
         # import property2015 data
@@ -154,7 +158,6 @@ class proj2(dml.Algorithm):
         property15_price_coordination = project(response2015, lambda x: (x["av_total"],x["location"]))
         property15_coordination = [eval(a[1]) for a in property15_price_coordination]
         property15_price_coordination_float = [(int(price[0]), coordination) for price in property15_price_coordination for coordination in property15_coordination]
-        print(property15_coordination)
         repo['pt0713_silnuext.property_crime'].insert_many(response2015)
         repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.property_crime'].metadata())
