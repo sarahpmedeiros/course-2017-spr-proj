@@ -94,26 +94,26 @@ class assignStudents(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
 
-        this_script = doc.agent('alg:echogu_wei0496_wuhaoyu#mergeLandmarksHubway',
-                                {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
-        resource_BLCLandmarks = doc.entity('dat:echogu_wei0496_wuhaoyu#BLCLandmarks',
-                                           {'prov:label': 'BLC Landmarks', prov.model.PROV_TYPE: 'ont:DataSet'})
-        resource_HubwayStations = doc.entity('dat:echogu_wei0496_wuhaoyu#HubwayStations',
-                                             {'prov:label': 'Hubway Stations', prov.model.PROV_TYPE: 'ont:DataSet'})
-
-        get_LandmarksHubway = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_LandmarksHubway, this_script)
-        doc.usage(get_LandmarksHubway, resource_BLCLandmarks, startTime, None,
-                  {prov.model.PROV_TYPE: 'ont:Computation'})
-        doc.usage(get_LandmarksHubway, resource_HubwayStations, startTime, None,
-                  {prov.model.PROV_TYPE: 'ont:Computation'})
-
-        LandmarksHubway = doc.entity('dat:echogu_wei0496_wuhaoyu#LandmarksHubway',
-                                     {prov.model.PROV_LABEL: 'Landmarks Hubway Stations', prov.model.PROV_TYPE: 'ont:DataSet'})
-        doc.wasAttributedTo(LandmarksHubway, this_script)
-        doc.wasGeneratedBy(LandmarksHubway, get_LandmarksHubway, endTime)
-        doc.wasDerivedFrom(LandmarksHubway, resource_BLCLandmarks, get_LandmarksHubway, get_LandmarksHubway, get_LandmarksHubway)
-        doc.wasDerivedFrom(LandmarksHubway, resource_HubwayStations, get_LandmarksHubway, get_LandmarksHubway, get_LandmarksHubway)
+        # this_script = doc.agent('alg:echogu_wei0496_wuhaoyu#mergeLandmarksHubway',
+        #                         {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
+        # resource_BLCLandmarks = doc.entity('dat:echogu_wei0496_wuhaoyu#BLCLandmarks',
+        #                                    {'prov:label': 'BLC Landmarks', prov.model.PROV_TYPE: 'ont:DataSet'})
+        # resource_HubwayStations = doc.entity('dat:echogu_wei0496_wuhaoyu#HubwayStations',
+        #                                      {'prov:label': 'Hubway Stations', prov.model.PROV_TYPE: 'ont:DataSet'})
+        #
+        # get_LandmarksHubway = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        # doc.wasAssociatedWith(get_LandmarksHubway, this_script)
+        # doc.usage(get_LandmarksHubway, resource_BLCLandmarks, startTime, None,
+        #           {prov.model.PROV_TYPE: 'ont:Computation'})
+        # doc.usage(get_LandmarksHubway, resource_HubwayStations, startTime, None,
+        #           {prov.model.PROV_TYPE: 'ont:Computation'})
+        #
+        # LandmarksHubway = doc.entity('dat:echogu_wei0496_wuhaoyu#LandmarksHubway',
+        #                              {prov.model.PROV_LABEL: 'Landmarks Hubway Stations', prov.model.PROV_TYPE: 'ont:DataSet'})
+        # doc.wasAttributedTo(LandmarksHubway, this_script)
+        # doc.wasGeneratedBy(LandmarksHubway, get_LandmarksHubway, endTime)
+        # doc.wasDerivedFrom(LandmarksHubway, resource_BLCLandmarks, get_LandmarksHubway, get_LandmarksHubway, get_LandmarksHubway)
+        # doc.wasDerivedFrom(LandmarksHubway, resource_HubwayStations, get_LandmarksHubway, get_LandmarksHubway, get_LandmarksHubway)
 
         repo.logout()
 
