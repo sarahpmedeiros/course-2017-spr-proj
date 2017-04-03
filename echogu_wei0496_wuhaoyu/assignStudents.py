@@ -9,7 +9,7 @@ import uuid
 import math
 import random
 #from geopy.distance import vincenty
-from echogu_wei0496_wuhaoyu import transformData
+#from echogu_wei0496_wuhaoyu import assignStudents
 
 class assignStudents(dml.Algorithm):
     contributor = 'echogu_wei0496_wuhaoyu'
@@ -41,8 +41,8 @@ class assignStudents(dml.Algorithm):
                              'school': item['properties']['school']})
 
         # group the student belongs to the same school
-        project_students = transformData.project(students, lambda t: (t['school'], [t['_id'], t['latitude'], t['longitude']]))
-        school_students = transformData.aggregate(project_students, assignStudents.porj_students)
+        project_students = assignStudents.project(students, lambda t: (t['school'], [t['_id'], t['latitude'], t['longitude']]))
+        school_students = assignStudents.aggregate(project_students, assignStudents.porj_students)
 
         results = []
         for item in school_students[0:10]:
@@ -147,23 +147,23 @@ class assignStudents(dml.Algorithm):
             # [Changes needed] check if diff b/t 2 pts < 0.001
             if(count == 10):
                 break
-            MPD = [(m, p, assignStudents.dist(m, p[:2])) for (m, p) in transformData.product(M, P)]
+            MPD = [(m, p, assignStudents.dist(m, p[:2])) for (m, p) in assignStudents.product(M, P)]
             PDs = [(p, assignStudents.dist(m, p[:2])) for (m, p, d) in MPD]
-            PD = transformData.aggregate(PDs, min)
-            MP = [(m, p) for ((m, p, d), (p2, d2)) in transformData.product(MPD, PD) if p == p2 and d == d2]
-            MT = transformData.aggregate(MP, assignStudents.plus)
+            PD = assignStudents.aggregate(PDs, min)
+            MP = [(m, p) for ((m, p, d), (p2, d2)) in assignStudents.product(MPD, PD) if p == p2 and d == d2]
+            MT = assignStudents.aggregate(MP, assignStudents.plus)
 
-            M1 = [(m, 1) for ((m, p, d), (p2, d2)) in transformData.product(MPD, PD) if p == p2 and d == d2]
-            MC = transformData.aggregate(M1, sum)
+            M1 = [(m, 1) for ((m, p, d), (p2, d2)) in assignStudents.product(MPD, PD) if p == p2 and d == d2]
+            MC = assignStudents.aggregate(M1, sum)
 
-            M = [assignStudents.scale(t, c) for ((m, t), (m2, c)) in transformData.product(MT, MC) if m == m2]
+            M = [assignStudents.scale(t, c) for ((m, t), (m2, c)) in assignStudents.product(MT, MC) if m == m2]
             count += 1
         return sorted(M)
 
     def assign_students(M, P):
-        MPD = [(m, p, assignStudents.dist(m, p[:2])) for (m, p) in transformData.product(M, P)]
+        MPD = [(m, p, assignStudents.dist(m, p[:2])) for (m, p) in assignStudents.product(M, P)]
         PDs = [(p, assignStudents.dist(m, p)[:2]) for (m, p, d) in MPD]
-        PD = transformData.aggregate(PDs, min)
+        PD = assignStudents.aggregate(PDs, min)
 
         final = []
         for mean in M:
@@ -187,5 +187,34 @@ class assignStudents(dml.Algorithm):
                 'aggregated_point': [j],
                 'points': result})
         return final
+
+    def union(R, S):
+        return R + S
+
+    def difference(R, S):
+        return [t for t in R if t not in S]
+
+    def intersect(R, S):
+        return [t for t in R if t in S]
+
+    def project(R, p):
+        return [p(t) for t in R]
+
+    def select(R, s):
+        return [t for t in R if s(t)]
+
+    def product(R, S):
+        return [(t, u) for t in R for u in S]
+
+    def aggregate(R, f):
+        keys = {r[0] for r in R}
+        return [(key, f([v for (k, v) in R if k == key])) for key in keys]
+
+    def map(f, R):
+        return [t for (k, v) in R for t in f(k, v)]
+
+    def reduce(f, R):
+        keys = {k for (k, v) in R}
+        return [f(k1, [v for (k2, v) in R if k1 == k2]) for k1 in keys]
 
 assignStudents.execute()
