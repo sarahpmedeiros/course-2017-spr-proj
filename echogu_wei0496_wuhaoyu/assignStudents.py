@@ -2,15 +2,13 @@
 
 # import urllib.request
 # import json
-# import numpy
-import math
-import random
 import dml
 import prov.model
 import datetime
 import uuid
-from geopy.distance import vincenty
-from heapq import heappush, heappop
+import math
+import random
+#from geopy.distance import vincenty
 from echogu_wei0496_wuhaoyu import transformData
 
 class assignStudents(dml.Algorithm):
@@ -35,7 +33,6 @@ class assignStudents(dml.Algorithm):
 
         # loads the collection
         raw_students = repo['echogu_wei0496_wuhaoyu.students'].find()
-
         students = []
         for item in raw_students:
             students.append({'_id': item['_id'],
@@ -44,26 +41,25 @@ class assignStudents(dml.Algorithm):
                              'school': item['properties']['school']})
 
         # group the student belongs to the same school
-        project_students = transformData.project(students, lambda t: (t['school'], [t['_id'], [t['latitude'], t['longitude']]]))
+        project_students = transformData.project(students, lambda t: (t['school'], [t['_id'], t['latitude'], t['longitude']]))
         school_students = transformData.aggregate(project_students, assignStudents.porj_students)
 
         results = []
-        for i in school_students[0:10]:
-            school = i[0]
-            num_students = len(i[1][0])
+        for item in school_students[0:10]:
+            school = item[0]
+            num_students = len(item[1][0])
             num_buses = math.ceil(num_students / bus_capacity)
-            # print("Assign students to buses for", str(school))
-            # print("# of buses needed are", str(num_buses))
+            print(str(school) + ": ", num_students, "students,", num_buses, "buses")
+            # k-means clustering algorithm (#means = #buses)
             random_points = [(random.uniform(42.2, 42.4), random.uniform(-71.0, -71.2)) for x in range(num_buses)]
-            students_points = [(x[1][0], x[1][1]) for x in i[1][0]]
+            students_points = [(student[1], student[2]) for student in item[1][0]]
             students_means = assignStudents.k_means(random_points, students_points)
-            # print(students_means)
-            print("finished!")
-            print("calling assign_students")
-            final = assignStudents.assign_students(students_means, students_points, i)
+            print("k-means:", students_means)
+
+            final = assignStudents.assign_students(students_means, students_points)
             results.append(final)
 
-        # stores the collection
+        # stores the means and their corresponding students in the collection
         repo.dropCollection('echogu_wei0496_wuhaoyu.assigned_students')
         repo.createCollection('echogu_wei0496_wuhaoyu.assigned_students')
         for r in results:
@@ -140,10 +136,11 @@ class assignStudents(dml.Algorithm):
         count = 0
         while (OLD != M):
             OLD = M
-            if(count == 100):
+            # [Changes needed] check if diff b/t 2 pts < 0.001
+            if(count == 10):
                 break
-            MPD = [(m, p, assignStudents.dist(m, p[0:2])) for (m, p) in transformData.product(M, P)]
-            PDs = [(p, assignStudents.dist(m, p[0:2])) for (m, p, d) in MPD]
+            MPD = [(m, p, assignStudents.dist(m, p)) for (m, p) in transformData.product(M, P)]
+            PDs = [(p, assignStudents.dist(m, p)) for (m, p, d) in MPD]
             PD = transformData.aggregate(PDs, min)
             MP = [(m, p) for ((m, p, d), (p2, d2)) in transformData.product(MPD, PD) if p == p2 and d == d2]
             MT = transformData.aggregate(MP, assignStudents.plus)
@@ -152,31 +149,33 @@ class assignStudents(dml.Algorithm):
             MC = transformData.aggregate(M1, sum)
 
             M = [assignStudents.scale(t, c) for ((m, t), (m2, c)) in transformData.product(MT, MC) if m == m2]
-            count = count + 1
-        return (sorted(M))
+            count += 1
+        return sorted(M)
 
-    def assign_students(M, P, i):
-        MPD = [(m, p, assignStudents.dist(m, p[0:2])) for (m, p) in transformData.product(M, P)]
-        PDs = [(p, assignStudents.dist(m, p[0:2])) for (m, p, d) in MPD]
+    def assign_students(M, P):
+        MPD = [(m, p, assignStudents.dist(m, p)) for (m, p) in transformData.product(M, P)]
+        PDs = [(p, assignStudents.dist(m, p)) for (m, p, d) in MPD]
         PD = transformData.aggregate(PDs, min)
-        id = 0
+
         final = []
-        for j in M:
+        for mean in M:
             result = []
-            count = 0
+            students_count = 0
             for i in PD:
-                if (count >= bus_capacity):
-                    print("count out of bound")
+                if (students_count >= bus_capacity):
+                    print("Bus is full.")
                     break
-                if(i[1] == assignStudents.dist(j, i[0][0:2])):
-                    print(i)
+                if(i[1] == assignStudents.dist(mean, i[0])):
+                    # print(i)
                     result.append({
                         'student_id': i[0][2],
                         'latitude': i[0][0],
                         'longitude': i[0][1]})
-                    count = count + 1
+                    students_count += 1
             #print(j)
             final.append({
                 'aggregated_point': [j],
                 'points': result})
         return final
+
+assignStudents.execute()
