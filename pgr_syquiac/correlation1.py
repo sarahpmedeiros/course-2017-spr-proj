@@ -37,25 +37,42 @@ class correlation1(dml.Algorithm):
         # Append tuples of (distance_nearest_hospital, rate_of_checkup, name_of_hospital) to here
         rates = []
 
-        # just prints how many data points each one has
-        # for i in visits:
-        # 	print(len(i['doctorVisits']))
-        # print(visits[0])
+        # Let the user choose the max distance from each hospital
+        radius = input("Please enter a radius in miles, or press enter to observe all data points: ")
+
+        if not radius == '':
+        	radius = float(radius)
+        	print("Observing data points within a " + str(radius) + " mile radius of their nearest hospital...")
+
 
         # get the distance of each data point from their closest hospital
         # get the rate of people going to the doctor for a checkup
-        # Create a data structure of the form (distance, rate, name)
+
+        count = 0
         for i in visits:
-        	for j in i['doctorVisits']:
-        		rate_distance = vincenty(j['geolocation']['coordinates'], i['location']['coordinates']).miles
-        		if 'data_value' in j and rate_distance:
-        			rates.append({'distance_nearest_hospital': rate_distance, 'rate_of_checkup': float(j['data_value']), 'name_of_hospital': i['name']})
+        	if trial and count > 1000:
+        		break
+        	else:
+	        	for j in i['doctorVisits']:
+	        		rate_distance = vincenty(j['geolocation']['coordinates'], i['location']['coordinates']).miles
+	        		if 'data_value' in j:
+	        			# If the user doesn't decide a radius then add all the data points
+	        			if radius == '':
+	        				rates.append({'distance_nearest_hospital': rate_distance,
+	        				'rate_of_checkup': float(j['data_value']), 'name_of_hospital': i['name']})
+	        				count += 1
+	        			# Otherwise add all the data points within the specified distance
+	        			else:
+	        				if rate_distance < radius:
+	        					rates.append({'distance_nearest_hospital': rate_distance,
+	        					'rate_of_checkup': float(j['data_value']), 'name_of_hospital': i['name']})
+	        					count += 1
 
         repo.dropPermanent("visit_rate_distance")
         repo.createPermanent("visit_rate_distance")
         repo['pgr_syquiac.visit_rate_distance'].insert_many(rates)
         print("Inserted new collection!")
-
+        print(count)
 
 
         print("Calculating correlation coefficient and p-value...")
@@ -118,6 +135,6 @@ class correlation1(dml.Algorithm):
         return doc
 
 correlation1.execute()
-doc = correlation1.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# doc = correlation1.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))

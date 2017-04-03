@@ -33,28 +33,39 @@ class correlation2(dml.Algorithm):
         repo.authenticate('pgr_syquiac', 'pgr_syquiac')
 
         sleep = repo.pgr_syquiac.sleep_rates_universities.find()
-        # print(sleep[2])
-        # print(sleep[0])
 
 
-        # for i in sleep:
-        # 	print(len(i['sleepRates']))
+        # Let the user choose the max distance from each hospital
+        radius = input("Please enter a radius in miles, or press enter to observe all data points: ")
 
-
+        if not radius == '':
+        	radius = float(radius)
+        	print("Observing data points within a " + str(radius) + " mile radius of their nearest university...")
 
          # Append tuples of (dist_closest_uni, sleep_rate, name_of_closest_uni)
         rates = []
-
+        # keep track of data points being added if trial is on
+        count = 0
         # get the distance of each data point from their closest university
-        # get the rate of people going to the doctor for a checkup
         # Create a data structure of the form (distance, sleep_rate, name)
         for i in sleep:
-        	# Skip over schools that don't have data points
-        	if len(i['sleepRates']) > 0:
-	        	for j in i['sleepRates']:
-	        		rate_distance = vincenty(j['geolocation']['coordinates'], i['coordinates']).miles
-	        		if 'data_value' in j and rate_distance:
-	        			rates.append({'distance_closest_uni': rate_distance, 'sleep_rate': float(j['data_value']), 'name_of_closest_uni': i['FIELD2']})
+        	if trial and count > 1000:
+        		break
+        	else:
+	        	# Skip over schools that don't have data points
+	        	if len(i['sleepRates']) > 0:
+		        	for j in i['sleepRates']:
+		        		rate_distance = vincenty(j['geolocation']['coordinates'], i['coordinates']).miles
+		        		if 'data_value' in j:
+		        			if radius == '':
+		        				rates.append({'distance_closest_uni': rate_distance,
+		        			 	'sleep_rate': float(j['data_value']), 'name_of_closest_uni': i['FIELD2']})
+		        			 	count += 1
+		        			else: 
+		        			 	if rate_distance < radius:
+		        			 		rates.append({'distance_closest_uni': rate_distance,
+		        			 		'sleep_rate': float(j['data_value']), 'name_of_closest_uni': i['FIELD2']})
+		        			 		count += 1
 
         repo.dropPermanent("sleep_universities")
         repo.createPermanent("sleep_universities")
@@ -125,6 +136,6 @@ class correlation2(dml.Algorithm):
         return doc
 
 correlation2.execute()
-doc = correlation2.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# doc = correlation2.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
