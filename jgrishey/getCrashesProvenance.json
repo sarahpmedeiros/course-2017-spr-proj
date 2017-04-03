@@ -1,0 +1,72 @@
+{
+    "prefix": {
+        "alg": "http://datamechanics.io/algorithm/",
+        "dat": "http://datamechanics.io/data/",
+        "ont": "http://datamechanics.io/ontology#",
+        "log": "http://datamechanics.io/log/",
+        "cdp": "http://data.cambridgema.gov/"
+    },
+    "agent": {
+        "alg:jgrishey#getCrashes": {
+            "prov:type": {
+                "$": "prov:SoftwareAgent",
+                "type": "prov:QUALIFIED_NAME"
+            },
+            "ont:Extension": "py"
+        }
+    },
+    "entity": {
+        "cdp:ybny-g9cv": {
+            "prov:label": "311, Service Requests",
+            "prov:type": "ont:DataResource",
+            "ont:Extension": "json"
+        },
+        "dat:jgrishey#crashes": {
+            "prov:label": "Cambridge Crashes",
+            "prov:type": "ont:DataSet"
+        }
+    },
+    "activity": {
+        "log:uuid0355b130-36d8-4d1c-99a4-efdd15235042": {}
+    },
+    "wasAssociatedWith": {
+        "_:id1": {
+            "prov:activity": "log:uuid0355b130-36d8-4d1c-99a4-efdd15235042",
+            "prov:agent": "alg:jgrishey#getCrashes"
+        }
+    },
+    "used": {
+        "_:id2": {
+            "prov:activity": "log:uuid0355b130-36d8-4d1c-99a4-efdd15235042",
+            "prov:entity": "cdp:ybny-g9cv",
+            "prov:type": "ont:Retrieval"
+        },
+        "_:id3": {
+            "prov:activity": "log:uuid0355b130-36d8-4d1c-99a4-efdd15235042",
+            "prov:entity": "cdp:ybny-g9cv",
+            "prov:type": "ont:DataSet",
+            "ont:Computation": "Apply ID, get latitude, and get longitude"
+        }
+    },
+    "wasAttributedTo": {
+        "_:id4": {
+            "prov:entity": "dat:jgrishey#crashes",
+            "prov:agent": "alg:jgrishey#getCrashes"
+        }
+    },
+    "wasGeneratedBy": {
+        "_:id5": {
+            "prov:entity": "dat:jgrishey#crashes",
+            "prov:activity": "log:uuid0355b130-36d8-4d1c-99a4-efdd15235042"
+        }
+    },
+    "wasDerivedFrom": {
+        "_:id6": {
+            "prov:generatedEntity": "dat:jgrishey#crashes",
+            "prov:usedEntity": "cdp:ybny-g9cv",
+            "prov:activity": "log:uuid0355b130-36d8-4d1c-99a4-efdd15235042",
+            "prov:generation": "log:uuid0355b130-36d8-4d1c-99a4-efdd15235042",
+            "prov:usage": "log:uuid0355b130-36d8-4d1c-99a4-efdd15235042"
+        }
+    }
+}
