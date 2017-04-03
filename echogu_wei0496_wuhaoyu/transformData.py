@@ -1,5 +1,5 @@
 # transformData.py
-# building blocks from lecture note
+# Data transformations and MapReduce paradigm
 
 def union(R, S):
     return R + S
