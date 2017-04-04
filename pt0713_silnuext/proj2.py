@@ -140,6 +140,18 @@ class proj2(dml.Algorithm):
         property15_zipcode = zip_code_propertydata(zip_to_coor, property15_price_short_coordination_float)
         #crime15_zipcode = zip_code_crimedata(zip_to_coor, crime_15short_coordination)
 
+
+        # inserting zipcode as polygons into R-Tree
+        def property_zipcode():
+            zip_shapes = [(zipcode, (shapely.geometry.shape(zipcode[coor]))) for zipcode in zip_to_coor]
+            property_zip = {}
+            rtidx = rtree.index.Index()
+            for i in range(len(zip_shapes)):
+                rtidx.insert(zipshapes[i], zip_shapes[i][1].bounds)
+
+            for i in range(len(property15_price_short_coordination_float)):
+                (lat, lon) = property15_price_short_coordination_float[i][1]
+
         # function of calculating average property prices within each zipcode
         def avgprice_zipcode(property_zip):
             price15_zipcode = {}
