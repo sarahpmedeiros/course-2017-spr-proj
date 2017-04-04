@@ -45,7 +45,8 @@ class safe_points(dml.Algorithm):
         safe_points_seven = []
         
         print("Calculating safe points for five foot rise...")
-        kmeans = [[-71.01576279, 42.37262541], [-71.10382837, 42.36778836] ,[-71.13631852, 42.2733972 ], [-71.1414882, 42.379961  ], [-71.06424473, 42.35630297], [-71.10116486, 42.32545693], [-70.9692239, 42.32885585], [-71.07482066, 42.28979033]]
+        kmeans = means_data["8_means"]
+
         sea_level_five_col = repo["ajr10_chamathd_williami.sea_level_five"].find().limit(0)
         for polygon in sea_level_five_col:
             seaPoly = shape(polygon["geometry"])
@@ -122,7 +123,7 @@ class safe_points(dml.Algorithm):
                   
         return doc
 
-##safe_points.execute()
+safe_points.execute()
 ##doc = safe_points.provenance()
 ##print(doc.get_provn())
 ##print(json.dumps(json.loads(doc.serialize()), indent=4))                                                                                                                                           print("Safe point", safe_point, "Original", kmean.xy
