@@ -81,13 +81,24 @@ class transformation_one_bus(dml.Algorithm):
 #         bus_locations = [(f, shapely.geometry.shape(f['geometry'])) for f in tqdm(geojson.loads(open('').read())['features']) if f['geometry'] is not None]
 
 
+	#fill tree
         student_tree = rtree.index.Index()
         for i in tqdm(range(len(student_locations))):
               (f,s) = student_locations[i]
               student_tree.insert(i, s.bounds)
 
-        print(student_tree)
+        #average out squares at lower nodes
 
+
+        #test
+        hits = student_tree.nearest((-71.2,42,-71,42.2),10)
+        print(list(hits))
+
+
+       # bounds = (-70,-72,41,43)
+        
+       # hits = student_tree.intersection(bounds)
+       # print(hits)
 
         A = project([x for x in repo.mrhoran_rnchen_vthomson.students.find({})], find_location_students)
         """
