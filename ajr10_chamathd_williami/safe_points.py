@@ -4,7 +4,6 @@ import prov.model
 import datetime
 import random
 import uuid
-from numpy.random import choice
 from shapely.geometry import Polygon, Point, LinearRing, shape
 
 def closest_point_on_border(border, pt):
