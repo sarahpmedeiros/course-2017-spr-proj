@@ -74,7 +74,7 @@ class transformation_one_bus(dml.Algorithm):
        
         b = select(product(A,A), lambda t: t[0][0][0] == t[1][0][0])
 
-        c = project(b, lambda t: (t[0][0], dist(t[0][1],t[1][1])))
+        c = select(project(b, lambda t: (t[0][0], dist(t[0][1],t[1][1]))), lambda t: t[1] > 0.0)
 
         d = project(b, lambda t: (t[0][0], 1))
 
@@ -82,7 +82,7 @@ class transformation_one_bus(dml.Algorithm):
 
         f = aggregate(d, sum)
 
-        project(select(product(f,g), lambda t: (t[0][0] == t[1][0])), lambda t: (t[0][0], (t[1][1]/t[0][1])))
+        average_distance_students = project(select(product(f,g), lambda t: (t[0][0] == t[1][0])), lambda t: (t[0][0], (t[1][1]/t[0][1])))
 
         repo.dropCollection('average_distance_students')
         repo.createCollection('average_distance_students')
@@ -219,7 +219,7 @@ def find_location_students(student):
     long = float(student["Longitude"])
     school_start_time = ["Current School Start Time"]
 
-    return([school_start_time, (lat,long)])
+    return((school_start_time, (lat,long)))
     
 
 def get_students(student): # want to return the coordinates of the towns in and around Boston
@@ -230,7 +230,7 @@ def get_students(student): # want to return the coordinates of the towns in and 
 
         name = "Sr Kennedy School"
         
-    return([name, (student["School Longitude"], student["School Latitude"])])
+    return((name, (student["School Longitude"], student["School Latitude"])))
 
 def get_buses(bus): # want to return the coordinates of the towns in and around Boston
 
@@ -238,7 +238,7 @@ def get_buses(bus): # want to return the coordinates of the towns in and around 
     long = bus['Bus Yard Longitude']
     name =  bus['Bus Yard']
 
-    return([name, (lat,long)])
+    return((name, (lat,long)))
 
 transformation_one_bus.execute()
 doc = transformation_one_bus.provenance()
