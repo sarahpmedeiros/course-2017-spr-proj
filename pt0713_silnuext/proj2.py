@@ -13,6 +13,7 @@ import geojson
 import geopy.distance
 import shapely.geometry
 from tqdm import tqdm
+from geojson import Polygon
 
 
 # implementation of schemas from course notes
@@ -99,19 +100,15 @@ class proj2(dml.Algorithm):
         crime = repo.pt0713_silnuext.crime.find()
         property_2015 = repo.pt0713_silnuext.property_2015.find()
 
-        crime_coordination = project(crime,lambda x:(x["year"], x["month"], x["location"]["latitude"],x["location"]["longitude"]))     
         # getting coordination of crimes happened in 2015
+        crime_coordination = project(crime, lambda x:(x["year"], x["month"], x["location"]["latitude"],x["location"]["longitude"]))     
         crime_15 = [crime_2015 for crime_2015 in crime_coordination if crime_2015[0] == "2015" and crime_2015[1] == "8"]
         crime_15coordination = [(float(latitude), float(longitude)) for (year, month, latitude, longitude) in crime_15]
 
-
         # getting coordination of properties that in the dataset of property assessment of 2015
-        property15_price_coordination = project(property_2015, lambda x: (x["av_total"], x.get("location")))
-        property15_coordination = [eval(str(a[1])) for a in property15_price_coordination]
-        property15_price_coordination_float = [(int(price[0]), coordination) for price in property15_price_coordination for coordination in property15_coordination]
+        property15_price_coordination = project(property_2015, lambda x: (int(x["av_total"]), eval(str(x.get("location")))))
         # shorting data in order to run it in a racheable time
-        property15_price_short_coordination_float = property15_price_coordination_float[:5000]
-
+        property15_price_short_coordination = property15_price_coordination[:50]
 
         # function of classifying properties in 2015 into differnet zipcodes by using their coordinates
         def zip_code_propertydata(zip_to_coor, coor):
@@ -137,20 +134,30 @@ class proj2(dml.Algorithm):
                             coor_zip[zipcode] += [coor[i]]
             return coor_zip
 
-        property15_zipcode = zip_code_propertydata(zip_to_coor, property15_price_short_coordination_float)
+        #property15_zipcode = zip_code_propertydata(zip_to_coor, property15_price_short_coordination_float)
         #crime15_zipcode = zip_code_crimedata(zip_to_coor, crime_15short_coordination)
-
 
         # inserting zipcode as polygons into R-Tree
         def property_zipcode():
-            zip_shapes = [(zipcode, (shapely.geometry.shape(zipcode[coor]))) for zipcode in zip_to_coor]
+            zip_shapes = [(zipcode, (shapely.geometry.asShape(Polygon(zip_to_coor[zipcode])))) for zipcode in zip_to_coor]
             property_zip = {}
             rtidx = rtree.index.Index()
-            for i in range(len(zip_shapes)):
-                rtidx.insert(zipshapes[i], zip_shapes[i][1].bounds)
+            for i in tqdm(range(len(zip_to_coor))):
+                (zipcode, shape) = zip_shapes[i]
+                rtidx.insert(zipcode, shape.bounds)
 
-            for i in range(len(property15_price_short_coordination_float)):
-                (lat, lon) = property15_price_short_coordination_float[i][1]
+            for i in range(len(property15_price_short_coordination)):
+                (lat, lon) = property15_price_short_coordination[i][1]
+                for (zipcode, shape) in [zip_shapes[i] for i in rtidx.nearest((lon, lat, lon, lat), 1)]:
+                    if shape.contains(shapely.geometry.Point(lon, lat)):
+                        if zipcode not in property_zip:
+                            property_zip[zipcode] = [property15_price_short_coordination_float[i]]
+                        else:
+                            property_zip[zipcode] += [property15_price_short_coordination_float[i]]
+
+            return property_zip
+
+        print(property_zipcode())
 
         # function of calculating average property prices within each zipcode
         def avgprice_zipcode(property_zip):
@@ -180,7 +187,7 @@ class proj2(dml.Algorithm):
             return crime_number
 
 
-        print(avgprice_zipcode(property15_zipcode))
+        #print(avgprice_zipcode(property15_zipcode))
 
  
         repo.logout()
@@ -209,9 +216,8 @@ class proj2(dml.Algorithm):
         
 
         this_script = doc.agent('alg:pt0713_silnuext#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource1 = doc.entity('bdp:crime', {'prov:label':'crime_district1415', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        resource2 = doc.entity('bdp:jsri-cpsq', {'prov:label':'property14', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        resource3 = doc.entity('bdp:n7za-nsjh', {'prov:label':'property15', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource1 = doc.entity('bdp:crime', {'prov:label':'crime', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource2 = doc.entity('bdp:n7za-nsjh', {'prov:label':'property15', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         get_property_crime = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_property_crime, this_script)
@@ -220,9 +226,6 @@ class proj2(dml.Algorithm):
                   {prov.model.PROV_TYPE:'ont:Retrieval',})
 
         doc.usage(get_property_crime, resource2, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',})
-
-        doc.usage(get_property_crime, resource3, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',})
 
         property14 = doc.entity('dat:pt0713_silnuext#property_14', {prov.model.PROV_LABEL:'property_2014', prov.model.PROV_TYPE:'ont:DataSet'})
@@ -235,18 +238,13 @@ class proj2(dml.Algorithm):
         doc.wasGeneratedBy(property15, get_property_crime, endTime)
         doc.wasDerivedFrom(property15, resource3, get_property_crime, get_property_crime, get_property_crime)
 
-        crime = doc.entity("dat:pt0713_silnuext#crime", {prov.model.PROV_LABEL:"crime", prov.model.PROV_TYPE:"ont:DataSet"})
-        doc.wasAttributedTo(crime, this_script)
-        doc.wasGeneratedBy(crime, get_property_crime, endTime)
-        doc.wasDerivedFrom(crime, resource1, get_property_crime, get_property_crime, get_property_crime)
-
         repo.logout()
                   
         return doc
 
 proj2.execute()
-doc = proj2.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#doc = proj2.provenance()
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
