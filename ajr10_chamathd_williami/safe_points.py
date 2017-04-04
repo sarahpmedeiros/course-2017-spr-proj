@@ -46,6 +46,7 @@ class safe_points(dml.Algorithm):
         
         print("Calculating safe points for five foot rise...")
         kmeans = means_data["8_means"]
+        print(kmeans)
 
         sea_level_five_col = repo["ajr10_chamathd_williami.sea_level_five"].find().limit(0)
         for polygon in sea_level_five_col:
