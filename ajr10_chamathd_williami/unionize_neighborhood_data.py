@@ -30,7 +30,7 @@ class unionize_neighborhood_data(dml.Algorithm):
         # Retrieve data from the Boston neighborhood collection
         print("Retrieving data from the Boston neighborhood collection")
 
-        boston_nhood_col = repo["ajr10_chamathd_williami.neighborhood_pop_boston"].find().limit(50)
+        boston_nhood_col = repo["ajr10_chamathd_williami.neighborhood_pop_boston"].find().limit(5) if trial else repo["ajr10_chamathd_williami.neighborhood_pop_boston"].find().limit(50)
 
         print("Inserting Boston data into collection", colName)
         for nhood in boston_nhood_col:
@@ -48,7 +48,7 @@ class unionize_neighborhood_data(dml.Algorithm):
         # Retrieve data from the Cambridge neighborhood collection
         print("Retrieving data from the Cambridge neighborhood collection")
 
-        cambridge_nhood_col = repo["ajr10_chamathd_williami.neighborhood_pop_cambridge"].find().limit(50)
+        cambridge_nhood_col = repo["ajr10_chamathd_williami.neighborhood_pop_cambridge"].find().limit(5) if trial else repo["ajr10_chamathd_williami.neighborhood_pop_cambridge"].find().limit(5)
 
         print("Inserting Cambridge data into collection", colName)
         for nhood in cambridge_nhood_col:
@@ -80,10 +80,10 @@ class unionize_neighborhood_data(dml.Algorithm):
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''
-            Create the provenance document describing everything happening
-            in this script. Each run of the script will generate a new
-            document describing that invocation event.
-            '''
+        Create the provenance document describing everything happening
+        in this script. Each run of the script will generate a new
+        document describing that invocation event.
+        '''
 
         # Set up the database connection.
         client = dml.pymongo.MongoClient()

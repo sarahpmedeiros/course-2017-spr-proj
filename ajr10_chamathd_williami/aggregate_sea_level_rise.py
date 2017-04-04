@@ -31,7 +31,7 @@ class aggregate_sea_level_rise(dml.Algorithm):
 
         # Retrieve data from the neighborhood info collection
         print("Retrieving data from the neighborhood info collection")
-        nhood_info_col = repo["ajr10_chamathd_williami.neighborhood_info"].find().limit(50)
+        nhood_info_col = repo["ajr10_chamathd_williami.neighborhood_info"].find().limit(5) if trial else repo["ajr10_chamathd_williami.neighborhood_info"].find().limit(5)
         print()
 
         # Retrieve polygon data for 7.5-foot sea level rise
@@ -126,10 +126,10 @@ class aggregate_sea_level_rise(dml.Algorithm):
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''
-            Create the provenance document describing everything happening
-            in this script. Each run of the script will generate a new
-            document describing that invocation event.
-            '''
+        Create the provenance document describing everything happening
+        in this script. Each run of the script will generate a new
+        document describing that invocation event.
+        '''
 
         # Set up the database connection.
         client = dml.pymongo.MongoClient()

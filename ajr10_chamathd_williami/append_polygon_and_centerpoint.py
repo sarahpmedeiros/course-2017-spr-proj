@@ -31,7 +31,7 @@ class append_polygon_and_centerpoint(dml.Algorithm):
 
         # Retrieve polygon data for Boston neighborhoods
         print("Retrieving polygon data from the Boston neighborhood area collection")
-        boston_area_col = repo["ajr10_chamathd_williami.neighborhood_area_boston"].find().limit(50)
+        boston_area_col = repo["ajr10_chamathd_williami.neighborhood_area_boston"].find().limit(5) if trial else repo["ajr10_chamathd_williami.neighborhood_area_boston"].find().limit(50) 
         print("Unionizing Boston polygon data into collection", colName)
         for polygon in boston_area_col:
             polyName = polygon["properties"]["name"]
@@ -43,7 +43,7 @@ class append_polygon_and_centerpoint(dml.Algorithm):
 
             # Iterate through our neighborhood collection to find a matching name
             # Retrieve data from the neighborhood collection
-            nhood_col = repo["ajr10_chamathd_williami.neighborhood_pop"].find().limit(50)
+            nhood_col = repo["ajr10_chamathd_williami.neighborhood_pop"].find().limit(5) if trial else repo["ajr10_chamathd_williami.neighborhood_pop"].find().limit(50)
             for nhood in nhood_col:
                 if nhood["name"] == polyName:
                     newDict = nhood
@@ -57,7 +57,7 @@ class append_polygon_and_centerpoint(dml.Algorithm):
 
         # Retrieve polygon data for Boston neighborhoods
         print("Retrieving polygon data from the Cambridge neighborhood area collection")
-        cambridge_area_col = repo["ajr10_chamathd_williami.neighborhood_area_cambridge"].find().limit(50)
+        cambridge_area_col = repo["ajr10_chamathd_williami.neighborhood_area_cambridge"].find().limit(5) if trial else repo["ajr10_chamathd_williami.neighborhood_area_cambridge"].find().limit(50)
         print("Unionizing Cambridge polygon data into collection", colName)
         for polygon in cambridge_area_col:
             polyName = polygon["properties"]["name"]
@@ -69,7 +69,7 @@ class append_polygon_and_centerpoint(dml.Algorithm):
 
             # Iterate through our neighborhood collection to find a matching name
             # Retrieve data from the neighborhood collection
-            nhood_col = repo["ajr10_chamathd_williami.neighborhood_pop"].find().limit(50)
+            nhood_col = repo["ajr10_chamathd_williami.neighborhood_pop"].find().limit(5) if trial else repo["ajr10_chamathd_williami.neighborhood_pop"].find().limit(50)
             for nhood in nhood_col:
                 if nhood["name"] == polyName:
                     newDict = nhood

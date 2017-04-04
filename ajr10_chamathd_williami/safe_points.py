@@ -123,6 +123,6 @@ class safe_points(dml.Algorithm):
 ##safe_points.execute()
 ##doc = safe_points.provenance()
 ##print(doc.get_provn())
-##print(json.dumps(json.loads(doc.serialize()), indent=4))                                                                                                                                           print("Safe point", safe_point, "Original", kmean.xy
-
+##print(json.dumps(json.loads(doc.serialize()), indent=4))
+##print("Safe point", safe_point, "Original", kmean.xy
 ## eof
