@@ -28,7 +28,6 @@ class optimizeBusRoute(dml.Algorithm):
         repo.authenticate('echogu_wei0496_wuhaoyu', 'echogu_wei0496_wuhaoyu')
 
         # Trial mode:
-        # This algorithm relies on the output of assignStudents algorithm, a trial mode is not needed
         if trial:
             pass
 
@@ -126,7 +125,7 @@ class optimizeBusRoute(dml.Algorithm):
             # construct a adjacency matrix
             adjacency_matrix = optimizeBusRoute.__generate_graph(points)
             result = optimizeBusRoute.__Prim(adjacency_matrix)
-        return result
+            return result
 
     # Initialization the adjacency matrix for the tree
     @staticmethod
@@ -183,3 +182,5 @@ class optimizeBusRoute(dml.Algorithm):
     @staticmethod
     def __distance(point1, point2):
         return vincenty(point1, point2).miles
+
+optimizeBusRoute.execute()

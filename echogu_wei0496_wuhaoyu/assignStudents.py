@@ -68,7 +68,7 @@ class assignStudents(dml.Algorithm):
                 random_points = [(random.uniform(lower_lat, upper_lat), random.uniform(lower_lon, upper_lon)) for i in range(num_buses)]
 
                 # k-means clustering algorithm for k = num_buses
-                means = assignStudents.k_means(random_points, students_points)
+                means = assignStudents.k_means(random_points, students_points, lower_lat, upper_lat, lower_lon, upper_lon)
                 print("k-means:", means)
                 print("k-means size:", len(means))
 
@@ -156,7 +156,7 @@ class assignStudents(dml.Algorithm):
         return math.isclose(a, b)
 
     @staticmethod
-    def k_means(M, P):
+    def k_means(M, P, lower_lat, upper_lat, lower_lon, upper_lon):
         OLD = []
         count = 0
         num_means = len(M)
@@ -177,7 +177,13 @@ class assignStudents(dml.Algorithm):
             M = [assignStudents.scale(t, c) for ((m, t), (m2, c)) in assignStudents.product(MT, MC) if m == m2]
             M = sorted(M)
 
-
+            # If some mean points merge together, add random points into the list of mean points
+            if (len(M) != num_means):
+                print("Mean point merged!")
+                diff = num_means - len(M)
+                for i in range(diff):
+                    random_points=[(random.uniform(lower_lat, upper_lat), random.uniform(lower_lon, upper_lon))]
+                    M = M + random_points
 
             print("M:", M)
             count += 1
@@ -249,4 +255,4 @@ class assignStudents(dml.Algorithm):
         centroid_y = sum(y_coords) / _len
         return (centroid_x, centroid_y)
 
-#assignStudents.execute()
+assignStudents.execute(True)
