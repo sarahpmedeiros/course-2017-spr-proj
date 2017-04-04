@@ -82,6 +82,8 @@ class correlation1(dml.Algorithm):
         	x.append(i['distance_nearest_hospital'])
         	y.append(i['rate_of_checkup'])
 
+        print(rates)
+
         math = scipy.stats.pearsonr(x, y)
         print("Correlation coefficient is " + str(math[0]))
         print("P-value is " + str(math[1]))

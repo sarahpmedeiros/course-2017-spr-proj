@@ -75,13 +75,13 @@ class correlation2(dml.Algorithm):
 
 
         print("Calculating correlation coefficient and p-value...")
-        x = []
-        y = []
-        z = []
-        for i in rates:
-        	x.append(i['distance_closest_uni'])
-        	z.append((i['distance_closest_uni'], i['sleep_rate'], i['name_of_closest_uni']))
-        	y.append(i['sleep_rate'])
+        # x = []
+        # y = []
+        # z = []
+        # for i in rates:
+        # 	x.append(i['distance_closest_uni'])
+        # 	z.append((i['distance_closest_uni'], i['sleep_rate'], i['name_of_closest_uni']))
+        # 	y.append(i['sleep_rate'])
 
         # for i in z:
         # 	print(i)

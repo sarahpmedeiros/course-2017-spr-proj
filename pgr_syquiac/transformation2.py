@@ -82,7 +82,7 @@ class transformation2(dml.Algorithm):
 
             # print(addr)
             # print("Count : " + str(count))
-            location = geolocator.geocode(addr)
+            location = geolocator.geocode(addr, timeout=10)
             # print("Address: " + location.address)
             # print("Coordinates: " + str((location.longitude, location.latitude)))
             # print("--**--")
@@ -169,4 +169,4 @@ class transformation2(dml.Algorithm):
 
         return doc
 
-
+transformation2.execute()
