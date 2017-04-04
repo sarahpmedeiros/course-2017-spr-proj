@@ -19,6 +19,7 @@ import uuid
 import ast
 import sodapy
 import time 
+import vincenty
 
 # this transformation will check how many comm gardens and food pantries there are for each area
 # we want to take (zipcode, #comm gardens) (zipcode, #food pantries) --> (area, #food pantries#comm gardens)
