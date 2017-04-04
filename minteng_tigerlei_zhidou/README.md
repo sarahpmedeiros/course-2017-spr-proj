@@ -25,10 +25,10 @@ We want to find a best office location for a new company. The first factor we co
 # Project 2
 ### *by Minteng Xie, Yue Lei, Zhi Dou*
 
-## 1 .
+## 1.
 A new team is formed by Minteng Xie, Yue Lei and Zhi Dou. All scripts and files of project 2 is under new folder ```minteng_tigerlei_zhidou```
 
-## auth.json
+### auth.json
 This project use app token from ```boston data portal``` and ```googlemaps geocoding API```. To retrieve data automatically, app token should be added into `auth.json` file as follow format:
 ```
 {
@@ -49,7 +49,8 @@ This project use app token from ```boston data portal``` and ```googlemaps geoco
 ```
 ## 2.a
 
-## 2.b Problem 1: Optimization
+## 2.b 
+### Problem 1: Optimization
 Following the idea of project 1, our goal is to find a best office location for a new company. Since a detailed coordinate is meaningless, we try to find a suitable area. Project 1 has helped us gather all the licensed restaurants/ crime incidents/ MBTA stops/ rent price in boston area. We gonna find the best area that maximize **```#restaurant```**, **```#MBTA stops```** and minimize **```#crime incidents```** and **```rent price```**. 
 
 We use googlemaps api to find the left bottom/ right top coordinates of boston area. With these coordinates, we could build a big rectangle containing boston area. Then we separate this rectangle into 10 x 10 grids(user could set this scale manually). Removing those blank grids which don't contain any useful data, we have 52 grids left. Each grid represents a possible target area which contains a suitable place for opening a company. 
@@ -64,7 +65,9 @@ Then our database would search and find matched rent price, which also should be
 ```
 (transport, food, safety, rent) 
 ```
-User could customize rating due to their preference in ```Result_Example.ipynb```. We provide an example that our algorithm rank all 52 grid area according to user's requirement of grades: **```(3, 4, 3, 4)```** and provide top choices as well as its bound coordinates, area name & zipcode, average rent and ratings.
+All these data would be stored in a new collection named ```box_count```.
+
+User could customize rating due to their preference in ```optimization.py```. We provide an example that our algorithm rank all 52 grid area according to user's requirement of grades: **```(3, 4, 3, 4)```** and provide top choices as well as its bound coordinates, area name & zipcode, average rent and ratings.
 ```
 Top fitted areas:
 Bound: [[42.2622102, -71.0835318], [42.2793753, -71.0566365]]
@@ -87,7 +90,17 @@ Bound: [[42.3137055, -71.1373224], [42.330870600000004, -71.11042710000001]]
 Area: Jamaica Plain 02130    Avg rent: 2214
 Grades: {'safety': 3, 'rent': 3, 'food': 5, 'transport': 2} 
 ```
-## 2.b Problem 2: Statistical Analysis
+
+To solve this optimization problem, first run the ```box_count.py```:
+```python
+python3 box_count.py
+```
+And then run ```optimization.py```:
+```python
+python3 box_count.py
+```
+
+### Problem 2: Statistical Analysis
 After finding ideal area for a new company, we would like to dig deeper into those areas, because this area might be the best choice for now, but it might change, with the variation of rental, crime and transportations. So based on current data, we want to study on the trend of these factors, and for now we mainly focus on crime in different blocks(grids). A new dataset [Safety(Crime 2012-2015)](https://data.cityofboston.gov/Public-Safety/Crime-Incident-Reports-July-2012-August-2015-Sourc/7cdf-6fgx) has been added.
 
 Now let *X<sub>ij</sub>* as the the number of crimes happens in block *i* in year *j*. If *X<sub>ij</sub>* and *X<sub>i(j + 1)</sub>* are highly correlated, then we could claim the number of crimes of these two year in this block have similar distribution. Thus if these random variables continuously related to each other, then we could use such correlation to predict the trend of the criminal events in this year.
@@ -109,13 +122,15 @@ From the graph below we could see the trend of block 27 in the consistent four y
 Because this data of these four year have strong linear relationship, there is a high probability that their criminal records have the same tendency through the entire year. Therefore, we fit all the data in four year to find a common pattern of block 27. Now assume, 2016-2017 could still maintain such strong linear relationship, and then we could use this fitting funtion to simulate the trend of crime of block 27 in this year.
 ![fitting](http://datamechanics.io/data/minteng_zhidou/fitting.png) 
 
-## 3.a Provenance information
+## 3.a 
+### Provenance information
 All provenance information could be seen in ```provenance.html``` after running:
 ```python
 python3 execute.py minteng_tigerlei_zhidou
 ```
 
-## 3.b Trial mode
+## 3.b 
+### Trial mode
 In trial mode, the algorithm would complete its execution very quickly (in at most a few seconds) by operating on a very small portion of the input data set(s). 
 
 Remember to uncomment last few lines of the file
