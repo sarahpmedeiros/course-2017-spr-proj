@@ -83,7 +83,8 @@ def polygon(x, y, poly):
 
 class proj2(dml.Algorithm):
     contributor = 'pt0713_silnuext'
-    reads = ['pt0713_silnuext.proj2']
+    reads = ['pt0713_silnuext.property_2015',
+             'pt0713_silnuext.crime']
     writes = ['pt0713_silnuext.proj2']
 
     @staticmethod
@@ -95,54 +96,21 @@ class proj2(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('pt0713_silnuext', 'pt0713_silnuext')
-        repo.dropCollection("property_crime")
-        repo.createCollection("property_crime")
+        crime = repo.pt0713_silnuext.crime.find()
+        property_2015 = repo.pt0713_silnuext.property_2015.find()
 
-        # import crime data
-        client1 = sodapy.Socrata("data.cityofboston.gov", None)
-        response1 = []
-        limits = [0, 50001, 100001, 150001, 200001, 250001]
-        for limit in limits:
-            response1 += client1.get("crime", limit=50000, offset=limit)
-        s = json.dumps(response1, sort_keys=True, indent=2)
-
-        crime_coordination = project(response1,lambda x:(x["year"], x["location"]["latitude"],x["location"]["longitude"]))     
+        crime_coordination = project(crime,lambda x:(x["year"], x["month"], x["location"]["latitude"],x["location"]["longitude"]))     
         # getting coordination of crimes happened in 2015
-        crime_15 = [crime_2015 for crime_2015 in crime_coordination if crime_2015[0] == "2015"]
-        crime_15coordination = [(float(latitude), float(longitude)) for (year, latitude, longitude) in crime_15]
-        # shorting data in order to run it in a racheable time
-        crime_15short_coordination = crime_15coordination[:5000]
+        crime_15 = [crime_2015 for crime_2015 in crime_coordination if crime_2015[0] == "2015" and crime_2015[1] == "8"]
+        crime_15coordination = [(float(latitude), float(longitude)) for (year, month, latitude, longitude) in crime_15]
 
-        repo['pt0713_silnuext.property_crime'].insert_many(response1)
-        repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
-        print(repo['pt0713_silnuext.property_crime'].metadata())
-
-        # import property2014 data
-        client2014 = sodapy.Socrata("data.cityofboston.gov", None)
-        response2014 = client2014.get("jsri-cpsq")
-        s = json.dumps(response2014, sort_keys=True, indent=2)
-
-
-        repo['pt0713_silnuext.property_crime'].insert_many(response2014)
-        repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
-        print(repo['pt0713_silnuext.property_crime'].metadata())
-
-
-        # import property2015 data
-        client2015 = sodapy.Socrata("data.cityofboston.gov", None)
-        response2015 = client2015.get("n7za-nsjh")
-        s = json.dumps(response2015, sort_keys=True, indent=2)
 
         # getting coordination of properties that in the dataset of property assessment of 2015
-        property15_price_coordination = project(response2015, lambda x: (x["av_total"],x["location"]))
-        property15_coordination = [eval(a[1]) for a in property15_price_coordination]
+        property15_price_coordination = project(property_2015, lambda x: (x["av_total"], x.get("location")))
+        property15_coordination = [eval(str(a[1])) for a in property15_price_coordination]
         property15_price_coordination_float = [(int(price[0]), coordination) for price in property15_price_coordination for coordination in property15_coordination]
         # shorting data in order to run it in a racheable time
         property15_price_short_coordination_float = property15_price_coordination_float[:5000]
-
-        repo['pt0713_silnuext.property_crime'].insert_many(response2015)
-        repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
-        print(repo['pt0713_silnuext.property_crime'].metadata())
 
 
         # function of classifying properties in 2015 into differnet zipcodes by using their coordinates
@@ -200,7 +168,7 @@ class proj2(dml.Algorithm):
             return crime_number
 
 
-        print(length_zipcode(property15_zipcode))
+        print(avgprice_zipcode(property15_zipcode))
 
  
         repo.logout()
