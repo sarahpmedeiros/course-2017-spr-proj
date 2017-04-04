@@ -167,7 +167,7 @@ class k_means_transform(dml.Algorithm):
                   
         return doc
 
-k_means_transform.execute()
+##k_means_transform.execute()
 ##doc = transformation1.provenance()
 ##print(doc.get_provn())
 ##print(json.dumps(json.loads(doc.serialize()), indent=4))
