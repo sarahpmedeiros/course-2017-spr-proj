@@ -1,9 +1,11 @@
 # Using Neighborhood Population Data and Sea Level Information to Determine Flooding Severity in Different Parts of Boston
 
 ### Purpose / Narrative
-  In late 2016, Boston experienced what is known as a 'king tide' - the highest point that the natural tide gets to during the course of the year. The tide in that particular year was surprisingly high; water came over the wharf at almost two feet higher than the yearly average. As sea levels around the world continue to rise, it becomes increasingly important to understand where potential flooding can become a problem and act accordingly ahead of time. In this project, I collect neighborhood census data and pair it with neighborhood geospatial polygon data, then test where that intersects geospatial data of estimated regions of coastal flooding at different sea levels. From this information, a severity index can be applied.
-  
-  The project's file structure consists of three files that fetch the intitial data to be placed in the MongoDB collections, and three files that represent the transformations on these data sets to form something more useful to the purpose above.
+Climate change remains one of the defining issues of the 21st century.  With sea levels rising around the world, coastal cities must be prepared to tackle new challenges. They must become climate ready(?).
+
+Boston is no exception. With an increase of just a couple feet, whole neighborhoods could become flooded, with thousands of people being displayed.
+
+Our project aims to help city planners prepare for this scenario, by identifying new locations outside the affected slowzone to build/move essential utilities such as electric stations or water pumps. We attempted to find locations that were close to large population centers so that they can service the greatest amount of people. By proactively and preemptively building in spots less effected by the increase in water levels, we can lessen the effect that climate change has on the city of Boston.
   
 ### APIs Used
 The following APIs were applied for collecting data:
