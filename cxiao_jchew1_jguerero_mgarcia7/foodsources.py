@@ -6,6 +6,8 @@ import dml
 import prov.model
 import datetime
 import uuid
+import pickle
+import time
 
 class foodsources(dml.Algorithm):
 	contributor = 'cxiao_jchew1_jguerero_mgarcia7'
@@ -87,6 +89,25 @@ class foodsources(dml.Algorithm):
 
 			combined_dataset.append(temp)
 
+		# Add latitude and longitude to food sources
+		'''
+		new_d = {}
+		for idx, row in enumerate(combined_dataset):
+			if idx % 8 == 0:
+				time.sleep(3)
+
+			row['longitude'], row['latitude'] = getCoordinates(row['Address'],row['Zipcode'])
+			new_d.update({(row['Address'],row['Zipcode']):(row['longitude'], row['latitude'])})
+
+		pickle.dump(new_d, open( "save.p", "wb" ) )
+		'''
+		new_d = pickle.load( open( "save.p", "rb" ) )
+		for row in combined_dataset:
+			row['longitude'], row['latitude'] = new_d[(row['Address'],row['Zipcode'])]
+
+
+
+
 
 		repo.dropCollection("foodsources")
 		repo.createCollection("foodsources")
@@ -136,16 +157,12 @@ class foodsources(dml.Algorithm):
 		doc.usage(get_foodsources, farmersmarkets_resource, startTime, None,
 		  {prov.model.PROV_TYPE:'ont:Computation'}
 		  )
-
+ 
 		foodsources = doc.entity('dat:cxiao_jchew1_jguerero_mgarcia7#foodsources', {prov.model.PROV_LABEL:'Sources of food per neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
 		doc.wasAttributedTo(foodsources, this_script)
 		doc.wasGeneratedBy(foodsources, get_foodsources, endTime)
-
-		doc.wasDerivedFrom(foodsources, allcornerstores_resource, get_foodsources, get_foodsources, get_foodsources)
 		doc.wasDerivedFrom(foodsources, supermarkets_resource, get_foodsources, get_foodsources, get_foodsources)
 		doc.wasDerivedFrom(foodsources, farmersmarkets_resource, get_foodsources, get_foodsources, get_foodsources)
-
-
 
 
 		repo.logout()
@@ -153,5 +170,24 @@ class foodsources(dml.Algorithm):
 		return doc
 
 
+def getCoordinates(address,zipcode):
+	try:
+		address = address.replace(' ','+')
+		if zipcode is None:
+			query = "{}+Boston,+MA+USA".format(address)
+		else:
+			query = "{}+Boston,+MA+{}+USA".format(address,zipcode)
+
+		url = "http://maps.googleapis.com/maps/api/geocode/json?address="
+		response = urllib.request.urlopen(url+query).read().decode("utf-8")
+		r = json.loads(response)
+		loc = r['results'][0]['geometry']['location']
+		return loc['lng'], loc['lat']
+	except Exception as e:
+		print(e)
+		return None, None
+
+
+foodsources.execute()
 ## eof
 

@@ -24,7 +24,7 @@ class population(dml.Algorithm):
         repo.authenticate('cxiao_jchew1_jguerero_mgarcia7', 'cxiao_jchew1_jguerero_mgarcia7')
 
  
-        url = 'http://datamechanics.io/data/cxiao_jchew1_jguerero_mgarcia7/bostondemographics.json'
+        url = 'http://datamechanics.io/data/jguerero_mgarcia7/bostondemographics.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
 

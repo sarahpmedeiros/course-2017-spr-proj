@@ -19,7 +19,7 @@ class supermarkets(dml.Algorithm):
         repo = client.repo
         repo.authenticate('cxiao_jchew1_jguerero_mgarcia7', 'cxiao_jchew1_jguerero_mgarcia7')
 
-        url = 'http://datamechanics.io/data/cxiao_jchew1_jguerero_mgarcia7/supermarkets.json'
+        url = 'http://datamechanics.io/data/jguerero_mgarcia7/supermarkets.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
 

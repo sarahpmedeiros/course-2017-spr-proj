@@ -29,10 +29,10 @@ class obesitystats(dml.Algorithm):
         opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
         urllib.request.install_opener(opener)
 
-        shp_url = 'http://datamechanics.io/data/cxiao_jchew1_jguerero_mgarcia7/MA.dbf'
+        shp_url = 'http://datamechanics.io/data/jguerero_mgarcia7/MA.dbf'
         shpfilepath, response = urllib.request.urlretrieve(shp_url)
 
-        dbf_url = 'http://datamechanics.io/data/cxiao_jchew1_jguerero_mgarcia7/MA.shp'
+        dbf_url = 'http://datamechanics.io/data/jguerero_mgarcia7/MA.shp'
         dbffilepath, response = urllib.request.urlretrieve(dbf_url)
 
         r = convert_shpfile_to_json(dbffilepath,shpfilepath)
