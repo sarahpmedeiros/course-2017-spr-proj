@@ -12,19 +12,21 @@ import statsmodels.api as sm
 import matplotlib.pyplot as plt
 import pandas as pd
 
-class StatisticalAnalysis(dml.Algorithm):
+class StatisticalAnalysis_2(dml.Algorithm):
 	contributor = 'mbyim_seanz'
-	reads = ['mbyim_seanz.property_assessments']
-	writes = ['mbyim_seanz.StatisticalAnalysis']
+	reads = ['mbyim_seanz.property_assessments', 'mbyim_seanz.mbta_stops']
+	writes = ['mbyim_seanz.StatisticalAnalysis_2']
 
 	@staticmethod
 	def execute(trial = False):
 
+
+		'''
 		#list of boston zipcodes from: http://zipcode.org/city/MA/BOSTON
 		boston_zips = ["02108", "02109", "02110", "02111", "02112", "02117", "02118", "02127", "02113", "02114", "02115", "02116", "02123", 
 						"02128","02133","02163","02196", "02199", "02205", "02206", "02212", "02215", "02266", "02283", 
 						"02201", "02203", "02204", "02210", "02211", "02217", "02222", "02241", "02284", "02293", "02295", "02297", "02298"]
-
+		'''
 		startTime = datetime.datetime.now()
 		client = dml.pymongo.MongoClient()
 		repo = client.repo

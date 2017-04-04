@@ -83,6 +83,8 @@ class agg_prop_value(dml.Algorithm):
 		agg_prop_value = doc.entity('dat:mbyim_seanz#agg_prop_value', {prov.model.PROV_LABEL:'Aggregated Property Assessments', prov.model.PROV_TYPE:'ont:DataSet'})
 		doc.wasAttributedTo(agg_prop_value, this_script)
 		doc.wasGeneratedBy(agg_prop_value, get_agg_prop_value, endTime)
+		doc.wasDerivedFrom(agg_prop_value, resource_agg_prop_value, get_agg_prop_value, get_agg_prop_value, get_agg_prop_value)
+
 
 		repo.logout()
 		          

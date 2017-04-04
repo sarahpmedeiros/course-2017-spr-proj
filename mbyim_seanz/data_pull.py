@@ -197,7 +197,7 @@ class data_pull(dml.Algorithm):
         parking_tickets = doc.entity('dat:mbyim_seanz#parking_tickets', {prov.model.PROV_LABEL:'Parking Tickets', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(parking_tickets, this_script)
         doc.wasGeneratedBy(parking_tickets, get_parking_tickets, endTime)
-        #doc.wasDerivedFrom(parking_tickets, resource, get_parking_tickets, get_parking_tickets, get_parking_tickets)
+        doc.wasDerivedFrom(parking_tickets, resource_parking_tickets, get_parking_tickets, get_parking_tickets, get_parking_tickets)
 
 
         '''
@@ -210,16 +210,21 @@ class data_pull(dml.Algorithm):
         mbta_stops = doc.entity('dat:mbyim_seanz#mbta_stops', {prov.model.PROV_LABEL:'MBTA Stops', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(mbta_stops, this_script)
         doc.wasGeneratedBy(mbta_stops, get_mbta_stops, endTime)
-        #doc.wasDerivedFrom(vehicle_tax, resource, get_vehicle_tax, get_vehicle_tax, get_vehicle_tax)
+        doc.wasDerivedFrom(mbta_stops, resource_mbta_stops, get_mbta_stops, get_mbta_stops, get_mbta_stops)
 
         property_assessments = doc.entity('dat:mbyim_seanz#property_assessments', {prov.model.PROV_LABEL:'Property Assessments 2014', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(property_assessments, this_script)
         doc.wasGeneratedBy(property_assessments, get_property_assessments, endTime)
-        #doc.wasDerivedFrom(vehicle_tax, resource, get_vehicle_tax, get_vehicle_tax, get_vehicle_tax)
+        doc.wasDerivedFrom(property_assessments, resource_property_assessments, get_property_assessments, get_property_assessments, get_property_assessments)
 
         snow_parking = doc.entity('dat:mbyim_seanz#snow_parking', {prov.model.PROV_LABEL:'Snow Parking', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(snow_parking, this_script)
         doc.wasGeneratedBy(snow_parking, get_snow_parking, endTime)
+        doc.wasDerivedFrom(snow_parking, resource_snow_parking, get_snow_parking, get_snow_parking, get_snow_parking)
+
+
+
+
 
         #end---
         repo.logout()

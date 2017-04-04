@@ -73,6 +73,8 @@ class agg_parking_tix(dml.Algorithm):
 		agg_parking_tix = doc.entity('dat:mbyim_seanz#agg_parking_tix', {prov.model.PROV_LABEL:'Aggregate Parking Tickets', prov.model.PROV_TYPE:'ont:DataSet'})
 		doc.wasAttributedTo(agg_parking_tix, this_script)
 		doc.wasGeneratedBy(agg_parking_tix, get_agg_parking_tix, endTime)
+        doc.wasDerivedFrom(agg_parking_tix, resource_agg_parking_tix, get_agg_parking_tix, get_agg_parking_tix, get_agg_parking_tix)
+
 
 		repo.logout()
 		          
