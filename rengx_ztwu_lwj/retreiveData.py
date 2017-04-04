@@ -9,11 +9,11 @@ import sodapy
 
 
 class retrieveData(dml.Algorithm):
-    contributor = 'rengx_ztwu'
+    contributor = 'rengx_ztwu_lwj'
     reads = []
-    writes = ['rengx_ztwu.publicschool', 'rengx_ztwu.policestation',
-              'rengx_ztwu.firestation','rengx_ztwu.hosptial',
-              'rengx_ztwu.crimereports']
+    writes = ['rengx_ztwu_lwj.publicschool', 'rengx_ztwu_lwj.policestation',
+              'rengx_ztwu_lwj.firestation','rengx_ztwu_lwj.hosptial',
+              'rengx_ztwu_lwj.crimereports']
 
     @staticmethod
     def execute(trial=False):
@@ -23,7 +23,7 @@ class retrieveData(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('rengx_ztwu', 'rengx_ztwu')
+        repo.authenticate('rengx_ztwu_lwj', 'rengx_ztwu_lwj')
 
         # get public school data in Boston
         client = sodapy.Socrata("data.cityofboston.gov", None)
@@ -33,9 +33,9 @@ class retrieveData(dml.Algorithm):
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("publicschool")
         repo.createCollection("publicschool")
-        repo['rengx_ztwu.publicschool'].insert_many(r)
-        repo['rengx_ztwu.publicschool'].metadata({'complete': True})
-        print(repo['rengx_ztwu.publicschool'].metadata())
+        repo['rengx_ztwu_lwj.publicschool'].insert_many(r)
+        repo['rengx_ztwu_lwj.publicschool'].metadata({'complete': True})
+        print(repo['rengx_ztwu_lwj.publicschool'].metadata())
 
         # get Police Station data in Boston
         client = sodapy.Socrata("data.cityofboston.gov", None)
@@ -45,9 +45,9 @@ class retrieveData(dml.Algorithm):
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("policestation")
         repo.createCollection("policestation")
-        repo['rengx_ztwu.policestation'].insert_many(r)
-        repo['rengx_ztwu.policestation'].metadata({'complete': True})
-        print(repo['rengx_ztwu.policestation'].metadata())
+        repo['rengx_ztwu_lwj.policestation'].insert_many(r)
+        repo['rengx_ztwu_lwj.policestation'].metadata({'complete': True})
+        print(repo['rengx_ztwu_lwj.policestation'].metadata())
 
         # get Crime Reports in Boston
         client = sodapy.Socrata("data.cityofboston.gov", None)
@@ -57,9 +57,9 @@ class retrieveData(dml.Algorithm):
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("crimereports")
         repo.createCollection("crimereports")
-        repo['rengx_ztwu.crimereports'].insert_many(r)
-        repo['rengx_ztwu.crimereports'].metadata({'complete': True})
-        print(repo['rengx_ztwu.crimereports'].metadata())
+        repo['rengx_ztwu_lwj.crimereports'].insert_many(r)
+        repo['rengx_ztwu_lwj.crimereports'].metadata({'complete': True})
+        print(repo['rengx_ztwu_lwj.crimereports'].metadata())
 
 
         # get hosptial in Boston
@@ -70,9 +70,9 @@ class retrieveData(dml.Algorithm):
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("hosptial")
         repo.createCollection("hosptial")
-        repo['rengx_ztwu.hosptial'].insert_many(r)
-        repo['rengx_ztwu.hosptial'].metadata({'complete': True})
-        print(repo['rengx_ztwu.hosptial'].metadata())
+        repo['rengx_ztwu_lwj.hosptial'].insert_many(r)
+        repo['rengx_ztwu_lwj.hosptial'].metadata({'complete': True})
+        print(repo['rengx_ztwu_lwj.hosptial'].metadata())
 
 
         # Get data of Fire Stations in Boston
@@ -83,9 +83,9 @@ class retrieveData(dml.Algorithm):
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("firestation")
         repo.createCollection("firestation")
-        repo['rengx_ztwu.firestation'].insert_many(r['features'])
-        repo['rengx_ztwu.firestation'].metadata({'complete': True})
-        print(repo['rengx_ztwu.firestation'].metadata())
+        repo['rengx_ztwu_lwj.firestation'].insert_many(r['features'])
+        repo['rengx_ztwu_lwj.firestation'].metadata({'complete': True})
+        print(repo['rengx_ztwu_lwj.firestation'].metadata())
 
 
 
@@ -100,7 +100,7 @@ class retrieveData(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('rengx_ztwu', 'rengx_ztwu')
+        repo.authenticate('rengx_ztwu_lwj', 'rengx_ztwu_lwj')
 
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
@@ -112,7 +112,7 @@ class retrieveData(dml.Algorithm):
 
 
         #agent
-        this_script = doc.agent('alg:rengx_ztwu#retreiveData',
+        this_script = doc.agent('alg:rengx_ztwu_lwj#retreiveData',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
 
         publicschool_resource = doc.entity('bdp:492y-i77g', {'prov:label': 'Public School',
@@ -164,32 +164,32 @@ class retrieveData(dml.Algorithm):
         doc.usage(get_firestation, firestation_resource, startTime, None, {prov.model.PROV_TYPE: 'ont:Retrieval'})
 
 
-        publicschool = doc.entity('dat:rengx_ztwu#publicschool',
+        publicschool = doc.entity('dat:rengx_ztwu_lwj#publicschool',
                                {prov.model.PROV_LABEL: 'Public school Locations', prov.model.PROV_TYPE: 'ont:DataSet'})
         doc.wasAttributedTo(publicschool, this_script)
         doc.wasGeneratedBy(publicschool, get_publicschool, endTime)
         doc.wasDerivedFrom(publicschool, publicschool_resource)
 
-        policestation = doc.entity('dat:rengx_ztwu#policestation',
+        policestation = doc.entity('dat:rengx_ztwu_lwj#policestation',
                              {prov.model.PROV_LABEL: 'policestation Locations', prov.model.PROV_TYPE: 'ont:DataSet'})
         doc.wasAttributedTo(policestation, this_script)
         doc.wasGeneratedBy(policestation, get_policestation, endTime)
         doc.wasDerivedFrom(policestation, policestation_resource)
 
-        firestation = doc.entity('dat:rengx_ztwu#firestation',
+        firestation = doc.entity('dat:rengx_ztwu_lwj#firestation',
                             {prov.model.PROV_LABEL: 'firestation Locations', prov.model.PROV_TYPE: 'ont:DataSet'})
         doc.wasAttributedTo(firestation, this_script)
         doc.wasGeneratedBy(firestation, get_firestation, endTime)
         doc.wasDerivedFrom(firestation, firestation_resource)
 
-        crimereports = doc.entity('dat:rengx_ztwu#crimereports',
+        crimereports = doc.entity('dat:rengx_ztwu_lwj#crimereports',
                                      {prov.model.PROV_LABEL: 'crimereports',
                                       prov.model.PROV_TYPE: 'ont:DataSet'})
         doc.wasAttributedTo(crimereports, this_script)
         doc.wasGeneratedBy(crimereports, get_crimereports, endTime)
         doc.wasDerivedFrom(crimereports, crimereports_resource)
 
-        hosptial = doc.entity('dat:rengx_ztwu#hosptial',
+        hosptial = doc.entity('dat:rengx_ztwu_lwj#hosptial',
                                      {prov.model.PROV_LABEL: 'hosptial',
                                       prov.model.PROV_TYPE: 'ont:DataSet'})
         doc.wasAttributedTo(hosptial, this_script)

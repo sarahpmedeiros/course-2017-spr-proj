@@ -12,9 +12,9 @@ from bson.json_util import dumps
 
 class crimeAndFiredpartment(dml.Algorithm):
 
-    contributor = 'rengx_ztwu'
-    reads = ['rengx_ztwu.firestation','rengx_ztwu.crimereports']
-    writes = ['rengx_ztwu.CrimeAndFire']
+    contributor = 'rengx_ztwu_lwj'
+    reads = ['rengx_ztwu_lwj.firestation','rengx_ztwu_lwj.crimereports']
+    writes = ['rengx_ztwu_lwj.CrimeAndFire']
 
     @staticmethod
     def execute(trial = False):
@@ -24,11 +24,11 @@ class crimeAndFiredpartment(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('rengx_ztwu', 'rengx_ztwu')
+        repo.authenticate('rengx_ztwu_lwj', 'rengx_ztwu_lwj')
 
         # Get the collections
-        firestation = repo['rengx_ztwu.firestation']
-        crimereports = repo['rengx_ztwu.crimereports']
+        firestation = repo['rengx_ztwu_lwj.firestation']
+        crimereports = repo['rengx_ztwu_lwj.crimereports']
 
         # Get names and zipcode of all schools and put them into (key, value) form
         CrimeAndFire = []
@@ -46,7 +46,7 @@ class crimeAndFiredpartment(dml.Algorithm):
     # Create a new collection and insert the result data set
         repo.dropCollection('CrimeAndFireDB')
         repo.createCollection('CrimeAndFireDB')
-        repo['rengx_ztwu.CrimeAndFireDB'].insert_many(CrimeAndFire)
+        repo['rengx_ztwu_lwj.CrimeAndFireDB'].insert_many(CrimeAndFire)
 
         repo.logout()
         endTime = datetime.datetime.now()
@@ -60,7 +60,7 @@ class crimeAndFiredpartment(dml.Algorithm):
 
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('rengx_ztwu', 'rengx_ztwu')
+        repo.authenticate('rengx_ztwu_lwj', 'rengx_ztwu_lwj')
 
         doc.add_namespace('alg',
                           'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
@@ -74,16 +74,16 @@ class crimeAndFiredpartment(dml.Algorithm):
         doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
 
         # Agent
-        this_script = doc.agent('alg:rengx_ztwu#CrimeAndFire',
+        this_script = doc.agent('alg:rengx_ztwu_lwj#CrimeAndFire',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
 
         # Resources
-        resource_firestation = doc.entity('dat:rengx_ztwu#firestation',
+        resource_firestation = doc.entity('dat:rengx_ztwu_lwj#firestation',
                                                 {'prov:label': 'firestation in Boston',
                                                  prov.model.PROV_TYPE: 'ont:DataResource',
                                                  'ont:Extension': 'json'})
 
-        resource_crimereports = doc.entity('dat:rengx_ztwu#crimereports',
+        resource_crimereports = doc.entity('dat:rengx_ztwu_lwj#crimereports',
                                               {'prov:label': 'crimereports in Boston',
                                                prov.model.PROV_TYPE: 'ont:DataResource',
                                                'ont:Extension': 'json'})
@@ -102,7 +102,7 @@ class crimeAndFiredpartment(dml.Algorithm):
         doc.usage(combine_CrimeAndFire, resource_crimereports, startTime)
 
         # Result dataset entity
-        CrimeAndFire = doc.entity('dat:rengx_ztwu#CrimeAndFire',
+        CrimeAndFire = doc.entity('dat:rengx_ztwu_lwj#CrimeAndFire',
                                       {prov.model.PROV_LABEL: 'All Crime And Fire in Boston',
                                        prov.model.PROV_TYPE: 'ont:DataSet'})
 

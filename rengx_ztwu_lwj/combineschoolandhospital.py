@@ -10,11 +10,11 @@ from bson.json_util import dumps
 
 
 
-class SchoolAndPolice(dml.Algorithm):
+class combineschoolandhosptial(dml.Algorithm):
 
-    contributor = 'rengx_ztwu'
-    reads = ['rengx_ztwu.publicschool','rengx_ztwu.policestation']
-    writes = ['rengx_ztwu.SchoolAndPolice']
+    contributor = 'rengx_ztwu_lwj'
+    reads = ['rengx_ztwu_lwj.publicschool','rengx_ztwu_lwj.hosptial']
+    writes = ['rengx_ztwu_lwj.schoolandhosptial']
 
     @staticmethod
     def execute(trial = False):
@@ -24,29 +24,29 @@ class SchoolAndPolice(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('rengx_ztwu', 'rengx_ztwu')
+        repo.authenticate('rengx_ztwu_lwj', 'rengx_ztwu_lwj')
 
         # Get the collections
-        publicschool = repo['rengx_ztwu.publicschool']
-        policestation = repo['rengx_ztwu.policestation']
+        publicschool = repo['rengx_ztwu_lwj.publicschool']
+        hosptial = repo['rengx_ztwu_lwj.hosptial']
 
         # Get names and zipcode of all schools and put them into (key, value) form
-        SchoolAndPolice = []
-        for entry in policestation.find({"Location": {"$exists": True}}):
-            SchoolAndPolice.append(
-                {"name": entry['NAME'], "value": {'street': entry['Location']}
+        SchoolAndHospital = []
+        for entry in publicschool.find({"ZIPCODE": {"$exists": True}}):
+            SchoolAndHospital.append(
+                {"name": entry['SCH_NAME'], "value": {'zip': entry['ZIPCODE']}
                  })
 
-        for entry in crimereports.find({"STREETNAME": {"$exists": True}}):
-            SchoolAndPolice.append(
-                {"name": entry['SCH_NAME'], "value": {'street': entry['Location']}
+        for entry in hosptial.find({"ZIPCODE": {"$exists": True}}):
+            SchoolAndHospital.append(
+                {"name": entry['NAME'], "value": {'zip': entry['ZIPCODE']}
                 })
 
 
     # Create a new collection and insert the result data set
-        repo.dropCollection('SchoolAndPoliceDB')
-        repo.createCollection('SchoolAndPoliceDB')
-        repo['rengx_ztwu.SchoolAndPoliceDB'].insert_many(SchoolAndPolice)
+        repo.dropCollection('SchoolAndHospitalDB')
+        repo.createCollection('SchoolAndHospitalDB')
+        repo['rengx_ztwu_lwj.SchoolAndHospitalDB'].insert_many(SchoolAndHospital)
 
         repo.logout()
         endTime = datetime.datetime.now()
@@ -60,7 +60,7 @@ class SchoolAndPolice(dml.Algorithm):
 
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('rengx_ztwu', 'rengx_ztwu')
+        repo.authenticate('rengx_ztwu_lwj', 'rengx_ztwu_lwj')
 
         doc.add_namespace('alg',
                           'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
@@ -74,53 +74,53 @@ class SchoolAndPolice(dml.Algorithm):
         doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
 
         # Agent
-        this_script = doc.agent('alg:rengx_ztwu#SchoolAndPolice',
+        this_script = doc.agent('alg:rengx_ztwu_lwj#schoolandhosptial',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
 
         # Resources
-        resource_publicschool = doc.entity('dat:rengx_ztwu#publicschool',
+        resource_publicschool = doc.entity('dat:rengx_ztwu_lwj#publicschool',
                                                 {'prov:label': 'public school in Boston',
                                                  prov.model.PROV_TYPE: 'ont:DataResource',
                                                  'ont:Extension': 'json'})
 
-        resource_policestation = doc.entity('dat:rengx_ztwu#policestation',
-                                              {'prov:label': 'police station in Boston',
+        resource_hosptial = doc.entity('dat:rengx_ztwu_lwj#hosptial',
+                                              {'prov:label': 'hosptials in Boston',
                                                prov.model.PROV_TYPE: 'ont:DataResource',
                                                'ont:Extension': 'json'})
 
         # Activities
-        combine_SchoolAndPolice = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime,
+        combine_schoolandhosptial = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime,
                                                 {
-                                                    prov.model.PROV_LABEL: "Combine all School And Police in Boston",
+                                                    prov.model.PROV_LABEL: "Combine all schools and hostials in Boston",
                                                     prov.model.PROV_TYPE: 'ont:Computation'})
 
         # Activities' Associations with Agent
-        doc.wasAssociatedWith(combine_SchoolAndPolice, this_script)
+        doc.wasAssociatedWith(combine_schoolandhosptial, this_script)
 
         # Record which activity used which resource
-        doc.usage(combine_SchoolAndPolice, resource_publicschool, startTime)
-        doc.usage(combine_SchoolAndPolice, resource_policestation, startTime)
+        doc.usage(combine_schoolandhosptial, resource_publicschool, startTime)
+        doc.usage(combine_schoolandhosptial, resource_hosptial, startTime)
 
         # Result dataset entity
-        SchoolAndPolice = doc.entity('dat:rengx_ztwu#SchoolAndPolice',
-                                      {prov.model.PROV_LABEL: 'All School And Police in Boston',
+        schoolandhosptial = doc.entity('dat:rengx_ztwu_lwj#schoolandhosptial',
+                                      {prov.model.PROV_LABEL: 'All school and hosptial in Boston',
                                        prov.model.PROV_TYPE: 'ont:DataSet'})
 
-        doc.wasAttributedTo(SchoolAndPolice, this_script)
-        doc.wasGeneratedBy(SchoolAndPolice, combine_SchoolAndPolice, endTime)
-        doc.wasDerivedFrom(SchoolAndPolice, resource_publicschool, combine_SchoolAndPolice,
-                           combine_SchoolAndPolice,
-                           combine_SchoolAndPolice)
-        doc.wasDerivedFrom(SchoolAndPolice, resource_policestation, combine_SchoolAndPolice,
-                           combine_SchoolAndPolice,
-                           combine_SchoolAndPolice)
+        doc.wasAttributedTo(schoolandhosptial, this_script)
+        doc.wasGeneratedBy(schoolandhosptial, combine_schoolandhosptial, endTime)
+        doc.wasDerivedFrom(schoolandhosptial, resource_publicschool, combine_schoolandhosptial,
+                           combine_schoolandhosptial,
+                           combine_schoolandhosptial)
+        doc.wasDerivedFrom(schoolandhosptial, resource_hosptial, combine_schoolandhosptial,
+                           combine_schoolandhosptial,
+                           combine_schoolandhosptial)
 
         repo.logout()
 
         return doc
 
-combineSchoolAndPolice.execute()
-doc = combineSchoolAndPolice.provenance()
+combineschoolandhosptial.execute()
+doc = combineschoolandhosptial.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 
