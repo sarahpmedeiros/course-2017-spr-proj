@@ -69,42 +69,51 @@ class k_means_transform(dml.Algorithm):
         repo.createCollection(colName)
 
         # --- Operational code ---
+
+        kMeansDict = {}
+
+        NUM_MEANS = 4    # Modify this value to vary number of means
         nhood_data = repo["ajr10_chamathd_williami.neighborhood_sea_level_data"].find({}, {"center_x": 1, "center_y": 1}).limit(50)
         points = []
         for nhood in nhood_data:
             points += [(nhood["center_x"], nhood["center_y"])]
 
-        # Run k-means++ to generate good seed values
-        seeds = []
-        centers = points.copy()
-        random.shuffle(centers)
-        # Pop a random neighborhood as the initial seed
-        seeds += [centers.pop()]
-        k = 1
-        while k < 12:
-            distances = []
-            # Check each center for the nearest seed
-            for index in range(len(centers)):
-                min_dist = dist(centers[index], seeds[0])
-                for seed in seeds:
-                    distance = dist(centers[index], seed)
-                    if distance < min_dist:
-                        min_dist = distance
-                D = min_dist ** 2
-                distances += [D]
-            total_prob = sum(distances)
-            probs = []
-            # Generate probabilities for each center
+        while NUM_MEANS < 21:
+            # Run k-means++ to generate good seed values
+            seeds = []
+            centers = points.copy()
+            random.shuffle(centers)
+            # Pop a random neighborhood as the initial seed
+            seeds += [centers.pop()]
+            k = 1
+            while k < NUM_MEANS:
+                distances = []
+                # Check each center for the nearest seed
+                for index in range(len(centers)):
+                    min_dist = dist(centers[index], seeds[0])
+                    for seed in seeds:
+                        distance = dist(centers[index], seed)
+                        if distance < min_dist:
+                            min_dist = distance
+                    D = min_dist ** 2
+                    distances += [D]
+                total_prob = sum(distances)
+                probs = []
+                # Generate probabilities for each center
                 prob = distance / total_prob
                 probs += [prob]
-            # Select random center with probability proportional to distance
-            # Pop that center onto the seed list
-            index = choice(list(range(len(centers))), 1, probs)[0]
-            seeds += [centers.pop(index)]
-            k += 1
+                # Select random center with probability proportional to distance
+                # Pop that center onto the seed list
+                index = choice(list(range(len(centers))), 1, probs)[0]
+                seeds += [centers.pop(index)]
+                k += 1
 
-        # Run k-means on the result to get the actual means
-        means = k_means(points, seeds)
+            # Run k-means on the result to get the actual means
+            means = k_means(points, seeds)
+            kMeansDict[str(NUM_MEANS) + "_means"] = means
+            NUM_MEANS += 2
+
+        repo[colName].insert(kMeansDict)
         
         # Logout and end
         repo.logout()
@@ -131,7 +140,7 @@ class k_means_transform(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('acw', 'ajr10_chamathd_williami')
 
-        this_script = doc.agent('alg:ajr10_chamathd_williami#append_polygon_and_centerpoint', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:ajr10_chamathd_williami#k_means_transform', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         neighborhood_area_boston_res = doc.entity('acw:neighborhood_area_boston', {'prov:label':'Boston Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         neighborhood_area_cambridge_res = doc.entity('acw:neighborhood_area_cambridge', {'prov:label':'Cambridge Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
