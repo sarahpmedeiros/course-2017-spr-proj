@@ -11,7 +11,7 @@ import datetime
 import uuid
 from geopy.distance import vincenty
 from heapq import heappush, heappop
-from echogu_wei0496_wuhaoyu import transformData
+#from echogu_wei0496_wuhaoyu import transformData
 
 class optimizeBusRoute(dml.Algorithm):
     contributor = 'echogu_wei0496_wuhaoyu'
@@ -33,25 +33,18 @@ class optimizeBusRoute(dml.Algorithm):
         raw_assigned_students = repo['echogu_wei0496_wuhaoyu.assigned_students'].find()
         assigned_students = []
         for item in raw_assigned_students:
-            try:
-                assigned_students.append({'Aggregated_Points': item['Aggregated_Points'],
-                                 'Points': item['Points']})
-            except:
-                pass
+            assigned_students.append({'aggregated_points': item['aggregated_points'], 'points': item['points']})
 
-        # fixied the capacity of the buses, and send the students' locations
-        # as coordinates and convert them to a graph, find the MST.
-        # First, group the student belongs to the same school
-        # projection_students = transformData.project(assigned_students, lambda t: (t['Assigned School'], [t['Latitude'], t['Longitude'], t['_id']]))
+        # ultilize minimum spanning tree to find bus route
         result = optimizeBusRoute.__find_mst(assigned_students)
 
-        repo.dropCollection('echogu_wei0496_wuhaoyu.final_route')
-        repo.createCollection('echogu_wei0496_wuhaoyu.final_route')
+        repo.dropCollection('echogu_wei0496_wuhaoyu.bus_route')
+        repo.createCollection('echogu_wei0496_wuhaoyu.bus_route')
         for i in result:
-            print(i)
-            repo['echogu_wei0496_wuhaoyu.final_route'].insert_one(i)
-        repo['echogu_wei0496_wuhaoyu.final_route'].metadata({'complete': True})
-        print(repo['echogu_wei0496_wuhaoyu.final_route'].metadata())
+            repo['echogu_wei0496_wuhaoyu.bus_route'].insert_one(i)
+        repo['echogu_wei0496_wuhaoyu.bus_route'].metadata({'complete': True})
+        print(repo['echogu_wei0496_wuhaoyu.bus_route'].metadata())
+
         endTime = datetime.datetime.now()
 
         return {"start":startTime, "end":endTime}
@@ -67,31 +60,29 @@ class optimizeBusRoute(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('echogu_wei0496_wuhaoyu', 'echogu_wei0496_wuhaoyu')
+
+        # create document object and define namespaces
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
 
-        this_script = doc.agent('alg:echogu_wei0496_wuhaoyu#mergeLandmarksHubway',
-                                {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
-        resource_BLCLandmarks = doc.entity('dat:echogu_wei0496_wuhaoyu#BLCLandmarks',
-                                           {'prov:label': 'BLC Landmarks', prov.model.PROV_TYPE: 'ont:DataSet'})
-        resource_HubwayStations = doc.entity('dat:echogu_wei0496_wuhaoyu#HubwayStations',
-                                             {'prov:label': 'Hubway Stations', prov.model.PROV_TYPE: 'ont:DataSet'})
+        # define entity to represent resources
+        this_script = doc.agent('alg:echogu_wei0496_wuhaoyu#optimizeBusRoute', {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
+        assigned_students = doc.entity('dat:echogu_wei0496_wuhaoyu#assigned_students', {'prov:label': 'assigned_students', prov.model.PROV_TYPE: 'ont:DataSet'})
 
-        get_LandmarksHubway = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_LandmarksHubway, this_script)
-        doc.usage(get_LandmarksHubway, resource_BLCLandmarks, startTime, None,
-                  {prov.model.PROV_TYPE: 'ont:Computation'})
-        doc.usage(get_LandmarksHubway, resource_HubwayStations, startTime, None,
-                  {prov.model.PROV_TYPE: 'ont:Computation'})
+        # define activity to represent invocaton of the script
+        run_mst = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        # associate the activity with the script
+        doc.wasAssociatedWith(run_mst, this_script)
+        # indicate that an activity used the entity
+        doc.usage(run_mst, assigned_students, startTime, None, {prov.model.PROV_TYPE: 'ont:Computation'})
 
-        LandmarksHubway = doc.entity('dat:echogu_wei0496_wuhaoyu#LandmarksHubway',
-                                     {prov.model.PROV_LABEL: 'Landmarks Hubway Stations', prov.model.PROV_TYPE: 'ont:DataSet'})
-        doc.wasAttributedTo(LandmarksHubway, this_script)
-        doc.wasGeneratedBy(LandmarksHubway, get_LandmarksHubway, endTime)
-        doc.wasDerivedFrom(LandmarksHubway, resource_BLCLandmarks, get_LandmarksHubway, get_LandmarksHubway, get_LandmarksHubway)
-        doc.wasDerivedFrom(LandmarksHubway, resource_HubwayStations, get_LandmarksHubway, get_LandmarksHubway, get_LandmarksHubway)
+        # for the data obtained, indicate that the entity was attributed to what agent, was generated by which activity and was derived from what entity
+        bus_route = doc.entity('dat:echogu_wei0496_wuhaoyu#optimizeBusRoute', {prov.model.PROV_LABEL: 'bus_route', prov.model.PROV_TYPE: 'ont:DataSet'})
+        doc.wasAttributedTo(bus_route, this_script)
+        doc.wasGeneratedBy(bus_route, run_mst, endTime)
+        doc.wasDerivedFrom(bus_route, assigned_students, run_mst, run_mst, run_mst)
 
         repo.logout()
 
@@ -99,36 +90,35 @@ class optimizeBusRoute(dml.Algorithm):
 
     # This is the helper function to find MST among all student pick up points
     # input: [coordinates] restricted by n(bus capacity, this is the maximum size of the tree)
-
     # convert the original input into format
     @staticmethod
     def __find_mst(assigned_students):
         final_res = []
         for i in assigned_students:
-            Points = i['Points']
-            K_points = i['Aggregated_Points'][0]
+            points = i['points']
+            K_points = i['aggregated_points'][0]
             final = []
             results = []
-            for j in Points:
-                results.append([j["Latitude"],j["Longitude"],j['Student_id']])
+            for j in points:
+                results.append([j["latitude"], j["longitude"], j['student_id']])
             #print("printing results")
             #print(results)
             res = optimizeBusRoute.__cal_MST(results)
             for k in res[0]:
                 final.append({
-                    'Student_id': results[k][2],
-                    'Latitude': results[k][0],
-                    'Longitude': results[k][1]})
+                    'student_id': results[k][2],
+                    'latitude': results[k][0],
+                    'longitude': results[k][1]})
 
             final_res.append({
-                'Aggregated_Points':K_points,
+                'aggregated_points':K_points,
                 'Pickup_sequence': final})
         return final_res
 
     @staticmethod
     def __cal_MST(points):
         # construct a adjacency matrix
-        # issue: when capacity contains only one student, there is a bug'''
+        # issue: when capacity contains only one student, there is a bug
         if(len(points) != 1):
             # construct a adjacency matrix
             adjacency_matrix = optimizeBusRoute.__generate_graph(points)
@@ -142,7 +132,7 @@ class optimizeBusRoute(dml.Algorithm):
         adjacency_matrix = [[100 for x in range(len(points))] for y in range(len(points))]
         for i in range(len(points)-1):
             for j in range(i+1, len(points)):
-                adjacency_matrix[i][j] = optimizeBusRoute.distance(points[i][0:2], points[j][0:2])
+                adjacency_matrix[i][j] = optimizeBusRoute.__distance(points[i][0:2], points[j][0:2])
                 adjacency_matrix[j][i] = adjacency_matrix[i][j]
         return adjacency_matrix
 
@@ -188,5 +178,7 @@ class optimizeBusRoute(dml.Algorithm):
         return S, result
 
     @staticmethod
-    def distance(point1, point2):
+    def __distance(point1, point2):
         return vincenty(point1, point2).miles
+
+optimizeBusRoute.execute()
