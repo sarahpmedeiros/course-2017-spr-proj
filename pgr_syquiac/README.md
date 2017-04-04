@@ -22,12 +22,11 @@ The third dataset (created by transformation2.py) is a dataset that has the obes
 
 ## Project 2
 
-With correlation1.py, correlation2.py and correlation3.py, we want to find out if we are able to attribute certain behaviors, in this case lack of sleep and annual check ups, to a characteristic of where one resides.
+With correlation_checkups_hospitals.py and correlation_pools_obesity.py, we want to find out if we are able to attribute certain behaviors, in this case annual check ups, to a characteristic of where one resides or how the number of swimming pools in one's proximity affects (if it does) obesity rates. 
 
-In correlation1.py, we find the correlation coefficient and p-value between whether someone in Boston visited their doctor for an annual check up within the last year and their proximity to a hospital. We also give the user the option to restrict the distance from the hospital to see if there is a correlation between people who live within, say, a 1 mile radius of the hospital. Using this data, if there is a negative correlation between distance from the hospital and going to the doctors for an annual check up, we can determine whether people a given distance away from the hospital need to be given better access to their doctors.
+In correlation_checkups_hospitals.py, we find the correlation coefficient and p-value between whether someone in Boston visited their doctor for an annual check up within the last year and their proximity to a hospital. We also give the user the option to restrict the distance from the hospital to see if there is a correlation between people who live within, say, a 1 mile radius of the hospital. Using this data, if there is a negative correlation between distance from the hospital and going to the doctors for an annual check up, we can determine whether people a given distance away from the hospital need to be given better access to their doctors.
 
-In correlation2.py, we find the correlation coefficient and p-value between lack of sleep (defined as less than 7 hours of sleep) and one's proximity to a university. Similar to correlation1, the user can adjust the radius from the university and get the correlation coefficient from people within that radius.
 
-In correlation3.py, we first find the number of pools within a user-given distance from a obesity rate data point. We then find the correlation coefficient and p-value between the number of pools around a given obesity rate data point and that data point. 
+In correlation_pools_obesity.py, we first find the number of pools within a user-given distance from a obesity rate data point. We then find the correlation coefficient and p-value between the number of pools around a given obesity rate data point and that data point's obesity rate. 
 
-Both correlation1 and correlation2 give us a p-value, meaning we can determine whether the correlation is statistically significant (at least by current statistics standards) not only for the entire dataset but for given proximities from a university/hospital as well.
+Both correlation1 and correlation2 give us a p-value, meaning we can determine whether the correlation is statistically significant (at least by current statistics standards) not only for the entire dataset but for slices of the data set, depending on the distance the user chooses. 

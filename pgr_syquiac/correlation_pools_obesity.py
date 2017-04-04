@@ -2,7 +2,7 @@
 Pauline Ramirez & Carlos Syquia
 correlation_pools_obesity.py
 
-Calculates the correlation between obesity rates and proximity to a public swimming pools
+Calculates the correlation between obesity rates and number of pools in proximity 
 
 '''
 
