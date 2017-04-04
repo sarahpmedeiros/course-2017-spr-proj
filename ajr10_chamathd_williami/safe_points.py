@@ -116,14 +116,14 @@ class safe_points(dml.Algorithm):
         safe_points = doc.entity('dat:ajr10_chamathd_williami#safe_points', {prov.model.PROV_LABEL:'Safe Points Information', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(safe_points, this_script)
         doc.wasGeneratedBy(safe_points, get_kmeans, endTime)
-        doc.wasDerivedFrom(safe_points, kmeans_res, kmeans_res, kmeans_res, kmeans_res)
+        doc.wasDerivedFrom(safe_points, kmeans_res, get_kmeans, get_kmeans, get_kmeans)
         
         repo.logout()
                   
         return doc
 
 safe_points.execute()
-##doc = safe_points.provenance()
+doc = safe_points.provenance()
 ##print(doc.get_provn())
 ##print(json.dumps(json.loads(doc.serialize()), indent=4))                                                                                                                                           print("Safe point", safe_point, "Original", kmean.xy
 
