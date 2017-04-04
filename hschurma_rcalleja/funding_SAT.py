@@ -58,37 +58,38 @@ class funding_SAT(dml.Algorithm):
         repo.dropPermanent("funding_SAT")
         repo.createPermanent("funding_SAT")
 
-        # size of SAT data set
-        SAT = list(repo.hschurma_rcalleja.SAT.find())
-        SATlen = len(SAT)
+        # # size of SAT data set
+        # SAT = list(repo.hschurma_rcalleja.SAT.find())
+        # SATlen = len(SAT)
+        #
+        # # list of schools in form [{'Name': val, 'NumTesting': val, 'Reading': val, 'Math': val, 'Writing': val}]
+        # SATschools = []
+        # for i in range(2,SATlen):
+        #     temp = SAT[i]
+        #     SATschools.append({'Name': temp['School'].strip(), 'NumTesting': temp['Test Takers'], 'Reading': temp['Critical Reading'], 'Math': temp['Mathematics'], 'Writing': temp['Writing']})
+        #
+        # #print(SATschools)
+        # # Dict of School name and Funding
+        # funding = list(repo.hschurma_rcalleja.funding.aggregate([{"$project": {"_id": 0, "FIELD2": 1, "FIELD13": 1}}]))
+        #
+        # # [{'Name': val, 'Funding': val}]
+        # nameFund = []
+        # for i in range(len(funding)):
+        #     nameFund.append({'Name': funding[i]["FIELD2"].strip(), 'Funding': funding[i]["FIELD13"].strip()})
+        #
+        # #print(nameFund)
+        # # print(nameLoc)
+        # # print(nameFund)
+        #
+        #
+        # P = product(SATschools, nameFund)
+        # #print(P)
+        # S = select(P, lambda t: t[0]['Name'] == t[1]['Name'])
+        # #print(S)
+        # PR = project(S, lambda t: {'Name': t[0]['Name'], 'NumTesting': t[0]['NumTesting'], 'Reading': t[0]['Reading'], 'Math': t[0]['Math'], 'Writing': t[0]['Writing'], 'Funding': t[1]['Funding']})
+        # print(PR)
 
-        # list of schools in form [{'Name': val, 'NumTesting': val, 'Reading': val, 'Math': val, 'Writing': val}]
-        SATschools = []
-        for i in range(2,SATlen):
-            temp = SAT[i]
-            SATschools.append({'Name': temp['School'].strip(), 'NumTesting': temp['Test Takers'], 'Reading': temp['Critical Reading'], 'Math': temp['Mathematics'], 'Writing': temp['Writing']})
-
-        #print(SATschools)
-        # Dict of School name and Funding
-        funding = list(repo.hschurma_rcalleja.funding.aggregate([{"$project": {"_id": 0, "FIELD2": 1, "FIELD13": 1}}]))
-
-        # [{'Name': val, 'Funding': val}]
-        nameFund = []
-        for i in range(len(funding)):
-            nameFund.append({'Name': funding[i]["FIELD2"].strip(), 'Funding': funding[i]["FIELD13"].strip()})
-
-        #print(nameFund)
-        # print(nameLoc)
-        # print(nameFund)
-
-        
-        P = product(SATschools, nameFund)
-        #print(P)
-        S = select(P, lambda t: t[0]['Name'] == t[1]['Name'])
-        #print(S)
-        PR = project(S, lambda t: {'Name': t[0]['Name'], 'NumTesting': t[0]['NumTesting'], 'Reading': t[0]['Reading'], 'Math': t[0]['Math'], 'Writing': t[0]['Writing'], 'Funding': t[1]['Funding']})
-        print(PR)
-
+        #PR = {'Name': 'Boston Latin', 'SAT': {'S2008': 500, 'S2009': 600}, 'Funding_General': {'S2009': 800, 'S2010': 900}, 'Funding_All': {'S2009': 500, 'S2010': 500} }
         repo.dropCollection('funding_SAT')
         repo.createCollection('funding_SAT')
         repo['hschurma_rcalleja.funding_SAT'].insert(PR)
