@@ -8,6 +8,11 @@ import datetime
 import uuid
 import sodapy
 import rtree
+import json
+import geojson
+import geopy.distance
+import shapely.geometry
+from tqdm import tqdm
 
 
 # implementation of schemas from course notes
@@ -76,7 +81,6 @@ def polygon(x, y, poly):
     return inside
 
 
-
 class proj2(dml.Algorithm):
     contributor = 'pt0713_silnuext'
     reads = ['pt0713_silnuext.proj2']
@@ -102,14 +106,12 @@ class proj2(dml.Algorithm):
             response1 += client1.get("crime", limit=50000, offset=limit)
         s = json.dumps(response1, sort_keys=True, indent=2)
 
-        # getting coordination of crimes happened in 2014
-        crime_coordination = project(response1,lambda x:(x["year"], x["location"]["latitude"],x["location"]["longitude"]))
-        crime_14 = [crime_2014 for crime_2014 in crime_coordination if crime_2014[0] == "2014"]
-        crime_14coordination = [(float(latitude), float(longitude)) for (year, latitude, longitude) in crime_14]
-        
+        crime_coordination = project(response1,lambda x:(x["year"], x["location"]["latitude"],x["location"]["longitude"]))     
         # getting coordination of crimes happened in 2015
         crime_15 = [crime_2015 for crime_2015 in crime_coordination if crime_2015[0] == "2015"]
         crime_15coordination = [(float(latitude), float(longitude)) for (year, latitude, longitude) in crime_15]
+        # shorting data in order to run it in a racheable time
+        crime_15short_coordination = crime_15coordination[:5000]
 
         repo['pt0713_silnuext.property_crime'].insert_many(response1)
         repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
@@ -120,33 +122,10 @@ class proj2(dml.Algorithm):
         response2014 = client2014.get("jsri-cpsq")
         s = json.dumps(response2014, sort_keys=True, indent=2)
 
-        # getting coordination of properties that in the dataset of property assessment of 2014
-        property14_price_coordination = project(response2014, lambda x: (x["av_total"],x["location"]))
-        property14_coordination = [eval(a[1]) for a in property14_price_coordination]
-        property14_price_coordination_float = [(int(price[0]), coordination) for price in property14_price_coordination for coordination in property14_coordination]
 
-
-        #print(property14_price_coordination_float)
         repo['pt0713_silnuext.property_crime'].insert_many(response2014)
         repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.property_crime'].metadata())
-
-
-        # correspond zipcode to property_14 (project2)
-
-        def zip_code_property14():
-            rtidx = rtree.index.Index()
-            rtidx = zip_to_coor
-            property14_zip = {}
-            for zipcode in zip_to_coor:
-                for i in range(len(property14_price_coordination_float)):
-                    if polygon(property14_price_coordination_float[i][1][0], property14_price_coordination_float[i][1][1], zip_to_coor[zipcode]):
-                        if zipcode not in property14_zip:
-                            property14_zip[zipcode] = property14_price_coordination_float[i]
-                        else:
-                            property14_zip[zipcode] += property14_price_coordination_float[i]
-            return property14_zip
-        print(zip_code_property14())
 
 
         # import property2015 data
@@ -158,9 +137,71 @@ class proj2(dml.Algorithm):
         property15_price_coordination = project(response2015, lambda x: (x["av_total"],x["location"]))
         property15_coordination = [eval(a[1]) for a in property15_price_coordination]
         property15_price_coordination_float = [(int(price[0]), coordination) for price in property15_price_coordination for coordination in property15_coordination]
+        # shorting data in order to run it in a racheable time
+        property15_price_short_coordination_float = property15_price_coordination_float[:5000]
+
         repo['pt0713_silnuext.property_crime'].insert_many(response2015)
         repo['pt0713_silnuext.property_crime'].metadata({'complete':True})
         print(repo['pt0713_silnuext.property_crime'].metadata())
+
+
+        # function of classifying properties in 2015 into differnet zipcodes by using their coordinates
+        def zip_code_propertydata(zip_to_coor, coor):
+            coor_zip = {}
+            for zipcode in zip_to_coor:
+                for i in range(len(coor)):
+                    if polygon(coor[i][1][0], coor[i][1][1], zip_to_coor[zipcode]):
+                        if zipcode not in coor_zip:
+                            coor_zip[zipcode] = [coor[i]]
+                        else:
+                            coor_zip[zipcode] += [coor[i]]
+            return coor_zip
+
+        # function of classifying crime incidents in 2015 into different zipcodes by using their coordinates
+        def zip_code_crimedata(zip_to_coor, coor):
+            coor_zip = {}
+            for zipcode in zip_to_coor:
+                for i in range(len(coor)):
+                    if polygon(coor[i][0], coor[i][1], zip_to_coor[zipcode]):
+                        if zipcode not in coor_zip:
+                            coor_zip[zipcode] = [coor[i]]
+                        else:
+                            coor_zip[zipcode] += [coor[i]]
+            return coor_zip
+
+        property15_zipcode = zip_code_propertydata(zip_to_coor, property15_price_short_coordination_float)
+        #crime15_zipcode = zip_code_crimedata(zip_to_coor, crime_15short_coordination)
+
+        # function of calculating average property prices within each zipcode
+        def avgprice_zipcode(property_zip):
+            price15_zipcode = {}
+            for zipcode in property_zip:
+                for i in range(len(property_zip[zipcode])):
+                    if zipcode not in price15_zipcode:
+                        price15_zipcode[zipcode] = [property_zip[zipcode][i][0]]
+                    else:
+                        price15_zipcode[zipcode] += [property_zip[zipcode][i][0]]
+
+            for zipcode in price15_zipcode:
+                price15_zipcode[zipcode] = [sum(price15_zipcode[zipcode]) / len(price15_zipcode[zipcode])]
+            
+            return price15_zipcode
+
+
+        # function of calculating amount of crime incidents within each zipcode
+        def length_zipcode(crime_zip):
+            crime_number = {}
+            for zipcode in crime_zip:
+                if zipcode not in crime_number:
+                    crime_number[zipcode] = len(crime_zip[zipcode])
+                else:
+                    crime_number[zipcode] += len(crime_zip[zipcode])
+
+            return crime_number
+
+
+        print(length_zipcode(property15_zipcode))
+
  
         repo.logout()
 
