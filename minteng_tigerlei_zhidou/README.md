@@ -45,20 +45,6 @@ This project use app token from boston data portal and googlemaps. To retrieve d
 }
 ```
 
-## Trial mode
-In trial mode, the algorithm would complete its execution very quickly (in at most a few seconds) by operating on a very small portion of the input data set(s). 
-
-Remember to uncomment last few lines of the file
-```python
-# if 'trial' in sys.argv:
-#     <filename>.execute(True)
-# else:
-#     <filename>.execute()
-```
-To run it:
-```python
-python3 <filename>.py trial
-```
 ## Problem 1: Optimization
 Following the idea of project 1, our goal is to find a best office location for a new company. Since a detailed coordinate is meaningless, we try to find a suitable area. Project 1 has helped us gather all the licensed restaurants/ crime incidents/ MBTA stops/ rent price in boston area. We gonna find the best area that maximize **```#restaurant```**, **```#MBTA stops```** and minimize **```#crime incidents```** and **```rent price```**. 
 
@@ -119,4 +105,24 @@ From the graph below we could see the trend of block 27 in the consistent four y
 Because this data of these four year have strong linear relationship, there is a high probability that their criminal records have the same tendency through the entire year. Therefore, we fit all the data in four year to find a common pattern of block 27. Now assume, 2016-2017 could still maintain such strong linear relationship, and then we could use this fitting funtion to simulate the trend of crime of block 27 in this year.
 ![fitting](http://datamechanics.io/data/minteng_zhidou/fitting.png) 
 
+## 3.a Provenance information
+All provenance information could be seen in ```provenance.html``` after running:
+```python
+python3 execute.py minteng_tigerlei_zhidou
+```
 
+
+## 3.b Trial mode
+In trial mode, the algorithm would complete its execution very quickly (in at most a few seconds) by operating on a very small portion of the input data set(s). 
+
+Remember to uncomment last few lines of the file
+```python
+# if 'trial' in sys.argv:
+#     <filename>.execute(True)
+# else:
+#     <filename>.execute()
+```
+To run it:
+```python
+python3 <filename>.py trial
+```
