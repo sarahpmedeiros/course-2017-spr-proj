@@ -16,7 +16,7 @@ from heapq import heappush, heappop
 class optimizeBusRoute(dml.Algorithm):
     contributor = 'echogu_wei0496_wuhaoyu'
     reads = ['echogu_wei0496_wuhaoyu.assigned_students']
-    writes = ['echogu_wei0496_wuhaoyu.bus_routes']
+    writes = ['echogu_wei0496_wuhaoyu.bus_route']
 
     @staticmethod
     def execute(trial = False):
