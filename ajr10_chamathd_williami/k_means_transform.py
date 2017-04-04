@@ -73,12 +73,15 @@ class k_means_transform(dml.Algorithm):
         kMeansDict = {}
 
         NUM_MEANS = 4    # Modify this value to vary number of means
+        print("Retrieving data from the neighborhood sea level data collection")
         nhood_data = repo["ajr10_chamathd_williami.neighborhood_sea_level_data"].find({}, {"center_x": 1, "center_y": 1}).limit(50)
+        print()
         points = []
         for nhood in nhood_data:
             points += [(nhood["center_x"], nhood["center_y"])]
 
         while NUM_MEANS < 21:
+            print("Running k-means with " + str(NUM_MEANS) + " means")
             # Run k-means++ to generate good seed values
             seeds = []
             centers = points.copy()
@@ -113,6 +116,8 @@ class k_means_transform(dml.Algorithm):
             kMeansDict[str(NUM_MEANS) + "_means"] = means
             NUM_MEANS += 2
 
+        print()
+        print("Inserting k-means information into database")
         repo[colName].insert(kMeansDict)
         
         # Logout and end
@@ -141,33 +146,22 @@ class k_means_transform(dml.Algorithm):
         doc.add_namespace('acw', 'ajr10_chamathd_williami')
 
         this_script = doc.agent('alg:ajr10_chamathd_williami#k_means_transform', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        neighborhood_area_boston_res = doc.entity('acw:neighborhood_area_boston', {'prov:label':'Boston Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        neighborhood_area_cambridge_res = doc.entity('acw:neighborhood_area_cambridge', {'prov:label':'Cambridge Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        neighborhood_sea_level_data_res = doc.entity('acw:neighborhood_sea_level_data', {'prov:label':'Boston Area Neighborhood Sea Level Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
-        get_neighborhood_area_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_neighborhood_area_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_neighborhood_sea_level_data = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_neighborhood_area_boston, this_script)
-        doc.wasAssociatedWith(get_neighborhood_area_cambridge, this_script)
+        doc.wasAssociatedWith(get_neighborhood_sea_level_data, this_script)
         
-        doc.usage(get_neighborhood_area_boston, neighborhood_area_boston_res, startTime, None,
+        doc.usage(get_neighborhood_sea_level_data, neighborhood_sea_level_data_res, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Neighborhood+Area+Boston'
-                  }
-                  )
-        doc.usage(get_neighborhood_area_cambridge, neighborhood_area_cambridge_res, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Neighborhood+Area+Cambridge'
+                  'ont:Query':'?type=Neighborhood+Sea+Level+Data'
                   }
                   )
 
-        neighborhood_info = doc.entity('dat:ajr10_chamathd_williami#neighborhood_info', {prov.model.PROV_LABEL:'Boston-Area Neighborhood Information', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(neighborhood_info, this_script)
-        doc.wasGeneratedBy(neighborhood_info, get_neighborhood_area_boston, endTime)
-        doc.wasGeneratedBy(neighborhood_info, get_neighborhood_area_cambridge, endTime)
-        doc.wasDerivedFrom(neighborhood_info, neighborhood_area_boston_res, get_neighborhood_area_boston, get_neighborhood_area_boston, get_neighborhood_area_boston)
-        doc.wasDerivedFrom(neighborhood_info, neighborhood_area_cambridge_res, get_neighborhood_area_cambridge, get_neighborhood_area_cambridge, get_neighborhood_area_cambridge)
-
+        k_means = doc.entity('dat:ajr10_chamathd_williami#k_means', {prov.model.PROV_LABEL:'K-Means Transformation for Various Means', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(k_means, this_script)
+        doc.wasGeneratedBy(k_means, get_neighborhood_sea_level_data, endTime)
+        doc.wasDerivedFrom(k_means, neighborhood_sea_level_data_res, get_neighborhood_sea_level_data, get_neighborhood_sea_level_data, get_neighborhood_sea_level_data)
         
         repo.logout()
                   
