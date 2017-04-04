@@ -25,6 +25,7 @@ class StatisticalAnalysis(dml.Algorithm):
 						"02128","02133","02163","02196", "02199", "02205", "02206", "02212", "02215", "02266", "02283", 
 						"02201", "02203", "02204", "02210", "02211", "02217", "02222", "02241", "02284", "02293", "02295", "02297", "02298"]
 
+		startTime = datetime.datetime.now()
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
 
@@ -105,6 +106,39 @@ class StatisticalAnalysis(dml.Algorithm):
 			regression_data.append(observation)
 			price_data.append(property_value)
 
+		#####Graph Style by Year##############################################################################
+
+		data_set = repo.mbyim_seanz.property_assessments.find()
+		year_area = []
+		for row in data_set:
+			reg_dict = dict(row)
+
+			try:
+				prop_year = int(reg_dict['yr_built'])
+				if (prop_year < 1850) or (prop_year > 2010):
+					continue
+			except:
+				continue
+			try:
+				floors = int(reg_dict['num_floors']) #living_area
+				if (floors == 0):
+					continue
+			except:
+				continue
+
+			year_area_obs = [prop_year] + [floors]
+
+			year_area.append(year_area_obs)
+
+
+
+		df = pd.DataFrame(year_area, columns=['x', 'y'])
+		df = df.groupby(['x']).mean()
+		df.reset_index(level=0, inplace=True)
+		df.plot(x='x', y='y', title='Average Number of Floors for Buildings Constructed By Year',legend=None)
+		plt.xlabel('Year')
+		plt.ylabel('Average Number of Floors')
+		plt.savefig('number_floors_graph')
 
 
 		######CREATE MODEL###################################################################################
@@ -142,40 +176,6 @@ class StatisticalAnalysis(dml.Algorithm):
 		repo['mbyim_seanz.StatisticalAnalysis'].metadata({'complete':True})
 
 
-		#####Graph Style by Year##############################################################################
-
-		data_set = repo.mbyim_seanz.property_assessments.find()
-		year_area = []
-		for row in data_set:
-			reg_dict = dict(row)
-
-			try:
-				prop_year = int(reg_dict['yr_built'])
-				if (prop_year < 1850) or (prop_year > 2010):
-					continue
-			except:
-				continue
-			try:
-				floors = int(reg_dict['num_floors']) #living_area
-				if (floors == 0):
-					continue
-			except:
-				continue
-
-			year_area_obs = [prop_year] + [floors]
-
-			year_area.append(year_area_obs)
-
-
-
-		df = pd.DataFrame(year_area, columns=['x', 'y'])
-		df = df.groupby(['x']).mean()
-		df.reset_index(level=0, inplace=True)
-		df.plot(x='x', y='y', title='Average Number of Floors for Buildings Constructed By Year',legend=None)
-		plt.xlabel('Year')
-		plt.ylabel('Average Number of Floors')
-		plt.savefig('number_floors_graph')
-	
 
 	@staticmethod
 	def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
@@ -205,11 +205,12 @@ class StatisticalAnalysis(dml.Algorithm):
 		StatisticalAnalysis = doc.entity('dat:mbyim_seanz#StatisticalAnalysis', {prov.model.PROV_LABEL:'Statistical Analysis', prov.model.PROV_TYPE:'ont:DataSet'})
 		doc.wasAttributedTo(StatisticalAnalysis, this_script)
 		doc.wasGeneratedBy(StatisticalAnalysis, get_statistical_analysis, endTime)
+		#doc.wasDerivedFrom(found, resource, get_found, get_found, get_found)
+
 
 		repo.logout()
 		          
 		return doc
-
 
 
 

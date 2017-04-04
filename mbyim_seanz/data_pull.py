@@ -51,11 +51,11 @@ class data_pull(dml.Algorithm):
         #MBTA API key Info
         #with open('auth.json') as auth_file:
         #    auth_key = json.load(auth_file)
-        dml.auth['mbtadeveloperportal']['key']
+        #dml.auth['services']['mbtadeveloperportal']['key']
 
 
         #api_key = auth_key['mbtadeveloperportal']['key']
-        api_key = dml.auth['mbtadeveloperportal']['key']
+        api_key = dml.auth['services']['mbtadeveloperportal']['key']
         url = 'http://realtime.mbta.com/developer/api/v2/routes?api_key=' + api_key + '&format=json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         mbta_route_data = json.loads(response)
