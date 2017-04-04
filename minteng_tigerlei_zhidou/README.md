@@ -25,6 +25,9 @@ We want to find a best office location for a new company. The first factor we co
 # Project 2
 ### *by Minteng Xie, Yue Lei, Zhi Dou*
 
+## 1 .
+A new team is formed by Minteng Xie, Yue Lei and Zhi Dou. All scripts and files of project 2 is under new folder ```minteng_tigerlei_zhidou```
+
 ## auth.json
 This project use app token from ```boston data portal``` and ```googlemaps geocoding API```. To retrieve data automatically, app token should be added into `auth.json` file as follow format:
 ```
