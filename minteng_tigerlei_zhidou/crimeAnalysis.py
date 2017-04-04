@@ -1,5 +1,5 @@
 import dml, prov.model
-import datetime
+import datetime, uuid
 import numpy as np
 from scipy import stats
 import warnings
@@ -86,14 +86,15 @@ class crimeAnalysis(dml.Algorithm):
         get_statsresult = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         
         doc.wasAssociatedWith(get_statsresult, this_script)
-        doc.usage(get_statsresult, statsresult_resource, statsresult_resource2,startTime, None,
+        doc.usage(get_statsresult, statsresult_resource,startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_statsresult, statsresult_resource2,startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'})
 
-
-        rent = doc.entity('dat:minteng_tigerlei_zhidou#statsresult', {prov.model.PROV_LABEL:'statistics result', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(statsresult, this_script)
-        doc.wasGeneratedBy(statsresult, get_statsresult, endTime)
-        doc.wasDerivedFrom(statsresult, statsresult_resource, statsresult_resource2, get_statsresult, get_statsresult, get_statsresult)
+        doc.wasAttributedTo(statsresult_result, this_script)
+        doc.wasGeneratedBy(statsresult_result, get_statsresult, endTime)
+        doc.wasDerivedFrom(statsresult_result, statsresult_resource, get_statsresult, get_statsresult, get_statsresult)
+        doc.wasDerivedFrom(statsresult_result, statsresult_resource2, get_statsresult, get_statsresult, get_statsresult)
 
         
         repo.logout()
