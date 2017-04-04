@@ -20,7 +20,8 @@ class retrieve(dml.Algorithm):
         repo = client.repo
         repo.authenticate('hschurma_rcalleja', 'hschurma_rcalleja')
         
-        url = 'https://data.cityofboston.gov/api/views/e29s-ympv/rows.json?accessType=DOWNLOAD'
+        #url = 'https://data.cityofboston.gov/api/views/e29s-ympv/rows.json?accessType=DOWNLOAD' school names were modified
+        url = 'http://datamechanics.io/data/hshurma_rcalleja/location.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
@@ -45,7 +46,7 @@ class retrieve(dml.Algorithm):
         repo.createCollection("funding")
         repo['hschurma_rcalleja.funding'].insert_many(r)
 
-        url = 'http://datamechanics.io/data/hshurma_rcalleja/SAT2014.json'
+        url = 'http://datamechanics.io/data/hshurma_rcalleja/SATtotal.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
@@ -89,9 +90,9 @@ class retrieve(dml.Algorithm):
         this_script = doc.agent('alg:hschurma_rcalleja#retrieve', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         resource_loc = doc.entity('bdp:e29s-ympv', {'prov:label':'Boston Public Schools', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_grad = doc.entity('bdp:wgrya-vhq5', {'prov:label':'Graduates Attending College', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        resource_SAT = doc.entity('dat:hschurma_rcalleja/SAT2014.json', {'prov:label':'BPS SAT Scores', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource_SAT = doc.entity('dat:hschurma_rcalleja/SATtotal.json', {'prov:label':'BPS SAT Scores', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_g_rates = doc.entity('dat:hschurma_rcalleja/gradrates06_16', {'prov:label':'BPS Graduation Rates', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        resource_fund = doc.entity('dat:hschurma_rcalleja/funding.json', {'prov:label':'BPS Funding', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        resource_fund = doc.entity('dat:hschurma_rcalleja/FundingAll.json', {'prov:label':'BPS Funding', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_loc = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_grad = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
