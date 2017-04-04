@@ -120,6 +120,9 @@ class unionize_neighborhood_data(dml.Algorithm):
         doc.wasAttributedTo(neighborhood_pop, this_script)
         doc.wasGeneratedBy(neighborhood_pop, get_neighborhood_pop_boston, endTime)
         doc.wasGeneratedBy(neighborhood_pop, get_neighborhood_pop_cambridge, endTime)
+        doc.wasDerivedFrom(neighborhood_pop, neighborhood_pop_boston_res, get_neighborhood_pop_boston, get_neighborhood_pop_boston, get_neighborhood_pop_boston)
+        doc.wasDerivedFrom(neighborhood_pop, neighborhood_pop_cambridge_res, get_neighborhood_pop_cambridge, get_neighborhood_pop_cambridge, get_neighborhood_pop_cambridge)
+
         
         repo.logout()
                   
