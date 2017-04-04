@@ -39,15 +39,12 @@ class safe_points(dml.Algorithm):
 
         # Operational code here:
 
-        means_data = repo["ajr10_chamathd_williami.k_means"]
+        kmeans = repo["ajr10_chamathd_williami.k_means"]["8_means"].find()
 
         safe_points_five = []
         safe_points_seven = []
         
         print("Calculating safe points for five foot rise...")
-        kmeans = means_data["8_means"]
-        print(kmeans)
-
         sea_level_five_col = repo["ajr10_chamathd_williami.sea_level_five"].find().limit(0)
         for polygon in sea_level_five_col:
             seaPoly = shape(polygon["geometry"])
