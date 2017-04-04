@@ -41,7 +41,7 @@ class optimizeBusRoute(dml.Algorithm):
         for i in result:
             repo['echogu_wei0496_wuhaoyu.bus_route'].insert_one(i)
         repo['echogu_wei0496_wuhaoyu.bus_route'].metadata({'complete': True})
-        print(repo['echogu_wei0496_wuhaoyu.bus_route'].metadata())
+        print(repo['echogu_wei0496_wuhaoyu.bus_route'].metadata(), "Saved Bus Route")
 
         endTime = datetime.datetime.now()
 
@@ -178,5 +178,3 @@ class optimizeBusRoute(dml.Algorithm):
     @staticmethod
     def __distance(point1, point2):
         return vincenty(point1, point2).miles
-
-optimizeBusRoute.execute()

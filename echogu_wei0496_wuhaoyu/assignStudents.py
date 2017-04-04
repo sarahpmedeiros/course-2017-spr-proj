@@ -8,7 +8,7 @@ import datetime
 import uuid
 import math
 import random
-# from geopy.distance import vincenty
+from geopy.distance import vincenty
 
 class assignStudents(dml.Algorithm):
     contributor = 'echogu_wei0496_wuhaoyu'
@@ -73,7 +73,7 @@ class assignStudents(dml.Algorithm):
         for r in results:
             repo['echogu_wei0496_wuhaoyu.assigned_students'].insert_many(r)
         repo['echogu_wei0496_wuhaoyu.assigned_students'].metadata({'complete': True})
-        print(repo['echogu_wei0496_wuhaoyu.assigned_students'].metadata())
+        print(repo['echogu_wei0496_wuhaoyu.assigned_students'].metadata(), "Saved Assigned Students")
 
         endTime = datetime.datetime.now()
 
@@ -124,9 +124,10 @@ class assignStudents(dml.Algorithm):
 
     @staticmethod
     def dist(p, q):
-        (x1, y1) = p
-        (x2, y2) = q
-        return (x1 - x2) ** 2 + (y1 - y2) ** 2
+        # (x1, y1) = p
+        # (x2, y2) = q
+        # return (x1 - x2) ** 2 + (y1 - y2) ** 2
+        return vincenty(p, q).miles
 
     @staticmethod
     def plus(args):
