@@ -22,7 +22,7 @@ def dist (p, q, coeff):
 
 class hospitalsLoad(dml.Algorithm):
     contributor = 'jgrishey'
-    reads = ['jgrishey.hospitals']
+    reads = ['jgrishey.hospitals', 'jgrishey.crime']
     writes = ['jgrishey.hospitalsLoad']
 
     @staticmethod
@@ -43,7 +43,10 @@ class hospitalsLoad(dml.Algorithm):
             hospital['bookings'] = 0
             hospital['coeff'] = 1 / (float(hospital['sqft']) / aver)
 
-        crimes = list(repo['jgrishey.crime'].find(None, ['lat', 'long']))
+        if trial:
+            crimes = list(repo['jgrishey.crime'].find(None, ['lat', 'long']))[:20]
+        else:
+            crimes = list(repo['jgrishey.crime'].find(None, ['lat', 'long']))
 
         '''
             Find closest hospital to crime, using coefficient based off sqft.
@@ -94,22 +97,26 @@ class hospitalsLoad(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:jgrishey#getCrime', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:29yf-ye7n', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_crime = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_crime, this_script)
-        doc.usage(get_crime, resource, startTime, None,
+        this_script = doc.agent('alg:jgrishey#hospitalsLoad', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        hospitals = doc.entity('dat:jgrishey#hospitals', {'prov:label':'MongoDB Request', prov.model.PROV_TYPE:'ont:DataSet', 'ont:Extension':'mongoDB'})
+        crime = doc.entity('dat:jgrishey#crime', {'prov:label':'MongoDB Request', prov.model.PROV_TYPE:'ont:DataSet', 'ont:Extension':'mongoDB'})
+        this_run = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        doc.wasAssociatedWith(this_run, this_script)
+        doc.usage(this_run, hospitals, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.usage(get_crime, resource, startTime, None,
-                    {prov.model.PROV_TYPE:'ont:DataSet',
-                    'ont:Computation': 'Apply ID, get latitude, and get longitude'})
+        doc.usage(this_run, crime, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(this_run, hospitals, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Computation'})
+        doc.usage(this_run, crime, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Computation'})
 
-        crime = doc.entity('dat:jgrishey#crime', {prov.model.PROV_LABEL:'Boston Crimes', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(crime, this_script)
-        doc.wasGeneratedBy(crime, get_crime, endTime)
-        doc.wasDerivedFrom(crime, resource, get_crime, get_crime, get_crime)
+        hospitalsLoad = doc.entity('dat:jgrishey#hospitalsLoad', {prov.model.PROV_LABEL:'Hospital Load Data', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(hospitalsLoad, this_script)
+        doc.wasGeneratedBy(hospitalsLoad, this_run, endTime)
+        doc.wasDerivedFrom(hospitalsLoad, crime, this_run, this_run, this_run)
+        doc.wasDerivedFrom(hospitalsLoad, hospitals, this_run, this_run, this_run)
 
         repo.logout()
 

@@ -10,33 +10,6 @@ from sklearn.cluster import KMeans
 import numpy as np
 
 '''
-    Helper Functions
-'''
-
-def product (R, S):
-    return [(t, u) for t in R for u in S]
-
-def aggregate (R, f):
-    keys = [r[0] for r in R]
-    return [(key, f([v for (k, v) in R if k == key])) for key in keys]
-
-def dist (p, q):
-    (x1, y1) = p
-    (x2, y2) = q
-    return (x1-x2)**2 + (y1-y2)**2
-
-def plus (args):
-    p = [0, 0]
-    for (x, y) in args:
-        p[0] += x
-        p[1] += y
-    return tuple(p)
-
-def scale (p, c):
-    (x, y) = p
-    return (x/c, y/c)
-
-'''
     Main class
 '''
 
@@ -55,13 +28,16 @@ class kMeansCrime(dml.Algorithm):
         repo = client.repo
         repo.authenticate('jgrishey', 'jgrishey')
 
-        crimes = list(repo['jgrishey.crime'].find(None, ['lat', 'long']))[:5]
+        if trial:
+            crimes = list(repo['jgrishey.crime'].find(None, ['lat', 'long']))[:20]
+        else:
+            crimes = list(repo['jgrishey.crime'].find(None, ['lat', 'long']))
 
         crimes = np.array([[crime['lat'], crime['long']] for crime in crimes])
 
         ''' K Means Algorithm '''
 
-        res = KMeans(n_clusters = 5, random_state = 1).fit(crimes)
+        res = KMeans(n_clusters = 7, random_state = 4).fit(crimes)
 
         centers = []
 
@@ -100,22 +76,20 @@ class kMeansCrime(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:jgrishey#getCrime', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:29yf-ye7n', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_crime = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_crime, this_script)
-        doc.usage(get_crime, resource, startTime, None,
+        this_script = doc.agent('alg:jgrishey#hospitalLocations', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        crime = doc.entity('dat:jgrishey#crime', {'prov:label':'MongoDB Request', prov.model.PROV_TYPE:'ont:DataSet', 'ont:Extension':'mongoDB'})
+        this_run = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        doc.wasAssociatedWith(this_run, this_script)
+        doc.usage(this_run, crime, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.usage(get_crime, resource, startTime, None,
-                    {prov.model.PROV_TYPE:'ont:DataSet',
-                    'ont:Computation': 'Apply ID, get latitude, and get longitude'})
+        doc.usage(this_run, crime, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Computation'})
 
-        crime = doc.entity('dat:jgrishey#crime', {prov.model.PROV_LABEL:'Boston Crimes', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(crime, this_script)
-        doc.wasGeneratedBy(crime, get_crime, endTime)
-        doc.wasDerivedFrom(crime, resource, get_crime, get_crime, get_crime)
+        hospitalLocations = doc.entity('dat:jgrishey#hospitalLocations', {prov.model.PROV_LABEL:'Hospital Locations via Crime and K Means.', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(hospitalLocations, this_script)
+        doc.wasGeneratedBy(hospitalLocations, this_run, endTime)
+        doc.wasDerivedFrom(hospitalLocations, crime, this_run, this_run, this_run)
 
         repo.logout()
 

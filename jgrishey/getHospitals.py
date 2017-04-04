@@ -68,19 +68,19 @@ class getHospitals(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('cdp', 'http://data.cambridgema.gov/')
 
-        this_script = doc.agent('alg:jgrishey#getTickets', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('cdp:vnxa-cuyr', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_tickets = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_tickets, this_script)
-        doc.usage(get_tickets, resource, startTime, None,
+        this_script = doc.agent('alg:jgrishey#getHospitals', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        resource = doc.entity('dat:hospitalsgeo.json', {'prov:label':'311, Service Requests', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        get_hospitals = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        doc.wasAssociatedWith(get_hospitals, this_script)
+        doc.usage(get_hospitals, resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',})
-        doc.usage(get_tickets, resource, startTime, None,
+        doc.usage(get_hospitals, resource, startTime, None,
                     {prov.model.PROV_TYPE:'ont:DataSet',
-                    'ont:Computation': 'Apply ID, get latitude, and get longitude'})
-        tickets = doc.entity('dat:jgrishey#tickets', {prov.model.PROV_LABEL:'Cambridge Parking Tickets', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(tickets, this_script)
-        doc.wasGeneratedBy(tickets, get_tickets, endTime)
-        doc.wasDerivedFrom(tickets, resource, get_tickets, get_tickets, get_tickets)
+                    'ont:Computation': 'Apply ID, get latitude, get longitude, get name, and get sqft.'})
+        hospitals = doc.entity('dat:jgrishey#hospitals', {prov.model.PROV_LABEL:'Boston Hospitals', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(hospitals, this_script)
+        doc.wasGeneratedBy(hospitals, get_hospitals, endTime)
+        doc.wasDerivedFrom(hospitals, resource, get_hospitals, get_hospitals, get_hospitals)
 
         repo.logout()
 
