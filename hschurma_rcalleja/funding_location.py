@@ -59,40 +59,40 @@ class funding_location(dml.Algorithm):
         #filter just name and location of schools
         nameLoc = []
         for j in range(s):
-            if schools[j][0]['school'][11] =="HS":
+            if schools[j][0]['school'][11] =="HS" or schools[j][0]['school'][11] =="6th-12" or schools[j][0]['school'][11] =="Mary 9-12":
                 sch = json.loads(schools[0][0]['school'][12][0])
                 nameLoc.append({'Name': schools[j][0]['school'][10], 'location': [sch['zip'], schools[j][0]['school'][12][1:3]]})
 
 
 
-        #print(nameLoc)
         
         #Dict of School name and Funding
-        funding = list(repo.hschurma_rcalleja.funding.aggregate([{"$project":{"_id":0, "FIELD2":1, "FIELD13":1}}]))
-
+        funding = list(repo.hschurma_rcalleja.funding.aggregate([{"$project":{"_id":0}}]))
         
         nameFund = []
-        for i in range(len(funding)):
-            nameFund.append({'Name': funding[i]["FIELD2"].strip(), 'Funding': funding[i]["FIELD13"].strip()})
+        for f in funding:
+            nameFund.append({'Name': f['School Name'].strip(), 'Funding': {'2008': f['2008_All'].strip(),'2009': f['2009_All'].strip(),'2010': f['2010_All'].strip(),'2011': f['2011_All'].strip(),'2012': f['2012_All'].strip(),'2013': f['2013_All'].strip(),'2014': f['2014_All'].strip(),'2015': f['2015_All'].strip(),'2016': f['2016_All'].strip()}})
+
 
 
         #print(nameFund)
         #print(nameLoc)
         #print(nameFund)
 
-
+        
         P = product(nameLoc, nameFund)
         #print(P)
         S = select(P, lambda t: t[0]['Name'] == t[1]['Name'])
         #print(S)
         PR = project(S, lambda t: {'Name': t[0]['Name'], 'location': t[0]['location'], 'Funding': t[1]['Funding']})
         #print(PR)
-
+        
         repo.dropCollection('funding_location')
         repo.createCollection('funding_location')
         repo['hschurma_rcalleja.funding_location'].insert(PR)
     
         #Trim white spaces
+        
    
 
     @staticmethod
