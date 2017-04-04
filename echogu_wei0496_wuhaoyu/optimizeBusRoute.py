@@ -27,6 +27,11 @@ class optimizeBusRoute(dml.Algorithm):
         repo = client.repo
         repo.authenticate('echogu_wei0496_wuhaoyu', 'echogu_wei0496_wuhaoyu')
 
+        # Trial mode:
+        # This algorithm relies on the output of assignStudents algorithm, a trial mode is not needed
+        if trial:
+            pass
+
         # loads the collection
         raw_assigned_students = repo['echogu_wei0496_wuhaoyu.assigned_students'].find()
         assigned_students = []
@@ -36,8 +41,8 @@ class optimizeBusRoute(dml.Algorithm):
         # ultilize minimum spanning tree to find bus route
         result = optimizeBusRoute.__find_mst(assigned_students)
 
-        repo.dropCollection('echogu_wei0496_wuhaoyu.bus_route')
-        repo.createCollection('echogu_wei0496_wuhaoyu.bus_route')
+        repo.dropCollection('bus_route')
+        repo.createCollection('bus_route')
         for i in result:
             repo['echogu_wei0496_wuhaoyu.bus_route'].insert_one(i)
         repo['echogu_wei0496_wuhaoyu.bus_route'].metadata({'complete': True})

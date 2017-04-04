@@ -4,6 +4,7 @@ Team: [Lingyi Gu][lyg], [Wei Wei][ww], [Haoyu Wu][hyw]
 ## Objective
 The [Boston Public Schools][bps] has announced a [Transportation Challenge][tc].
 
+
 ## Optimization Methods
 ### Assigning Students to Buses
 ###### Number of buses
@@ -13,11 +14,14 @@ The [Boston Public Schools][bps] has announced a [Transportation Challenge][tc].
 ### Bus Route
 ###### Minimum Spanning Tree
 
+
 ## Trial Mode
+###### assignStudents
+
+###### optimizeBusRoute
+Replying on the output of assignStudents algorithm, a trial mode is not needed.
 
 ## Setting Up
-
-### Trial Mode
 
 Follows the procedure in [Data-Mechanics/course-2017-spr-proj][dm].
 
