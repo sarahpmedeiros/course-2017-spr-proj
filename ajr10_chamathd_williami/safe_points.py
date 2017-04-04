@@ -44,7 +44,7 @@ class safe_points(dml.Algorithm):
         safe_points_five = []
         safe_points_seven = []
         
-        print("Calculating safe points...")
+        print("Calculating safe points for five foot rise...")
         kmeans = [[-71.01576279, 42.37262541], [-71.10382837, 42.36778836] ,[-71.13631852, 42.2733972 ], [-71.1414882, 42.379961  ], [-71.06424473, 42.35630297], [-71.10116486, 42.32545693], [-70.9692239, 42.32885585], [-71.07482066, 42.28979033]]
         sea_level_five_col = repo["ajr10_chamathd_williami.sea_level_five"].find().limit(0)
         for polygon in sea_level_five_col:
@@ -56,6 +56,7 @@ class safe_points(dml.Algorithm):
                     safe_points_five += [safe_point]
                     print("Safe point", safe_point, "Original", kmean.xy)
 
+        print("Calculating safe points for seven foot rise...")
         sea_level_seven_col = repo["ajr10_chamathd_williami.sea_level_seven"].find().limit(0)
         for polygon in sea_level_seven_col:
             seaPoly = shape(polygon["geometry"])
@@ -66,9 +67,11 @@ class safe_points(dml.Algorithm):
                     safe_points_seven += [safe_point]
                     print("Safe point", safe_point, "Original", kmean.xy)
 
+        print("Saving data to safe_points")
+
         pts_five = {"safe_points_five": safe_points_five}
         pts_seven = {"safe_points_seven": safe_points_seven}
-        print(type(pts_five), pts_five)
+
         repo["ajr10_chamathd_williami.safe_points"].insert(pts_five)
         repo["ajr10_chamathd_williami.safe_points"].insert(pts_seven)
 
