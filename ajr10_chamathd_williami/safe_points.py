@@ -100,31 +100,23 @@ class safe_points(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('acw', 'ajr10_chamathd_williami')
 
-        this_script = doc.agent('alg:ajr10_chamathd_williami#append_polygon_and_centerpoint', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        neighborhood_area_boston_res = doc.entity('acw:neighborhood_area_boston', {'prov:label':'Boston Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        neighborhood_area_cambridge_res = doc.entity('acw:neighborhood_area_cambridge', {'prov:label':'Cambridge Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        this_script = doc.agent('alg:ajr10_chamathd_williami#safe_points', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        kmeans_res = doc.entity('acw:k_means', {'prov:label':'K Means Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
-        get_neighborhood_area_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_neighborhood_area_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_kmeans = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_neighborhood_area_boston, this_script)
-        doc.wasAssociatedWith(get_neighborhood_area_cambridge, this_script)
+        doc.wasAssociatedWith(get_kmeans, this_script)
         
-        doc.usage(get_neighborhood_area_boston, neighborhood_area_boston_res, startTime, None,
+        doc.usage(get_kmeans, kmeans_res, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Neighborhood+Area+Boston'
-                  }
-                  )
-        doc.usage(get_neighborhood_area_cambridge, neighborhood_area_cambridge_res, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Neighborhood+Area+Cambridge'
+                  'ont:Query':'?type=K+Means'
                   }
                   )
 
-        neighborhood_info = doc.entity('dat:ajr10_chamathd_williami#neighborhood_info', {prov.model.PROV_LABEL:'Boston-Area Neighborhood Information', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(neighborhood_info, this_script)
-        doc.wasGeneratedBy(neighborhood_info, get_neighborhood_area_boston, endTime)
-        doc.wasGeneratedBy(neighborhood_info, get_neighborhood_area_cambridge, endTime)
+        safe_points = doc.entity('dat:ajr10_chamathd_williami#safe_points', {prov.model.PROV_LABEL:'Safe Points Information', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(safe_points, this_script)
+        doc.wasGeneratedBy(safe_points, get_kmeans, endTime)
+        doc.wasDerivedFrom(safe_points, kmeans_res, kmeans_res, kmeans_res, kmeans_res)
         
         repo.logout()
                   
