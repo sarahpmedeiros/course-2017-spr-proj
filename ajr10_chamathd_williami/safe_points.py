@@ -5,7 +5,7 @@ import datetime
 import random
 import uuid
 from numpy.random import choice
-from shapely.geometry import Polygon, Point, LinearRing
+from shapely.geometry import Polygon, Point, LinearRing, shape
 
 def closest_point_on_border(border, pt):
     poly = Polygon(border)
@@ -19,7 +19,7 @@ def closest_point_on_border(border, pt):
 
 class safe_points(dml.Algorithm):
     contributor = 'ajr10_chamathd_williami'
-    reads = ['ajr10_chamathd_williami.transformation1']
+    reads = ['ajr10_chamathd_williami.k_means']
     writes = ['ajr10_chamathd_williami.safe_points']
 
     @staticmethod
@@ -39,25 +39,39 @@ class safe_points(dml.Algorithm):
 
         # Operational code here:
 
-        means_data = repo["ajr10_chamathd_williami.transformation1"]
-        sea_level_five_data = repo["ajr10_chamathd_williami.sea_level_five"]
-        sea_level_seven_data = repo["ajr10_chamathd_williami.sea_level_seven"]
-        
-        safe_pts = []
-        for mean in means_data:
-            safe_pts += closest_point_on_border(mean, POLYGON)
+        means_data = repo["ajr10_chamathd_williami.k_means"]
 
+        safe_points_five = []
+        safe_points_seven = []
+        
         print("Calculating safe points...")
         kmeans = [[-71.01576279, 42.37262541], [-71.10382837, 42.36778836] ,[-71.13631852, 42.2733972 ], [-71.1414882, 42.379961  ], [-71.06424473, 42.35630297], [-71.10116486, 42.32545693], [-70.9692239, 42.32885585], [-71.07482066, 42.28979033]]
-        sea_level_five_col = repo["ajr10_chamathd_williami.sea_level_seven"].find().limit(0)
+        sea_level_five_col = repo["ajr10_chamathd_williami.sea_level_five"].find().limit(0)
         for polygon in sea_level_five_col:
             seaPoly = shape(polygon["geometry"])
             for mean in kmeans:
                 kmean = Point(mean[0], mean[1])
                 if seaPoly.contains(kmean):
                     safe_point = closest_point_on_border(seaPoly, kmean)
+                    safe_points_five += [safe_point]
                     print("Safe point", safe_point, "Original", kmean.xy)
-        
+
+        sea_level_seven_col = repo["ajr10_chamathd_williami.sea_level_seven"].find().limit(0)
+        for polygon in sea_level_seven_col:
+            seaPoly = shape(polygon["geometry"])
+            for mean in kmeans:
+                kmean = Point(mean[0], mean[1])
+                if seaPoly.contains(kmean):
+                    safe_point = closest_point_on_border(seaPoly, kmean)
+                    safe_points_seven += [safe_point]
+                    print("Safe point", safe_point, "Original", kmean.xy)
+
+        pts_five = {"safe_points_five": safe_points_five}
+        pts_seven = {"safe_points_seven": safe_points_seven}
+        print(type(pts_five), pts_five)
+        repo["ajr10_chamathd_williami.safe_points"].insert(pts_five)
+        repo["ajr10_chamathd_williami.safe_points"].insert(pts_seven)
+
         # Logout and end
         repo.logout()
 
