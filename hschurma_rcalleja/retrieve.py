@@ -37,7 +37,7 @@ class retrieve(dml.Algorithm):
         repo.createCollection("graduation")
         repo['hschurma_rcalleja.graduation'].insert_one(r)
 
-        url = 'http://datamechanics.io/data/hshurma_rcalleja/funding.json'
+        url = 'http://datamechanics.io/data/hshurma_rcalleja/FundingAll.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
