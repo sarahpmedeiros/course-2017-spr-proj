@@ -156,6 +156,9 @@ class k_means_transform(dml.Algorithm):
         doc.wasAttributedTo(neighborhood_info, this_script)
         doc.wasGeneratedBy(neighborhood_info, get_neighborhood_area_boston, endTime)
         doc.wasGeneratedBy(neighborhood_info, get_neighborhood_area_cambridge, endTime)
+        doc.wasDerivedFrom(neighborhood_info, neighborhood_area_boston_res, get_neighborhood_area_boston, get_neighborhood_area_boston, get_neighborhood_area_boston)
+        doc.wasDerivedFrom(neighborhood_info, neighborhood_area_cambridge_res, get_neighborhood_area_cambridge, get_neighborhood_area_cambridge, get_neighborhood_area_cambridge)
+
         
         repo.logout()
                   
