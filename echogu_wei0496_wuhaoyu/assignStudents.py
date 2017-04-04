@@ -8,8 +8,7 @@ import datetime
 import uuid
 import math
 import random
-#from geopy.distance import vincenty
-#from echogu_wei0496_wuhaoyu import assignStudents
+# from geopy.distance import vincenty
 
 class assignStudents(dml.Algorithm):
     contributor = 'echogu_wei0496_wuhaoyu'
@@ -45,14 +44,22 @@ class assignStudents(dml.Algorithm):
         school_students = assignStudents.aggregate(project_students, assignStudents.porj_students)
 
         results = []
-        for item in school_students:
+        for item in school_students[:10]:
             school = item[0]
             num_students = len(item[1][0])
             num_buses = math.ceil(num_students / bus_capacity)
             print(str(school) + ": ", num_students, "students,", num_buses, "buses")
-            # k-means clustering algorithm for k = num_buses
+
+            # initialize random points for k-means
             students_points = [(student[1], student[2], student[0]) for student in item[1][0]]
-            random_points = [assignStudents.cal_centroid(students_points[i * num_buses: (i + 1) * num_buses]) for i in range(num_buses)]
+            # random_points = [assignStudents.cal_centroid(students_points[i * num_buses: (i + 1) * num_buses]) for i in range(num_buses)]
+            lat = [x for (x, y, z) in students_points]
+            lon = [y for (x, y, z) in students_points]
+            lower_lat, upper_lat = min(lat), max(lat)
+            lower_lon, upper_lon = min(lon), max(lon)
+            random_points = [(random.uniform(lower_lat, upper_lat), random.uniform(lower_lon, upper_lon)) for i in range(num_buses)]
+
+            # k-means clustering algorithm for k = num_buses
             means = assignStudents.k_means(random_points, students_points)
             print(len(means))
             print("k-means:", means)
@@ -152,7 +159,6 @@ class assignStudents(dml.Algorithm):
         count = 0
         while (OLD != M):
             OLD = M
-            # [Changes needed] check if diff b/t 2 pts < 0.001
             if(count == 10):
                 break
             MPD = [(m, p, assignStudents.dist(m, p[0:2])) for (m, p) in assignStudents.product(M, P)]
@@ -227,13 +233,13 @@ class assignStudents(dml.Algorithm):
         keys = {k for (k, v) in R}
         return [f(k1, [v for (k2, v) in R if k1 == k2]) for k1 in keys]
 
-    def cal_centroid(*points):
-        points = points[0]
-        x_coords = [float(p[0]) for p in points]
-        y_coords = [float(p[1]) for p in points]
-        _len = len(points)
-        centroid_x = sum(x_coords) / _len
-        centroid_y = sum(y_coords) / _len
-        return (centroid_x, centroid_y)
+    # def cal_centroid(*points):
+    #     points = points[0]
+    #     x_coords = [float(p[0]) for p in points]
+    #     y_coords = [float(p[1]) for p in points]
+    #     _len = len(points)
+    #     centroid_x = sum(x_coords) / _len
+    #     centroid_y = sum(y_coords) / _len
+    #     return (centroid_x, centroid_y)
 
 assignStudents.execute()

@@ -2,16 +2,14 @@
 
 # import urllib.request
 # import json
-# import numpy
-import math
-import random
 import dml
 import prov.model
 import datetime
 import uuid
-from geopy.distance import vincenty
+import math
+import random
 from heapq import heappush, heappop
-#from echogu_wei0496_wuhaoyu import transformData
+from geopy.distance import vincenty
 
 class optimizeBusRoute(dml.Algorithm):
     contributor = 'echogu_wei0496_wuhaoyu'
