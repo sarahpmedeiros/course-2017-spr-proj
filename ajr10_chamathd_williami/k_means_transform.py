@@ -31,7 +31,7 @@ def aggregate(R, f):
     keys = {r[0] for r in R}
     return [(key, f([v for (k,v) in R if k == key])) for key in keys]
 
-def k_means(P,M):
+def k_means(P, M):
     OLD = []
     for x in range(1000):
         OLD = M
@@ -48,10 +48,10 @@ def k_means(P,M):
         M = [scale(t,c) for ((m,t),(m2,c)) in product(MT, MC) if m == m2]
     return sorted(M)
 
-class transformation1(dml.Algorithm):
+class k_means_transform(dml.Algorithm):
     contributor = 'ajr10_chamathd_williami'
     reads = ['ajr10_chamathd_williami.neighborhood_sea_level_data']
-    writes = ['ajr10_chamathd_williami.transformation1']
+    writes = ['ajr10_chamathd_williami.k_means']
 
     @staticmethod
     def execute(trial = False):
@@ -64,11 +64,11 @@ class transformation1(dml.Algorithm):
         repo.authenticate('ajr10_chamathd_williami', 'ajr10_chamathd_williami')
 
         # Perform initialization for the new repository
-        colName = "ajr10_chamathd_williami.transformation1"
+        colName = "ajr10_chamathd_williami.k_means"
         repo.dropCollection(colName)
         repo.createCollection(colName)
 
-        # Operational code here:
+        # --- Operational code ---
         nhood_data = repo["ajr10_chamathd_williami.neighborhood_sea_level_data"].find({}, {"center_x": 1, "center_y": 1}).limit(50)
         points = []
         for nhood in nhood_data:
@@ -78,10 +78,12 @@ class transformation1(dml.Algorithm):
         seeds = []
         centers = points.copy()
         random.shuffle(centers)
+        # Pop a random neighborhood as the initial seed
         seeds += [centers.pop()]
         k = 1
         while k < 12:
             distances = []
+            # Check each center for the nearest seed
             for index in range(len(centers)):
                 min_dist = dist(centers[index], seeds[0])
                 for seed in seeds:
@@ -92,13 +94,16 @@ class transformation1(dml.Algorithm):
                 distances += [D]
             total_prob = sum(distances)
             probs = []
-            for distance in distances:
+            # Generate probabilities for each center
                 prob = distance / total_prob
                 probs += [prob]
+            # Select random center with probability proportional to distance
+            # Pop that center onto the seed list
             index = choice(list(range(len(centers))), 1, probs)[0]
             seeds += [centers.pop(index)]
             k += 1
 
+        # Run k-means on the result to get the actual means
         means = k_means(points, seeds)
         
         # Logout and end
@@ -156,7 +161,7 @@ class transformation1(dml.Algorithm):
                   
         return doc
 
-transformation1.execute()
+k_means_transform.execute()
 ##doc = transformation1.provenance()
 ##print(doc.get_provn())
 ##print(json.dumps(json.loads(doc.serialize()), indent=4))
