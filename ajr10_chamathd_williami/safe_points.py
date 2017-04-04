@@ -46,6 +46,17 @@ class safe_points(dml.Algorithm):
         safe_pts = []
         for mean in means_data:
             safe_pts += closest_point_on_border(mean, POLYGON)
+
+        print("Calculating safe points...")
+        kmeans = [[-71.01576279, 42.37262541], [-71.10382837, 42.36778836] ,[-71.13631852, 42.2733972 ], [-71.1414882, 42.379961  ], [-71.06424473, 42.35630297], [-71.10116486, 42.32545693], [-70.9692239, 42.32885585], [-71.07482066, 42.28979033]]
+        sea_level_five_col = repo["ajr10_chamathd_williami.sea_level_seven"].find().limit(0)
+        for polygon in sea_level_five_col:
+            seaPoly = shape(polygon["geometry"])
+            for mean in kmeans:
+                kmean = Point(mean[0], mean[1])
+                if seaPoly.contains(kmean):
+                    safe_point = closest_point_on_border(seaPoly, kmean)
+                    print("Safe point", safe_point, "Original", kmean.xy)
         
         # Logout and end
         repo.logout()
@@ -105,6 +116,6 @@ class safe_points(dml.Algorithm):
 safe_points.execute()
 ##doc = safe_points.provenance()
 ##print(doc.get_provn())
-##print(json.dumps(json.loads(doc.serialize()), indent=4))
+##print(json.dumps(json.loads(doc.serialize()), indent=4))                                                                                                                                           print("Safe point", safe_point, "Original", kmean.xy
 
 ## eof
