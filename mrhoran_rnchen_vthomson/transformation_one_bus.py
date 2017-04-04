@@ -162,6 +162,18 @@ class transformation_one_bus(dml.Algorithm):
                   #'ont:Query':'location, area, coordinates, zip_code' #?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
                   }
                   )
+
+        # Used resource2 --> average_distance_students uses students.json
+        get_average_distance_students = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+        doc.wasAssociatedWith(get_average_distance_students, this_script)
+
+        doc.usage(get_average_distance_students, resource2, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'
+                  #'ont:Query':'location, area, coordinates, zip_code' #?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
+                  }
+                  )
+    
         student_per_school = doc.entity('dat:mrhoran_rnchen_vthomson#student_per_school', {prov.model.PROV_LABEL:'Students per school', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
         doc.wasAttributedTo(student_per_school, this_script)
         doc.wasGeneratedBy(student_per_school, get_student_per_school, endTime)
@@ -171,7 +183,14 @@ class transformation_one_bus(dml.Algorithm):
         buses_per_yard = doc.entity('dat:mrhoran_rnchen_vthomson#buses_per_yard', {prov.model.PROV_LABEL:'Buses per yard', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
         doc.wasAttributedTo(buses_per_yard, this_script)
         doc.wasGeneratedBy(buses_per_yard, get_buses_per_yard, endTime)
-        doc.wasDerivedFrom(buses_per_yard, resource1, get_buses_per_yard, get_buses_per_yard, get_buses_per_yard)    
+        doc.wasDerivedFrom(buses_per_yard, resource1, get_buses_per_yard, get_buses_per_yard, get_buses_per_yard)   
+
+
+        average_distance_students = doc.entity('dat:mrhoran_rnchen_vthomson#average_distance_students', {prov.model.PROV_LABEL:'Distance between students', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
+        doc.wasAttributedTo(average_distance_students, this_script)
+        doc.wasGeneratedBy(average_distance_students, get_average_distance_students, endTime)
+        doc.wasDerivedFrom(average_distance_students, resource2, get_average_distance_students, get_average_distance_students, get_average_distance_students)       
+
         repo.logout()
                   
         return doc
