@@ -34,8 +34,8 @@ class box_count(dml.Algorithm):
         lat_range=[bound['southwest']['lat'],bound['northeast']['lat']]
         lng_range=[bound['southwest']['lng'],bound['northeast']['lng']]
         #change parameter
-        # lat_range[1] =float(42.399531)
-        # lng_range[1] =float(-70.922160)
+        lat_range[1] =float(42.399531)
+        lng_range[1] =float(-70.922160)
         #new dataset : box count
         
         k=10 ####set the #of box
