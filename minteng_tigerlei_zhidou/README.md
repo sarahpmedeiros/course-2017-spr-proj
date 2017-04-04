@@ -18,15 +18,30 @@ We want to find a best office location for a new company. The first factor we co
 ## Transformations
 1. In first transformations, we combine rent table with zipcode of accorsponding area. First we fetch longitude and latitude based on the name of area in rent table via google maps api and then using this location information as input to fetch zipcode also with the help of google maps api. Then combine location table with rent table and implement aggregation to get the final data set with rent and the zipcode.
 
+To run this transformation:
+```python
+python3 rent.py
+```
+
 2. Project MBTA, Food and Safety data, besides the needed infomation, for the value of key "location", we add tags such that (location, "transport") for MBTA data, (location, "food") for Food data and (location, "crime") for Safety data. Then implement union of three datasets into the second new dataset. After union, implement selection to remove data with invalid locations (for example, with longitude and latitude equal to 0).
 
+To run this transformation:
+```python
+python3 location.py
+```
+
 3. After project the needed information, combine the two Salary data, then aggragate the dataset using the job title as the key, get the average salary for different jobs. The third new dataset contain the key: job title, values: average salary and other infomation such as company name, year and so on.
+
+To run this transformation:
+```python
+python3 salary.py
+```
 
 # Project 2
 ### *by Minteng Xie, Yue Lei, Zhi Dou*
 
 ## 1.
-A new team is formed by Minteng Xie, Yue Lei and Zhi Dou. All scripts and files of project 2 is under new folder ```minteng_tigerlei_zhidou```
+A new team is formed by Minteng Xie, Yue Lei and Zhi Dou. All scripts and files of project 2 is under new folder ```minteng_tigerlei_zhidou```. We modify part of ```location.py``` in project 1 and add a new transformation ```crime.py``` to retrieve and store new crime data into database.
 
 ### auth.json
 This project use app token from ```boston data portal``` and ```googlemaps geocoding API```. To retrieve data automatically, app token should be added into `auth.json` file as follow format:
@@ -90,6 +105,8 @@ Bound: [[42.3137055, -71.1373224], [42.330870600000004, -71.11042710000001]]
 Area: Jamaica Plain 02130    Avg rent: 2214
 Grades: {'safety': 3, 'rent': 3, 'food': 5, 'transport': 2} 
 ```
+
+Assuming ```rent.py```, ```location.py```, ```salary.py```, ```crime.py```(retrieve and transformations procedure) has been run.
 
 To solve this optimization problem, first run the ```box_count.py```:
 ```python
