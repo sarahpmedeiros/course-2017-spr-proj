@@ -20,7 +20,9 @@ class data_pull(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('mbyim_seanz', 'mbyim_seanz')
-
+        
+ 
+        
         #Parking Tickets Info---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         # url = 'https://data.cityofboston.gov/resource/cpdb-ie6e.json?$select=ticket_loc,violation1'
         url = 'https://data.cityofboston.gov/resource/cpdb-ie6e.json?$limit=1000000'
@@ -36,15 +38,15 @@ class data_pull(dml.Algorithm):
         #Vehicle Excise Tax Info------------------------------------------------------------------------------------------------------------------------------------------
         '''
         # url = 'https://data.cityofboston.gov/resource/ww9y-x77a.json?$select=zip'
-        url = 'https://data.cityofboston.gov/resource/ww9y-x77a.json?$limit=1000000'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("vehicle_tax")
-        repo.createCollection("vehicle_tax")
-        repo['mbyim_seanz.vehicle_tax'].insert_many(r)
-        repo['mbyim_seanz.vehicle_tax'].metadata({'complete':True})
-        print(repo['mbyim_seanz.vehicle_tax'].metadata())
+        #url = 'https://data.cityofboston.gov/resource/ww9y-x77a.json?$limit=1000000'
+        #response = urllib.request.urlopen(url).read().decode("utf-8")
+        #r = json.loads(response)
+        #s = json.dumps(r, sort_keys=True, indent=2)
+        #repo.dropCollection("vehicle_tax")
+        #repo.createCollection("vehicle_tax")
+        #repo['mbyim_seanz.vehicle_tax'].insert_many(r)
+        #repo['mbyim_seanz.vehicle_tax'].metadata({'complete':True})
+        #print(repo['mbyim_seanz.vehicle_tax'].metadata())
         '''
 
         #MBTA Info------------------------------------------------------------------------------------------------------------------------------------------
@@ -120,6 +122,20 @@ class data_pull(dml.Algorithm):
         repo['mbyim_seanz.snow_parking'].metadata({'complete':True})
         print(repo['mbyim_seanz.snow_parking'].metadata())
 
+        
+        #Boston Zip Code Data------------------------------------------------------------------------------------------------------------------------------------------
+        url = 'http://datamechanics.io/data/mbyim_seanz/boston_zip_codes.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        print(r)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("boston_zip_codes")
+        repo.createCollection("boston_zip_codes")
+        repo['mbyim_seanz.boston_zip_codes'].insert_many(r)
+        repo['mbyim_seanz.boston_zip_codes'].metadata({'complete':True})
+        print(repo['mbyim_seanz.boston_zip_codes'].metadata())
+
+
         #end------------------------------------------------------------------------------------------------------------------------------------------
         repo.logout()
         endTime = datetime.datetime.now()
@@ -145,6 +161,8 @@ class data_pull(dml.Algorithm):
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
         doc.add_namespace('mbta', 'http://realtime.mbta.com/developer/api/v2/stopsbyroute')
 
+        
+
         this_script = doc.agent('alg:mbyim_seanz#data_pull', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         #resource_vehicle_tax = doc.entity('bdp:ww9y-x77a', {'prov:label':'Vehicle Tax', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_parking_tickets = doc.entity('bdp:cpdb-ie6e', {'prov:label':'Parking Tickets', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
@@ -152,11 +170,25 @@ class data_pull(dml.Algorithm):
         resource_property_assessments = doc.entity('bdp:jsri-cpsq', {'prov:label':'Property Assessments 2014', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         resource_snow_parking = doc.entity('dat:mbyim_seanz/SnowParking.json', {'prov:label':'Snow Parking', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
+        
+
+        resource_boston_zip_codes = doc.entity('dat:mbyim_seanz/boston_zip_codes.json', {'prov:label':'Boston Zip Codes', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+
+
+        
+        
+
         #get_vehicle_tax = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_parking_tickets = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_mbta_stops = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_property_assessments = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         get_snow_parking = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+        
+
+        get_boston_zip_codes = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+        
 
         #doc.wasAssociatedWith(get_vehicle_tax, this_script)
         doc.wasAssociatedWith(get_parking_tickets, this_script)
@@ -164,13 +196,21 @@ class data_pull(dml.Algorithm):
         doc.wasAssociatedWith(get_property_assessments, this_script)
         doc.wasAssociatedWith(get_snow_parking, this_script)
 
-        '''
+        
+
+        doc.wasAssociatedWith(get_boston_zip_codes, this_script)
+
+        
+        
+        
+
         doc.usage(get_vehicle_tax, resource_vehicle_tax, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
                   'ont:Query':'?$select=zip' #not sure what this does
                   }
         )
-        '''
+
+        
 
         doc.usage(get_parking_tickets, resource_parking_tickets, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
@@ -194,18 +234,26 @@ class data_pull(dml.Algorithm):
                   }
         )
 
+        
+        doc.usage(get_boston_zip_codes, resource_boston_zip_codes, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',
+                  'ont:Query':'?format=json'
+                  }
+        )
+
         parking_tickets = doc.entity('dat:mbyim_seanz#parking_tickets', {prov.model.PROV_LABEL:'Parking Tickets', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(parking_tickets, this_script)
         doc.wasGeneratedBy(parking_tickets, get_parking_tickets, endTime)
         doc.wasDerivedFrom(parking_tickets, resource_parking_tickets, get_parking_tickets, get_parking_tickets, get_parking_tickets)
 
 
-        '''
-        vehicle_tax = doc.entity('dat:mbyim_seanz#vehicle_tax', {prov.model.PROV_LABEL:'Vehicle Tax', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(vehicle_tax, this_script)
-        doc.wasGeneratedBy(vehicle_tax, get_vehicle_tax, endTime)
+        
+        #vehicle_tax = doc.entity('dat:mbyim_seanz#vehicle_tax', {prov.model.PROV_LABEL:'Vehicle Tax', prov.model.PROV_TYPE:'ont:DataSet'})
+        #doc.wasAttributedTo(vehicle_tax, this_script)
+        #doc.wasGeneratedBy(vehicle_tax, get_vehicle_tax, endTime)
         #doc.wasDerivedFrom(vehicle_tax, resource, get_vehicle_tax, get_vehicle_tax, get_vehicle_tax)
-        '''
+        
+     
 
         mbta_stops = doc.entity('dat:mbyim_seanz#mbta_stops', {prov.model.PROV_LABEL:'MBTA Stops', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(mbta_stops, this_script)
@@ -222,6 +270,13 @@ class data_pull(dml.Algorithm):
         doc.wasGeneratedBy(snow_parking, get_snow_parking, endTime)
         doc.wasDerivedFrom(snow_parking, resource_snow_parking, get_snow_parking, get_snow_parking, get_snow_parking)
 
+        
+
+        boston_zip_codes = doc.entity('dat:mbyim_seanz#boston_zip_codes', {prov.model.PROV_LABEL:'Boston Zip Codes', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(boston_zip_codes, this_script)
+        doc.wasGeneratedBy(boston_zip_codes, get_boston_zip_codes, endTime)
+        doc.wasDerivedFrom(boston_zip_codes, resource_boston_zip_codes, get_boston_zip_codes, get_boston_zip_codes, get_boston_zip_codes)
+
 
 
 
@@ -230,7 +285,7 @@ class data_pull(dml.Algorithm):
         repo.logout()
         return doc
 
-# data_pull.execute()
+#    data_pull.execute()
 # # datapull.property_assessment()
 
 # doc = data_pull.provenance()

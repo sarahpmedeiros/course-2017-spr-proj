@@ -22,9 +22,9 @@ class agg_prop_value(dml.Algorithm):
 
 		#list of boston zipcodes from:
 		#http://zipcode.org/city/MA/BOSTON
-		boston_zips = ["02108", "02109", "02110", "02111", "02112", "02117", "02118", "02127", "02113", "02114", "02115", "02116", "02123", 
-				"02128","02133","02163","02196", "02199", "02205", "02206", "02212", "02215", "02266", "02283", 
-				"02201", "02203", "02204", "02210", "02211", "02217", "02222", "02241", "02284", "02293", "02295", "02297", "02298"]
+		#boston_zips = ["02108", "02109", "02110", "02111", "02112", "02117", "02118", "02127", "02113", "02114", "02115", "02116", "02123", 
+		#		"02128","02133","02163","02196", "02199", "02205", "02206", "02212", "02215", "02266", "02283", 
+		#		"02201", "02203", "02204", "02210", "02211", "02217", "02222", "02241", "02284", "02293", "02295", "02297", "02298"]
 
 		startTime = datetime.datetime.now()
 		client = dml.pymongo.MongoClient()
@@ -34,6 +34,16 @@ class agg_prop_value(dml.Algorithm):
 		repo.authenticate('mbyim_seanz', 'mbyim_seanz')
 
 		property_assessments = repo.mbyim_seanz.property_assessments.find()
+		boston_zips = repo.mbyim_seanz.boston_zip_codes.find()
+
+		#parse and grab zipcodes into a list
+		boston_zip_codes = []
+		for row in boston_zips:
+			zip_dict = dict(row)
+			zipcode = zip_dict['Boston Zip Codes']
+			boston_zip_codes.append(zipcode)
+
+	
 
 		#make the aggregated_zip_data
 		zip_data = []
@@ -42,15 +52,17 @@ class agg_prop_value(dml.Algorithm):
 			try:
 				property_zip_code = prop_dict['zipcode']
 				property_value = prop_dict['av_total']
-				if property_zip_code in boston_zips:
+				if property_zip_code in boston_zip_codes:
 					zip_data.append([property_zip_code, property_value])
 			except:
 
 				print('There was an error with getting a zipcode key (this is a minor minor issue)')
 
+		#print(zip_data)
+
 		aggregated_zip_data = aggregate(zip_data, sum)	
 		aggregated_zip_data_str = str(aggregated_zip_data).replace("'",'"')	#small json fix to convert to strings
-
+		print(aggregated_zip_data_str)
 		zip_jsons = json.loads(aggregated_zip_data_str)
 		s = json.dumps(zip_jsons, sort_keys=True, indent = 2)
 		repo.dropCollection("agg_prop_value")
@@ -91,7 +103,7 @@ class agg_prop_value(dml.Algorithm):
 		return doc
 
 
-# agg_prop_value.execute()
+#agg_prop_value.execute()
 # doc = agg_prop_value.provenance()
 
 # print('finished aggregating property values')
