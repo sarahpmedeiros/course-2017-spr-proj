@@ -175,6 +175,10 @@ class aggregate_sea_level_rise(dml.Algorithm):
         doc.wasGeneratedBy(neighborhood_sea_level_data, get_neighborhood_info, endTime)
         doc.wasGeneratedBy(neighborhood_sea_level_data, get_sea_level_five, endTime)
         doc.wasGeneratedBy(neighborhood_sea_level_data, get_sea_level_seven, endTime)
+        doc.wasDerivedFrom(neighborhood_sea_level_data, neighborhood_info_res, get_neighborhood_info, get_neighborhood_info, get_neighborhood_info)
+        doc.wasDerivedFrom(neighborhood_sea_level_data, sea_level_five_res, get_sea_level_five, get_sea_level_five, get_sea_level_five)
+        doc.wasDerivedFrom(neighborhood_sea_level_data, sea_level_seven_res, get_sea_level_seven, get_sea_level_seven, get_sea_level_seven)
+
         
         repo.logout()
                   
