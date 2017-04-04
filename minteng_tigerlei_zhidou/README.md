@@ -10,7 +10,7 @@ We want to find a best office location for a new company. The first factor we co
 1. [Average Rent](http://datamechanics.io/data/minteng_zhidou/rent.txt)
 2. [MBTA Stops](http://datamechanics.io/data/minteng_zhidou/stops.txt)
 3. [Food Data](https://data.cityofboston.gov/Permitting/Active-Food-Establishment-Licenses/gb6y-34cq)
-4. [Safety(Crime)](https://data.cityofboston.gov/Public-Safety/Crime-Incident-Reports-August-2015-To-Date-Source-/fqn4-4qap)
+4. [Safety(Crime 2015-2017)](https://data.cityofboston.gov/Public-Safety/Crime-Incident-Reports-August-2015-To-Date-Source-/fqn4-4qap)
 5. [Salary 2015](https://data.cityofboston.gov/Finance/Employee-Earnings-Report-2015/ah28-sywy)
 6. [Salary 2014](https://data.cityofboston.gov/Finance/Employee-Earnings-Report-2014/4swk-wcg8)
 7. [Goolge Maps](https://www.google.com/maps)
@@ -26,7 +26,7 @@ We want to find a best office location for a new company. The first factor we co
 ### *by Minteng Xie, Yue Lei, Zhi Dou*
 
 ## auth.json
-This project use app token from boston data portal and googlemaps. To retrieve data automatically, app token should be added into `auth.json` file as follow format:
+This project use app token from ```boston data portal``` and ```googlemaps geocoding API```. To retrieve data automatically, app token should be added into `auth.json` file as follow format:
 ```
 {
     "services": {
@@ -44,8 +44,9 @@ This project use app token from boston data portal and googlemaps. To retrieve d
     }
 }
 ```
+## 2.a
 
-## Problem 1: Optimization
+## 2.b Problem 1: Optimization
 Following the idea of project 1, our goal is to find a best office location for a new company. Since a detailed coordinate is meaningless, we try to find a suitable area. Project 1 has helped us gather all the licensed restaurants/ crime incidents/ MBTA stops/ rent price in boston area. We gonna find the best area that maximize **```#restaurant```**, **```#MBTA stops```** and minimize **```#crime incidents```** and **```rent price```**. 
 
 We use googlemaps api to find the left bottom/ right top coordinates of boston area. With these coordinates, we could build a big rectangle containing boston area. Then we separate this rectangle into 10 x 10 grids(user could set this scale manually). Removing those blank grids which don't contain any useful data, we have 52 grids left. Each grid represents a possible target area which contains a suitable place for opening a company. 
@@ -83,8 +84,8 @@ Bound: [[42.3137055, -71.1373224], [42.330870600000004, -71.11042710000001]]
 Area: Jamaica Plain 02130    Avg rent: 2214
 Grades: {'safety': 3, 'rent': 3, 'food': 5, 'transport': 2} 
 ```
-## Problem 2: Statistical Analysis
-After finding ideal area for a new company, we would like to dig deeper into those areas, because this area might be the best choice for now, but it might change, with the variation of rental, crime and transportations. So based on current data, we want to study on the trend of these factors, and for now we mainly focus on crime in different blocks(grids). 
+## 2.b Problem 2: Statistical Analysis
+After finding ideal area for a new company, we would like to dig deeper into those areas, because this area might be the best choice for now, but it might change, with the variation of rental, crime and transportations. So based on current data, we want to study on the trend of these factors, and for now we mainly focus on crime in different blocks(grids). A new dataset [Safety(Crime 2012-2015)](https://data.cityofboston.gov/Public-Safety/Crime-Incident-Reports-July-2012-August-2015-Sourc/7cdf-6fgx) has been added.
 
 Now let *X<sub>ij</sub>* as the the number of crimes happens in block *i* in year *j*. If *X<sub>ij</sub>* and *X<sub>i(j + 1)</sub>* are highly correlated, then we could claim the number of crimes of these two year in this block have similar distribution. Thus if these random variables continuously related to each other, then we could use such correlation to predict the trend of the criminal events in this year.
 
@@ -110,7 +111,6 @@ All provenance information could be seen in ```provenance.html``` after running:
 ```python
 python3 execute.py minteng_tigerlei_zhidou
 ```
-
 
 ## 3.b Trial mode
 In trial mode, the algorithm would complete its execution very quickly (in at most a few seconds) by operating on a very small portion of the input data set(s). 
