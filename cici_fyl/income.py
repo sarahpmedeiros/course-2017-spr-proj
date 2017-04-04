@@ -142,5 +142,3 @@ class income(dml.Algorithm):
         repo.logout()
                   
         return doc
-
-
