@@ -49,28 +49,7 @@ class neighborhoodstatistics(dml.Algorithm):
 			return [(key, f([v for (k,v) in R if k == key])) for key in keys]
 
 		#extracts necessary information from Population dataset to be used for new dataset
-		p = project(population_cursor, lambda x: (x['Neighborhood'], x['Population'], x['Median Household Income in 2015 ($)']))
-
-		#certain cities information were combined to better fit the obesity dataset
-		FK = select(p, lambda a: a[0] == 'Fenway' or a[0] == 'Kenmore')
-		FDD = select(p, lambda a: a[0] == 'Financial District' or a[0] == 'Downtown')
-		GCFH = select(p, lambda a: a[0] == 'Government Center' or a[0] == 'Faneuil Hall')
-
-		pop_info = select(p, lambda a: a[0] != 'Fenway' and a[0] != 'Kenmore' and a[0] != 'Financial District' and a[0] != 'Downtown' and a[0] != 'Government Center')
-
-		def combine(tupl):
-			'''
-				This function combines two tuples together
-			'''
-			if (len(tupl) == 2):
-				b = union(int(tupl[0][1].replace(",", "")), int(tupl[1][1].replace(",", "")))
-				c = union(int(tupl[0][2].replace(",", "")), int(tupl[1][2].replace(",", "")))//2
-				return (b,c)
-
-		#adds the corrected tuple information to the population info list of tuples
-		pop_info.append(('Fenway/Kenmore', combine(FK)[0], combine(FK)[1]))
-		pop_info.append(('Financial District/Downtown', combine(FDD)[0], combine(FDD)[1]))
-		pop_info.append(('Government Center/Faneuil Hall', GCFH[0][1], GCFH[0][2]))
+		pop_info = project(population_cursor, lambda x: (x['Neighborhood'], x['Median Income']))
 
 		#get important info from food sources dataset 
 		value = project(foodsources_cursor, lambda y: (y['Neighborhood'], y['Type']))
@@ -83,8 +62,7 @@ class neighborhoodstatistics(dml.Algorithm):
 		for i in pop_info:
 			temp_stats = {key:0 for key in temp_stats}
 			temp_stats['Neighborhood'] = i[0]
-			temp_stats['Population Size'] = i[1]
-			temp_stats['Average Income ($)'] = i[2]
+			temp_stats['Average Income ($)'] = i[1]
 			nstats.append(temp_stats)
 
 		#appends food_info and obese_info information to dictionary so far based on neighborhood
@@ -153,6 +131,6 @@ class neighborhoodstatistics(dml.Algorithm):
 				  
 		return doc
 
-
+neighborhoodstatistics.execute()
 ## eof
 

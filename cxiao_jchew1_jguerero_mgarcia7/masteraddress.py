@@ -39,6 +39,8 @@ class masteraddress(dml.Algorithm):
         # Create shapeobjects for each neighborhood
         neighborhood_shapes = {n['name']:shape(n['the_geom']) for n in neighborhoods.find({})}
 
+        print(neighborhood_shapes.keys())
+
         # Find which neighborhood each point belongs to
         for row in residential_add:
             if row['longitude'] is None or row['latitude'] is None:
