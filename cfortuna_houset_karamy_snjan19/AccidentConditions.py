@@ -8,50 +8,43 @@ import csv
 import json
 import requests 
 
-class retrieveData(dml.Algorithm):
+class AccidentConditions(dml.Algorithm):
     contributor = 'cfortuna_houset_karamy_snjan19'
-    reads = []
-    writes = ['cfortuna_houset_karamy_snjan19.WazeTrafficData','cfortuna_houset_karamy_snjan19.BostonHospitalsData','cfortuna_houset_karamy_snjan19.BostonStreetsData']
+    reads = ['cfortuna_houset_karamy_snjan19.TrafficAccidents']
+    writes = ['']
 
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
         startTime = datetime.datetime.now()
 
+      	def intersect(R, S):
+            return [t for t in R if t in S]
+
+        def aggregate(R, f):
+            keys = {r[0] for r in R}
+            return [(key, f([v for (k,v) in R if k == key])) for key in keys]
+
+        def removeDuplicates(seq):
+            seen = set()
+            seen_add = seen.add
+            return [x for x in seq if not (x in seen or seen_add(x)) and x != " "]
+
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('cfortuna_houset_karamy_snjan19', 'cfortuna_houset_karamy_snjan19')
 
-        ###### Importing Datasets and putting them inside the mongoDB database #####
+        #GOAL: Time and weather → what’s probability of car accident at a location (clustered points together)
 
-        # Waze Traffic Data
-        url = 'http://data.cityofboston.gov/resource/dih6-az4h.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("WazeTrafficData")
-        repo.createCollection("WazeTrafficData")
-        repo['cfortuna_houset_karamy_snjan19.WazeTrafficData'].insert_many(r)
+        # Initialize new repository to store the data
 
-        # Boston Hospitals
-        url = 'http://data.cityofboston.gov/resource/u6fv-m8v4.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("BostonHospitalsData")
-        repo.createCollection("BostonHospitalsData")
-        repo['cfortuna_houset_karamy_snjan19.BostonHospitalsData'].insert_many(r)
-
-
-        # Streets of Boston
-        url = 'http://data.mass.gov/resource/ms23-5ubn.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("BostonStreetsData")
-        repo.createCollection("BostonStreetsData")
-        repo['cfortuna_houset_karamy_snjan19.BostonStreetsData'].insert_many(r)
+        # Trial Mode is basically limiting data points on which to run execution if trial parameter set to true
+        #Retrieve Data
+        accidents = repo['cfortuna_houset_karamy_snjan19.TrafficAccidents'].find().limit(5) if trial else repo['cfortuna_houset_karamy_snjan19.TrafficAccidents'].find()
+        
+        #Retrieve Time, Weather and Location of accidents
+        
 
 
         repo.logout()
@@ -59,7 +52,8 @@ class retrieveData(dml.Algorithm):
         endTime = datetime.datetime.now()
 
         return {"start":startTime, "end":endTime}
-    
+
+    """Provenance of this Document"""
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
         '''
