@@ -188,8 +188,16 @@ class proj2(dml.Algorithm):
         print(crimenumber_zipcode)
 
 
-        # correlation
-        #def coorelation():
+        # correlation of finding whether the more the crime, the less the property price
+        def sort_data():
+            data = []
+            for zipcode1 in avg_price_zipcode:
+                for zipcode2 in crimenumber_zipcode:
+                    if zipcode1 == zipcode2:
+                        data += [(avg_price_zipcode[zipcode1], crimenumber_zipcode[zipcode])]
+                        break
+            
+            return data
 
 
 
@@ -243,7 +251,7 @@ class proj2(dml.Algorithm):
             zipcode = '0' + str(nearest)
             return zipcode
 
-        print("The zipcode that is the best place to live that is as far away as crime areas is: ")
+        print("The zipcode that is the best place to live and is as far away as crime areas is: ")
         print(kmeans_zipcode())
 
  
@@ -274,8 +282,10 @@ class proj2(dml.Algorithm):
 
         this_script = doc.agent('alg:pt0713_silnuext#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         resource1 = doc.entity('bdp:crime', {'prov:label':'crime', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        resource2 = doc.entity('bdp:n7za-nsjh', {'prov:label':'property15', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        get_property_crime = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        resource2 = doc.entity('bdp:n7za-nsjh', {'prov:label':'property_2015', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+
+        correlation = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        k_means = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_property_crime, this_script)
 
@@ -285,12 +295,12 @@ class proj2(dml.Algorithm):
         doc.usage(get_property_crime, resource2, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',})
 
-        property14 = doc.entity('dat:pt0713_silnuext#property_14', {prov.model.PROV_LABEL:'property_2014', prov.model.PROV_TYPE:'ont:DataSet'})
+        property14 = doc.entity('dat:pt0713_silnuext#property_2015', {prov.model.PROV_LABEL:'property_2014', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(property14, this_script)
         doc.wasGeneratedBy(property14, get_property_crime, endTime)
         doc.wasDerivedFrom(property14, resource2, get_property_crime, get_property_crime, get_property_crime)
 
-        property15 = doc.entity("dat:pt0713_silnuext#property_15", {prov.model.PROV_LABEL:"property_2015", prov.model.PROV_TYPE:"ont:DataSet"})
+        property15 = doc.entity("dat:pt0713_silnuext#crime", {prov.model.PROV_LABEL:"property_2015", prov.model.PROV_TYPE:"ont:DataSet"})
         doc.wasAttributedTo(property15, this_script)
         doc.wasGeneratedBy(property15, get_property_crime, endTime)
         doc.wasDerivedFrom(property15, resource3, get_property_crime, get_property_crime, get_property_crime)

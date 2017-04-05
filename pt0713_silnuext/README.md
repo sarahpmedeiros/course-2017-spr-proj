@@ -42,4 +42,10 @@ We are interested in “Boston crime incidents” in relation to “property val
 
 ## Project 2
 
-### What we are doing in Project 2
+### What we are doing in Project 2: Statistical Analysis and Optimization
+
+For project2, we want to study more comprehensively about the relationship between the 2015 property price and the number of crime incidents in Boston area. To do so, we will implement two techniques: statistical analysis and optimization(k-means). 
+
+For the statistical analysis, we want to find the correlation between property price and number of crime incident, and we are expecting that higher property price will lead to lower number of crime incidents. We first use r- tree and polygon to correspond “property14_price_coordination_float” to “zip_to_coor”, compute the average price in each zip code, and the result shows all the zip codes along with its corresponding average property price in Boston area. Second, we also use r-tree and polygon to correspond “crime_15coordination” to “zip_to_coor”, compute how many crime incidents within each zip code, and the result will show all the zip codes along with its corresponding number of crime incidents. Finally, we find the correlation between the average price and property price, and we expect the result will be a negative value.
+
+For the k-means, we want to find the most optimized point where the property is the cheapest at the same time, safest (farthest from the crime incidents). To do so, we input “crime_15coordination” to our k_means function and find the most optimized coordinate. And we correspond the coordinate back to polygon and we claim the zip code we get is the area where people can obtain property that is the cheapest while safest.
