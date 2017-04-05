@@ -42,7 +42,7 @@ class calcfoodacc(dml.Algorithm):
 
 		def createDistanceMatrix(address,food):
 			empty = [0] * len(food)
-			mat = np.array([empty]*len(address))
+			mat = np.array([empty]*len(address), dtype=float)
 
 			for row in range(len(address)):
 				a = (address[row][0], address[row][1])
