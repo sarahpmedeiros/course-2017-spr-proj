@@ -22,8 +22,12 @@ class crashTicketsLocation(dml.Algorithm):
         repo = client.repo
         repo.authenticate('jgrishey', 'jgrishey')
 
-        tickets = list(repo['jgrishey.tickets'].find(None, ['_id', 'lat', 'long']))
-        crashes = list(repo['jgrishey.crashes'].find(None, ['_id', 'lat', 'long']))
+        if trial:
+            tickets = list(repo['jgrishey.tickets'].find(None, ['_id', 'lat', 'long']))[:20]
+            crashes = list(repo['jgrishey.crashes'].find(None, ['_id', 'lat', 'long']))[:20]
+        else:
+            tickets = list(repo['jgrishey.tickets'].find(None, ['_id', 'lat', 'long']))
+            crashes = list(repo['jgrishey.crashes'].find(None, ['_id', 'lat', 'long']))
 
         res = {}
 

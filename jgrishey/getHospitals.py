@@ -86,6 +86,4 @@ class getHospitals(dml.Algorithm):
 
         return doc
 
-getHospitals.execute()
-
 ## eof

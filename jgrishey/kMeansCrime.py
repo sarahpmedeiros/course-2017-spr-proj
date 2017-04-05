@@ -52,7 +52,6 @@ class kMeansCrime(dml.Algorithm):
 
         for center in centers:
             repo['jgrishey.hospitalLocations'].insert(center)
-            print(center)
 
         repo.logout()
 
@@ -95,5 +94,4 @@ class kMeansCrime(dml.Algorithm):
 
         return doc
 
-kMeansCrime.execute()
 ## eof

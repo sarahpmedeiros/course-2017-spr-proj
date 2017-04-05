@@ -1,0 +1,46 @@
+{
+    "Cambridgeport": {
+        "tickets": 12,
+        "crashes": 5
+    },
+    "East Cambridge": {
+        "tickets": 2,
+        "crashes": 4
+    },
+    "Strawberry Hill": {
+        "tickets": 1,
+        "crashes": 0
+    },
+    "Cambridge": {
+        "tickets": 3,
+        "crashes": 4
+    },
+    "Inner Belt": {
+        "tickets": 1,
+        "crashes": 0
+    },
+    "Avon Hill": {
+        "tickets": 1,
+        "crashes": 2
+    },
+    "West Somerville": {
+        "tickets": 0,
+        "crashes": 1
+    },
+    "Coolidge Hill": {
+        "tickets": 0,
+        "crashes": 1
+    },
+    "Mount Auburn": {
+        "tickets": 0,
+        "crashes": 1
+    },
+    "Old Cambridge": {
+        "tickets": 0,
+        "crashes": 1
+    },
+    "North Cambridge": {
+        "tickets": 0,
+        "crashes": 1
+    }
+}

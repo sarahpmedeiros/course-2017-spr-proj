@@ -73,7 +73,6 @@ class hospitalsLoad(dml.Algorithm):
 
         for hospital in hospitals:
             repo['jgrishey.hospitalsLoad'].insert(hospital)
-            print(hospital)
 
         repo.logout()
 
@@ -122,5 +121,4 @@ class hospitalsLoad(dml.Algorithm):
 
         return doc
 
-hospitalsLoad.execute()
 ## eof
