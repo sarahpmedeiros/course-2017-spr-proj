@@ -191,35 +191,34 @@ class transformation_two_bus(dml.Algorithm):
             '''
 
         # Set up the database connection.
-##        client = dml.pymongo.MongoClient()
-##        repo = client.repo
-##        repo.authenticate('mrhoran_rnchen', 'mrhoran_rnchen')
-##        
-##        doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
-##        doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
-##        doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
-##        doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-##        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        client = dml.pymongo.MongoClient()
+        repo = client.repo
+        repo.authenticate('mrhoran_rnchen_vthomson', 'mrhoran_rnchen_vthomson')
+        
+        doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
+        doc.add_namespace('dat', 'http://datamechanics.io/?prefix=_bps_transportation_challenge/') # The data sets are in <user>#<collection> format.
+        doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
+        doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
 ##
-##        this_script = doc.agent('alg:mrhoran_rnchen#transformation_two', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-##        
-##        resource1 = doc.entity('bdp:66t5-f563', {'prov:label':'Farmers Market', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-##
-##        get_farmers_market = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-##
-##        doc.wasAssociatedWith(get_farmers_market, this_script)
-##
-##        doc.usage(get_farmers_market, resource1, startTime, None,
-##                  {prov.model.PROV_TYPE:'ont:Retrieval'
-##                  }
-##                  )
-##        farmers_market = doc.entity('dat:mrhoran_rnchen#farmers_market', {prov.model.PROV_LABEL:'Food Pantries', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
-##        doc.wasAttributedTo(farmers_market, this_script)
-##        doc.wasGeneratedBy(farmers_market, get_farmers_market, endTime)
-##        doc.wasDerivedFrom(farmers_market, resource1, get_farmers_market, get_farmers_market, get_farmers_market)
-##        repo.logout()
-##                  
-##        return doc
+        this_script = doc.agent('alg:mrhoran_rnchen_vthomson#transformation_two_bus', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        
+        resource1 = doc.entity('dat:schools', {'prov:label':'Kmeans Schools', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+
+        get_kmeans_schools = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+        doc.wasAssociatedWith(get_kmeans_schools, this_script)
+
+        doc.usage(get_kmeans_schools, resource1, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval'
+                  }
+                  )
+        kmeans = doc.entity('dat:mrhoran_rnchen#kmeans', {prov.model.PROV_LABEL:'Kmeans Schools', prov.model.PROV_TYPE:'ont:DataSet','ont:Extension':'json'})
+        doc.wasAttributedTo(kmeans, this_script)
+        doc.wasGeneratedBy(kmeans, get_kmeans_schools, endTime)
+        doc.wasDerivedFrom(kmeans, resource1, get_kmeans_schools, get_kmeans_schools, get_kmeans_schools)
+        repo.logout()
+                  
+        return doc
         return ""
 def dist(p, q):
     (x1,y1) = p
@@ -254,24 +253,20 @@ def get_school_locations(schools):
     #name = schools["School Name"]
 
     x = (schools["Address"].split(','))
-
-    #print("ss" + x[1] ==("02135"))
-    
-    #if (x[1] == ("02135") or x[1] == '02126'or x[1] == '02129'or x[1] == '02215'or x[1] == '02124' or x[1] == '02129'):
     
     return((lat,long))
         
-def get_busyard_locations(bus):
-
-    lat = bus['Bus Yard Latitude']
-    long = bus['Bus Yard Longitude']
-    name =  bus['Bus Yard']
-
-    return((name, (lat,long)))
+##def get_busyard_locations(bus):
+##
+##    lat = bus['Bus Yard Latitude']
+##    long = bus['Bus Yard Longitude']
+##    name =  bus['Bus Yard']
+##
+##    return((name, (lat,long)))
     
 transformation_two_bus.execute()
-#doc = transformation_two_bus.provenance()
-#print(doc.get_provn())
-#print(json.dumps(json.loads(doc.serialize()), indent=4))
+doc = transformation_two_bus.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
