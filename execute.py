@@ -7,6 +7,7 @@ import prov.model
 
 parser = argparse.ArgumentParser()
 parser.add_argument("contributor_folder")
+parser.add_argument("-t", "--trial", help="run all algorithms in trial mode", action="store_true")
 args = parser.parse_args()
 
 # Extract the algorithm classes from the modules in the
@@ -35,6 +36,7 @@ while len(algorithms) > 0:
 # Execute the algorithms in order.
 provenance = prov.model.ProvDocument()
 for algorithm in ordered:
+    algorithm.execute(trial=args.trial)
     provenance = algorithm.provenance(provenance)
 
 # Display a provenance record of the overall execution process.
