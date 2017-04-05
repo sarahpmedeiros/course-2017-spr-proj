@@ -117,7 +117,7 @@ class proj2(dml.Algorithm):
     writes = ['pt0713_silnuext.proj2']
 
     @staticmethod
-    def execute(trial = False):
+    def execute(trial = True):
         '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
         startTime = datetime.datetime.now()
 
@@ -188,63 +188,6 @@ class proj2(dml.Algorithm):
         crime_zipcode = crime_zipcode()
 
 
-        # function of calculating average price in each zipcode
-        def zip_code_avgprice():
-            zipcode_price = {}
-            for zipcode in property_zipcode:
-                zipcode_price[zipcode] = sum(property_zipcode[zipcode])/len(property_zipcode[zipcode])
-
-            return zipcode_price
-
-        print("Average prices in each zipcode are:")
-        avg_price_zipcode = zip_code_avgprice()
-        print(avg_price_zipcode)
-
-        print()
-
-        # function of calculating amount of crime happens in each zipcode
-        def zipcode_crimelength():
-            len_zipcode = {}
-            for zipcode in crime_zipcode:
-                len_zipcode[zipcode] = len(crime_zipcode[zipcode])
-
-            return len_zipcode
-
-        print("Amount of crime incidents happens in each zipcode are:")
-        crimenumber_zipcode = zipcode_crimelength()
-        print(crimenumber_zipcode)
-
-
-        # correlation of finding whether the more the crime, the less the property price
-        def sort_data():
-            data = []
-            for zipcode1 in avg_price_zipcode:
-                for zipcode2 in crimenumber_zipcode:
-                    if zipcode1 == zipcode2:
-                        data += [(avg_price_zipcode[zipcode1], crimenumber_zipcode[zipcode2])]
-                        break
-            
-            return data
-
-        x = [xi for (xi, yi) in sort_data()]
-        y = [yi for (xi, yi) in sort_data()]
-
-        print("The correlation result we get is: ")
-        correlation_result = corr(x, y)
-        print(correlation_result)
-        print()
-        print("The p-value we get is: ")
-        p_value = p(x, y)
-        print(p(x, y))
-
-
-
-        print()
-        print()
-        print()
-        print()
-        print()
-
         # k-means function to find two properties that is furthest from crime reporting places
         # initialize two random locations        
         M = [(42,-71),(41,-70)]
@@ -314,31 +257,21 @@ class proj2(dml.Algorithm):
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
         
 
-        this_script = doc.agent('alg:pt0713_silnuext#proj2', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:pt0713_silnuext#optimization', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         crimedata = doc.entity('bdp:crime', {'prov:label':'crime', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         property2015data = doc.entity('bdp:n7za-nsjh', {'prov:label':'property_2015', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-
-        correlation = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        
         k_means = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(correlation, this_script)
         doc.wasAssociatedWith(k_means, this_script)
-
-        doc.usage(correlation, crimedata, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Computation',})
 
         doc.usage(k_means, property2015data, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Computation',})
 
-        correlation_result = doc.entity('dat:pt0713_silnuext#correlation_result', {prov.model.PROV_LABEL:'Correlation Result of Property Price and Crime Numbers', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(correlation_result, this_script)
-        doc.wasGeneratedBy(correlation_result, correlation, endTime)
-        doc.wasDerivedFrom(correlation_result, crimedata, property2015data, correlation, correlation, correlation)
-
         best_zipcode = doc.entity("dat:pt0713_silnuext#best_zipcode", {prov.model.PROV_LABEL:"Best Zipcode of Living with Least Crime Numbers Around", prov.model.PROV_TYPE:"ont:DataSet"})
         doc.wasAttributedTo(best_zipcode, this_script)
         doc.wasGeneratedBy(best_zipcode, k_means, endTime)
-        doc.wasDerivedFrom(best_zipcode, crimedata, property2015data, k_means, k_means, k_means)
+        doc.wasDerivedFrom(best_zipcode, crimedata, k_means, k_means, k_means)
 
         repo.logout()
                   
@@ -346,7 +279,7 @@ class proj2(dml.Algorithm):
 
 proj2.execute()
 doc = proj2.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

@@ -39,7 +39,8 @@ def reduce(f, R):
 
 class fld_crime(dml.Algorithm):
     contributor = "pt0713_silnuext"
-    reads = ["pt0713_silnuext.fld_crime"]
+    reads = ["pt0713_silnuext.fld",
+            "pt0713_silnuext.crime"]
     writes = ["pt0713_silnuext.fld_crime"]
 
     @staticmethod

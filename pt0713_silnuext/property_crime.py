@@ -44,7 +44,9 @@ def reduce(f, R):
 
 class property_crime(dml.Algorithm):
     contributor = 'pt0713_silnuext'
-    reads = ['pt0713_silnuext.property_crime']
+    reads = ['pt0713_silnuext.property_2015',
+            'pt0713_silnuext.property_2014',
+            'pt0713_silnuext.crime']
     writes = ['pt0713_silnuext.property_crime']
 
     @staticmethod
