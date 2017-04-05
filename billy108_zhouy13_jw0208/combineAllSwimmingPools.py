@@ -8,9 +8,9 @@ import uuid
 
 
 class combineAllSwimmingPools(dml.Algorithm):
-    contributor = 'billy108_zhou13'
-    reads = ['billy108_zhou13.seasonalSwimPools', 'billy108_zhou13.commCenterPools']
-    writes = ['billy108_zhou13.allPoolsInBoston']
+    contributor = 'billy108_zhouy13_jw0208'
+    reads = ['billy108_zhouy13_jw0208.seasonalSwimPools', 'billy108_zhouy13_jw0208.commCenterPools']
+    writes = ['billy108_zhouy13_jw0208.allPoolsInBoston']
 
     @staticmethod
     def execute(trial=False):
@@ -20,11 +20,11 @@ class combineAllSwimmingPools(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('billy108_zhou13', 'billy108_zhou13')
+        repo.authenticate('billy108_zhouy13_jw0208', 'billy108_zhouy13_jw0208')
 
         # Get the collections
-        seasonalPools = repo['billy108_zhou13.seasonalSwimPools']
-        commCenterPools = repo['billy108_zhou13.commCenterPools']
+        seasonalPools = repo['billy108_zhouy13_jw0208.seasonalSwimPools']
+        commCenterPools = repo['billy108_zhouy13_jw0208.commCenterPools']
 
         # Get names, neighborhood and zipcode of all seasonal pools and put them into (key, value) form
         allPools_list = []
@@ -59,7 +59,7 @@ class combineAllSwimmingPools(dml.Algorithm):
         # Create a new collection and insert the result data set
         repo.dropCollection('allPoolsInBoston')
         repo.createCollection('allPoolsInBoston')
-        repo['billy108_zhou13.allPoolsInBoston'].insert_many(allPools_list)
+        repo['billy108_zhouy13_jw0208.allPoolsInBoston'].insert_many(allPools_list)
 
         repo.logout()
         endTime = datetime.datetime.now()
@@ -71,7 +71,7 @@ class combineAllSwimmingPools(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('billy108_zhou13', 'billy108_zhou13')
+        repo.authenticate('billy108_zhouy13_jw0208', 'billy108_zhouy13_jw0208')
 
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
@@ -83,16 +83,16 @@ class combineAllSwimmingPools(dml.Algorithm):
         doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
 
         # Agent
-        this_script = doc.agent('alg:billy108_zhou13#combineAllSwimmingPools',
+        this_script = doc.agent('alg:billy108_zhouy13_jw0208#combineAllSwimmingPools',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
 
         # Resources
-        resource_seasonalSwimPools = doc.entity('dat:billy108_zhou13#seasonalSwimPools',
+        resource_seasonalSwimPools = doc.entity('dat:billy108_zhouy13_jw0208#seasonalSwimPools',
                                                 {'prov:label': 'Seasonal Swimming Pools in Boston',
                                                  prov.model.PROV_TYPE: 'ont:DataResource',
                                                  'ont:Extension': 'json'})
 
-        resource_commCenterPools = doc.entity('dat:billy108_zhou13#commCenterPools',
+        resource_commCenterPools = doc.entity('dat:billy108_zhouy13_jw0208#commCenterPools',
                                               {'prov:label': 'Community Center Pools in Boston',
                                                prov.model.PROV_TYPE: 'ont:DataResource',
                                                'ont:Extension': 'json'})
@@ -112,7 +112,7 @@ class combineAllSwimmingPools(dml.Algorithm):
         doc.usage(combine_allPoolsInBoston, resource_commCenterPools, startTime)
 
         # Result dataset entity
-        allPoolsInBoston = doc.entity('dat:billy108_zhou13#allPoolsInBoston',
+        allPoolsInBoston = doc.entity('dat:billy108_zhouy13_jw0208#allPoolsInBoston',
                                        {prov.model.PROV_LABEL: 'All swimming pools in Boston',
                                         prov.model.PROV_TYPE: 'ont:DataSet'})
 

@@ -10,9 +10,9 @@ from bson.json_util import dumps
 
 class combineAllOpenSpaces(dml.Algorithm):
 
-    contributor = 'billy108_zhou13'
-    reads = ['billy108_zhou13.communityGardens','billy108_zhou13.openSpaceCambridge','billy108_zhou13.openSpaceBoston']
-    writes = ['billy108_zhou13.allOpenSpacesInBoston']
+    contributor = 'billy108_zhouy13_jw0208'
+    reads = ['billy108_zhouy13_jw0208.communityGardens','billy108_zhouy13_jw0208.openSpaceCambridge','billy108_zhouy13_jw0208.openSpaceBoston']
+    writes = ['billy108_zhouy13_jw0208.allOpenSpacesInBoston']
 
     @staticmethod
     def execute(trial = False):
@@ -22,12 +22,12 @@ class combineAllOpenSpaces(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('billy108_zhou13', 'billy108_zhou13')
+        repo.authenticate('billy108_zhouy13_jw0208', 'billy108_zhouy13_jw0208')
 
         # Get the collections
-        openSpaceCambridge = repo['billy108_zhou13.openSpaceCambridge']
-        openSpaceBoston = repo['billy108_zhou13.openSpaceBoston']
-        communityGardens = repo['billy108_zhou13.communityGardens']
+        openSpaceCambridge = repo['billy108_zhouy13_jw0208.openSpaceCambridge']
+        openSpaceBoston = repo['billy108_zhouy13_jw0208.openSpaceBoston']
+        communityGardens = repo['billy108_zhouy13_jw0208.communityGardens']
 
         #Get names, neighborhood of all open spaces in Cambridge
         allOpenSpaces_list = []
@@ -81,7 +81,7 @@ class combineAllOpenSpaces(dml.Algorithm):
         # Create a new collection and insert the result data set
         repo.dropCollection('allOpenSpacesInBoston')
         repo.createCollection('allOpenSpacesInBoston')
-        repo['billy108_zhou13.allOpenSpacesInBoston'].insert_many(allOpenSpaces_list)
+        repo['billy108_zhouy13_jw0208.allOpenSpacesInBoston'].insert_many(allOpenSpaces_list)
 
 
         repo.logout()
@@ -94,7 +94,7 @@ class combineAllOpenSpaces(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('billy108_zhou13', 'billy108_zhou13')
+        repo.authenticate('billy108_zhouy13_jw0208', 'billy108_zhouy13_jw0208')
 
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
@@ -106,21 +106,21 @@ class combineAllOpenSpaces(dml.Algorithm):
         doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
 
         # Agent
-        this_script = doc.agent('alg:billy108_zhou13#combineAllOpenSpaces',
+        this_script = doc.agent('alg:billy108_zhouy13_jw0208#combineAllOpenSpaces',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
 
         # Resources
-        resource_communityGardens = doc.entity('dat:billy108_zhou13#communityGardens',
+        resource_communityGardens = doc.entity('dat:billy108_zhouy13_jw0208#communityGardens',
                                                 {'prov:label': 'Community Gardens in Boston',
                                                  prov.model.PROV_TYPE: 'ont:DataResource',
                                                  'ont:Extension': 'json'})
 
-        resource_openSpaceCambridge = doc.entity('dat:billy108_zhou13#openSpaceCambridge',
+        resource_openSpaceCambridge = doc.entity('dat:billy108_zhouy13_jw0208#openSpaceCambridge',
                                               {'prov:label': 'Open Spaces in Cambridge',
                                                prov.model.PROV_TYPE: 'ont:DataResource',
                                                'ont:Extension': 'json'})
 
-        resource_openSpaceBoston = doc.entity('dat:billy108_zhou13#openSpaceBoston',
+        resource_openSpaceBoston = doc.entity('dat:billy108_zhouy13_jw0208#openSpaceBoston',
                                               {'prov:label': 'Open Spaces in Boston',
                                                prov.model.PROV_TYPE: 'ont:DataResource',
                                                'ont:Extension': 'json'})
@@ -139,7 +139,7 @@ class combineAllOpenSpaces(dml.Algorithm):
         doc.usage(combine_AllOpenSpaces, resource_openSpaceBoston, startTime)
 
         # Result dataset entity
-        allOpenSpacesInBoston = doc.entity('dat:billy108_zhou13#allOpenSpacesInBoston',
+        allOpenSpacesInBoston = doc.entity('dat:billy108_zhouy13_jw0208#allOpenSpacesInBoston',
                                       {prov.model.PROV_LABEL: 'All open spaces in Boston',
                                        prov.model.PROV_TYPE: 'ont:DataSet'})
 

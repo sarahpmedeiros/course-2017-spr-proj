@@ -7,9 +7,9 @@ import uuid
 
 class combineAll(dml.Algorithm):
 
-    contributor = 'billy108_zhou13'
-    reads = ['billy108_zhou13.waterplayCambridge','billy108_zhou13.allOpenSpacesInBoston','billy108_zhou13.allPoolsInBoston']
-    writes = ['billy108_zhou13.allRecreationalPlaces']
+    contributor = 'billy108_zhouy13_jw0208'
+    reads = ['billy108_zhouy13_jw0208.waterplayCambridge','billy108_zhouy13_jw0208.allOpenSpacesInBoston','billy108_zhouy13_jw0208.allPoolsInBoston']
+    writes = ['billy108_zhouy13_jw0208.allRecreationalPlaces']
 
     @staticmethod
     def execute(trial = False):
@@ -19,12 +19,12 @@ class combineAll(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('billy108_zhou13', 'billy108_zhou13')
+        repo.authenticate('billy108_zhouy13_jw0208', 'billy108_zhouy13_jw0208')
 
         # Get the collections
-        waterplayCambridge = repo['billy108_zhou13.waterplayCambridge']
-        allOpenSpacesBoston = repo['billy108_zhou13.allOpenSpacesInBoston']
-        allPoolsInBoston = repo['billy108_zhou13.allPoolsInBoston']
+        waterplayCambridge = repo['billy108_zhouy13_jw0208.waterplayCambridge']
+        allOpenSpacesBoston = repo['billy108_zhouy13_jw0208.allOpenSpacesInBoston']
+        allPoolsInBoston = repo['billy108_zhouy13_jw0208.allPoolsInBoston']
 
         #Get names, neighborhood of all water play parks in Cambridge
         allRecreationalPlaces_list = []
@@ -39,7 +39,6 @@ class combineAll(dml.Algorithm):
                 {"name": entry['name'], 'neighborhood': entry['neighborhood']}
             )
 
-
         #get names, neighborhood of all swimming pools in Boston
         for entry in allPoolsInBoston.find():
             allRecreationalPlaces_list.append(
@@ -50,7 +49,7 @@ class combineAll(dml.Algorithm):
         # Create a new collection and insert the result data set
         repo.dropCollection('allRecreationalPlaces')
         repo.createCollection('allRecreationalPlaces')
-        repo['billy108_zhou13.allRecreationalPlaces'].insert_many(allRecreationalPlaces_list)
+        repo['billy108_zhouy13_jw0208.allRecreationalPlaces'].insert_many(allRecreationalPlaces_list)
 
 
         repo.logout()
@@ -63,7 +62,7 @@ class combineAll(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('billy108_zhou13', 'billy108_zhou13')
+        repo.authenticate('billy108_zhouy13_jw0208', 'billy108_zhouy13_jw0208')
 
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
@@ -75,21 +74,21 @@ class combineAll(dml.Algorithm):
         doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
 
         # Agent
-        this_script = doc.agent('alg:billy108_zhou13#combineAll',
+        this_script = doc.agent('alg:billy108_zhouy13_jw0208#combineAll',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
 
         # Resources
-        resource_waterplayCambridge = doc.entity('dat:billy108_zhou13#waterplayCambridge',
+        resource_waterplayCambridge = doc.entity('dat:billy108_zhouy13_jw0208#waterplayCambridge',
                                                {'prov:label': 'Waterplay Parks in Cambridge',
                                                 prov.model.PROV_TYPE: 'ont:DataResource',
                                                 'ont:Extension': 'json'})
 
-        resource_allOpenSpacesInBoston = doc.entity('dat:billy108_zhou13#allOpenSpacesInBoston',
+        resource_allOpenSpacesInBoston = doc.entity('dat:billy108_zhouy13_jw0208#allOpenSpacesInBoston',
                                                  {'prov:label': 'All Open Spaces in Boston',
                                                   prov.model.PROV_TYPE: 'ont:DataResource',
                                                   'ont:Extension': 'json'})
 
-        resource_allPoolsInBoston = doc.entity('dat:billy108_zhou13#allPoolsInBoston',
+        resource_allPoolsInBoston = doc.entity('dat:billy108_zhouy13_jw0208#allPoolsInBoston',
                                               {'prov:label': 'All Swimming Pools in Boston',
                                                prov.model.PROV_TYPE: 'ont:DataResource',
                                                'ont:Extension': 'json'})
@@ -108,7 +107,7 @@ class combineAll(dml.Algorithm):
         doc.usage(combine_allRecreationalPlaces, resource_allPoolsInBoston, startTime)
 
         # Result dataset entity
-        allRecreationalPlaces = doc.entity('dat:billy108_zhou13#allRecreationalPlaces',
+        allRecreationalPlaces = doc.entity('dat:billy108_zhouy13_jw0208#allRecreationalPlaces',
                                            {prov.model.PROV_LABEL: 'All recreational places in Boston',
                                             prov.model.PROV_TYPE: 'ont:DataSet'})
 
