@@ -41,7 +41,7 @@ class transformation_one_bus(dml.Algorithm):
               'mrhoran_rnchen_vthomson.average_distance_students']
 
     @staticmethod
-    def execute(trial = False):
+    def execute(trial = True):
         
         startTime = datetime.datetime.now()
 
@@ -74,6 +74,9 @@ class transformation_one_bus(dml.Algorithm):
         student_locations = [(f, shapely.geometry.shape(f['geometry'])) for f in tqdm(geojson.loads(open('input_data/students-simulated.geojson').read())['features']) if f['geometry'] is not None]
 #http://datamechanics.io/data/_bps_transportation_challenge/buses.geojson
 
+        if trial == True:
+            student_locations = student_locations[:((int)(len(student_locations)/16))]
+
         student_data = geojson.load(open('input_data/students-simulated.geojson'))
 
 
@@ -89,7 +92,12 @@ class transformation_one_bus(dml.Algorithm):
 
         
         avgs = []
+<<<<<<< HEAD
         #average distance to nearest other students for each student
+=======
+        student_radius = []
+        #average distance to nearest 10 other students for each student
+>>>>>>> 538f93b57f9a170374e9b6a690585c34495563b9
         for i in tqdm(range(len(student_locations))):
               #print(student_locations[i][0]['geometry']['coordinates'])
 
@@ -97,11 +105,31 @@ class transformation_one_bus(dml.Algorithm):
               m = (sv[0][0],sv[0][1],sv[0][0],sv[0][1])
               near = list(student_tree.nearest(m,1,True))
               n = [x.bbox for x in near]
+<<<<<<< HEAD
              
               avgs.append(sum([vincenty((m[0],m[1]),(c[0],c[1])).miles for c in n])/len(n))
+=======
+              #print(len(n))
+
+              #print(m,(n[0][0],n[0][1])) 
+              #print([vincenty((m[0],m[1]),(c[0],c[1])) for c in n])
+              #avgs.append(sum([vincenty((m[0],m[1]),(c[0],c[1])).miles for c in n])/len(n))
+              d = [vincenty((m[0],m[1]),(c[0],c[1])).miles for c in n]
+              d.sort()
+              student_radius.append([s for s in d if s < 0.5])
  
-        #print(avgs[0]) 
-        
+              avgs.append(np.sum([d[i] for i in range(min(10,len(d)))])/10)
+              #print(avgs[i])
+              #r = [(((m[0]-l[0])**2) + ((m[1]-l[1])**2)**(1/2)) for l in n]
+              
+>>>>>>> 538f93b57f9a170374e9b6a690585c34495563b9
+ 
+        #print(avgs[0])
+        print("Average Distance to 10 nearest students of student 0: ") 
+        print(avgs[0])
+        print("Distances to students within a 0.5 mile radius: ")
+        print(student_radius[0])
+        print("Values for each student stored in avgs and student_radius")
 
         #test
         #hits = student_tree.nearest((-71.2,42.2),10,True)
@@ -111,10 +139,10 @@ class transformation_one_bus(dml.Algorithm):
         #print(list(hits))
 
 
-       # bounds = (-70,-72,41,43)
+        # bounds = (-70,-72,41,43)
         
-       # hits = student_tree.intersection(bounds)
-       # print(hits)
+        # hits = student_tree.intersection(bounds)
+        # print(hits)
 
         A = project([x for x in repo.mrhoran_rnchen_vthomson.students.find({})], find_location_students)
         """
@@ -137,9 +165,14 @@ class transformation_one_bus(dml.Algorithm):
         # idea here is to see what conditions buses are like for differents start times
         
         # also want to keep track of the worst distance between a student (possibly)
+<<<<<<< HEAD
        
        #vincentie geopy
         """ 
+=======
+
+        """
+>>>>>>> 538f93b57f9a170374e9b6a690585c34495563b9
         b = select(product(A,A), lambda t: t[0][0][0] == t[1][0][0])
 
         c = select(project(b, lambda t: (t[0][0], dist(t[0][1],t[1][1]))), lambda t: t[1] > 0.0)
@@ -151,15 +184,21 @@ class transformation_one_bus(dml.Algorithm):
         f = aggregate(d, sum)
 
         average_distance_students = project(select(product(f,g), lambda t: (t[0][0] == t[1][0])), lambda t: (t[0][0], (t[1][1]/t[0][1])))
+<<<<<<< HEAD
 
         """
 
         
 
+=======
+        """
+      
+>>>>>>> 538f93b57f9a170374e9b6a690585c34495563b9
         repo.dropCollection('average_distance_students')
         repo.createCollection('average_distance_students')
 
-       # repo.mrhoran_rnchen_vthomson.student_per_school.insert(dict(average_distance_students))
+
+        # repo.mrhoran_rnchen_vthomson.student_per_school.insert(dict(average_distance_students))
         
     
 ##########################
@@ -290,6 +329,7 @@ def find_location_students(student):
     lat = float(student["Latitude"])
     lon = float(student["Longitude"])
     school_start_time = ["Current School Start Time"]
+<<<<<<< HEAD
 
 #
     return((school_start_time, (lat,long)))
@@ -297,6 +337,10 @@ def find_location_students(student):
     return([school_start_time, (lat,lon)])
 
     
+=======
+ 
+    return((school_start_time,(lat,lon)))  
+>>>>>>> 538f93b57f9a170374e9b6a690585c34495563b9
 
 def get_students(student): # want to return the coordinates of the towns in and around Boston
 
@@ -312,15 +356,21 @@ def get_buses(bus): # want to return the coordinates of the towns in and around 
 
     lat = bus['Bus Yard Latitude']
     lon = bus['Bus Yard Longitude']
+<<<<<<< HEAD
     name =  bus['Bus Yard']
 
     return((name, (lat,long)))
 
 
+=======
+    name = bus['Bus Yard']
+
+    return((name,(lat,lon)))
+>>>>>>> 538f93b57f9a170374e9b6a690585c34495563b9
 
 transformation_one_bus.execute()
 doc = transformation_one_bus.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
 
-## eof
+### eof
