@@ -53,7 +53,14 @@ class corr_gradrates(dml.Algorithm):
         repo.dropPermanent("corr_gradrates")
         repo.createPermanent("corr_gradrates")
 
-        fund_grad = list(repo.hschurma_rcalleja.funding_gradrates.aggregate([{"$project":{"_id":0}}]))
+        
+        trial = False
+
+        fund_grad = []
+        if trial == True:
+            fund_grad.append(repo.hschurma_rcalleja.funding_gradrates.find_one({}))
+        else:
+            fund_grad = list(repo.hschurma_rcalleja.funding_gradrates.aggregate([{"$project":{"_id":0}}]))
         #print(fund_grad)
 
         correlation = []
@@ -106,13 +113,13 @@ class corr_gradrates(dml.Algorithm):
 
         doc.wasAssociatedWith(get_corr_fund, this_script)
 
-        doc.used(get_corr_fund, funding_gradrates, startTime)
+        doc.used(get_corr_grad, funding_gradrates, startTime)
 
-        corr_fund = doc.entity('dat:hschurma_rcalleja#corr_gradrates', {prov.model.PROV_LABEL:'High School Funding and Graduation Data Correlation', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(corr_fund, this_script)
-        doc.wasGeneratedBy(corr_fund, get_corr_fund, endTime)
+        corr_grad = doc.entity('dat:hschurma_rcalleja#corr_gradrates', {prov.model.PROV_LABEL:'High School Funding and Graduation Data Correlation', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(corr_grad, this_script)
+        doc.wasGeneratedBy(corr_grad, get_corr_grad, endTime)
         
-        doc.wasDerivedFrom(corr_fund, funding_gradrates, get_corr_fund, get_corr_fund, get_corr_fund)
+        doc.wasDerivedFrom(corr_grad, funding_gradrates, get_corr_grad, get_corr_grad, get_corr_grad)
         
         repo.record(doc.serialize())
         repo.logout()
@@ -121,6 +128,8 @@ class corr_gradrates(dml.Algorithm):
                   
 
 corr_gradrates.execute()
+#doc = corr_gradrates.provenance()
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
         
         
 
