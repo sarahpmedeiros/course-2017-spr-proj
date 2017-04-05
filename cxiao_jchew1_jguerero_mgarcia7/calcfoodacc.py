@@ -50,20 +50,57 @@ class calcfoodacc(dml.Algorithm):
 					f = (food[column][0], food[column][1])
 					dist = vincenty(a, f).miles
 					mat[row,column] = dist
-
 			return mat
 
 		an = createDistanceMatrix(add_per_nb['Mission Hill'], fs_per_nb['Mission Hill'])
-		print (an)
-
 
 		def createMetricsMatrix(address, food, distance): #metrics = rows and then columns is food
-			empty = [0] * len(address)
-			mat = np.array([empty]*3, np.int64)
+			empty = [0.000] * len(address)
+			mat = np.array([empty]*3)
+
+			#walking distance metric 
+			for row in range(len(distance)):
+				mat[0][row] = sum([1 for i in range(len(distance[row])) if distance[row][i] < 0.5])
+
+			#distance of closest
+			for row in range(len(distance)):
+				mat[1][row] = min(distance[row])
+
+			#quality of food source
+			fm = 0
+			sm = 0
+			cs = 0
+			for i in range(len(food)):
+				if food[i][2] == 'Farmers Market':
+					fm += 1
+				elif food[i][2] == 'Supermarkets':
+					sm += 1
+				elif food[i][2] == 'Cornerstores':
+					cs += 1
+
+			total = len(food)
+			before = [1*(fm/total), (2/3)*(sm/total), (1/3)*(cs/total)]
+
+			for row in range(len(distance)):
+				mat[2][row] = sum(before)
 
 			return mat
 
 		result = createMetricsMatrix(add_per_nb['Mission Hill'], fs_per_nb['Mission Hill'], an)
+		print (result)
+
+		'''
+
+		Result is the final metrics matrix for the specified neighborhood: 
+
+								addresses above (same order as addresses in distance matrix)
+		total in walking distance.   
+		distance of closest fs 		
+		quality of food source
+
+
+
+		'''
 		#print (result)
 		#m = np.array()
 
