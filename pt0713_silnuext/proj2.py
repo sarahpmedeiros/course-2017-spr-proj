@@ -13,10 +13,11 @@ import geojson
 import geopy.distance
 import shapely.geometry
 from tqdm import tqdm
-from geojson import Polygon
+from geojson import Polygon, LineString
+from shapely.geometry import Polygon
 
 
-# implementation of schemas from course notes
+# implementation of functions from course notes
 
 def union(R, S):
     return R + S
@@ -40,6 +41,22 @@ def aggregate(R, f):
     keys = {r[0] for r in R}
     return [(key, f([v for (k,v) in R if k == key])) for key in keys]
 
+def dist(p, q):
+    (x1,y1) = p
+    (x2,y2) = q
+    return (x1-x2)**2 + (y1-y2)**2
+
+def plus(args):
+    p = [0,0]
+    for (x,y) in args:
+        p[0] += x
+        p[1] += y
+    return tuple(p)
+
+def scale(p, c):
+    (x,y) = p
+    return (x/c, y/c)
+
 
 # getting zipcode data from local directory/internet
 
@@ -59,7 +76,7 @@ for i in range(len(zipcode)):
 	for j in range(len(coor[i])):
 		x1, y1 = coor[i][j][0], coor[i][j][1]
 		x2, y2 = transform(inProj, outProj, x1, y1)
-		coor[i][j] = (y2, x2)
+		coor[i][j] = [y2, x2]
 		zip_to_coor[zipcode[i]] = coor[i]
 
 # function of checking whether a point is inside a polygon
@@ -107,8 +124,6 @@ class proj2(dml.Algorithm):
 
         # getting coordination of properties that in the dataset of property assessment of 2015
         property15_price_coordination = project(property_2015, lambda x: (int(x["av_total"]), eval(str(x.get("location")))))
-        # shorting data in order to run it in a racheable time
-        property15_price_short_coordination = property15_price_coordination[:50]
 
         # function of classifying properties in 2015 into differnet zipcodes by using their coordinates
         def zip_code_propertydata(zip_to_coor, coor):
@@ -134,26 +149,25 @@ class proj2(dml.Algorithm):
                             coor_zip[zipcode] += [coor[i]]
             return coor_zip
 
-        #property15_zipcode = zip_code_propertydata(zip_to_coor, property15_price_short_coordination_float)
-        #crime15_zipcode = zip_code_crimedata(zip_to_coor, crime_15short_coordination)
 
         # inserting zipcode as polygons into R-Tree
         def property_zipcode():
-            zip_shapes = [(zipcode, (shapely.geometry.asShape(Polygon(zip_to_coor[zipcode])))) for zipcode in zip_to_coor]
+            zip_shapes = [(int(zipcode), Polygon(zip_to_coor[zipcode])) for zipcode in zip_to_coor]
             property_zip = {}
             rtidx = rtree.index.Index()
-            for i in tqdm(range(len(zip_to_coor))):
+            for i in tqdm(range(len(zip_shapes))):
                 (zipcode, shape) = zip_shapes[i]
                 rtidx.insert(zipcode, shape.bounds)
 
-            for i in range(len(property15_price_short_coordination)):
-                (lat, lon) = property15_price_short_coordination[i][1]
+            for i in range(len(property15_price_coordination)):
+                print(zip_shapes[i]["coordinates"])
+                (lat, lon) = zip_shapes[i]["coordinates"]
                 for (zipcode, shape) in [zip_shapes[i] for i in rtidx.nearest((lon, lat, lon, lat), 1)]:
                     if shape.contains(shapely.geometry.Point(lon, lat)):
                         if zipcode not in property_zip:
-                            property_zip[zipcode] = [property15_price_short_coordination_float[i]]
+                            property_zip[zipcode] = [property15_price_coordination_float[i]]
                         else:
-                            property_zip[zipcode] += [property15_price_short_coordination_float[i]]
+                            property_zip[zipcode] += [property15_price_coordination_float[i]]
 
             return property_zip
 
@@ -187,7 +201,32 @@ class proj2(dml.Algorithm):
             return crime_number
 
 
-        #print(avgprice_zipcode(property15_zipcode))
+
+        # k-means function to find two properties that is furthest from crime reporting places
+        # initialize two random locations        
+        M = [(42,-71),(41,-70)]
+
+        def k_means(P,M):
+            OLD = []
+            while OLD != M:
+                OLD = M
+
+                MPD = [(m, p, dist(m,p)) for (m, p) in product(M, P)]
+                PDs = [(p, dist(m,p)) for (m, p, d) in MPD]
+                PD = aggregate(PDs, max)
+                MP = [(m, p) for ((m,p,d), (p2,d2)) in product(MPD, PD) if p==p2 and d==d2]
+                MT = aggregate(MP, plus)
+
+                M1 = [(m, 1) for ((m,p,d), (p2,d2)) in product(MPD, PD) if p==p2 and d==d2]
+                MC = aggregate(M1, sum)
+
+                M = [scale(t,c) for ((m,t),(m2,c)) in product(MT, MC) if m == m2]
+
+            return sorted(M)
+
+        print("We are going to find the property that is closest to the coordinate(s): ")
+        print(k_means(crime_15coordination,M))
+
 
  
         repo.logout()
