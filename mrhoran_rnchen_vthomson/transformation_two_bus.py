@@ -249,12 +249,12 @@ def aggregate(R, f):
 def get_school_locations(schools):
 
     lat = float(schools["Latitude"])
-    long = float(schools["Longitude"])
+    lon = float(schools["Longitude"])
     #name = schools["School Name"]
 
     x = (schools["Address"].split(','))
     
-    return((lat,long))
+    return((lat,lon))
         
 ##def get_busyard_locations(bus):
 ##
