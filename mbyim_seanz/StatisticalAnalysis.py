@@ -57,7 +57,7 @@ class StatisticalAnalysis(dml.Algorithm):
 		for row in property_assessments:
 
 			reg_dict = dict(row)
-
+			'''
 			try:
 				empty_zip_dummys = [0 for x in range(0,len(boston_zips))]
 				index = 0
@@ -70,6 +70,7 @@ class StatisticalAnalysis(dml.Algorithm):
 
 			except:
 				continue
+			'''
 			try:
 				property_value = int(reg_dict['av_bldg'])
 			except:
@@ -149,10 +150,12 @@ class StatisticalAnalysis(dml.Algorithm):
 		plt.savefig('number_floors_graph')
 
 
+
 		######CREATE MODEL###################################################################################
 
 		regression_data = np.array(regression_data)
 		price_data = np.array(price_data)
+		
 
 		results = sm.OLS(price_data, regression_data).fit()
 
@@ -220,6 +223,7 @@ class StatisticalAnalysis(dml.Algorithm):
 		          
 		return doc
 
+StatisticalAnalysis.execute()
 
 
 
