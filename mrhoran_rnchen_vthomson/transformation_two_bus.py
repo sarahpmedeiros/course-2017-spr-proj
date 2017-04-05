@@ -6,6 +6,7 @@ import prov.model
 import datetime
 import uuid
 import ast
+import random
 import sodapy
 import time 
 
@@ -13,14 +14,13 @@ import time
 # we want to take (zipcode, #comm gardens) (zipcode, #food pantries) --> (area, #food pantries#comm gardens)
 # I think this is a selection and aggregation
 
-class transformation_two(dml.Algorithm):
+class transformation_two_bus(dml.Algorithm):
 
     contributor = 'mrhoran_rnchen'
 
-    reads = ['mrhoran_rnchen_vthomson.schools',
-             'mrhoran_rnchen_vthomson.buses']
+    reads = ['mrhoran_rnchen_vthomson.schools']
 
-    writes = ['mrhoran_rnchen_vthomson.kmeans_busyards_schools']
+    writes = ['mrhoran_rnchen_vthomson.kmeans_school_hubs']
 
 
     @staticmethod
@@ -33,26 +33,28 @@ class transformation_two(dml.Algorithm):
         repo = client.repo
         
         repo.authenticate('mrhoran_rnchen_vthomson', 'mrhoran_rnchen_vthomson')
-        ## code here
 
-        ## get town name and lat, long coordinates
-        S = select(project([o for o in repo.mrhoran_rnchen_vthomson.schools.({})], get_schools_locations), lambda t: t[0] == t[0])
+        ## For this transformation we want to focus on using k means to look at the hubs of schools
+        ## we are going to focus on the effects of different numbers of k and its effects on the means
+        
+        S = project([x for x in repo.mrhoran_rnchen_vthomson.schools.find({})], get_school_locations)
 
-        B = (project[o for o in repo.mrhoran_rnchen_vthomson.schools.({})], get_busyard_locations)
+        print(S)
 
-        repo.dropCollection('mrhoran_rnchen.local_fm')
-        repo.createCollection('mrhoran_rnchen.local_fm')
+        M = [None]*5;
 
-        repo.mrhoran_rnchen.local_fm.insert(dict(X))
+        print('# of schools =' + str(len(S)))
 
-        ## Now to do K means
+        # the means are picked randomly for the start 
+        for i in range(0, 5):
 
-        ## means are just picked randomly // we will pick
-        for i in range(0, len(S)):
-            
-            M[i] = S[i]
-
-        P = B
+            x = random.randint(0, len(S)-1)
+            val = S[x]
+            M[i] = val
+        
+        print(M)
+        P = S
+        #print(P)
 
         OLD = []
         
@@ -71,10 +73,24 @@ class transformation_two(dml.Algorithm):
             M = [scale(t,c) for ((m,t),(m2,c)) in product(MT, MC) if m == m2]
             #print(sorted(M))
 
+        print("5 means gives us:")
         results = (sorted(M))
 
+        ## calculating the cost now
+
+        ## first we want to go through and see which mean is the closest, and keep that distance
+        ## store that in a big array
+
+        ## find the cost by adding up all the distances and diving it by the number of distances to get the average
+        ## cost value for each point.. ie how close do the means get and is there a drop off in terms of productivity
+
+        #repo.dropCollection('mrhoran_rnchen.local_fm')
+        #repo.createCollection('mrhoran_rnchen.local_fm')
+
+        #repo.mrhoran_rnchen.local_fm.insert(dict(X))
+
         ## now we want to see which school is closest to each of the means
-        
+        print(results)
 
         repo.logout()
 
@@ -148,19 +164,27 @@ def aggregate(R, f):
     keys = {r[0] for r in R}
     return [(key, f([v for (k,v) in R if k == key])) for key in keys]
 
-def get_schools_locations(schools):
+def get_school_locations(schools):
 
-    lat = schools["Latitude"]
-    long = schools["Longitude"]
-    name = schools["School Name"]
+    lat = float(schools["Latitude"])
+    long = float(schools["Longitude"])
+    #name = schools["School Name"]
 
-    return([name, (lat,long)])
+    x = (schools["Address"].split(','))
 
-def get_busyard_locations(buses):
+    #print("ss" + x[1] ==("02135"))
+    
+    #if (x[1] == ("02135") or x[1] == '02126'or x[1] == '02129'or x[1] == '02215'or x[1] == '02124' or x[1] == '02129'):
+    
+    return((lat,long))
+        
+def get_busyard_locations(bus):
 
-    bus_yard = buses["Bus Yard"]
-    lat = buses["Bus Yard Latitude"]
-    long = buses["Bus Yard Longitude"]
+    lat = bus['Bus Yard Latitude']
+    long = bus['Bus Yard Longitude']
+    name =  bus['Bus Yard']
+
+    return((name, (lat,long)))
     
 transformation_two_bus.execute()
 doc = transformation_two_bus.provenance()

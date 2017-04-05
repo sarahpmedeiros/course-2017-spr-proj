@@ -141,10 +141,15 @@ class transformation_one_bus(dml.Algorithm):
         # idea here is to see what conditions buses are like for differents start times
         
         # also want to keep track of the worst distance between a student (possibly)
+<<<<<<< HEAD
+       
+       #vincentie geopy
+=======
         """ 
+>>>>>>> 5f6b3c80055d5fed1c0fccdcdeb0d979025eae25
         b = select(product(A,A), lambda t: t[0][0][0] == t[1][0][0])
 
-        c = project(b, lambda t: (t[0][0], dist(t[0][1],t[1][1])))
+        c = select(project(b, lambda t: (t[0][0], dist(t[0][1],t[1][1]))), lambda t: t[1] > 0.0)
 
         d = project(b, lambda t: (t[0][0], 1))
 
@@ -153,10 +158,13 @@ class transformation_one_bus(dml.Algorithm):
         f = aggregate(d, sum)
 
         average_distance_students = project(select(product(f,g), lambda t: (t[0][0] == t[1][0])), lambda t: (t[0][0], (t[1][1]/t[0][1])))
+<<<<<<< HEAD
+=======
 
         """
 
         
+>>>>>>> 1e27ffee620800c204e86d42bfaba47567e022a5
 
         repo.dropCollection('average_distance_students')
         repo.createCollection('average_distance_students')
@@ -293,7 +301,11 @@ def find_location_students(student):
     lon = float(student["Longitude"])
     school_start_time = ["Current School Start Time"]
 
+<<<<<<< HEAD
+    return((school_start_time, (lat,long)))
+=======
     return([school_start_time, (lat,lon)])
+>>>>>>> 1e27ffee620800c204e86d42bfaba47567e022a5
     
 
 def get_students(student): # want to return the coordinates of the towns in and around Boston
@@ -304,7 +316,7 @@ def get_students(student): # want to return the coordinates of the towns in and 
 
         name = "Sr Kennedy School"
         
-    return([name, (student["School Longitude"], student["School Latitude"])])
+    return((name, (student["School Longitude"], student["School Latitude"])))
 
 def get_buses(bus): # want to return the coordinates of the towns in and around Boston
 
@@ -312,7 +324,11 @@ def get_buses(bus): # want to return the coordinates of the towns in and around 
     lon = bus['Bus Yard Longitude']
     name =  bus['Bus Yard']
 
+<<<<<<< HEAD
+    return((name, (lat,long)))
+=======
     return([name, (lat,lon)])
+>>>>>>> 1e27ffee620800c204e86d42bfaba47567e022a5
 
 transformation_one_bus.execute()
 doc = transformation_one_bus.provenance()
