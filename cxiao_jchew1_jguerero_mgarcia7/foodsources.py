@@ -91,19 +91,15 @@ class foodsources(dml.Algorithm):
 
 			combined_dataset.append(temp)
 
-		# Add latitude and longitude to food sources
-		'''
+
+		url = 'http://datamechanics.io/data/jguerero_mgarcia7/food_sources_coords.json'
+		response = urllib.request.urlopen(url).read().decode("utf-8")
+		r = json.loads(response)
+
 		new_d = {}
-		for idx, row in enumerate(combined_dataset):
-			if idx % 8 == 0:
-				time.sleep(3)
+		for item in r:
+			new_d.update({(item['Address'], item['Zipcode']):(item['Longitude'],item['Latitude'])})
 
-			row['longitude'], row['latitude'] = getCoordinates(row['Address'],row['Zipcode'])
-			new_d.update({(row['Address'],row['Zipcode']):(row['longitude'], row['latitude'])})
-
-		pickle.dump(new_d, open( "save.p", "wb" ) )
-		'''
-		new_d = pickle.load( open( "cxiao_jchew1_jguerero_mgarcia7/save.p", "rb" ) )
 		for row in combined_dataset:
 			row['longitude'], row['latitude'] = new_d[(row['Address'],row['Zipcode'])]
 
@@ -115,8 +111,9 @@ class foodsources(dml.Algorithm):
 		neighborhood_shapes = {n['name']:shape(n['the_geom']) for n in neighborhoods.find({})}
 
 		# Find which neighborhood each point belongs to
-		for row in combined_dataset:
+		for row in combined_dataset[:]:
 			if row['longitude'] is None or row['latitude'] is None:
+				combined_dataset.remove(row)
 				continue
 				
 			loc = Point(row['longitude'],row['latitude'])
@@ -204,7 +201,6 @@ def getCoordinates(address,zipcode):
 	except Exception as e:
 		print(e)
 		return None, None
-
 
 foodsources.execute()
 ## eof

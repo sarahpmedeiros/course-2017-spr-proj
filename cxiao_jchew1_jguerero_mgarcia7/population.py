@@ -5,12 +5,15 @@ import dml
 import prov.model
 import datetime
 import uuid
+from shapely.geometry import shape 
+import pickle
+from collections import defaultdict
 
-d = []
+#d = []
 
 class population(dml.Algorithm):
     contributor = 'cxiao_jchew1_jguerero_mgarcia7'
-    reads = []
+    reads = ['cxiao_jchew1_jguerero_mgarcia7.neighborhoods']
     writes = ['cxiao_jchew1_jguerero_mgarcia7.population']
 
     @staticmethod
@@ -24,7 +27,7 @@ class population(dml.Algorithm):
         repo.authenticate('cxiao_jchew1_jguerero_mgarcia7', 'cxiao_jchew1_jguerero_mgarcia7')
 
  
-        url = 'http://datamechanics.io/data/jguerero_mgarcia7/bostondemographics.json'
+        url = 'http://datamechanics.io/data/jguerero_mgarcia7/censusincomedata.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
 
@@ -138,5 +141,5 @@ def scrape_website():
 
 
 
-
+population.execute()
 ## eof
