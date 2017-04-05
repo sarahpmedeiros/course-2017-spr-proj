@@ -79,24 +79,6 @@ for i in range(len(zipcode)):
 		coor[i][j] = [y2, x2]
 		zip_to_coor[zipcode[i]] = coor[i]
 
-# function of checking whether a point is inside a polygon
-# implemented online on http://geospatialpython.com/2011/01/point-in-polygon.html
-
-def polygon(x, y, poly):
-    n = len(poly)
-    inside = False
-    p1x,p1y = poly[0]
-    for i in range(n+1):
-        p2x, p2y = poly[i % n]
-        if y > min(p1y, p2y):
-            if y <= max(p1y, p2y):
-                if x <= max(p1x, p2x):
-                    if p1y != p2y:
-                        xints = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
-                    if p1x == p2x or x <= xints:
-                        inside = not inside
-        p1x, p1y = p2x, p2y
-    return inside
 
 
 class proj2(dml.Algorithm):
@@ -118,12 +100,18 @@ class proj2(dml.Algorithm):
         property_2015 = repo.pt0713_silnuext.property_2015.find()
 
         # getting coordination of crimes happened in 2015
-        crime_coordination = project(crime, lambda x:(x["year"], x["location"]["latitude"],x["location"]["longitude"]))     
-        crime_15 = [crime_2015 for crime_2015 in crime_coordination if crime_2015[0] == "2015"]
-        crime_15coordination = [(float(latitude), float(longitude)) for (year, latitude, longitude) in crime_15]
+        crime_coordination = project(crime, lambda x:(x["year"], x["month"], x["location"]["latitude"],x["location"]["longitude"]))     
+        crime_15 = [crime_2015 for crime_2015 in crime_coordination if crime_2015[0] == "2015" and crime_2015[1] == "8"]
+        crime_15coordination = [(float(latitude), float(longitude)) for (year, month, latitude, longitude) in crime_15]
 
         # getting coordination of properties that in the dataset of property assessment of 2015
         property15_price_coordination = project(property_2015, lambda x: (int(x["av_total"]), eval(str(x.get("location")))))
+
+
+        print("Because our crime dataset is too large to run for k-means, we make it smaller by only taking a certain month of crime data.")
+        print()
+        print()
+        print()
 
         # property r-tree
         def property_zipcode():
@@ -161,16 +149,58 @@ class proj2(dml.Algorithm):
                 (lon, lat) = crime_15coordination[i]
                 nearest = list(rtidx.nearest((lon, lat, lon, lat), 1))[0]
                 zipcode = '0' + str(nearest)
-            if zipcode not in crime_zip:
-                crime_zip[zipcode] = [crime_15coordination[i]]
-            else:
-                crime_zip[zipcode] += [crime_15coordination[i]]
+                if zipcode not in crime_zip:
+                    crime_zip[zipcode] = [crime_15coordination[i]]
+                else:
+                    crime_zip[zipcode] += [crime_15coordination[i]]
 
             return crime_zip
 
         crime_zipcode = crime_zipcode()
 
-        
+
+        # function of calculating average price in each zipcode
+        def zip_code_avgprice():
+            zipcode_price = {}
+            for zipcode in property_zipcode:
+                zipcode_price[zipcode] = sum(property_zipcode[zipcode])/len(property_zipcode[zipcode])
+
+            return zipcode_price
+
+        print("Average prices in each zipcode are:")
+        avg_price_zipcode = zip_code_avgprice()
+        print(avg_price_zipcode)
+
+        print()
+        print()
+        print()
+
+        # function of calculating amount of crime happens in each zipcode
+        def zipcode_crimelength():
+            len_zipcode = {}
+            for zipcode in crime_zipcode:
+                len_zipcode[zipcode] = len(crime_zipcode[zipcode])
+
+            return len_zipcode
+
+        print("Amount of crime incidents happens in each zipcode are:")
+        crimenumber_zipcode = zipcode_crimelength()
+        print(crimenumber_zipcode)
+
+
+        # correlation
+        #def coorelation():
+
+
+
+
+
+
+        print()
+        print()
+        print()
+        print()
+        print()
 
         # k-means function to find two properties that is furthest from crime reporting places
         # initialize two random locations        
@@ -195,8 +225,26 @@ class proj2(dml.Algorithm):
             return sorted(M)
 
         print("We are going to find the property that is closest to the coordinate(s): ")
-        print(k_means(crime_15coordination,M))
+        k_means_result = k_means(crime_15coordination,M)
+        print(k_means_result)
+        print()
+        print()
 
+        # put result get from k-means into r tree to find which zipcode is the best place to live that is as far as possible from crime areas
+        def kmeans_zipcode():
+            zip_shapes = [(int(zipcode), Polygon(zip_to_coor[zipcode])) for zipcode in zip_to_coor]
+            rtidx = rtree.index.Index()
+            for i in range(len(zip_shapes)):
+                (zipcode, shape) = zip_shapes[i]
+                rtidx.insert(zipcode, shape.bounds)
+
+            (lon, lat) = k_means_result[1]
+            nearest = list(rtidx.nearest((lon, lat, lon, lat), 1))[0]
+            zipcode = '0' + str(nearest)
+            return zipcode
+
+        print("The zipcode that is the best place to live that is as far away as crime areas is: ")
+        print(kmeans_zipcode())
 
  
         repo.logout()
