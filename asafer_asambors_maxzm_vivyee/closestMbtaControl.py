@@ -174,7 +174,7 @@ class closestMbtaControl(dml.Algorithm):
         
 
 
-closestMbtaControl.execute()
+# closestMbtaControl.execute()
 
 
 

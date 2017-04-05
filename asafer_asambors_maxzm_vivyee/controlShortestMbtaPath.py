@@ -6,7 +6,7 @@ import uuid
 import math
 import sys
 
-class shortestMbtaPath(dml.Algorithm):
+class controlShortestMbtaPath(dml.Algorithm):
     contributor = 'asafer_asambors_maxzm_vivyee'
     reads = ['asafer_asambors_maxzm_vivyee.control_obesity', 'asafer_asambors_maxzm_vivyee.mbta_routes']
     writes = ['asafer_asambors_maxzm_vivyee.control_obesity', 'asafer_asambors_maxzm_vivyee.control_time']
@@ -118,7 +118,7 @@ class shortestMbtaPath(dml.Algorithm):
                                 transfers[key].append(stop['stop_id'])
 
                         if i > 0:
-                            d = shortestMbtaPath.calculate_distance(prev_lat, prev_lon, eval(stop['stop_lat']), eval(stop['stop_lon']))
+                            d = controlShortestMbtaPath.calculate_distance(prev_lat, prev_lon, eval(stop['stop_lat']), eval(stop['stop_lon']))
                             w = d / mpm
                             G.add_edge(prev_stop, stop['stop_id'], weight=w)
                             G.add_edge(stop['stop_id'], prev_stop, weight=w)
@@ -132,9 +132,9 @@ class shortestMbtaPath(dml.Algorithm):
         
         # project
 
-        control_obesity_times = shortestMbtaPath.project(control_obesity, shortestMbtaPath.get_closest_path, G)
-        control_obesity_times_tuples = shortestMbtaPath.select(control_obesity_times, lambda x: 'data_value' in x['obesity_locations']['obesity'])
-        control_obesity_times_tuples = shortestMbtaPath.project(control_obesity_times_tuples, shortestMbtaPath.get_tuples, G)
+        control_obesity_times = controlShortestMbtaPath.project(control_obesity, controlShortestMbtaPath.get_closest_path, G)
+        control_obesity_times_tuples = controlShortestMbtaPath.select(control_obesity_times, lambda x: 'data_value' in x['obesity_locations']['obesity'])
+        control_obesity_times_tuples = controlShortestMbtaPath.project(control_obesity_times_tuples, controlShortestMbtaPath.get_tuples, G)
         # nx.dijkstra_path_length(G, source, target)
 
 
@@ -194,5 +194,5 @@ class shortestMbtaPath(dml.Algorithm):
         return doc
 
 
-shortestMbtaPath.execute()
+# shortestMbtaPath.execute()
 

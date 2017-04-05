@@ -188,7 +188,7 @@ class fetchData(dml.Algorithm):
         doc.wasDerivedFrom(mbta_routes, mbta_routes_resource, get_mbta_routes, get_mbta_routes, get_mbta_routes)
 
 
-        control = doc.entity('dat:asafer_asambors_maxzm_vivyee#control', {prov.model.PROV_LABEL:'Big belly locations', prov.model.PROV_TYPE:'ont:DataSet'})()
+        control = doc.entity('dat:asafer_asambors_maxzm_vivyee#control', {prov.model.PROV_LABEL:'Big belly locations', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(control, this_script)
         doc.wasGeneratedBy(control, get_control, endTime)
         doc.wasDerivedFrom(control, control_resource, get_control, get_control, get_control)

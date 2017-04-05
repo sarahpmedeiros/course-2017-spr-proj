@@ -132,5 +132,5 @@ class closestControlObesity(dml.Algorithm):
         return doc
         
 
-closestControlObesity.execute()
+# closestControlObesity.execute()
 

@@ -8,7 +8,7 @@ import requests
 import numpy as np
 import math
 
-class linearRegressionObesityTime(dml.Algorithm):
+class controlLinearRegressionCompare(dml.Algorithm):
         contributor = 'asafer_asambors_maxzm_vivyee'
         reads = ['asafer_asambors_maxzm_vivyee.control_time','asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data']
         writes = ['asafer_asambors_maxzm_vivyee.results']
@@ -94,4 +94,4 @@ class linearRegressionObesityTime(dml.Algorithm):
                 return doc
 
 
-linearRegressionObesityTime.execute()
+# linearRegressionObesityTime.execute()
