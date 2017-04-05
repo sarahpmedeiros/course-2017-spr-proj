@@ -11,6 +11,10 @@ The [Boston Public Schools][bps] has announced a [Transportation Challenge][tc].
 
 ###### K-means Clustering Algorithm
 
+Problems that we cannot solve for now:
+1. K-means with same cluster size.
+Although we set the number of buses to 50, our algorithm cannot assign students evenly to those buses.
+
 ### Bus Route
 ###### Minimum Spanning Tree
 
