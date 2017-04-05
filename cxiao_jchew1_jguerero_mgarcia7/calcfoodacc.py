@@ -9,7 +9,7 @@ import uuid
 import numpy as np
 from collections import defaultdict
 
-class foodsources(dml.Algorithm):
+class calcfoodacc(dml.Algorithm):
 	contributor = 'cxiao_jchew1_jguerero_mgarcia7'
 	reads = ['cxiao_jchew1_jguerero_mgarcia7.foodsources', 'cxiao_jchew1_jguerero_mgarcia7.masteraddress']
 	writes = []
@@ -58,35 +58,33 @@ class foodsources(dml.Algorithm):
 		repo = client.repo
 		repo.authenticate('cxiao_jchew1_jguerero_mgarcia7', 'cxiao_jchew1_jguerero_mgarcia7')
 		doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
-		doc.add_namespace('dat', 'http://datamechanics.io/data/jguereo_mgarcia7') # The data sets are in <user>#<collection> format.
+		doc.add_namespace('dat', 'http://datamechanics.io/data/jguerero_mgarcia7') # The data sets are in <user>#<collection> format.
 		doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
 		doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
 
-		this_script = doc.agent('alg:cxiao_jchew1_jguerero_mgarcia7#foodsources', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+		this_script = doc.agent('alg:cxiao_jchew1_jguerero_mgarcia7#calcfoodacc', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 		
-		allcornerstores_resource = doc.entity('dat:allcornerstores', {'prov:label':'Corner Stores', prov.model.PROV_TYPE:'ont:DataSet'})
-		supermarkets_resource = doc.entity('dat:supermarkets', {'prov:label':'Supermarkets', prov.model.PROV_TYPE:'ont:DataSet'})
-		farmersmarkets_resource = doc.entity('dat:farmersmarkets', {'prov:label':'Farmers Markets', prov.model.PROV_TYPE:'ont:DataSet'})
+		foodsources_resource = doc.entity('dat:foodsources', {'prov:label':'Food Sources', prov.model.PROV_TYPE:'ont:DataSet'})
+		masteraddresses_resource = doc.entity('dat:masteraddresses', {'prov:label':'Master Addresses', prov.model.PROV_TYPE:'ont:DataSet'})
 
 
-		get_foodsources = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+		computeScore = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-		doc.wasAssociatedWith(get_foodsources, this_script)
-		doc.usage(get_foodsources, allcornerstores_resource, startTime, None,
+		doc.wasAssociatedWith(computeScore, this_script)
+		doc.usage(computeScore, foodsources_resource, startTime, None,
 				  {prov.model.PROV_TYPE:'ont:Computation'}
 				  )
-		doc.usage(get_foodsources, supermarkets_resource, startTime, None,
-				  {prov.model.PROV_TYPE:'ont:Computation'}
-				  )
-		doc.usage(get_foodsources, farmersmarkets_resource, startTime, None,
+		doc.usage(computeScore, masteraddresses_resource, startTime, None,
 		  {prov.model.PROV_TYPE:'ont:Computation'}
 		  )
  
-		foodsources = doc.entity('dat:cxiao_jchew1_jguerero_mgarcia7#foodsources', {prov.model.PROV_LABEL:'Sources of food per neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
+		'''
+		foodsources = doc.entity('dat:cxiao_jchew1_jguerero_mgarcia7#calcfoodacc', {prov.model.PROV_LABEL:'Sources of food per neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
 		doc.wasAttributedTo(foodsources, this_script)
-		doc.wasGeneratedBy(foodsources, get_foodsources, endTime)
-		doc.wasDerivedFrom(foodsources, supermarkets_resource, get_foodsources, get_foodsources, get_foodsources)
-		doc.wasDerivedFrom(foodsources, farmersmarkets_resource, get_foodsources, get_foodsources, get_foodsources)
+		doc.wasGeneratedBy(foodsources, computeScore, endTime)
+		doc.wasDerivedFrom(foodsources, supermarkets_resource, computeScore, computeScore, computeScore)
+		doc.wasDerivedFrom(foodsources, farmersmarkets_resource, computeScore, computeScore, computeScore)
+		'''
 
 
 		repo.logout()
@@ -96,6 +94,4 @@ class foodsources(dml.Algorithm):
 def calc_distance():
 	pass
 
-
-foodsources.execute()
 ## eof

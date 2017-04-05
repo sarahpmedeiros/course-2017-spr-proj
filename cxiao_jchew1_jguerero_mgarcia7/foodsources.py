@@ -103,7 +103,7 @@ class foodsources(dml.Algorithm):
 
 		pickle.dump(new_d, open( "save.p", "wb" ) )
 		'''
-		new_d = pickle.load( open( "save.p", "rb" ) )
+		new_d = pickle.load( open( "cxiao_jchew1_jguerero_mgarcia7/save.p", "rb" ) )
 		for row in combined_dataset:
 			row['longitude'], row['latitude'] = new_d[(row['Address'],row['Zipcode'])]
 
@@ -124,8 +124,6 @@ class foodsources(dml.Algorithm):
 				if shp.contains(loc):
 					row['Neighborhood'] = name
 					break
-
-
 
 
 
