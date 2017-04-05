@@ -13,7 +13,7 @@ from geopy.distance import vincenty
 class calcfoodacc(dml.Algorithm):
 	contributor = 'cxiao_jchew1_jguerero_mgarcia7'
 	reads = ['cxiao_jchew1_jguerero_mgarcia7.foodsources', 'cxiao_jchew1_jguerero_mgarcia7.masteraddress']
-	writes = []
+	writes = ['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics']
 
 	@staticmethod
 	def execute(trial = False):
@@ -32,6 +32,7 @@ class calcfoodacc(dml.Algorithm):
 		fs = [(source['Neighborhood'], source['latitude'], source['longitude'], source['Type']) for source in foodsources_data_cursor]
 		add = [(a['neighborhood'], a['latitude'], a['longitude'], 'Residential') for a in add_data_cursor]
 
+
 		# Aggregate fs and add per neighborhood
 		def aggregate(R):
 			keys = {r[0] for r in R}
@@ -39,6 +40,9 @@ class calcfoodacc(dml.Algorithm):
 
 		fs_per_nb = aggregate(fs)
 		add_per_nb = aggregate(add)
+
+		print(add_per_nb.keys())
+		print(fs_per_nb.keys())
 
 		def createDistanceMatrix(address,food):
 			empty = [0] * len(food)
@@ -51,9 +55,6 @@ class calcfoodacc(dml.Algorithm):
 					dist = vincenty(a, f).miles
 					mat[row,column] = dist
 			return mat
-
-		an = createDistanceMatrix(add_per_nb['Mission Hill'], fs_per_nb['Mission Hill'])
-
 		def createMetricsMatrix(address, food, distance): #metrics = rows and then columns is food
 			empty = [0.000] * len(address)
 			mat = np.array([empty]*3)
@@ -86,24 +87,49 @@ class calcfoodacc(dml.Algorithm):
 
 			return mat
 
-		result = createMetricsMatrix(add_per_nb['Mission Hill'], fs_per_nb['Mission Hill'], an)
-		print (result)
+
+
+		# Get the average metric score per neighborhood
+		nbs = set(fs_per_nb.keys()).intersection(set(add_per_nb.keys()))
+		avg_metrics = np.zeros((len(nbs), 3), dtype=np.float64)
+
+		for idx,nb in enumerate(nbs):
+			distanceMat = createDistanceMatrix(add_per_nb[nb], fs_per_nb[nb])
+			metricMatrix = createMetricsMatrix(add_per_nb[nb], fs_per_nb[nb], distanceMat)
+			avg_metrics[idx] = np.mean(metricMatrix,axis=1, dtype=np.float64)
+
+		# Compute the z-scores for each metric (to standardize)
+		def computeZscore(arr):
+			avg = np.mean(arr,dtype=np.float64)
+			stdev = np.std(arr,dtype=np.float64)
+			return (arr-avg)/stdev
+
+		zscore_metrics = np.apply_along_axis(computeZscore,axis=0,arr=avg_metrics)
+
+		# Compute a composite score for each neighborhood
 
 		'''
-
 		Result is the final metrics matrix for the specified neighborhood: 
 
-								addresses above (same order as addresses in distance matrix)
-		total in walking distance.   
-		distance of closest fs 		
-		quality of food source
-
-
-
+		addresses above (same order as addresses in distance matrix)
+		total in walking distance. # High  
+		distance of closest fs	# Low
+		quality of food source # High
 		'''
-		#print (result)
-		#m = np.array()
 
+		weights = np.array([-1,0,-1]) # Weight = -1 if it's a good thing to have a high value, Weight = 1 if it is not
+		scores = np.sum(weights*zscore_metrics,axis=1)
+
+		def scale_linear(rawpoints, high=100.0, low=0.0):
+		    mins = np.min(rawpoints, axis=0)
+		    maxs = np.max(rawpoints, axis=0)
+		    rng = maxs - mins
+		    return high - (((high - low) * (maxs - rawpoints)) / rng)
+
+		scores = scale_linear(scores)
+
+		for w,s in zip(nbs,scores):
+			print(w,":",s)
 
 		repo.logout()
 		endTime = datetime.datetime.now()
