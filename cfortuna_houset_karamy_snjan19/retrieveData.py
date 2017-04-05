@@ -7,11 +7,10 @@ import uuid
 import csv
 import json
 import requests 
-
 class retrieveData(dml.Algorithm):
     contributor = 'cfortuna_houset_karamy_snjan19'
     reads = []
-    writes = ['cfortuna_houset_karamy_snjan19.SnowRoutes','cfortuna_houset_karamy_snjan19.BikeRoutes','cfortuna_houset_karamy_snjan19.PotHoles','cfortuna_houset_karamy_snjan19.Streets', 'cfortuna_houset_karamy_snjan19.ParkingMeters']
+    writes = ['cfortuna_houset_karamy_snjan19.WazeTrafficData','cfortuna_houset_karamy_snjan19.BostonHospitalsData','cfortuna_houset_karamy_snjan19.BostonStreetsData']
 
     @staticmethod
     def execute(trial = False):
@@ -24,32 +23,35 @@ class retrieveData(dml.Algorithm):
         repo.authenticate('cfortuna_houset_karamy_snjan19', 'cfortuna_houset_karamy_snjan19')
 
         ###### Importing Datasets and putting them inside the mongoDB database #####
+
         # Waze Traffic Data
-        url = 'http://data.cityofboston.gov/resource/dih6-az4h.json'
+        url = 'https://data.cityofboston.gov/resource/dih6-az4h.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("WazeTrafficData")
         repo.createCollection("WazeTrafficData")
-        repo['cfortuna_houset_karamy_snjan19.WazeTrafficData'].insert_many(r)
+        repo['cfortuna_houset_karamy_snjan19.WazeTrafficData'].insert_many(r['features'])
 
         # Boston Hospitals
-        url = 'http://data.cityofboston.gov/resource/u6fv-m8v4.json'
+        url = 'https://data.cityofboston.gov/resource/u6fv-m8v4.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("BostonHospitals")
-        repo.createCollection("BostonHospitals")
-        repo['cfortuna_houset_karamy_snjan19.BostonHospitals'].insert_many(r)
+        repo.dropCollection("BostonHospitalsData")
+        repo.createCollection("BostonHospitalsData")
+        repo['cfortuna_houset_karamy_snjan19.BostonHospitalsData'].insert_many(r['features'])
+
 
         # Streets of Boston
         url = 'http://data.mass.gov/resource/ms23-5ubn.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("Streets")
-        repo.createCollection("Streets")
+        repo.dropCollection("BostonStreetsData")
+        repo.createCollection("BostonStreetsData")
         repo['cfortuna_houset_karamy_snjan19.Streets'].insert_many(r)
+
 
         repo.logout()
 
@@ -69,39 +71,52 @@ class retrieveData(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('cfortuna_houset_karamy_snjan19', 'cfortuna_houset_karamy_snjan19')
-        doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
-        doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
-        doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
-        doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('acw', 'cfortuna_houset_karamy_snjan19')
+        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        doc.add_namespace('mag', 'https://data.mass.gov/resource/')
 
-        this_script = doc.agent('alg:cfortuna_houset_karamy_snjan19#append_polygon_and_centerpoint', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        neighborhood_area_boston_res = doc.entity('acw:neighborhood_area_boston', {'prov:label':'Boston Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        neighborhood_area_cambridge_res = doc.entity('acw:neighborhood_area_cambridge', {'prov:label':'Cambridge Neighborhood Population Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-
-        get_neighborhood_area_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        get_neighborhood_area_cambridge = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-
-        doc.wasAssociatedWith(get_neighborhood_area_boston, this_script)
-        doc.wasAssociatedWith(get_neighborhood_area_cambridge, this_script)
+        this_script = doc.agent('alg:cfortuna_houset_karamy_snjan19#retrieveData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
         
-        doc.usage(get_neighborhood_area_boston, neighborhood_area_boston_res, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Neighborhood+Area+Boston'
-                  }
-                  )
-        doc.usage(get_neighborhood_area_cambridge, neighborhood_area_cambridge_res, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Neighborhood+Area+Cambridge'
-                  }
-                  )
+        wazeResource = doc.entity('bdp:dih6-az4h', {'prov:label':'Waze Traffic Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        hospitalsResource = doc.entity('bdp:u6fv-m8v4', {'prov:label':'Boston Hospitals Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        streetResource = doc.entity('mag:ms23-5ubn', {'prov:label':'Boston Streets Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
-        neighborhood_info = doc.entity('dat:cfortuna_houset_karamy_snjan19#neighborhood_info', {prov.model.PROV_LABEL:'Boston-Area Neighborhood Information', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(neighborhood_info, this_script)
-        doc.wasGeneratedBy(neighborhood_info, get_neighborhood_area_boston, endTime)
-        doc.wasGeneratedBy(neighborhood_info, get_neighborhood_area_cambridge, endTime)
-        doc.wasDerivedFrom(neighborhood_info, neighborhood_area_boston_res, get_neighborhood_area_boston, get_neighborhood_area_boston, get_neighborhood_area_boston)
-        doc.wasDerivedFrom(neighborhood_info, neighborhood_area_cambridge_res, get_neighborhood_area_cambridge, get_neighborhood_area_cambridge, get_neighborhood_area_cambridge)
+        getWazeTrafficData = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        getBostonHospitalsData = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        getBostonStreetsData = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+        doc.wasAssociatedWith(getWazeTrafficData, this_script)
+        doc.wasAssociatedWith(getBostonHospitalsData, this_script)
+        doc.wasAssociatedWith(getBostonStreetsData, this_script)
+        
+        doc.usage(getWazeTrafficData, wazeResource, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',
+                  #'ont:Query':'?type=Neighborhood+Area+Boston'
+                  }
+                  )
+        doc.usage(getBostonHospitalsData, hospitalsResource, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',
+                  #'ont:Query':'?type=Neighborhood+Area+Cambridge'
+                  }
+                  )
+        doc.usage(getBostonStreetsData, streetResource, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',
+                  #'ont:Query':'?type=Neighborhood+Area+Cambridge'
+                  }
+                  )
+        WazeTrafficData = doc.entity('dat:cfortuna_houset_karamy_snjan19#WazeTrafficData', {prov.model.PROV_LABEL:'Waze Traffic Data', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(WazeTrafficData, this_script)
+        doc.wasGeneratedBy(WazeTrafficData, getWazeTrafficData, endTime)
+        doc.wasDerivedFrom(WazeTrafficData, wazeResource, getWazeTrafficData, getWazeTrafficData, getWazeTrafficData)
+
+        BostonHospitalsData = doc.entity('dat:cfortuna_houset_karamy_snjan19#BostonHospitalsData', {prov.model.PROV_LABEL:'Boston Hospitals Data', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(BostonHospitalsData, this_script)
+        doc.wasGeneratedBy(BostonHospitalsData, getBostonHospitalsData, endTime)
+        doc.wasDerivedFrom(BostonHospitalsData, hospitalsResource, getBostonHospitalsData, getBostonHospitalsData, getBostonHospitalsData)
+
+        BostonStreetsData = doc.entity('dat:cfortuna_houset_karamy_snjan19#BostonStreetsData', {prov.model.PROV_LABEL:'Boston Streets Data', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(BostonStreetsData, this_script)
+        doc.wasGeneratedBy(BostonStreetsData, getBostonStreetsData, endTime)
+        doc.wasDerivedFrom(BostonStreetsData, streetResource, getBostonStreetsData, getBostonStreetsData, getBostonStreetsData)
 
         repo.logout()
                   
