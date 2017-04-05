@@ -1,7 +1,7 @@
-# Assign_Students.py
+# assignStudents.py
 
-# import urllib.request
-# import json
+import urllib.request
+import json
 import dml
 import prov.model
 import datetime
@@ -57,7 +57,7 @@ class assignStudents(dml.Algorithm):
             print(str(school) + ":", num_students, "students,", num_buses, "buses")
 
             if num_buses == 1:
-                means = assignStudents.cal_centroid(students_points)
+                means = [assignStudents.cal_centroid(students_points)]
             else:
                 # initialize random points for k-means
                 # random_points = [assignStudents.cal_centroid(students_points[i * num_buses: (i + 1) * num_buses]) for i in range(num_buses)]

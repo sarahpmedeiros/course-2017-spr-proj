@@ -1,6 +1,6 @@
 # optimizeBusRoute.py
 
-# import urllib.request
+import urllib.request
 import json
 import dml
 import prov.model
@@ -98,24 +98,20 @@ class optimizeBusRoute(dml.Algorithm):
         final_res = []
         for i in assigned_students:
             points = i['points']
-            K_points = i['aggregated_points'][0]
+            k_points = i['aggregated_points'][0]
             final = []
             results = []
-            for j in points:
-                results.append([j["latitude"], j["longitude"], j['student_id']])
-            #print("printing results")
-            #print(results)
-            res = optimizeBusRoute.cal_MST(results)
-            print(res)
-            for k in res[0]:
-                final.append({
-                        'student_id': results[k][2],
-                        'latitude': results[k][0],
-                        'longitude': results[k][1]})
+            for p in points:
+                results.append([p["latitude"], p["longitude"], p['student_id']])
 
-            final_res.append({
-                'aggregated_points':K_points,
-                'Pickup_sequence': final})
+            res = optimizeBusRoute.cal_MST(results)
+            for k in res[0]:
+                final.append({'student_id': results[k][2],
+                              'latitude': results[k][0],
+                              'longitude': results[k][1]})
+
+            final_res.append({'aggregated_points':k_points,
+                              'Pickup_sequence': final})
         return final_res
 
     @staticmethod
