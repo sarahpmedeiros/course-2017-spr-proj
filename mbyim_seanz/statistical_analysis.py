@@ -12,21 +12,15 @@ import statsmodels.api as sm
 import matplotlib.pyplot as plt
 import pandas as pd
 
-class StatisticalAnalysis_2(dml.Algorithm):
+class statistical_analysis(dml.Algorithm):
 	contributor = 'mbyim_seanz'
-	reads = ['mbyim_seanz.property_assessments', 'mbyim_seanz.mbta_stops']
-	writes = ['mbyim_seanz.StatisticalAnalysis_2']
+	reads = ['mbyim_seanz.property_assessments']
+	writes = ['mbyim_seanz.statistical_analysis']
 
 	@staticmethod
 	def execute(trial = False):
 
-
-		'''
-		#list of boston zipcodes from: http://zipcode.org/city/MA/BOSTON
-		boston_zips = ["02108", "02109", "02110", "02111", "02112", "02117", "02118", "02127", "02113", "02114", "02115", "02116", "02123", 
-						"02128","02133","02163","02196", "02199", "02205", "02206", "02212", "02215", "02266", "02283", 
-						"02201", "02203", "02204", "02210", "02211", "02217", "02222", "02241", "02284", "02293", "02295", "02297", "02298"]
-		'''
+		
 		startTime = datetime.datetime.now()
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
@@ -37,6 +31,18 @@ class StatisticalAnalysis_2(dml.Algorithm):
 
 		#Grab Property_Assessment Data and prep for multiple regression
 		property_assessments = repo.mbyim_seanz.property_assessments.find()
+
+		#Grab boston zip data and prep
+		boston_zips = repo.mbyim_seanz.boston_zip_codes.find()
+
+		#list of boston zipcodes from: http://zipcode.org/city/MA/BOSTON
+
+		#parse and grab zipcodes into a list
+		boston_zip_codes = []
+		for row in boston_zips:
+			zip_dict = dict(row)
+			zipcode = zip_dict['Boston Zip Codes']
+			boston_zip_codes.append(zipcode)
 
 
 		###########DATA PREP###########################################################################################
@@ -51,7 +57,7 @@ class StatisticalAnalysis_2(dml.Algorithm):
 		for row in property_assessments:
 
 			reg_dict = dict(row)
-
+			'''
 			try:
 				empty_zip_dummys = [0 for x in range(0,len(boston_zips))]
 				index = 0
@@ -64,6 +70,7 @@ class StatisticalAnalysis_2(dml.Algorithm):
 
 			except:
 				continue
+			'''
 			try:
 				property_value = int(reg_dict['av_bldg'])
 			except:
@@ -141,12 +148,14 @@ class StatisticalAnalysis_2(dml.Algorithm):
 		plt.xlabel('Year')
 		plt.ylabel('Average Number of Floors')
 		plt.savefig('number_floors_graph')
+		print('generated graph figure')
 
 
 		######CREATE MODEL###################################################################################
 
 		regression_data = np.array(regression_data)
 		price_data = np.array(price_data)
+		
 
 		results = sm.OLS(price_data, regression_data).fit()
 
@@ -172,12 +181,11 @@ class StatisticalAnalysis_2(dml.Algorithm):
 
 		r = json.loads(string_fix)
 		s = json.dumps(r, sort_keys=True, indent = 2)
-		repo.dropCollection("StatisticalAnalysis")
-		repo.createCollection("StatisticalAnalysis")
-		repo['mbyim_seanz.StatisticalAnalysis'].insert_many(r)
-		repo['mbyim_seanz.StatisticalAnalysis'].metadata({'complete':True})
-
-
+		repo.dropCollection("statistical_analysis")
+		repo.createCollection("statistical_analysis")
+		repo['mbyim_seanz.statistical_analysis'].insert_many(r)
+		repo['mbyim_seanz.statistical_analysis'].metadata({'complete':True})
+		print(repo['mbyim_seanz.statistical_analysis'].metadata())
 
 	@staticmethod
 	def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
@@ -192,7 +200,7 @@ class StatisticalAnalysis_2(dml.Algorithm):
 		doc.add_namespace('mbta', 'http://realtime.mbta.com/developer/api/v2/stopsbyroute')
 
 
-		this_script = doc.agent('alg:mbyim_seanz#StatisticalAnalysis', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+		this_script = doc.agent('alg:mbyim_seanz#statistical_analysis', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 		resource_statistical_analysis = doc.entity('bdp:jsri-cpsq', {'prov:label':'Aggregate Property Assessments', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
 		get_statistical_analysis = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
@@ -204,17 +212,18 @@ class StatisticalAnalysis_2(dml.Algorithm):
 		          }
 		)
 		
-		StatisticalAnalysis = doc.entity('dat:mbyim_seanz#StatisticalAnalysis', {prov.model.PROV_LABEL:'Statistical Analysis', prov.model.PROV_TYPE:'ont:DataSet'})
-		doc.wasAttributedTo(StatisticalAnalysis, this_script)
-		doc.wasGeneratedBy(StatisticalAnalysis, get_statistical_analysis, endTime)
-		doc.wasDerivedFrom(StatisticalAnalysis, resource_statistical_analysis, get_statistical_analysis, get_statistical_analysis, get_statistical_analysis)
+		statistical_analysis = doc.entity('dat:mbyim_seanz#statistical_analysis', {prov.model.PROV_LABEL:'Statistical Analysis', prov.model.PROV_TYPE:'ont:DataSet'})
+		doc.wasAttributedTo(statistical_analysis, this_script)
+		doc.wasGeneratedBy(statistical_analysis, get_statistical_analysis, endTime)
+		doc.wasDerivedFrom(statistical_analysis, resource_statistical_analysis, get_statistical_analysis, get_statistical_analysis, get_statistical_analysis)
 
 
 		repo.logout()
 		          
 		return doc
 
-
+statistical_analysis.execute()
+statistical_analysis.provenance()
 
 
 
