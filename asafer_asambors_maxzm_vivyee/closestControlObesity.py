@@ -33,6 +33,7 @@ class closestControlObesity(dml.Algorithm):
     @staticmethod
     def calculate_distance(info):
         control, obesity = info
+        print(control)
         control_lat = control['healthy_locations']['Location'][0]
         control_lon = control['healthy_locations']['Location'][1]
 

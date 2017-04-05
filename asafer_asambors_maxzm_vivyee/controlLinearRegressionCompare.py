@@ -10,8 +10,8 @@ import math
 
 class linearRegressionObesityTime(dml.Algorithm):
         contributor = 'asafer_asambors_maxzm_vivyee'
-        reads = ['asafer_asambors_maxzm_vivyee.obesity_time']
-        writes = ['asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data']
+        reads = ['asafer_asambors_maxzm_vivyee.control_time','asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data']
+        writes = ['asafer_asambors_maxzm_vivyee.results']
 
         @staticmethod
         def execute(trial=False):
@@ -23,12 +23,11 @@ class linearRegressionObesityTime(dml.Algorithm):
                 repo.authenticate('asafer_asambors_maxzm_vivyee','asafer_asambors_maxzm_vivyee')
 
                 #loads
-                obesity_time = repo['asafer_asambors_maxzm_vivyee.obesity_time'].find()
+                control_time = repo['asafer_asambors_maxzm_vivyee.control_time'].find()
+                control_time_tuples = [[a['time'],a['data_value']] for a in control_time]
 
-                obesity_time_tuples = [[a['time'],a['data_value']] for a in obesity_time]
-
-                X = np.array(obesity_time_tuples)[:,0] # x will be the time it takes to get to a healthy location
-                Y = np.array(obesity_time_tuples)[:,1] # y is going to be the obesity percent
+                X = np.array(control_time_tuples)[:,0] # x will be the time it takes to get to a trash site
+                Y = np.array(control_time_tuples)[:,1] # y is going to be the obesity percent
 
                 # we are going to run a linear regression that predicts the current level of obesity given how long it takes to get somewhere healthy
 
@@ -48,16 +47,18 @@ class linearRegressionObesityTime(dml.Algorithm):
                 RMSE = math.sqrt(MSE)
 
                 #send data up
-                stats = {"B1":B1,"B0":B0, "MSE" : MSE, "RMSE":RMSE}
-                repo.dropCollection('asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data')
-                repo.createCollection('asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data')
+                obesity_health_stats = [data for data in repo['asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data'].find()][0]
 
-                repo['asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data'].insert(stats)
-                repo['asafer_asambors_maxzm_vivyee.obesity_time_linear_regression_data'].metadata({'complete': True})
+                stats = {"control_stats":{"B1":B1,"B0":B0, "MSE" : MSE, "RMSE":RMSE},"obesity_distance_stats":obesity_health_stats,"comparison":{"Obesity_Distance_RMSE/Control_RMSE":obesity_health_stats['RMSE']/RMSE,"Obesity_Distance_Slope/Control_Slope":obesity_health_stats['B0']/B0}}
+                repo.dropCollection('asafer_asambors_maxzm_vivyee.results')
+                repo.createCollection('asafer_asambors_maxzm_vivyee.results')
+
+                repo['asafer_asambors_maxzm_vivyee.results'].insert(stats)
+                repo['asafer_asambors_maxzm_vivyee.results'].metadata({'complete': True})
 
                 endTime = datetime.datetime.now()
 
-                print('all uploaded: linearRegressionObesityTime')
+                print('all uploaded: results')
 
                 print(stats)
                 return {"start":startTime, "end":endTime}
@@ -93,4 +94,4 @@ class linearRegressionObesityTime(dml.Algorithm):
                 return doc
 
 
-#linearRegressionObesityTime.execute()
+linearRegressionObesityTime.execute()
