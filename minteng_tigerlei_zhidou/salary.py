@@ -7,7 +7,7 @@ import uuid
 from collections import defaultdict
 import sys
 
-TRIAL_LIMIT = 5000
+TRIAL_LIMIT = 500
 
 class salary(dml.Algorithm):
     contributor = 'minteng_tigerlei_zhidou'

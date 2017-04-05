@@ -6,7 +6,7 @@ import datetime
 import uuid
 import sys
 
-TRIAL_LIMIT = 5000
+TRIAL_LIMIT = 500
 
 class crime(dml.Algorithm):
     contributor = 'minteng_tigerlei_zhidou'
@@ -34,7 +34,7 @@ class crime(dml.Algorithm):
 
         if trial:
             limit = TRIAL_LIMIT
-            record = 5000
+            record = 500
 
         url='https://data.cityofboston.gov/resource/29yf-ye7n.json?$limit='+ str(limit)+ '&$offset='
         for i in range(1, record, limit):
@@ -56,7 +56,7 @@ class crime(dml.Algorithm):
 
         if trial:
             limit = TRIAL_LIMIT
-            record = 5000
+            record = 500
 
         url='https://data.cityofboston.gov/resource/crime.json?$limit='+ str(limit)+ '&$offset='
         for i in range(1, record, limit):

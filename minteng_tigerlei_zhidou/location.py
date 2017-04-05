@@ -6,7 +6,7 @@ import datetime
 import uuid
 import sys
 
-TRIAL_LIMIT = 5000
+TRIAL_LIMIT = 500
 
 class location(dml.Algorithm):
     contributor = 'minteng_tigerlei_zhidou'

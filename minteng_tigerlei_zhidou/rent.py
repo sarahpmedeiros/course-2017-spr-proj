@@ -3,7 +3,7 @@ import json, googlemaps
 import dml, prov.model, uuid
 import datetime, sys 
 
-TRIAL_LIMIT = 5000
+TRIAL_LIMIT = 500
 
 class rent(dml.Algorithm):
     contributor = 'minteng_tigerlei_zhidou'
