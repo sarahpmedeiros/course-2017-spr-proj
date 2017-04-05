@@ -56,7 +56,7 @@ class closestMbtaControl(dml.Algorithm):
     @staticmethod
     def close_stop(info):
         try:
-            return info[1][1] <= 0.1
+            return info[1][1] <= 0.25
         except TypeError:
             return False
 
