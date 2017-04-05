@@ -8,6 +8,7 @@ import datetime
 import uuid
 import numpy as np
 from collections import defaultdict
+from geopy.distance import vincenty
 
 class calcfoodacc(dml.Algorithm):
 	contributor = 'cxiao_jchew1_jguerero_mgarcia7'
@@ -19,7 +20,7 @@ class calcfoodacc(dml.Algorithm):
 		'''Retrieve some data sets (not using the API here for the sake of simplicity).'''
 		startTime = datetime.datetime.now()
 
-		# Set up the database connection.
+		# Set up the database connection
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
 		repo.authenticate('cxiao_jchew1_jguerero_mgarcia7', 'cxiao_jchew1_jguerero_mgarcia7')
@@ -39,7 +40,33 @@ class calcfoodacc(dml.Algorithm):
 		fs_per_nb = aggregate(fs)
 		add_per_nb = aggregate(add)
 
-		print(fs_per_nb)
+		def createDistanceMatrix(address,food):
+			empty = [0] * len(food)
+			mat = np.array([empty]*len(address))
+
+			for row in range(len(address)):
+				a = (address[row][0], address[row][1])
+				for column in range(len(food)):
+					f = (food[column][0], food[column][1])
+					dist = vincenty(a, f).miles
+					mat[row,column] = dist
+
+			return mat
+
+		an = createDistanceMatrix(add_per_nb['Mission Hill'], fs_per_nb['Mission Hill'])
+		print (an)
+
+
+		def createMetricsMatrix(address, food, distance): #metrics = rows and then columns is food
+			empty = [0] * len(address)
+			mat = np.array([empty]*3, np.int64)
+
+			return mat
+
+		result = createMetricsMatrix(add_per_nb['Mission Hill'], fs_per_nb['Mission Hill'], an)
+		#print (result)
+		#m = np.array()
+
 
 		repo.logout()
 		endTime = datetime.datetime.now()
