@@ -20,13 +20,17 @@ class fetchData(dml.Algorithm):
         return repo
 
     @staticmethod
-    def store(repo, url, collection):
+    def store(repo, url, collection, trial):
 
         if (collection == 'asafer_asambors_maxzm_vivyee.mbta_routes'):
             response = urllib.request.urlopen(url).read().decode("utf-8")
             response = json.loads(response)
 
-            routes = [ mode for mode in response['mode'] if mode['mode_name'] == 'Subway' or mode['mode_name'] == 'Bus' ]
+            if trial: # only use Subway routes
+                routes = [ mode for mode in response['mode'] if mode['mode_name'] == 'Subway' ]
+            else: # use Subway and Bus routes
+                routes = [ mode for mode in response['mode'] if mode['mode_name'] == 'Subway' or mode['mode_name'] == 'Bus' ]
+
             routes = [ (mode['mode_name'], route['route_id']) for mode in routes for route in mode['route'] ]
 
             stop_url = 'http://realtime.mbta.com/developer/api/v2/stopsbyroute?api_key=' + dml.auth['services']['mbtadeveloperportal']['key']
@@ -75,18 +79,30 @@ class fetchData(dml.Algorithm):
         mbta_key = dml.auth['services']['mbtadeveloperportal']['key']
         cityofboston_token = dml.auth['services']['cityofbostondataportal']['token']
 
-        datasets = {
-            'asafer_asambors_maxzm_vivyee.orchards': 'https://data.cityofboston.gov/resource/8tmm-wjbw.json?$$app_token=' + cityofboston_token,
-            'asafer_asambors_maxzm_vivyee.corner_stores': 'https://data.cityofboston.gov/resource/ybm6-m5qd.json?$$app_token=' + cityofboston_token,
-            'asafer_asambors_maxzm_vivyee.obesity': 'https://chronicdata.cdc.gov/resource/ahrt-wk9b.json?$offset=13908&$limit=177',
-            'asafer_asambors_maxzm_vivyee.nutrition_prog': 'https://data.cityofboston.gov/resource/ahjc-pw5e.json?$$app_token=' + cityofboston_token,
-            'asafer_asambors_maxzm_vivyee.mbta_routes': 'http://realtime.mbta.com/developer/api/v2/routes?api_key=' + mbta_key + '&format=json',
-            'asafer_asambors_maxzm_vivyee.control': 'http://datamechanics.io/data/asafer_asambors_maxzm_vivyee/Big_Belly_Locations2.json'
+        if trial: # limit orchards, corner_stores, and nutrition_prog to 15 rows each
+            datasets = {
+                'asafer_asambors_maxzm_vivyee.orchards': 'https://data.cityofboston.gov/resource/8tmm-wjbw.json?$$app_token=' + cityofboston_token + '&$limit=15',
+                'asafer_asambors_maxzm_vivyee.corner_stores': 'https://data.cityofboston.gov/resource/ybm6-m5qd.json?$$app_token=' + cityofboston_token + '&$limit=15',
+                'asafer_asambors_maxzm_vivyee.obesity': 'https://chronicdata.cdc.gov/resource/ahrt-wk9b.json?$offset=13908&$limit=20',
+                'asafer_asambors_maxzm_vivyee.nutrition_prog': 'https://data.cityofboston.gov/resource/ahjc-pw5e.json?$$app_token=' + cityofboston_token + '&$limit=15',
+                'asafer_asambors_maxzm_vivyee.mbta_routes': 'http://realtime.mbta.com/developer/api/v2/routes?api_key=' + mbta_key + '&format=json',
+                'asafer_asambors_maxzm_vivyee.control': 'http://datamechanics.io/data/asafer_asambors_maxzm_vivyee/Big_Belly_Locations2.json'
+
+            }
+        else:
+            datasets = {
+                'asafer_asambors_maxzm_vivyee.orchards': 'https://data.cityofboston.gov/resource/8tmm-wjbw.json?$$app_token=' + cityofboston_token,
+                'asafer_asambors_maxzm_vivyee.corner_stores': 'https://data.cityofboston.gov/resource/ybm6-m5qd.json?$$app_token=' + cityofboston_token,
+                'asafer_asambors_maxzm_vivyee.obesity': 'https://chronicdata.cdc.gov/resource/ahrt-wk9b.json?$offset=13908&$limit=177',
+                'asafer_asambors_maxzm_vivyee.nutrition_prog': 'https://data.cityofboston.gov/resource/ahjc-pw5e.json?$$app_token=' + cityofboston_token,
+                'asafer_asambors_maxzm_vivyee.mbta_routes': 'http://realtime.mbta.com/developer/api/v2/routes?api_key=' + mbta_key + '&format=json',
+                'asafer_asambors_maxzm_vivyee.control': 'http://datamechanics.io/data/asafer_asambors_maxzm_vivyee/Big_Belly_Locations2.json'
         }
+
 
         for collection, url in datasets.items():
             try:
-                fetchData.store(repo, url, collection)
+                fetchData.store(repo, url, collection, trial)
             except TypeError:
                 response = urllib.request.urlopen(url).read().decode("utf-8")
                 r = r = json.loads('['+response+']') 
