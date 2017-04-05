@@ -27,15 +27,18 @@ class optimizeBusRoute(dml.Algorithm):
         repo = client.repo
         repo.authenticate('echogu_wei0496_wuhaoyu', 'echogu_wei0496_wuhaoyu')
 
-        # Trial mode
-        if trial:
-            pass
-
         # loads the collection
         raw_assigned_students = repo['echogu_wei0496_wuhaoyu.assigned_students'].find()
         assigned_students = []
         for item in raw_assigned_students:
             assigned_students.append({'aggregated_points': item['aggregated_points'], 'points': item['points']})
+
+        # Trial mode
+        if trial:
+            if len(assigned_students) < 10:
+                pass
+            else:
+                assigned_students = random.choice(assigned_students, k = 10)
 
         # utilize minimum spanning tree to find bus route
         result = optimizeBusRoute.find_mst(assigned_students)
@@ -49,7 +52,7 @@ class optimizeBusRoute(dml.Algorithm):
 
         endTime = datetime.datetime.now()
 
-        return {"start":startTime, "end":endTime}
+        return {"start": startTime, "end": endTime}
 
     @staticmethod
     def provenance(doc=prov.model.ProvDocument(), startTime=None, endTime=None):
