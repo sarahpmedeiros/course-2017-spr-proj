@@ -34,11 +34,12 @@ class calcfoodacc(dml.Algorithm):
 		# Aggregate fs and add per neighborhood
 		def aggregate(R):
 			keys = {r[0] for r in R}
-			return dict([(key, [(lat,lon) for (k,lat,lon, type) in R if k == key]) for key in keys])
+			return dict([(key, [(lat,lon,ty) for (k,lat,lon, ty) in R if k == key]) for key in keys])
 
 		fs_per_nb = aggregate(fs)
 		add_per_nb = aggregate(add)
 
+		print(fs_per_nb)
 
 		repo.logout()
 		endTime = datetime.datetime.now()
@@ -94,4 +95,5 @@ class calcfoodacc(dml.Algorithm):
 def calc_distance():
 	pass
 
+calcfoodacc.execute()
 ## eof
