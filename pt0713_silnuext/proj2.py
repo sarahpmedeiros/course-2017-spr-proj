@@ -118,89 +118,59 @@ class proj2(dml.Algorithm):
         property_2015 = repo.pt0713_silnuext.property_2015.find()
 
         # getting coordination of crimes happened in 2015
-        crime_coordination = project(crime, lambda x:(x["year"], x["month"], x["location"]["latitude"],x["location"]["longitude"]))     
-        crime_15 = [crime_2015 for crime_2015 in crime_coordination if crime_2015[0] == "2015" and crime_2015[1] == "8"]
-        crime_15coordination = [(float(latitude), float(longitude)) for (year, month, latitude, longitude) in crime_15]
+        crime_coordination = project(crime, lambda x:(x["year"], x["location"]["latitude"],x["location"]["longitude"]))     
+        crime_15 = [crime_2015 for crime_2015 in crime_coordination if crime_2015[0] == "2015"]
+        crime_15coordination = [(float(latitude), float(longitude)) for (year, latitude, longitude) in crime_15]
 
         # getting coordination of properties that in the dataset of property assessment of 2015
         property15_price_coordination = project(property_2015, lambda x: (int(x["av_total"]), eval(str(x.get("location")))))
 
-        # function of classifying properties in 2015 into differnet zipcodes by using their coordinates
-        def zip_code_propertydata(zip_to_coor, coor):
-            coor_zip = {}
-            for zipcode in zip_to_coor:
-                for i in range(len(coor)):
-                    if polygon(coor[i][1][0], coor[i][1][1], zip_to_coor[zipcode]):
-                        if zipcode not in coor_zip:
-                            coor_zip[zipcode] = [coor[i]]
-                        else:
-                            coor_zip[zipcode] += [coor[i]]
-            return coor_zip
-
-        # function of classifying crime incidents in 2015 into different zipcodes by using their coordinates
-        def zip_code_crimedata(zip_to_coor, coor):
-            coor_zip = {}
-            for zipcode in zip_to_coor:
-                for i in range(len(coor)):
-                    if polygon(coor[i][0], coor[i][1], zip_to_coor[zipcode]):
-                        if zipcode not in coor_zip:
-                            coor_zip[zipcode] = [coor[i]]
-                        else:
-                            coor_zip[zipcode] += [coor[i]]
-            return coor_zip
-
-
-        # inserting zipcode as polygons into R-Tree
+        # property r-tree
         def property_zipcode():
             zip_shapes = [(int(zipcode), Polygon(zip_to_coor[zipcode])) for zipcode in zip_to_coor]
             property_zip = {}
             rtidx = rtree.index.Index()
-            for i in tqdm(range(len(zip_shapes))):
+            for i in range(len(zip_shapes)):
                 (zipcode, shape) = zip_shapes[i]
                 rtidx.insert(zipcode, shape.bounds)
 
             for i in range(len(property15_price_coordination)):
-                print(zip_shapes[i]["coordinates"])
-                (lat, lon) = zip_shapes[i]["coordinates"]
-                for (zipcode, shape) in [zip_shapes[i] for i in rtidx.nearest((lon, lat, lon, lat), 1)]:
-                    if shape.contains(shapely.geometry.Point(lon, lat)):
-                        if zipcode not in property_zip:
-                            property_zip[zipcode] = [property15_price_coordination_float[i]]
-                        else:
-                            property_zip[zipcode] += [property15_price_coordination_float[i]]
+                if property15_price_coordination[i][1] != 0 and property15_price_coordination[i][1] != None:
+                    (lon, lat) = property15_price_coordination[i][1]
+                    nearest = list(rtidx.nearest((lon, lat, lon, lat), 1))[0]
+                    zipcode = '0' + str(nearest)
+                if zipcode not in property_zip:
+                    property_zip[zipcode] = [property15_price_coordination[i][0]]
+                else:
+                    property_zip[zipcode] += [property15_price_coordination[i][0]]
 
             return property_zip
 
-        print(property_zipcode())
+        property_zipcode = property_zipcode()
 
-        # function of calculating average property prices within each zipcode
-        def avgprice_zipcode(property_zip):
-            price15_zipcode = {}
-            for zipcode in property_zip:
-                for i in range(len(property_zip[zipcode])):
-                    if zipcode not in price15_zipcode:
-                        price15_zipcode[zipcode] = [property_zip[zipcode][i][0]]
-                    else:
-                        price15_zipcode[zipcode] += [property_zip[zipcode][i][0]]
+        # crime r-tree
+        def crime_zipcode():
+            zip_shapes = [(int(zipcode), Polygon(zip_to_coor[zipcode])) for zipcode in zip_to_coor]
+            crime_zip = {}
+            rtidx = rtree.index.Index()
+            for i in range(len(zip_shapes)):
+                (zipcode, shape) = zip_shapes[i]
+                rtidx.insert(zipcode, shape.bounds)
 
-            for zipcode in price15_zipcode:
-                price15_zipcode[zipcode] = [sum(price15_zipcode[zipcode]) / len(price15_zipcode[zipcode])]
-            
-            return price15_zipcode
+            for i in range(len(crime_15coordination)):
+                (lon, lat) = crime_15coordination[i]
+                nearest = list(rtidx.nearest((lon, lat, lon, lat), 1))[0]
+                zipcode = '0' + str(nearest)
+            if zipcode not in crime_zip:
+                crime_zip[zipcode] = [crime_15coordination[i]]
+            else:
+                crime_zip[zipcode] += [crime_15coordination[i]]
 
+            return crime_zip
 
-        # function of calculating amount of crime incidents within each zipcode
-        def length_zipcode(crime_zip):
-            crime_number = {}
-            for zipcode in crime_zip:
-                if zipcode not in crime_number:
-                    crime_number[zipcode] = len(crime_zip[zipcode])
-                else:
-                    crime_number[zipcode] += len(crime_zip[zipcode])
+        crime_zipcode = crime_zipcode()
 
-            return crime_number
-
-
+        
 
         # k-means function to find two properties that is furthest from crime reporting places
         # initialize two random locations        
