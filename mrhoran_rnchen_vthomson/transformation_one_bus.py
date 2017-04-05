@@ -105,8 +105,12 @@ class transformation_one_bus(dml.Algorithm):
               #avgs.append(sum([vincenty((m[0],m[1]),(c[0],c[1])).miles for c in n])/len(n))
               d = [vincenty((m[0],m[1]),(c[0],c[1])).miles for c in n]
               d.sort()
+              student_radius = [s for s in d if s < 0.5]
+ 
               avgs.append(np.sum([d[i] for i in range(min(10,len(d)))])/10)
               #print(avgs[i])
+              #r = [(((m[0]-l[0])**2) + ((m[1]-l[1])**2)**(1/2)) for l in n]
+              
  
         #print(avgs[0]) 
         
