@@ -68,9 +68,15 @@ class data_pull(dml.Algorithm):
 
         mode_ids = [subway_zero_route_id, subway_one_route_id, bus_route_id]
 
+        trial_count = 0
         #Stop Location Data
         stop_locations_unique = []
         for mode_id in mode_ids: #iterate through all the list of list of modes
+            
+            # if trial flag is on, then only query 200
+            if trial_count > 200:
+                break
+
             for route_id in mode_id: #e.g. Green-B
                 url = 'http://realtime.mbta.com/developer/api/v2/stopsbyroute?api_key=' + api_key + '&format=json&route=' + route_id
                 response = urllib.request.urlopen(url).read().decode("utf-8")

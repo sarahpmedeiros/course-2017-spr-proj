@@ -13,6 +13,7 @@ import uuid
 from z3 import *
 from math import radians, cos, sin, asin, sqrt
 import sys
+import random
 
 class res_transit_pull(dml.Algorithm):
 	contributor = 'mbyim_seanz'
@@ -34,7 +35,7 @@ class res_transit_pull(dml.Algorithm):
 
 		# get residential property latitude and longitude, used as an intermediate piece of data
 		# Dictionary of the form:
-		# { point #: [latitude, longitude, property cost, res_address] }
+		# { point #: [latitude, longitude, property cost, res_address, res_zipcode] }
 		final_residential_property = {}
 		point_counter = 0
 		for row in property_assessments_data:
@@ -48,11 +49,23 @@ class res_transit_pull(dml.Algorithm):
 				total = dict_property["av_total"]
 				parcel_id = dict_property["parcel_id"]
 				res_address = dict_property["full_address"]
+				res_zipcode = dict_property["zipcode"]
 
-				final_residential_property[point_counter] = [lat,lng,total,parcel_id,res_address]
+				final_residential_property[point_counter] = [lat,lng,total,parcel_id,res_address,res_zipcode]
 				point_counter += 1
 
 		# print('got residential property')
+
+		final_data_set = []
+		count = 0
+
+		google_places_key = dml.auth['services']['googleplacesapi']['key']
+
+		original_stdout = sys.stdout
+		# sys.stdout = open('res_transit.txt', 'w')
+
+		randomized_res_keys = list(final_residential_property.keys())
+		random.shuffle(randomized_res_keys)
 
 		# finding shortest transit stop within a 1 km radius to every given residential property
 		# The data will be stored of the form
@@ -61,6 +74,7 @@ class res_transit_pull(dml.Algorithm):
 		#		"res_transit_data" :
 		#			{
 		#				"res_address": res_address,
+		#				"res_zipcode": res_zipcode,
 		#				"res_lat": res_lat,
 		#				"res_lng": res_lng,
 		#				"cost": cost,
@@ -79,20 +93,18 @@ class res_transit_pull(dml.Algorithm):
 		#				]
 		#			}
 		#	}
-
 		# print('finding some google maps stuff')
-		final_data_set = []
-		count = 0
 
-		google_places_key = dml.auth['googleplacesapi']['key']
-
-		original_stdout = sys.stdout
-		sys.stdout = open('res_transit.txt', 'w')
-		for residential_property in final_residential_property:
+		for residential_property in randomized_res_keys:
 			# there are 133,000 residential properties, but we cannot query the Google Map API this many times in a feasible time 
-			# frame, so we limited it to 10,000 residential properties
-			if count > 10000:
+			# frame, so we limited it to 2,000 residential properties
+			if count > 2000:
 				break
+
+			# if trial flag is on, then only query 200
+			if trial == True and count > 200:
+				break
+				
 			res_transit_dict = {} #final dictionary
 			sub_dict = {} 			#sub dictionary for res_transit_data
 			res_lat = final_residential_property[residential_property][0]
@@ -100,11 +112,13 @@ class res_transit_pull(dml.Algorithm):
 			cost = final_residential_property[residential_property][2]
 			parcel_id = final_residential_property[residential_property][3]
 			res_address = final_residential_property[residential_property][4]
+			res_zipcode = final_residential_property[residential_property][5]
 
 			sub_dict["res_address"] = res_address
 			sub_dict["res_lat"] = res_lat
 			sub_dict["res_lng"] = res_lng
 			sub_dict["cost"] = cost
+			sub_dict["res_zipcode"] = res_zipcode
 
 			google_places_url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + str(res_lat) + ',' + str(res_lng) + '&radius=1000&type=transit_station&key=' + google_places_key
 
@@ -133,16 +147,16 @@ class res_transit_pull(dml.Algorithm):
 			res_transit_dict["parcel_id"] = parcel_id
 			res_transit_dict["res_transit_data"] = sub_dict
 
-			print(json.dumps(res_transit_dict), end=",")
+			# print(json.dumps(res_transit_dict), end=",") out to a text file
 
 			final_data_set.append(res_transit_dict)
 			count += 1
 		
-		sys.stdout.close()
-		sys.stdout = original_stdout
+		# sys.stdout.close()
+		# sys.stdout = original_stdout
 		final_data_string_fixed = json.dumps(final_data_set)
 		final_data_string_fixed.replace("'", '"')
-		print('done')
+		# print('done')
 		
 		r = json.loads(final_data_string_fixed)
 		s = json.dumps(r, sort_keys=True, indent=2)
@@ -175,19 +189,20 @@ class res_transit_pull(dml.Algorithm):
 
 		doc.usage(get_res_transit, resource_res_transit, startTime, None,
 		          {prov.model.PROV_TYPE:'ont:Retrieval',
-		          'ont:Query':'?format=json' #not sure what this does
+		          'ont:Query':'?location=lat,lng&radius=1000&type=transit_station&key=api_key' 
 		          }
 		)
 
 		res_transit = doc.entity('dat:mbyim_seanz#res_transit', {prov.model.PROV_LABEL:'Residential Transit Stations', prov.model.PROV_TYPE:'ont:DataSet'})
 		doc.wasAttributedTo(res_transit, this_script)
 		doc.wasGeneratedBy(res_transit, get_res_transit, endTime)
+		doc.wasDerivedFrom(res_transit, resource_res_transit, get_res_transit, get_res_transit, get_res_transit)
 
 		repo.logout()
 		          
 		return doc
 
 
-res_transit_pull.execute()
-doc = res_transit_pull.provenance()
-print('finished res transit pull')
+# res_transit_pull.execute()
+# doc = res_transit_pull.provenance()
+# print('finished res transit pull')

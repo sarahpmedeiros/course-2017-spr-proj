@@ -1,5 +1,10 @@
 # Project #2
-# This class is used to optimize constraints:
+
+# This class is used for a constraint satisfaction problem:
+# problem: is it possible to find a w,r,t such that a person would be indifferent to living at one location vs another?
+# if it's satisfiable, then the weights that we find are the weights that a person would be indifferent for
+
+# i.e. [w = 37/920, t = 7/460, r = 41/920000] means that someone who would indifferent to living in one location vs another in this set would have to be someone who values walking more than the other two
 
 import urllib.request
 import json
@@ -7,9 +12,10 @@ import dml
 import prov.model
 import datetime
 import uuid
-from z3 import *
+import z3
 from math import radians, cos, sin, asin, sqrt
 import sys
+import random
 
 class optimization(dml.Algorithm):
 	contributor = 'mbyim_seanz'
@@ -43,30 +49,15 @@ class optimization(dml.Algorithm):
 		repo.authenticate('mbyim_seanz', 'mbyim_seanz')
 
 		# Constraints----------------------------------------------------------------
-		# Kendall Square -- hardcoded company location
+		# Kendall Square -- hardcoded location
 		company_lat = 42.3629
 		company_lng = -71.0901
-
-		best_min = {
-			'obj_fn_evaluation': float('inf'),
-			'walk_time': 0,
-			'transit_time': 0,
-			'res_cost': 0,
-			'stop_name': '',
-			'res_address': ''
-		}
-		parcel_id_test = ''
-		stop_lat_test = ''
-		stop_lng_test = ''
-		# has to add up to 100 %
-		walk_priority = 0.15
-		transit_priority = 0.35
-		res_cost_priority = 0.50
 
 		#Optimize----------------------------------------------------------------
 		res_transit_data = repo.mbyim_seanz.residential_transit.find()
 
-		final_res_transit = []
+		# get residential/transit data from database
+		pulled_res_transit = []
 		for row in res_transit_data:
 			res_transit_dict = dict(row)
 			
@@ -77,88 +68,102 @@ class optimization(dml.Algorithm):
 			inner_dict['parcel_id'] = parcel_id
 			inner_dict['res_transit_data'] = res_transit_subdata
 
-			final_res_transit.append(inner_dict)
+			pulled_res_transit.append(inner_dict)
 
-		#for each residential property
-		for i in range(len(final_res_transit)):
-			res_lat = final_res_transit[i]['res_transit_data']['res_lat']
-			res_lng = final_res_transit[i]['res_transit_data']['res_lng']
-			res_cost = float(final_res_transit[i]['res_transit_data']['cost'])
-			res_address = final_res_transit[i]['res_transit_data']['res_address']
-			parcel_id_temp = final_res_transit[i]['parcel_id']
-			nearby_stops = final_res_transit[i]['res_transit_data']['nearby_stops']
-
-			if res_cost < 10000 or res_address[0] == '0' or res_address == 'NULL':
+		zipcodes_used = {}
+		final_satisfiable_set = []
+		# for each zip code region
+		for data_point in pulled_res_transit:
+			curr_res_zipcode = data_point['res_transit_data']['res_zipcode']
+			
+			#loop through unique zipcodes only
+			if curr_res_zipcode in zipcodes_used:
 				continue
+			
+			zipcodes_used[curr_res_zipcode] = 1
 
-			#walk times, assume person walks 1 km in 10 minutes on average
+			# store to use in z3 optimization
 			walk_times = []
-
-			# for each nearby stop, get the walking distance
-			for j in range(len(nearby_stops)):
-				transit_lat = nearby_stops[j]['stop_lat']
-				transit_lng = nearby_stops[j]['stop_lng']
-				stop_name = nearby_stops[j]['stop_name']
-
-				walk_time = haversine(res_lat, res_lng, transit_lat, transit_lng) * 10
-
-				single_dict = {
-					'walk_time': walk_time,
-					'stop_name': stop_name
-				}
-				walk_times.append(single_dict)
-
-			#transit times, assume transit travels 1 km in 5 minutes on average
 			transit_times = []
+			res_costs = []
 
-			# for each transit station, get the transit distance to the company
-			for j in range(len(nearby_stops)):
-				transit_lat = nearby_stops[j]['stop_lat']
-				transit_lng = nearby_stops[j]['stop_lng']
+			# loop through all residential properties in this zip code region
+			for zip_code_data_point in pulled_res_transit:
+				# check if it's in the current zip code
+				if zip_code_data_point['res_transit_data']['res_zipcode'] != curr_res_zipcode:
+					continue
 
-				transit_time = haversine(transit_lat, transit_lng, company_lat, company_lng) * 5
+				# otherwise start to get the data 
+				res_cost = int(zip_code_data_point['res_transit_data']['cost'])
+				res_address = zip_code_data_point['res_transit_data']['res_address']
+
+				# simple initial filter because some of the Boston data was missing or inaccurate
+				if res_cost < 10000 or res_address[0] == '0' or res_address == 'NULL':
+					continue
+
+				res_lat = zip_code_data_point['res_transit_data']['res_lat']
+				res_lng = zip_code_data_point['res_transit_data']['res_lng']
+				closest_transit_lat = zip_code_data_point['res_transit_data']['nearby_stops'][0]['stop_lat']
+				closest_transit_lng = zip_code_data_point['res_transit_data']['nearby_stops'][0]['stop_lng']
+
+				# Assume a person walks 1 km in 10 minutes on average
+				walk_time = int(haversine(res_lat, res_lng, closest_transit_lat, closest_transit_lng)) * 10
+
+				# Assume public transit travels 1 km in 5 minutes on average
+				transit_time = int(haversine(closest_transit_lat, closest_transit_lng, company_lat, company_lng)) * 5
+
+				walk_times.append(walk_time)
 				transit_times.append(transit_time)
+				res_costs.append(res_cost)
 
+			# weights that we are trying to solve for
+			w = z3.Real('w') 
+			t = z3.Real('t') 
+			r = z3.Real('r') 
 
+			opt = z3.Solver()
+			opt.add(w>0, r>0, t>0)
 
-			# print('----walk times')
-			# print(walk_times)
-			# print('transit times----')
-			# print(transit_times)
-			# print('residential cost----')
-			# print(res_cost)
+			# loop through the residents in the same zip code 
+			for i in range(len(walk_times)):
+				# provide some leeway in terms of constraint satisfaction, explained in README
+				opt.add(w * walk_times[i] +  t * transit_times[i] +  r * res_costs[i] <= 1)
+				opt.add(w * walk_times[i] +  t * transit_times[i] +  r * res_costs[i] > 0.99)
 
-			for j in range(len(walk_times)):
-				walk_time = float(walk_times[j]['walk_time'])
-				stop_name = walk_times[j]['stop_name']
-				transit_time = float(transit_times[j])
+			# check if constraint is satisfiable
+			opt_check = opt.check()
+			sat = z3.CheckSatResult(z3.Z3_L_TRUE)
 
-				obj_fn_evalutation = (walk_time * walk_priority) + (transit_time * transit_priority) + (res_cost * res_cost_priority)
+			# if it was satisfiable, what were the weights?
+			satisfiable_set = {}
+			if opt_check == sat:
+				model = opt.model()
 
-				if obj_fn_evalutation < best_min['obj_fn_evaluation']:
-					best_min['obj_fn_evaluation'] = obj_fn_evalutation
-					best_min['walk_time'] = walk_time
-					best_min['transit_time'] = transit_time
-					best_min['res_cost'] = res_cost
-					best_min['res_address'] = res_address
-					best_min['stop_name'] = stop_name
-					parcel_id_test = parcel_id_temp
+				# weight_key is w,r,t
+				# model[weight_key] is the actual fraction/weight
+				for weight_key in model:
+					weight_value = float((model[weight_key].as_decimal(30))[:-1])
+					satisfiable_set[weight_key.name()] = weight_value
 
-		print(best_min)
-		print(parcel_id_test)
+				satisfiable_set["res_zipcode"] = curr_res_zipcode
+				satisfiable_set["data_points"] = len(walk_times)
+			
+			# only prepare it for the database if it was satisfiable
+			if len(satisfiable_set) != 0:
+				final_satisfiable_set.append(satisfiable_set)
 
-		# final_data_string_fixed = json.dumps(final_data_set)
-		# final_data_string_fixed.replace("'", '"')
-		# print('done')
+		# prepare for json 
+		final_data_string_fixed = json.dumps(final_satisfiable_set)
+		final_data_string_fixed.replace("'", '"')
 		
-		# r = json.loads(final_data_string_fixed)
-		# s = json.dumps(r, sort_keys=True, indent=2)
+		r = json.loads(final_data_string_fixed)
+		s = json.dumps(r, sort_keys=True, indent=2)
 
-		# repo.dropCollection("residential_transit")
-		# repo.createCollection("residential_transit")
-		# repo['mbyim_seanz.residential_transit'].insert_many(r)
-		# repo['mbyim_seanz.residential_transit'].metadata({'complete':True})
-		# print(repo['mbyim_seanz.residential_transit'].metadata())
+		repo.dropCollection("optimization")
+		repo.createCollection("optimization")
+		repo['mbyim_seanz.optimization'].insert_many(r)
+		repo['mbyim_seanz.optimization'].metadata({'complete':True})
+		print(repo['mbyim_seanz.optimization'].metadata())
 	
 	@staticmethod
 	def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
@@ -176,26 +181,25 @@ class optimization(dml.Algorithm):
 		doc.add_namespace('gmaps', 'https://maps.googleapis.com/maps/api/place/nearbysearch/json')
 
 		this_script = doc.agent('alg:mbyim_seanz#optimization', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-		resource_res_transit = doc.entity('gmaps:type=transit_station', {'prov:label':'Residential Transit Stations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-		get_res_transit = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+		resource_optimization = doc.entity('gmaps:type=transit_station', {'prov:label':'Optimize Residential Transit Stations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+		get_optimization = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-		doc.wasAssociatedWith(get_res_transit, this_script)
+		doc.wasAssociatedWith(get_optimization, this_script)
 
-		doc.usage(get_res_transit, resource_res_transit, startTime, None,
-		          {prov.model.PROV_TYPE:'ont:Retrieval',
-		          'ont:Query':'?format=json' #not sure what this does
-		          }
+		doc.usage(get_optimization, resource_optimization, startTime, None,
+		          {prov.model.PROV_TYPE:'ont:Computation'}
 		)
 
-		res_transit = doc.entity('dat:mbyim_seanz#res_transit', {prov.model.PROV_LABEL:'Residential Transit Stations', prov.model.PROV_TYPE:'ont:DataSet'})
-		doc.wasAttributedTo(res_transit, this_script)
-		doc.wasGeneratedBy(res_transit, get_res_transit, endTime)
+		optimization = doc.entity('dat:mbyim_seanz#optimization', {prov.model.PROV_LABEL:'Optimize Residential Transit Stations', prov.model.PROV_TYPE:'ont:DataSet'})
+		doc.wasAttributedTo(optimization, this_script)
+		doc.wasGeneratedBy(optimization, get_optimization, endTime)
+		doc.wasDerivedFrom(optimization, resource_optimization, get_optimization, get_optimization, get_optimization)
 
 		repo.logout()
 		          
 		return doc
 
 
-optimization.execute()
+# optimization.execute()
 # doc = optimization.provenance()
-print('finished res transit optimization')
+# print('finished res transit optimization')
