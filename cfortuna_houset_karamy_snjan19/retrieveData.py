@@ -24,7 +24,6 @@ class retrieveData(dml.Algorithm):
         repo.authenticate('cfortuna_houset_karamy_snjan19', 'cfortuna_houset_karamy_snjan19')
 
         ###### Importing Datasets and putting them inside the mongoDB database #####
-
         # Waze Traffic Data
         url = 'https://data.cityofboston.gov/resource/dih6-az4h.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
@@ -32,7 +31,7 @@ class retrieveData(dml.Algorithm):
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("WazeTrafficData")
         repo.createCollection("WazeTrafficData")
-        repo['cfortuna_houset_karamy_snjan19.SnowRoutes'].insert_many(r['features'])
+        repo['cfortuna_houset_karamy_snjan19.WazeTrafficData'].insert_many(r['features'])
 
         # Boston Hospitals
         url = 'https://data.cityofboston.gov/resource/u6fv-m8v4.json'
@@ -41,7 +40,7 @@ class retrieveData(dml.Algorithm):
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("BostonHospitals")
         repo.createCollection("BostonHospitals")
-        repo['cfortuna_houset_karamy_snjan19.BikeRoutes'].insert_many(r['features'])
+        repo['cfortuna_houset_karamy_snjan19.BostonHospitals'].insert_many(r['features'])
 
         # Potholes
         url = 'http://data.cityofboston.gov/resource/n65p-xaz7.json'
