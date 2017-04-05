@@ -26,31 +26,22 @@ class retrieveData(dml.Algorithm):
         ###### Importing Datasets and putting them inside the mongoDB database #####
 
         # Waze Traffic Data
-        url = 'https://data.cityofboston.gov/resource/dih6-az4h.json'
+        url = 'http://data.cityofboston.gov/resource/dih6-az4h.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("WazeTrafficData")
         repo.createCollection("WazeTrafficData")
-        repo['cfortuna_houset_karamy_snjan19.SnowRoutes'].insert_many(r['features'])
+        repo['cfortuna_houset_karamy_snjan19.WazeTrafficData'].insert_many(r)
 
         # Boston Hospitals
-        url = 'https://data.cityofboston.gov/resource/u6fv-m8v4.json'
+        url = 'http://data.cityofboston.gov/resource/u6fv-m8v4.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("BostonHospitals")
         repo.createCollection("BostonHospitals")
-        repo['cfortuna_houset_karamy_snjan19.BikeRoutes'].insert_many(r['features'])
-
-        # Potholes
-        url = 'http://data.cityofboston.gov/resource/n65p-xaz7.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("PotHoles")
-        repo.createCollection("PotHoles")
-        repo['cfortuna_houset_karamy_snjan19.PotHoles'].insert_many(r)
+        repo['cfortuna_houset_karamy_snjan19.BostonHospitals'].insert_many(r)
 
         # Streets of Boston
         url = 'http://data.mass.gov/resource/ms23-5ubn.json'
@@ -60,15 +51,6 @@ class retrieveData(dml.Algorithm):
         repo.dropCollection("Streets")
         repo.createCollection("Streets")
         repo['cfortuna_houset_karamy_snjan19.Streets'].insert_many(r)
-
-        # Parking Meters
-        url = 'http://bostonopendata-boston.opendata.arcgis.com/datasets/962da9bb739f440ba33e746661921244_9.geojson'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
-        s = json.dumps(r, sort_keys=True, indent=2)
-        repo.dropCollection("ParkingMeters")
-        repo.createCollection("ParkingMeters")
-        repo['cfortuna_houset_karamy_snjan19.ParkingMeters'].insert_many(r['features'])
 
         repo.logout()
 
@@ -152,7 +134,7 @@ class retrieveData(dml.Algorithm):
                   
         return doc
 
-#retrieveData.execute()
+retrieveData.execute()
 # doc = retrieveData.provenance()
 # print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
