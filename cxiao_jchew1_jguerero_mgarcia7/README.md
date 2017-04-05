@@ -24,30 +24,31 @@ Third, we created a new dataset that combines information from all of the datase
 ### Calculating a Food Accessbility Score For Each Neighborhood: ###
 [INSERT TEXT HERE]
 
-| Neighborhood                |   Avg # of Food Sources* |   Avg Distance To Closest Food Source (miles) |   Quality of Food Sources* |   Composite Z-score |
-|:----------------------------|-------------------------:|----------------------------------------------:|---------------------------:|--------------------:|
-| Roxbury                     |                     8.23 |                                          0.31 |                       0.44 |               -0.12 |
-| Roslindale                  |                     4.66 |                                          0.39 |                       0.48 |                0.20 |
-| South Boston                |                     6.57 |                                          0.31 |                       0.42 |                0.65 |
-| Beacon Hill                 |                     3.00 |                                          0.22 |                       0.33 |                2.90 |
-| Hyde Park                   |                     3.37 |                                          0.46 |                       0.45 |                1.05 |
-| Mission Hill                |                     3.86 |                                          0.22 |                       0.58 |               -1.01 |
-| North End                   |                     8.71 |                                          0.10 |                       0.41 |                0.17 |
-| Bay Village                 |                     3.00 |                                          0.19 |                       0.33 |                2.90 |
-| Back Bay                    |                     8.29 |                                          0.27 |                       0.53 |               -1.55 |
-| West End                    |                     7.00 |                                          0.28 |                       0.38 |                1.05 |
-| Allston/Brighton            |                     8.04 |                                          0.27 |                       0.41 |                0.39 |
-| East Boston                 |                    13.96 |                                          0.16 |                       0.37 |               -0.73 |
-| Financial District/Downtown |                    11.50 |                                          0.22 |                       0.39 |               -0.35 |
-| Jamaica Plain               |                     5.22 |                                          0.37 |                       0.53 |               -0.67 |
-| Fenway/Kenmore              |                    11.48 |                                          0.16 |                       0.49 |               -1.83 |
-| Dorchester                  |                    11.30 |                                          0.29 |                       0.44 |               -1.08 |
-| Mattapan                    |                     5.43 |                                          0.40 |                       0.52 |               -0.59 |
-| Charlestown                 |                     6.65 |                                          0.26 |                       0.46 |                0.02 |
-| South End                   |                    13.15 |                                          0.17 |                       0.46 |               -1.81 |
-| West Roxbury                |                     1.92 |                                          0.69 |                       0.52 |                0.42 |
+| Neighborhood                   |   Avg # of Food Sources* |   Avg Distance To Closest Food Source (km) |   Quality of Food Sources* |   Composite Z-score |
+|:-------------------------------|-------------------------:|-------------------------------------------:|---------------------------:|--------------------:|
+| Bay Village                    |                     3.00 |                                       0.21 |                       0.33 |                2.72 |
+| South End                      |                    13.60 |                                       0.17 |                       0.46 |               -1.80 |
+| Roxbury                        |                     8.12 |                                       0.31 |                       0.44 |               -0.01 |
+| Allston/Brighton               |                     8.67 |                                       0.26 |                       0.41 |                0.21 |
+| Mattapan                       |                     5.76 |                                       0.39 |                       0.52 |               -0.41 |
+| Roslindale                     |                     4.18 |                                       0.40 |                       0.48 |                0.52 |
+| Financial District/Downtown    |                    11.29 |                                       0.19 |                       0.39 |               -0.32 |
+| West End                       |                     7.00 |                                       0.26 |                       0.38 |                1.00 |
+| North End                      |                     8.74 |                                       0.10 |                       0.41 |                0.18 |
+| Back Bay                       |                     8.88 |                                       0.23 |                       0.53 |               -1.41 |
+| East Boston                    |                    14.15 |                                       0.17 |                       0.37 |               -0.86 |
+| South Boston                   |                     7.02 |                                       0.27 |                       0.42 |                0.55 |
+| Mission Hill                   |                     3.69 |                                       0.33 |                       0.58 |               -0.55 |
+| Jamaica Plain                  |                     5.12 |                                       0.40 |                       0.53 |               -0.34 |
+| Government Center/Faneuil Hall |                     4.00 |                                       0.19 |                       0.67 |               -1.66 |
+| Beacon Hill                    |                     3.00 |                                       0.23 |                       0.33 |                2.72 |
+| Dorchester                     |                    11.19 |                                       0.29 |                       0.44 |               -0.95 |
+| Fenway/Kenmore                 |                    11.22 |                                       0.15 |                       0.49 |               -1.55 |
+| West Roxbury                   |                     1.92 |                                       0.71 |                       0.52 |                0.68 |
+| Hyde Park                      |                     3.79 |                                       0.44 |                       0.45 |                1.03 |
+| Charlestown                    |                     6.25 |                                       0.32 |                       0.46 |                0.26 |
 
-\* *Within walking distance of a residence*
+\* *Within walking distance of a residence, which we defined to be < 1km*
 
 ### Determining Correlation: ###
 [INSERT TEXT HERE]

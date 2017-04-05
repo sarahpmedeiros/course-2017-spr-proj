@@ -22,9 +22,13 @@ class masteraddress(dml.Algorithm):
         repo.authenticate('cxiao_jchew1_jguerero_mgarcia7', 'cxiao_jchew1_jguerero_mgarcia7')
 
         # Download json
-        url = 'https://data.cityofboston.gov/resource/je5q-tbjf.json'
-        response = urllib.request.urlopen(url).read().decode("utf-8")
-        r = json.loads(response)
+
+        r = []
+        for i in range(0,331000,1000):
+            '''https://data.cityofboston.gov/resource/je5q-tbjf.json?$limit=10&$offset=1000&$order=:id'''
+            url = 'https://data.cityofboston.gov/resource/je5q-tbjf.json?$limit={}&$offset={}&$order=:id'.format(1000,i)
+            response = urllib.request.urlopen(url).read().decode("utf-8")
+            r.extend(json.loads(response))
 
         # Select only residential addreses from the master list
         def select(R, s):
@@ -33,6 +37,7 @@ class masteraddress(dml.Algorithm):
         residential_codes = set(['A', 'CD', 'R1', 'R2', 'R3', 'R4', 'RC'])
         residential_add = select(r, lambda d: d.get('land_usage') in residential_codes)
 
+        '''
         # For each food source, standardize the neighborhoods by looking at the latitude and longitude and finding out what neighborhood it fits into
         neighborhoods = repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoods']
 
@@ -55,6 +60,7 @@ class masteraddress(dml.Algorithm):
                     row['neighborhood'] = name
                     break
 
+        '''
 
         repo.dropCollection("masteraddress")
         repo.createCollection("masteraddress")

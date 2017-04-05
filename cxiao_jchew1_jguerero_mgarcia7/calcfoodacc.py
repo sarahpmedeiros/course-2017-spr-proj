@@ -9,6 +9,7 @@ import uuid
 import numpy as np
 from collections import defaultdict
 from geopy.distance import vincenty
+import pickle
 
 class calcfoodacc(dml.Algorithm):
 	contributor = 'cxiao_jchew1_jguerero_mgarcia7'
@@ -29,20 +30,19 @@ class calcfoodacc(dml.Algorithm):
 		foodsources_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.foodsources'].find()
 		add_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.masteraddress'].find()
 
-		fs = [(source['Neighborhood'], source['latitude'], source['longitude'], source['Type']) for source in foodsources_data_cursor]
-		add = [(a['neighborhood'], a['latitude'], a['longitude'], 'Residential') for a in add_data_cursor]
+		fs_per_nb = {source['Neighborhood']: (source['latitude'], source['longitude'], source['Type']) for source in foodsources_data_cursor}
+		add_per_nb = {a.get('neighborhood'): (a['latitude'], a['longitude'], 'Residential') for a in add_data_cursor}
 
-
+		'''
 		# Aggregate fs and add per neighborhood
 		def aggregate(R):
-			keys = {r[0] for r in R}
+			keys = {r[0] for r in R if r[0] is not None}
 			return dict([(key, [(lat,lon,ty) for (k,lat,lon, ty) in R if k == key]) for key in keys])
 
 		fs_per_nb = aggregate(fs)
 		add_per_nb = aggregate(add)
+		'''
 
-		print(add_per_nb.keys())
-		print(fs_per_nb.keys())
 
 		def createDistanceMatrix(address,food):
 			empty = [0] * len(food)
@@ -52,7 +52,7 @@ class calcfoodacc(dml.Algorithm):
 				a = (address[row][0], address[row][1])
 				for column in range(len(food)):
 					f = (food[column][0], food[column][1])
-					dist = vincenty(a, f).miles
+					dist = vincenty(a, f).kilometers
 					mat[row,column] = dist
 			return mat
 		def createMetricsMatrix(address, food, distance): #metrics = rows and then columns is food
@@ -61,7 +61,7 @@ class calcfoodacc(dml.Algorithm):
 
 			#walking distance metric 
 			for row in range(len(distance)):
-				mat[0][row] = sum([1 for i in range(len(distance[row])) if distance[row][i] < 0.5])
+				mat[0][row] = sum([1 for i in range(len(distance[row])) if distance[row][i] < 1.0])
 
 			#distance of closest
 			for row in range(len(distance)):
@@ -90,7 +90,7 @@ class calcfoodacc(dml.Algorithm):
 
 
 		# Get the average metric score per neighborhood
-		nbs = set(fs_per_nb.keys()).intersection(set(add_per_nb.keys()))
+		nbs = list(set(fs_per_nb.keys()).intersection(set(add_per_nb.keys())))
 		avg_metrics = np.zeros((len(nbs), 3), dtype=np.float64)
 
 		for idx,nb in enumerate(nbs):
@@ -108,28 +108,12 @@ class calcfoodacc(dml.Algorithm):
 
 		# Compute a composite score for each neighborhood
 
-		'''
-		Result is the final metrics matrix for the specified neighborhood: 
-
-		addresses above (same order as addresses in distance matrix)
-		total in walking distance. # High  
-		distance of closest fs	# Low
-		quality of food source # High
-		'''
-
-		weights = np.array([-1,0,-1]) # Weight = -1 if it's a good thing to have a high value, Weight = 1 if it is not
+		weights = np.array([-1,0,-1]) # Weight = -1 if it's a good thing to have a high value
 		scores = np.sum(weights*zscore_metrics,axis=1)
 
-		def scale_linear(rawpoints, high=100.0, low=0.0):
-		    mins = np.min(rawpoints, axis=0)
-		    maxs = np.max(rawpoints, axis=0)
-		    rng = maxs - mins
-		    return high - (((high - low) * (maxs - rawpoints)) / rng)
 
-		scores = scale_linear(scores)
-
-		for w,s in zip(nbs,scores):
-			print(w,":",s)
+		newd = {"Neighborhoods":nbs, "Scores":scores, "Zscore_metrics":zscore_metrics, "Avg_metrics":avg_metrics}
+		pickle.dump(newd, open('info.p','wb'))
 
 		repo.logout()
 		endTime = datetime.datetime.now()
