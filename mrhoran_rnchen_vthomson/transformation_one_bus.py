@@ -12,6 +12,7 @@
 # get the # bus yards and their coordinates
 
 import json
+import geojson
 import dml
 import prov.model
 import datetime
@@ -19,6 +20,12 @@ import uuid
 import ast
 import sodapy
 import time 
+import vincenty
+import rtree
+from tqdm import tqdm
+import shapely.geometry
+import geopy.distance
+
 
 # this transformation will check how many comm gardens and food pantries there are for each area
 # we want to take (zipcode, #comm gardens) (zipcode, #food pantries) --> (area, #food pantries#comm gardens)
@@ -65,17 +72,64 @@ class transformation_one_bus(dml.Algorithm):
 ############################
 ## FIND THE AVERAGE # CASE DISTANCE BETWEEN STUDENTS ** (MAYBE WORST CASE DISTANCE)
 
+        student_locations = [(f, shapely.geometry.shape(f['geometry'])) for f in tqdm(geojson.loads(open('input_data/students-simulated.geojson').read())['features']) if f['geometry'] is not None]
+#http://datamechanics.io/data/_bps_transportation_challenge/buses.geojson
+
+        student_data = geojson.load(open('input_data/students-simulated.geojson'))
+
+
+#         bus_locations = [(f, shapely.geometry.shape(f['geometry'])) for f in tqdm(geojson.loads(open('').read())['features']) if f['geometry'] is not None]
+
+
+	#fill tree
+        student_tree = rtree.index.Index()
+        for i in tqdm(range(len(student_locations))):
+              (f,s) = student_locations[i]
+              student_tree.insert(i, s.bounds)
+
+        #average out squares at lower nodes
+
+
+        #test
+        hits = student_tree.nearest((-71.2,42,-71,42.2),10)
+        print(list(hits))
+
+
+       # bounds = (-70,-72,41,43)
+        
+       # hits = student_tree.intersection(bounds)
+       # print(hits)
+
         A = project([x for x in repo.mrhoran_rnchen_vthomson.students.find({})], find_location_students)
+        """
+        average_distance_student = []
+	
+        for feature in tqdm(student_data['features']):
+            if 'geometry' in feature and 'coordinates' in feature['geometry']:
+                coordinates = feature['geometry']['coordinates']
+                if any([
+                    shape.contains(shapely.geometry.Point(lon, lat))
+                    for (lon, lat) in coordinates
+                    for (feature, shape) in [student_locations[i]
+                    for i in student_tree.nearest((lon,lat,lon,lat), 1)]
+                    ]):
+                    average_distance_student.append(feature)
+                    continue
+        """
 
         # now we have start_time , (lat,long) for every student now we want to preform average to find average distance per school start time
         # idea here is to see what conditions buses are like for differents start times
         
         # also want to keep track of the worst distance between a student (possibly)
+<<<<<<< HEAD
        
        #vincentie geopy
+=======
+        """ 
+>>>>>>> 5f6b3c80055d5fed1c0fccdcdeb0d979025eae25
         b = select(product(A,A), lambda t: t[0][0][0] == t[1][0][0])
 
-        c = project(b, lambda t: (t[0][0], dist(t[0][1],t[1][1])))
+        c = select(project(b, lambda t: (t[0][0], dist(t[0][1],t[1][1]))), lambda t: t[1] > 0.0)
 
         d = project(b, lambda t: (t[0][0], 1))
 
@@ -83,12 +137,19 @@ class transformation_one_bus(dml.Algorithm):
 
         f = aggregate(d, sum)
 
-        project(select(product(f,g), lambda t: (t[0][0] == t[1][0])), lambda t: (t[0][0], (t[1][1]/t[0][1])))
+        average_distance_students = project(select(product(f,g), lambda t: (t[0][0] == t[1][0])), lambda t: (t[0][0], (t[1][1]/t[0][1])))
+<<<<<<< HEAD
+=======
+
+        """
+
+        
+>>>>>>> 1e27ffee620800c204e86d42bfaba47567e022a5
 
         repo.dropCollection('average_distance_students')
         repo.createCollection('average_distance_students')
 
-        repo.mrhoran_rnchen_vthomson.student_per_school.insert(dict(average_distance_students))
+       # repo.mrhoran_rnchen_vthomson.student_per_school.insert(dict(average_distance_students))
         
     
 ##########################
@@ -217,10 +278,14 @@ def product(R, S):
 def find_location_students(student):
 
     lat = float(student["Latitude"])
-    long = float(student["Longitude"])
+    lon = float(student["Longitude"])
     school_start_time = ["Current School Start Time"]
 
-    return([school_start_time, (lat,long)])
+<<<<<<< HEAD
+    return((school_start_time, (lat,long)))
+=======
+    return([school_start_time, (lat,lon)])
+>>>>>>> 1e27ffee620800c204e86d42bfaba47567e022a5
     
 
 def get_students(student): # want to return the coordinates of the towns in and around Boston
@@ -231,15 +296,19 @@ def get_students(student): # want to return the coordinates of the towns in and 
 
         name = "Sr Kennedy School"
         
-    return([name, (student["School Longitude"], student["School Latitude"])])
+    return((name, (student["School Longitude"], student["School Latitude"])))
 
 def get_buses(bus): # want to return the coordinates of the towns in and around Boston
 
     lat = bus['Bus Yard Latitude']
-    long = bus['Bus Yard Longitude']
+    lon = bus['Bus Yard Longitude']
     name =  bus['Bus Yard']
 
-    return([name, (lat,long)])
+<<<<<<< HEAD
+    return((name, (lat,long)))
+=======
+    return([name, (lat,lon)])
+>>>>>>> 1e27ffee620800c204e86d42bfaba47567e022a5
 
 transformation_one_bus.execute()
 doc = transformation_one_bus.provenance()
