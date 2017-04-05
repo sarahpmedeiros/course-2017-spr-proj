@@ -1,5 +1,4 @@
 import shapefile
-from pyproj import Proj, transform
 import urllib.request
 import json
 import dml
@@ -15,6 +14,9 @@ import shapely.geometry
 from tqdm import tqdm
 from geojson import Polygon, LineString
 from shapely.geometry import Polygon
+from pyproj import Proj, transform
+from random import shuffle
+from math import sqrt
 
 
 # implementation of functions from course notes
@@ -56,6 +58,33 @@ def plus(args):
 def scale(p, c):
     (x,y) = p
     return (x/c, y/c)
+
+def permute(x):
+    shuffled = [xi for xi in x]
+    shuffle(shuffled)
+    return shuffled
+
+def avg(x): # Average
+    return sum(x)/len(x)
+
+def stddev(x): # Standard deviation.
+    m = avg(x)
+    return sqrt(sum([(xi-m)**2 for xi in x])/len(x))
+
+def cov(x, y): # Covariance.
+    return sum([(xi-avg(x))*(yi-avg(y)) for (xi,yi) in zip(x,y)])/len(x)
+
+def corr(x, y): # Correlation coefficient.
+    if stddev(x)*stddev(y) != 0:
+        return cov(x, y)/(stddev(x)*stddev(y))
+
+def p(x, y):
+    c0 = corr(x, y)
+    corrs = []
+    for k in range(0, 2000):
+        y_permuted = permute(y)
+        corrs.append(corr(x, y_permuted))
+    return len([c for c in corrs if abs(c) > c0])/len(corrs)
 
 
 # getting zipcode data from local directory/internet
@@ -172,8 +201,6 @@ class proj2(dml.Algorithm):
         print(avg_price_zipcode)
 
         print()
-        print()
-        print()
 
         # function of calculating amount of crime happens in each zipcode
         def zipcode_crimelength():
@@ -194,13 +221,21 @@ class proj2(dml.Algorithm):
             for zipcode1 in avg_price_zipcode:
                 for zipcode2 in crimenumber_zipcode:
                     if zipcode1 == zipcode2:
-                        data += [(avg_price_zipcode[zipcode1], crimenumber_zipcode[zipcode])]
+                        data += [(avg_price_zipcode[zipcode1], crimenumber_zipcode[zipcode2])]
                         break
             
             return data
 
+        x = [xi for (xi, yi) in sort_data()]
+        y = [yi for (xi, yi) in sort_data()]
 
-
+        print("The correlation result we get is: ")
+        correlation_result = corr(x, y)
+        print(correlation_result)
+        print()
+        print("The p-value we get is: ")
+        p_value = p(x, y)
+        print(p(x, y))
 
 
 
@@ -235,7 +270,6 @@ class proj2(dml.Algorithm):
         print("We are going to find the property that is closest to the coordinate(s): ")
         k_means_result = k_means(crime_15coordination,M)
         print(k_means_result)
-        print()
         print()
 
         # put result get from k-means into r tree to find which zipcode is the best place to live that is as far as possible from crime areas
@@ -280,38 +314,39 @@ class proj2(dml.Algorithm):
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
         
 
-        this_script = doc.agent('alg:pt0713_silnuext#example', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource1 = doc.entity('bdp:crime', {'prov:label':'crime', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-        resource2 = doc.entity('bdp:n7za-nsjh', {'prov:label':'property_2015', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        this_script = doc.agent('alg:pt0713_silnuext#proj2', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        crimedata = doc.entity('bdp:crime', {'prov:label':'crime', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        property2015data = doc.entity('bdp:n7za-nsjh', {'prov:label':'property_2015', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         correlation = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         k_means = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_property_crime, this_script)
+        doc.wasAssociatedWith(correlation, this_script)
+        doc.wasAssociatedWith(k_means, this_script)
 
-        doc.usage(get_property_crime, resource1, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',})
+        doc.usage(correlation, crimedata, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Computation',})
 
-        doc.usage(get_property_crime, resource2, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',})
+        doc.usage(k_means, property2015data, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Computation',})
 
-        property14 = doc.entity('dat:pt0713_silnuext#property_2015', {prov.model.PROV_LABEL:'property_2014', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(property14, this_script)
-        doc.wasGeneratedBy(property14, get_property_crime, endTime)
-        doc.wasDerivedFrom(property14, resource2, get_property_crime, get_property_crime, get_property_crime)
+        correlation_result = doc.entity('dat:pt0713_silnuext#correlation_result', {prov.model.PROV_LABEL:'Correlation Result of Property Price and Crime Numbers', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(correlation_result, this_script)
+        doc.wasGeneratedBy(correlation_result, correlation, endTime)
+        doc.wasDerivedFrom(correlation_result, crimedata, property2015data, correlation, correlation, correlation)
 
-        property15 = doc.entity("dat:pt0713_silnuext#crime", {prov.model.PROV_LABEL:"property_2015", prov.model.PROV_TYPE:"ont:DataSet"})
-        doc.wasAttributedTo(property15, this_script)
-        doc.wasGeneratedBy(property15, get_property_crime, endTime)
-        doc.wasDerivedFrom(property15, resource3, get_property_crime, get_property_crime, get_property_crime)
+        best_zipcode = doc.entity("dat:pt0713_silnuext#best_zipcode", {prov.model.PROV_LABEL:"Best Zipcode of Living with Least Crime Numbers Around", prov.model.PROV_TYPE:"ont:DataSet"})
+        doc.wasAttributedTo(best_zipcode, this_script)
+        doc.wasGeneratedBy(best_zipcode, k_means, endTime)
+        doc.wasDerivedFrom(best_zipcode, crimedata, property2015data, k_means, k_means, k_means)
 
         repo.logout()
                   
         return doc
 
 proj2.execute()
-#doc = proj2.provenance()
-#print(doc.get_provn())
-#print(json.dumps(json.loads(doc.serialize()), indent=4))
+doc = proj2.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
