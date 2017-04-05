@@ -7,7 +7,7 @@ The [Boston Public Schools][bps] has announced a [Transportation Challenge][tc].
 
 ## Optimization Methods
 ### Assigning Students to Buses
-###### Number of buses
+###### Number of #buses
 
 ###### K-means Clustering Algorithm
 
