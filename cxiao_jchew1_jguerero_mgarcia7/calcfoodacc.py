@@ -30,10 +30,9 @@ class calcfoodacc(dml.Algorithm):
 		foodsources_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.foodsources'].find()
 		add_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.masteraddress'].find()
 
-		fs_per_nb = {source['Neighborhood']: (source['latitude'], source['longitude'], source['Type']) for source in foodsources_data_cursor}
-		add_per_nb = {a.get('neighborhood'): (a['latitude'], a['longitude'], 'Residential') for a in add_data_cursor}
+		fs = [(source['Neighborhood'], source['latitude'], source['longitude'], source['Type']) for source in foodsources_data_cursor]
+		add = [(a.get('neighborhood'),a['latitude'], a['longitude'], 'Residential') for a in add_data_cursor]
 
-		'''
 		# Aggregate fs and add per neighborhood
 		def aggregate(R):
 			keys = {r[0] for r in R if r[0] is not None}
@@ -41,7 +40,6 @@ class calcfoodacc(dml.Algorithm):
 
 		fs_per_nb = aggregate(fs)
 		add_per_nb = aggregate(add)
-		'''
 
 
 		def createDistanceMatrix(address,food):
