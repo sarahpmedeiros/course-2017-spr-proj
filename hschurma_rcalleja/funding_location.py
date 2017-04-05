@@ -75,11 +75,6 @@ class funding_location(dml.Algorithm):
 
 
 
-        #print(nameFund)
-        #print(nameLoc)
-        #print(nameFund)
-
-        
         P = product(nameLoc, nameFund)
         #print(P)
         S = select(P, lambda t: t[0]['Name'] == t[1]['Name'])
@@ -91,9 +86,6 @@ class funding_location(dml.Algorithm):
         repo.createCollection('funding_location')
         repo['hschurma_rcalleja.funding_location'].insert(PR)
     
-        #Trim white spaces
-        
-   
 
     @staticmethod
     def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
