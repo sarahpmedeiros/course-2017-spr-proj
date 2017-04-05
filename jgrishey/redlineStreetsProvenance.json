@@ -1,0 +1,78 @@
+{
+    "prefix": {
+        "alg": "http://datamechanics.io/algorithm/",
+        "dat": "http://datamechanics.io/data/",
+        "ont": "http://datamechanics.io/ontology#",
+        "log": "http://datamechanics.io/log/",
+        "geo": "http://api.geonames.org/"
+    },
+    "agent": {
+        "alg:jgrishey#redlineStreets": {
+            "prov:type": {
+                "$": "prov:SoftwareAgent",
+                "type": "prov:QUALIFIED_NAME"
+            },
+            "ont:Extension": "py"
+        }
+    },
+    "entity": {
+        "geo:findNearbyStreetsJSON": {
+            "prov:label": "311, Service Requests",
+            "prov:type": "ont:DataResource",
+            "ont:Extension": "json"
+        },
+        "dat:jgrishey#redlineStations": {
+            "prov:label": "MongoDB Request",
+            "prov:type": "ont:DataSet",
+            "ont:Extension": "mongoDB"
+        },
+        "dat:jgrishey#redlineStreets": {
+            "prov:label": "Red Line Nearby Streets",
+            "prov:type": "ont:DataSet"
+        }
+    },
+    "activity": {
+        "log:uuid6e01f004-78a5-4eb9-b2a0-ca928b45397c": {}
+    },
+    "wasAssociatedWith": {
+        "_:id1": {
+            "prov:activity": "log:uuid6e01f004-78a5-4eb9-b2a0-ca928b45397c",
+            "prov:agent": "alg:jgrishey#redlineStreets"
+        }
+    },
+    "used": {
+        "_:id2": {
+            "prov:activity": "log:uuid6e01f004-78a5-4eb9-b2a0-ca928b45397c",
+            "prov:entity": "dat:jgrishey#redlineStations",
+            "prov:type": "ont:Retrieval"
+        },
+        "_:id3": {
+            "prov:activity": "log:uuid6e01f004-78a5-4eb9-b2a0-ca928b45397c",
+            "prov:entity": "geo:findNearbyStreetsJSON",
+            "prov:type": "ont:Retrieval",
+            "ont:Query": "lat=&lng=&username=",
+            "ont:Computation": "Get Streets and append to corresponding station"
+        }
+    },
+    "wasAttributedTo": {
+        "_:id4": {
+            "prov:entity": "dat:jgrishey#redlineStreets",
+            "prov:agent": "alg:jgrishey#redlineStreets"
+        }
+    },
+    "wasGeneratedBy": {
+        "_:id5": {
+            "prov:entity": "dat:jgrishey#redlineStreets",
+            "prov:activity": "log:uuid6e01f004-78a5-4eb9-b2a0-ca928b45397c"
+        }
+    },
+    "wasDerivedFrom": {
+        "_:id6": {
+            "prov:generatedEntity": "dat:jgrishey#redlineStreets",
+            "prov:usedEntity": "geo:findNearbyStreetsJSON",
+            "prov:activity": "dat:jgrishey#redlineStations",
+            "prov:generation": "log:uuid6e01f004-78a5-4eb9-b2a0-ca928b45397c",
+            "prov:usage": "log:uuid6e01f004-78a5-4eb9-b2a0-ca928b45397c"
+        }
+    }
+}
