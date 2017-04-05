@@ -13,10 +13,10 @@ Consider the project deadline and our capability, we made a few assumptions for 
 
 ### Assigning Students to Buses
 We retrieve the students’ coordinations and schools they attend from the dataset and aggregate by school names.
-###### Number of buses
-We set each school bus to have 50 seats, which is same as a normal bus size.  **Therefore, we have a general idea of how many buses we need for each school.**
+#### Number of buses
+We set each school bus to have 50 seats, which is same as a normal bus size.  Therefore, we have a general idea of how many buses we need for each school.
 #### K-means Clustering Algorithm
-In order to make sure each bus has shortest route, it needs to pick students that live near to each other. Therefore, we implement the [k-mean clustering](https://en.wikipedia.org/wiki/K-means_clustering)  algorithm to group the students based on their location. Then we find the mean point in this cluster and store into the new data set. Because we cannot control how many students are assigned into each cluster, we cannot  guarantee that each bus have **less than** 50 students.
+In order to make sure each bus has shortest route, it needs to pick students that live near to each other. Therefore, we implement the [k-mean clustering](https://en.wikipedia.org/wiki/K-means_clustering)  algorithm to group the students based on their location. Then we find the mean point in this cluster and store into the new data set. Because we cannot control how many students are assigned into each cluster, we cannot  guarantee that each bus have less than 50 students.
 
 ### Bus Route
 We use the new data obtained from the previous algorithm.
