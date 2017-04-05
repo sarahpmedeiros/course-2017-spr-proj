@@ -72,6 +72,7 @@ class transformation_one_bus(dml.Algorithm):
         
         # also want to keep track of the worst distance between a student (possibly)
        
+       #vincentie geopy
         b = select(product(A,A), lambda t: t[0][0][0] == t[1][0][0])
 
         c = project(b, lambda t: (t[0][0], dist(t[0][1],t[1][1])))
