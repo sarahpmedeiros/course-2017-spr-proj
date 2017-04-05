@@ -1,5 +1,5 @@
 # retrieveData.py
-# retrieve raw data from online data portal
+# retrieve raw data of Boston Public Schools Challenge
 
 import urllib.request
 import json
