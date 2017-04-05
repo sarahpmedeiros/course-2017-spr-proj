@@ -25,22 +25,22 @@ class retrieveData(dml.Algorithm):
         ###### Importing Datasets and putting them inside the mongoDB database #####
 
         # Waze Traffic Data
-        url = 'https://data.cityofboston.gov/resource/dih6-az4h.json'
+        url = 'http://data.cityofboston.gov/resource/dih6-az4h.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("WazeTrafficData")
         repo.createCollection("WazeTrafficData")
-        repo['cfortuna_houset_karamy_snjan19.WazeTrafficData'].insert_many(r['features'])
+        repo['cfortuna_houset_karamy_snjan19.WazeTrafficData'].insert_many(r)
 
         # Boston Hospitals
-        url = 'https://data.cityofboston.gov/resource/u6fv-m8v4.json'
+        url = 'http://data.cityofboston.gov/resource/u6fv-m8v4.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("BostonHospitalsData")
         repo.createCollection("BostonHospitalsData")
-        repo['cfortuna_houset_karamy_snjan19.BostonHospitalsData'].insert_many(r['features'])
+        repo['cfortuna_houset_karamy_snjan19.BostonHospitalsData'].insert_many(r)
 
 
         # Streets of Boston
@@ -50,7 +50,7 @@ class retrieveData(dml.Algorithm):
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("BostonStreetsData")
         repo.createCollection("BostonStreetsData")
-        repo['cfortuna_houset_karamy_snjan19.Streets'].insert_many(r)
+        repo['cfortuna_houset_karamy_snjan19.BostonStreetsData'].insert_many(r)
 
 
         repo.logout()
