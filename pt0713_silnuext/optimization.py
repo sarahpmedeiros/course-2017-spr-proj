@@ -279,7 +279,7 @@ class proj2(dml.Algorithm):
 
 proj2.execute()
 doc = proj2.provenance()
-#print(doc.get_provn())
-#print(json.dumps(json.loads(doc.serialize()), indent=4))
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
