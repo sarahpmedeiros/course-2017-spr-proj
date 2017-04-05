@@ -43,7 +43,6 @@ class retrieveData(dml.Algorithm):
         repo.createCollection("BostonHospitalsData")
         repo['cfortuna_houset_karamy_snjan19.BostonHospitalsData'].insert_many(r)
 
-
         # Streets of Boston
         url = 'http://data.mass.gov/resource/ms23-5ubn.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
@@ -53,6 +52,14 @@ class retrieveData(dml.Algorithm):
         repo.createCollection("BostonStreetsData")
         repo['cfortuna_houset_karamy_snjan19.BostonStreetsData'].insert_many(r)
 
+        # Car Crashes
+        url = 'http://datamechanics.io/data/cfortuna_houset_karamy_snjan19/CarCrashData.json'
+        response = urllib.request.urlopen(url).read().decode("utf-8")
+        r = json.loads(response)
+        s = json.dumps(r, sort_keys=True, indent=2)
+        repo.dropCollection("CarCrashData")
+        repo.createCollection("CarCrashData")
+        repo['cfortuna_houset_karamy_snjan19.CarCrashData'].insert_many(r)
 
         repo.logout()
 
