@@ -32,7 +32,7 @@ class retrieveData(dml.Algorithm):
         repo.createCollection("buses")
         repo['echogu_wei0496_wuhaoyu.buses'].insert_many(r)
         repo['echogu_wei0496_wuhaoyu.buses'].metadata({'complete': True})
-        print(repo['echogu_wei0496_wuhaoyu.buses'].metadata())
+        print(repo['echogu_wei0496_wuhaoyu.buses'].metadata(), "Retrieved buses")
 
         # grade-safe-distance
         url = 'http://datamechanics.io/data/_bps_transportation_challenge/grade-safe-distance.json'
@@ -42,7 +42,7 @@ class retrieveData(dml.Algorithm):
         repo.createCollection("grade_safe_distance")
         repo['echogu_wei0496_wuhaoyu.grade_safe_distance'].insert_one(r)
         repo['echogu_wei0496_wuhaoyu.grade_safe_distance'].metadata({'complete': True})
-        print(repo['echogu_wei0496_wuhaoyu.grade_safe_distance'].metadata())
+        print(repo['echogu_wei0496_wuhaoyu.grade_safe_distance'].metadata(), "Retrieved grade safe distance")
 
         # safety-scores
         url = 'http://datamechanics.io/data/_bps_transportation_challenge/safety-scores.json'
@@ -52,7 +52,7 @@ class retrieveData(dml.Algorithm):
         repo.createCollection("safety_scores")
         repo['echogu_wei0496_wuhaoyu.safety_scores'].insert_many(r)
         repo['echogu_wei0496_wuhaoyu.safety_scores'].metadata({'complete': True})
-        print(repo['echogu_wei0496_wuhaoyu.safety_scores'].metadata())
+        print(repo['echogu_wei0496_wuhaoyu.safety_scores'].metadata(), "Retrieved safety scores")
 
         # schools
         url = 'http://datamechanics.io/data/_bps_transportation_challenge/schools-real.geojson'
@@ -62,7 +62,7 @@ class retrieveData(dml.Algorithm):
         repo.createCollection("schools")
         repo['echogu_wei0496_wuhaoyu.schools'].insert_many(r)
         repo['echogu_wei0496_wuhaoyu.schools'].metadata({'complete': True})
-        print(repo['echogu_wei0496_wuhaoyu.schools'].metadata())
+        print(repo['echogu_wei0496_wuhaoyu.schools'].metadata(), "Retrieved schools")
 
         # students
         url = 'http://datamechanics.io/data/_bps_transportation_challenge/students-simulated.geojson'
@@ -72,7 +72,7 @@ class retrieveData(dml.Algorithm):
         repo.createCollection("students")
         repo['echogu_wei0496_wuhaoyu.students'].insert_many(r)
         repo['echogu_wei0496_wuhaoyu.students'].metadata({'complete': True})
-        print(repo['echogu_wei0496_wuhaoyu.students'].metadata())
+        print(repo['echogu_wei0496_wuhaoyu.students'].metadata(), "Retrieved students")
 
         repo.logout()
 

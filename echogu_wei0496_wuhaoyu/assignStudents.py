@@ -54,7 +54,7 @@ class assignStudents(dml.Algorithm):
             num_students = len(item[1][0])
             num_buses = math.ceil(num_students / bus_capacity)
             students_points = [(student[1], student[2], student[0]) for student in item[1][0]]
-            print(str(school) + ": ", num_students, "students,", num_buses, "buses")
+            print(str(school) + ":", num_students, "students,", num_buses, "buses")
 
             if num_buses == 1:
                 means = assignStudents.cal_centroid(students_points)
@@ -69,8 +69,8 @@ class assignStudents(dml.Algorithm):
 
                 # k-means clustering algorithm for k = num_buses
                 means = assignStudents.k_means(random_points, students_points, lower_lat, upper_lat, lower_lon, upper_lon)
-                print("k-means:", means)
-                print("k-means size:", len(means))
+                # print("k-means:", means)
+                # print("k-means size:", len(means))
 
             final = assignStudents.assign_students(means, students_points)
             results.append(final)
@@ -148,62 +148,64 @@ class assignStudents(dml.Algorithm):
         return (x / c, y / c)
 
     @staticmethod
-    def eq_tuples(a, b):
-        return math.isclose(a[0], b[0]) and math.isclose(a[1], b[1])
+    def eq_values(a, b):
+        return math.isclose(a, b)
 
     @staticmethod
-    def eq_points(a, b):
-        return math.isclose(a, b)
+    def converge(old, new):
+        # k-means first iteration
+        if len(old) == 0:
+            return False
+
+        for i in range(len(old)):
+            if abs(old[i][0] - new[i][0] > 0.001) or abs(old[i][1] - new[i][1]) > 0.001:
+                return False
+        return True
 
     @staticmethod
     def k_means(M, P, lower_lat, upper_lat, lower_lon, upper_lon):
         OLD = []
-        count = 0
         num_means = len(M)
-        while (OLD != M):
+
+        while assignStudents.converge(OLD, M) == False:
             OLD = M
-            if(count == 10):
-                break
+
             MPD = [(m, p, assignStudents.dist(m, p[0:2])) for (m, p) in assignStudents.product(M, P)]
             PDs = [(p, assignStudents.dist(m, p[0:2])) for (m, p, d) in MPD]
             PD = assignStudents.aggregate(PDs, min)
-            MP = [(m, p) for ((m, p, d), (p2, d2)) in assignStudents.product(MPD, PD) if assignStudents.eq_tuples(p, p2) and assignStudents.eq_points(d, d2)]
-            # print(len(M), len(set(M)))
+
+            MP = [(m, p) for ((m, p, d), (p2, d2)) in assignStudents.product(MPD, PD) if p == p2 and d == d2]
             MT = assignStudents.aggregate(MP, assignStudents.plus)
-
-            M1 = [(m, 1) for ((m, p, d), (p2, d2)) in assignStudents.product(MPD, PD) if assignStudents.eq_tuples(p, p2) and assignStudents.eq_points(d, d2)]
+            M1 = [(m, 1) for ((m, p, d), (p2, d2)) in assignStudents.product(MPD, PD) if p == p2 and d == d2]
             MC = assignStudents.aggregate(M1, sum)
-
             M = [assignStudents.scale(t, c) for ((m, t), (m2, c)) in assignStudents.product(MT, MC) if m == m2]
             M = sorted(M)
 
             # If some mean points merge together, add random points into the list of mean points
             if (len(M) != num_means):
-                print("Mean point merged!")
+                # print("Mean point merged!")
                 diff = num_means - len(M)
                 for i in range(diff):
                     random_points=[(random.uniform(lower_lat, upper_lat), random.uniform(lower_lon, upper_lon))]
                     M = M + random_points
-
             # print("M:", M)
-            count += 1
         return sorted(M)
 
     @staticmethod
     def assign_students(M, P):
+        # [Issue] K-means algorithm does not assign students to each mean evenly.
+        # Although we have set the bus capacity, the actual assignment of students might overflow the capacity
+
         MPD = [(m, p, assignStudents.dist(m, p[:2])) for (m, p) in assignStudents.product(M, P)]
         PDs = [(p, assignStudents.dist(m, p[:2])) for (m, p, d) in MPD]
         PD = assignStudents.aggregate(PDs, min)
 
         final = []
         for mean in M:
-            print("NEW MEAN")
             result = []
             # students_count = 0
-
             for i in PD:
-                # [Issue]
-                if(assignStudents.eq_points(i[1], assignStudents.dist(mean, i[0][:2]))):
+                if(assignStudents.eq_values(i[1], assignStudents.dist(mean, i[0][:2]))):
                     result.append({
                         'student_id': i[0][2],
                         'latitude': i[0][0],
@@ -215,35 +217,45 @@ class assignStudents(dml.Algorithm):
                 'points': result})
         return final
 
+    @staticmethod
     def union(R, S):
         return R + S
 
+    @staticmethod
     def difference(R, S):
         return [t for t in R if t not in S]
 
+    @staticmethod
     def intersect(R, S):
         return [t for t in R if t in S]
 
+    @staticmethod
     def project(R, p):
         return [p(t) for t in R]
 
+    @staticmethod
     def select(R, s):
         return [t for t in R if s(t)]
 
+    @staticmethod
     def product(R, S):
         return [(t, u) for t in R for u in S]
 
+    @staticmethod
     def aggregate(R, f):
         keys = {r[0] for r in R}
         return [(key, f([v for (k, v) in R if k == key])) for key in keys]
 
+    @staticmethod
     def map(f, R):
         return [t for (k, v) in R for t in f(k, v)]
 
+    @staticmethod
     def reduce(f, R):
         keys = {k for (k, v) in R}
         return [f(k1, [v for (k2, v) in R if k1 == k2]) for k1 in keys]
 
+    @staticmethod
     def cal_centroid(*points):
         points = points[0]
         x_coords = [float(p[0]) for p in points]
@@ -253,4 +265,9 @@ class assignStudents(dml.Algorithm):
         centroid_y = sum(y_coords) / size
         return (centroid_x, centroid_y)
 
-assignStudents.execute(True)
+# assignStudents.execute()
+# doc = assignStudents.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
+
+## eof

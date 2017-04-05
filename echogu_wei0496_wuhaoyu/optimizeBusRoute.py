@@ -1,7 +1,7 @@
 # optimizeBusRoute.py
 
 # import urllib.request
-# import json
+import json
 import dml
 import prov.model
 import datetime
@@ -27,7 +27,7 @@ class optimizeBusRoute(dml.Algorithm):
         repo = client.repo
         repo.authenticate('echogu_wei0496_wuhaoyu', 'echogu_wei0496_wuhaoyu')
 
-        # Trial mode:
+        # Trial mode
         if trial:
             pass
 
@@ -38,7 +38,7 @@ class optimizeBusRoute(dml.Algorithm):
             assigned_students.append({'aggregated_points': item['aggregated_points'], 'points': item['points']})
 
         # utilize minimum spanning tree to find bus route
-        result = optimizeBusRoute.__find_mst(assigned_students)
+        result = optimizeBusRoute.find_mst(assigned_students)
 
         repo.dropCollection('bus_route')
         repo.createCollection('bus_route')
@@ -94,7 +94,7 @@ class optimizeBusRoute(dml.Algorithm):
     # input: [coordinates] restricted by n(bus capacity, this is the maximum size of the tree)
     # convert the original input into format
     @staticmethod
-    def __find_mst(assigned_students):
+    def find_mst(assigned_students):
         final_res = []
         for i in assigned_students:
             points = i['points']
@@ -105,12 +105,13 @@ class optimizeBusRoute(dml.Algorithm):
                 results.append([j["latitude"], j["longitude"], j['student_id']])
             #print("printing results")
             #print(results)
-            res = optimizeBusRoute.__cal_MST(results)
+            res = optimizeBusRoute.cal_MST(results)
+            print(res)
             for k in res[0]:
                 final.append({
-                    'student_id': results[k][2],
-                    'latitude': results[k][0],
-                    'longitude': results[k][1]})
+                        'student_id': results[k][2],
+                        'latitude': results[k][0],
+                        'longitude': results[k][1]})
 
             final_res.append({
                 'aggregated_points':K_points,
@@ -118,23 +119,26 @@ class optimizeBusRoute(dml.Algorithm):
         return final_res
 
     @staticmethod
-    def __cal_MST(points):
-        # construct a adjacency matrix
-        # issue: when capacity contains only one student, there is a bug
+    def cal_MST(points):
         if(len(points) != 1):
             # construct a adjacency matrix
-            adjacency_matrix = optimizeBusRoute.__generate_graph(points)
-            result = optimizeBusRoute.__Prim(adjacency_matrix)
+            adjacency_matrix = optimizeBusRoute.generate_graph(points)
+            result = optimizeBusRoute.Prim(adjacency_matrix)
+
             return result
+
+        # When points contains only one student, no need to run MST
+        else:
+            return [0], 0
 
     # Initialization the adjacency matrix for the tree
     @staticmethod
-    def __generate_graph(points):
+    def generate_graph(points):
         # initialize the adjacency matrix
         adjacency_matrix = [[100 for x in range(len(points))] for y in range(len(points))]
         for i in range(len(points)-1):
             for j in range(i+1, len(points)):
-                adjacency_matrix[i][j] = optimizeBusRoute.__distance(points[i][0:2], points[j][0:2])
+                adjacency_matrix[i][j] = optimizeBusRoute.distance(points[i][0:2], points[j][0:2])
                 adjacency_matrix[j][i] = adjacency_matrix[i][j]
         return adjacency_matrix
 
@@ -142,7 +146,7 @@ class optimizeBusRoute(dml.Algorithm):
     # Takes the random graph G as input and return the route and
     # the total weight of the MST
     @staticmethod
-    def __Prim(G):
+    def Prim(G):
         # print(G)
         # Initialize the final weight to 0
         result = 0
@@ -176,11 +180,16 @@ class optimizeBusRoute(dml.Algorithm):
                     if Lookup[v] == 0:
                         # Since it's not efficient to lookup and modify existing tuples in the heap
                         # We can just insert the new tuple, upon removal we still have the lowest edge
-                        heappush(heap,[G[u[1]][v],v])
+                        heappush(heap, [G[u[1]][v], v])
         return S, result
 
     @staticmethod
-    def __distance(point1, point2):
+    def distance(point1, point2):
         return vincenty(point1, point2).miles
 
-optimizeBusRoute.execute(True)
+# optimizeBusRoute.execute()
+# doc = optimizeBusRoute.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
+
+## eof
