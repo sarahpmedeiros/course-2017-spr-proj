@@ -104,11 +104,11 @@ class transformation_one_bus(dml.Algorithm):
               #print([vincenty((m[0],m[1]),(c[0],c[1])) for c in n])
               #avgs.append(sum([vincenty((m[0],m[1]),(c[0],c[1])).miles for c in n])/len(n))
               d = [vincenty((m[0],m[1]),(c[0],c[1])).miles for c in n]
-              d.sort(d,kind='mergesort')
-              avgs.append(np.sum([c for i in range(10) in d])/len(10))
-              print(avgs[i])
+              d.sort()
+              avgs.append(np.sum([d[i] for i in range(min(10,len(d)))])/10)
+              #print(avgs[i])
  
-        print(avgs[0]) 
+        #print(avgs[0]) 
         
 
         #test
