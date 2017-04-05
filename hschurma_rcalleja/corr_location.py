@@ -78,7 +78,13 @@ class corr_location(dml.Algorithm):
             dists.append({'School Name': c['School Name'], 'Distances': locs})
 
         #print(dists)
-        print(shortest_dist(dists))
+        shortest = shortest_dist(dists)
+        print(shortest)
+
+
+        repo.dropCollection('corr_location')
+        repo.createCollection('corr_location')
+        repo['hschurma_rcalleja.corr_location'].insert(shortest)
         
 
     @staticmethod
