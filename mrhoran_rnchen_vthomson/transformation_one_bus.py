@@ -20,11 +20,10 @@ import uuid
 import ast
 import sodapy
 import time 
-import vincenty
 import rtree
 from tqdm import tqdm
 import shapely.geometry
-import geopy.distance
+from geopy.distance import vincenty
 
 
 # this transformation will check how many comm gardens and food pantries there are for each area
@@ -82,17 +81,38 @@ class transformation_one_bus(dml.Algorithm):
 
 
 	#fill tree
-        student_tree = rtree.index.Index()
+        p = rtree.index.Property()
+        student_tree = rtree.index.Index(properties=p)
         for i in tqdm(range(len(student_locations))):
               (f,s) = student_locations[i]
               student_tree.insert(i, s.bounds)
 
-        #average out squares at lower nodes
+        
+        avgs = []
+        #average distance to nearest other students for each student
+        for i in tqdm(range(len(student_locations))):
+              #print(student_locations[i][0]['geometry']['coordinates'])
 
+              sv = student_locations[i][0]['geometry']['coordinates']
+              m = (sv[0][0],sv[0][1],sv[0][0],sv[0][1])
+              near = list(student_tree.nearest(m,1,True))
+              n = [x.bbox for x in near]
+              #print(len(n))
+
+              #print(m,(n[0][0],n[0][1])) 
+              #print([vincenty((m[0],m[1]),(c[0],c[1])) for c in n])
+              avgs.append(sum([vincenty((m[0],m[1]),(c[0],c[1])).miles for c in n])/len(n))
+              print(avgs[i])
+ 
+        print(avgs[0]) 
+        
 
         #test
-        hits = student_tree.nearest((-71.2,42,-71,42.2),10)
-        print(list(hits))
+        hits = student_tree.nearest((-71.2,42.2),10,True)
+        #hits = [student_data[c] for c in hits]
+        for t in hits:
+            print(t.bbox)
+        #print(list(hits))
 
 
        # bounds = (-70,-72,41,43)
