@@ -81,7 +81,7 @@ class fetchData(dml.Algorithm):
             'asafer_asambors_maxzm_vivyee.obesity': 'https://chronicdata.cdc.gov/resource/ahrt-wk9b.json?$offset=13908&$limit=177',
             'asafer_asambors_maxzm_vivyee.nutrition_prog': 'https://data.cityofboston.gov/resource/ahjc-pw5e.json?$$app_token=' + cityofboston_token,
             'asafer_asambors_maxzm_vivyee.mbta_routes': 'http://realtime.mbta.com/developer/api/v2/routes?api_key=' + mbta_key + '&format=json',
-            'asafer_asambors_maxzm_vivyee.control': 'http://datamechanics.io/data/asafer_asambors_maxzm_vivyee/Big_Belly_Locations.json'
+            'asafer_asambors_maxzm_vivyee.control': 'http://datamechanics.io/data/asafer_asambors_maxzm_vivyee/Big_Belly_Locations2.json'
         }
 
         for collection, url in datasets.items():
@@ -175,3 +175,4 @@ class fetchData(dml.Algorithm):
         return doc
 
 ## eof
+fetchData.execute()
