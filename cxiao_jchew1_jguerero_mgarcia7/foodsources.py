@@ -8,10 +8,12 @@ import datetime
 import uuid
 import pickle
 import time
+from shapely.geometry import shape, Point
+
 
 class foodsources(dml.Algorithm):
 	contributor = 'cxiao_jchew1_jguerero_mgarcia7'
-	reads = ['cxiao_jchew1_jguerero_mgarcia7.farmersmarkets', 'cxiao_jchew1_jguerero_mgarcia7.supermarkets', 'cxiao_jchew1_jguerero_mgarcia7.allcornerstores']
+	reads = ['cxiao_jchew1_jguerero_mgarcia7.farmersmarkets', 'cxiao_jchew1_jguerero_mgarcia7.supermarkets', 'cxiao_jchew1_jguerero_mgarcia7.allcornerstores', 'cxiao_jchew1_jguerero_mgarcia7.neighborhoods']
 	writes = ['cxiao_jchew1_jguerero_mgarcia7.foodsources']
 
 	@staticmethod
@@ -104,6 +106,24 @@ class foodsources(dml.Algorithm):
 		new_d = pickle.load( open( "save.p", "rb" ) )
 		for row in combined_dataset:
 			row['longitude'], row['latitude'] = new_d[(row['Address'],row['Zipcode'])]
+
+
+		# For each food source, standardize the neighborhoods by looking at the latitude and longitude and finding out what neighborhood it fits into
+		neighborhoods = repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoods']
+
+		# Create shapeobjects for each neighborhood
+		neighborhood_shapes = {n['name']:shape(n['the_geom']) for n in neighborhoods.find({})}
+
+		# Find which neighborhood each point belongs to
+		for row in combined_dataset:
+			if row['longitude'] is None or row['latitude'] is None:
+				continue
+				
+			loc = Point(row['longitude'],row['latitude'])
+			for name,shp in neighborhood_shapes.items():
+				if shp.contains(loc):
+					row['Neighborhood'] = name
+					break
 
 
 

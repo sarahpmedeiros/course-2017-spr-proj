@@ -5,10 +5,11 @@ import dml
 import prov.model
 import datetime
 import uuid
+from shapely.geometry import shape, Point
 
 class masteraddress(dml.Algorithm):
     contributor = 'cxiao_jchew1_jguerero_mgarcia7'
-    reads = []
+    reads = ['cxiao_jchew1_jguerero_mgarcia7.neighborhoods']
     writes = ['cxiao_jchew1_jguerero_mgarcia7.masteraddress']
 
     @staticmethod
@@ -31,6 +32,27 @@ class masteraddress(dml.Algorithm):
 
         residential_codes = set(['A', 'CD', 'R1', 'R2', 'R3', 'R4', 'RC'])
         residential_add = select(r, lambda d: d.get('land_usage') in residential_codes)
+
+        # For each food source, standardize the neighborhoods by looking at the latitude and longitude and finding out what neighborhood it fits into
+        neighborhoods = repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoods']
+
+        # Create shapeobjects for each neighborhood
+        neighborhood_shapes = {n['name']:shape(n['the_geom']) for n in neighborhoods.find({})}
+
+        # Find which neighborhood each point belongs to
+        for row in residential_add:
+            if row['longitude'] is None or row['latitude'] is None:
+                continue
+
+            row['longitude'] = float(row['longitude'])
+            row['latitude'] = float(row['latitude'])
+                
+            loc = Point(row['longitude'],row['latitude'])
+            for name,shp in neighborhood_shapes.items():
+                if shp.contains(loc):
+                    row['neighborhood'] = name
+                    break
+
 
         repo.dropCollection("masteraddress")
         repo.createCollection("masteraddress")
