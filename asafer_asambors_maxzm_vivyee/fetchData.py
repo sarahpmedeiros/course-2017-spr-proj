@@ -109,8 +109,6 @@ class fetchData(dml.Algorithm):
                 repo.dropCollection(collection)
                 repo[collection].insert_many(r)
                 repo[collection].metadata({'complete':True})
-                
-
 
         repo.logout()
 
@@ -131,7 +129,6 @@ class fetchData(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
-
         doc.add_namespace('cdc', 'https://chronicdata.cdc.gov/resource/') # CDC API
         doc.add_namespace('mbta', 'http://realtime.mbta.com/developer/api/v2/r') # MBTA API
 
@@ -142,24 +139,28 @@ class fetchData(dml.Algorithm):
         obesity_resource = doc.entity('cdc:a2ye-t2pa', {'prov:label': 'Obesity Among Adults', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         nutrition_prog_resource = doc.entity('bdp:ahjc-pw5e', {'prov:label': 'Community Culinary and Nutrition Programs', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension': 'json'})
         mbta_routes_resource = doc.entity('mbta:routes', {'prov:label': 'MBTA Routes', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        control_resource = doc.entity('dat:asafer_asambors_maxzm_vivyee', {'prov:label':'Big belly locations', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
 
         get_orchards = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
         get_corner_stores = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
         get_obesity = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime) # LOL
         get_nutrition_prog = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
         get_mbta_routes = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        get_control = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_orchards, this_script)
         doc.wasAssociatedWith(get_corner_stores, this_script)
         doc.wasAssociatedWith(get_obesity, this_script)
         doc.wasAssociatedWith(get_nutrition_prog, this_script)
         doc.wasAssociatedWith(get_mbta_routes, this_script)
+        doc.wasAssociatedWith(get_control, this_script)
 
         doc.usage(get_orchards, orchards_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_corner_stores, corner_stores_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_obesity, obesity_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_nutrition_prog, nutrition_prog_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.usage(get_mbta_routes, mbta_routes_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_control, control_resource, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
 
         orchards = doc.entity('dat:asafer_asambors_maxzm_vivyee#orchards', {prov.model.PROV_LABEL:'Urban Orchard Locations', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(orchards, this_script)
@@ -186,9 +187,15 @@ class fetchData(dml.Algorithm):
         doc.wasGeneratedBy(mbta_routes, get_mbta_routes, endTime)
         doc.wasDerivedFrom(mbta_routes, mbta_routes_resource, get_mbta_routes, get_mbta_routes, get_mbta_routes)
 
+
+        control = doc.entity('dat:asafer_asambors_maxzm_vivyee#control', {prov.model.PROV_LABEL:'Big belly locations', prov.model.PROV_TYPE:'ont:DataSet'})()
+        doc.wasAttributedTo(control, this_script)
+        doc.wasGeneratedBy(control, get_control, endTime)
+        doc.wasDerivedFrom(control, control_resource, get_control, get_control, get_control)
+
         repo.logout()
 
         return doc
 
 ## eof
-fetchData.execute()
+# fetchData.execute()
