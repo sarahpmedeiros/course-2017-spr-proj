@@ -24,6 +24,7 @@ import rtree
 from tqdm import tqdm
 import shapely.geometry
 from geopy.distance import vincenty
+import numpy as np
 
 
 # this transformation will check how many comm gardens and food pantries there are for each area
@@ -89,29 +90,32 @@ class transformation_one_bus(dml.Algorithm):
 
         
         avgs = []
-        #average distance to nearest other students for each student
+        #average distance to nearest 10 other students for each student
         for i in tqdm(range(len(student_locations))):
               #print(student_locations[i][0]['geometry']['coordinates'])
 
               sv = student_locations[i][0]['geometry']['coordinates']
-              m = (sv[0][0],sv[0][1],sv[0][0],sv[0][1])
+              m = (sv[0][0],sv[0][1])
               near = list(student_tree.nearest(m,1,True))
               n = [x.bbox for x in near]
               #print(len(n))
 
               #print(m,(n[0][0],n[0][1])) 
               #print([vincenty((m[0],m[1]),(c[0],c[1])) for c in n])
-              avgs.append(sum([vincenty((m[0],m[1]),(c[0],c[1])).miles for c in n])/len(n))
+              #avgs.append(sum([vincenty((m[0],m[1]),(c[0],c[1])).miles for c in n])/len(n))
+              d = [vincenty((m[0],m[1]),(c[0],c[1])).miles for c in n]
+              d.sort(d,kind='mergesort')
+              avgs.append(np.sum([c for i in range(10) in d])/len(10))
               print(avgs[i])
  
         print(avgs[0]) 
         
 
         #test
-        hits = student_tree.nearest((-71.2,42.2),10,True)
+        #hits = student_tree.nearest((-71.2,42.2),10,True)
         #hits = [student_data[c] for c in hits]
-        for t in hits:
-            print(t.bbox)
+        #for t in hits:
+          #  print(t.bbox)
         #print(list(hits))
 
 
@@ -141,12 +145,14 @@ class transformation_one_bus(dml.Algorithm):
         # idea here is to see what conditions buses are like for differents start times
         
         # also want to keep track of the worst distance between a student (possibly)
-<<<<<<< HEAD
+
        
+      
        #vincentie geopy
-=======
-        """ 
+        """
 >>>>>>> 5f6b3c80055d5fed1c0fccdcdeb0d979025eae25
+       
+        
         b = select(product(A,A), lambda t: t[0][0][0] == t[1][0][0])
 
         c = select(project(b, lambda t: (t[0][0], dist(t[0][1],t[1][1]))), lambda t: t[1] > 0.0)
@@ -158,13 +164,13 @@ class transformation_one_bus(dml.Algorithm):
         f = aggregate(d, sum)
 
         average_distance_students = project(select(product(f,g), lambda t: (t[0][0] == t[1][0])), lambda t: (t[0][0], (t[1][1]/t[0][1])))
+
+        
+
 <<<<<<< HEAD
 =======
 
-        """
-
-        
->>>>>>> 1e27ffee620800c204e86d42bfaba47567e022a5
+        """        
 
         repo.dropCollection('average_distance_students')
         repo.createCollection('average_distance_students')
@@ -295,17 +301,45 @@ def project(R, p):
 def product(R, S):
     return [(t,u) for t in R for u in S]
 
+"""
+#radixsort source: http://www.geekviewpoint.com/python/sorting/radixsort
+def radixsort( aList ):
+  RADIX = 10
+  maxLength = False
+  tmp , placement = -1, 1
+ 
+  while not maxLength:
+    maxLength = True
+    # declare and initialize buckets
+    buckets = [list() for _ in range( RADIX )]
+ 
+    # split aList between lists
+    for  i in aList:
+      tmp = i / placement
+      buckets[tmp % RADIX].append( i )
+      if maxLength and tmp > 0:
+        maxLength = False
+ 
+    # empty lists into aList array
+    a = 0
+    for b in range( RADIX ):
+      buck = buckets[b]
+      for i in buck:
+        aList[a] = i
+        a += 1
+ 
+    # move to next digit
+    placement *= RADIX
+
+"""
+
 def find_location_students(student):
 
     lat = float(student["Latitude"])
     lon = float(student["Longitude"])
     school_start_time = ["Current School Start Time"]
 
-<<<<<<< HEAD
     return((school_start_time, (lat,long)))
-=======
-    return([school_start_time, (lat,lon)])
->>>>>>> 1e27ffee620800c204e86d42bfaba47567e022a5
     
 
 def get_students(student): # want to return the coordinates of the towns in and around Boston
@@ -324,11 +358,7 @@ def get_buses(bus): # want to return the coordinates of the towns in and around 
     lon = bus['Bus Yard Longitude']
     name =  bus['Bus Yard']
 
-<<<<<<< HEAD
-    return((name, (lat,long)))
-=======
-    return([name, (lat,lon)])
->>>>>>> 1e27ffee620800c204e86d42bfaba47567e022a5
+    return((name, (lat,lon)))
 
 transformation_one_bus.execute()
 doc = transformation_one_bus.provenance()
