@@ -33,7 +33,7 @@ Because K-means Clustering is a NP-Hard problem, it takes approximately 15 minut
 ```
 $ python execute.py echogu_wei0496_wuhaoyu --trial
 ```
-###### assignStudents
+###### AssignStudents
 In the trial mode, we select students from ```k``` schools randomly. You can set the number of schools by changing the value of ```k``` in the following line.
 ```python
 if trial:
