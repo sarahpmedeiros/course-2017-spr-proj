@@ -25,7 +25,7 @@ class transformation_two_bus(dml.Algorithm):
 
 
     @staticmethod
-    def execute(trial = False):
+    def execute(trial = True):
         
         startTime = datetime.datetime.now()
 
@@ -98,70 +98,88 @@ class transformation_two_bus(dml.Algorithm):
 
             for i in range(len(cost_array)):
 
-                print("distance from each point to the means:")
-                print(cost_array[i])
+                #print(cost_array[i])
 
                 overall_cost += cost_array[i]
 
             return((overall_cost/len(cost_array)))
 
-        print("number of school points")
-        print(S)
 
-        num_means =44
+        # if trial is true then we want to do it on a small subset of the data
+        
+        if(trial == True):
+
+            ## running on a dataset half the size
+            num_means =22
         
 
-        M = [None]*num_means;
+            # picking the number of means from a random selection from (1/4) of the data
 
-        # the means are picked randomly for the start 
-        for i in range(0, num_means):
+            M = [None]*num_means;
 
-            x = random.randint(0, len(S)-1)
-            val = S[x]
-            M[i] = val
+            for i in range(0, num_means):
 
-        ## trying to split the data to make it better
-        print("")
-        print("number of means:")
-        print(M)
+                x = random.randint(0, len(S)-1)
+                val = S[x]
+                M[i] = val
 
-        x = int(len(S)/2)
+            x = int(len(S)/2)
         
-        P1 = [None]*x
-        P2 = [None]*x
+            P1 = [None]*x
 
-        for i in range(x):
+            for i in range(x):
             
-            P1[i] = S[i]
-            P2[i] = S[i+x]
+                P1[i] = S[i]
 
+            mean = k_means(P1, M)
+            
+            cost = costs(P1, mean)
 
-        mean = k_means(P1, M)
-        mean2 = k_means(P2, M)
+            print("cost of " + str(num_means) +" is "+ str(cost))
+            print("here are the new means")
+            print(mean)
+            return(mean)
+           
 
-        print("new means after kmeans for P1:")
-        results_half = print(mean)
-        
-        print("new means after kmeans for P2:")
-        results_half = print(mean2)
+        ## otherwise just do things normally
+        else:
 
-        cost_combined = (costs(P1, mean)+costs(P1, mean2))/2
-        
-        print("costfor one is"+ str(costs(P1, mean)))
-        print("costfor two is"+ str(costs(P2, mean2)))
-              
-        print("costfor two means is" + str(cost_combined))
-        
-        #repo.dropCollection('mrhoran_rnchen.local_fm')
-        #repo.createCollection('mrhoran_rnchen.local_fm')
+            #after running various test, cost of more means dropped off around here
 
-        #repo.mrhoran_rnchen.local_fm.insert(dict(X))
+            num_means =44
 
-        repo.logout()
+            # picking the number of means from a random selection of the data
 
-        endTime = datetime.datetime.now()
+            M = [None]*num_means;
 
-        return {"start":startTime, "end":endTime}
+            for i in range(0, num_means):
+
+                x = random.randint(0, len(S)-1)
+                val = S[x]
+                M[i] = val
+
+                
+            mean = k_means(S, M)
+            
+            cost_combined = (costs(S, mean))
+           
+
+            # now we want to insert the means into a dictionanry
+
+            new_means = mean# + mean2
+
+            k_means = project(new_means, lambda t: ("1", (t[0], t[1])))
+            
+            repo.dropCollection('mrhoran_rnchen_vthomson.kmeans_school_hubs')
+            repo.createCollection('mrhoran_rnchen_vthomson.kmeans_school_hubs')
+
+            repo.mrhoran_rnchen_vthomson.kmeans_school_hubs.insert(dict(k_means))
+#
+            repo.logout()
+
+            endTime = datetime.datetime.now()
+
+            return {"start":startTime, "end":endTime}
 
     
     @staticmethod
