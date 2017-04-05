@@ -41,7 +41,7 @@ python3 salary.py
 ### *by Minteng Xie, Yue Lei, Zhi Dou*
 
 ## 1.
-A new team is formed by Minteng Xie, Yue Lei and Zhi Dou. All scripts and files of project 2 is under new folder ```minteng_tigerlei_zhidou```. We modify part of ```location.py``` in project 1 and add a new transformation ```crime.py``` to retrieve and store new crime data into database. All ipynb files are just used to plot and show graphs in case of running error inspected by ```execute.py```.
+A new team is formed by Minteng Xie, Yue Lei and Zhi Dou. All scripts and files of project 2 is under new folder ```minteng_tigerlei_zhidou```. We modify part of ```location.py``` in project 1 and add a new transformation ```crime.py``` to retrieve and store new crime data into database. All ```.ipynb``` files are just used to plot and show graphs in case of running error inspected by ```execute.py```.
 
 ### auth.json
 This project use app token from ```boston data portal``` and ```googlemaps geocoding API```. To retrieve data automatically, app token should be added into `auth.json` file as follow format:
@@ -174,7 +174,7 @@ python3 execute.py minteng_tigerlei_zhidou
 
 ## 3.b 
 ### Trial mode
-In trial mode, the algorithm would complete its execution very quickly (in at most a few seconds) by operating on a very small portion of the input data set(s). 
+In trial mode, the algorithm would complete its execution very quickly (in at most a few seconds) by operating on a very small portion of the input data set(s). All retreieve and transformation are limited to 500 records.
 
 Remember to uncomment last few lines of the file
 ```python
@@ -183,7 +183,12 @@ Remember to uncomment last few lines of the file
 # else:
 #     <filename>.execute()
 ```
-To run it:
+To run trial mode on all files:
 ```python
-python3 <filename>.py trial
+python3 execute.py --trial
+```
+
+To run trial mode on separate files:
+```python
+python3 <filename>.py --trial
 ```
