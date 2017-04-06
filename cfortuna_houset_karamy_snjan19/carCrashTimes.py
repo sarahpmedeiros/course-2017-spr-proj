@@ -10,48 +10,32 @@ import requests
 from collections import *
 import math
 import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+import numpy as np
 
 class carCrashTimes(dml.Algorithm):
     contributor = 'cfortuna_houset_karamy_snjan19'
     reads = ['cfortuna_houset_karamy_snjan19.CarCrashData']
-    writes = ['']
+    writes = ['cfortuna_houset_karamy_snjan19.CrashTimes']
 
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
         startTime = datetime.datetime.now()
 
-        def intersect(R, S):
-            return [t for t in R if t in S]
-
-        def aggregate(R, f):
-            keys = {r[0] for r in R}
-            return [(key, f([v for (k,v) in R if k == key])) for key in keys]
-
-        def removeDuplicates(seq):
-            seen = set()
-            seen_add = seen.add
-            return [x for x in seq if not (x in seen or seen_add(x)) and x != " "]
-
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('cfortuna_houset_karamy_snjan19', 'cfortuna_houset_karamy_snjan19')
 
-        #GOAL: Time and weather → what’s probability of car accident at a location (clustered points together)
-
-        # Initialize new repository to store the data
-
         # Trial Mode is basically limiting data points on which to run execution if trial parameter set to true
-        #Retrieve Data
-        repoData = repo['cfortuna_houset_karamy_snjan19.CarCrashData'].find()#.limit(5) if trial else repo['cfortuna_houset_karamy_snjan19.CarCrashData'].find()
-        
+        repoData = repo['cfortuna_houset_karamy_snjan19.CarCrashData'].find().limit(0) if trial else repo['cfortuna_houset_karamy_snjan19.CarCrashData'].find()
+
+        # Categorize the times into the hour that the crash has occured
         times = []
         for element in repoData:
             time_string = element["Crash Time"]
             time_split = time_string.split(" ")
-
-            print(time_split)
 
             if time_split[1] == "PM" and int(time_split[0].split(":")[0]) != 12:
                 time_digit = int(time_split[0].split(":")[0]) + 12
@@ -59,7 +43,9 @@ class carCrashTimes(dml.Algorithm):
                 time_digit = int(time_split[0].split(":")[0])
             
             times.append(time_digit)
+            print(time_string)
 
+        # Count the amount of car crashes that appear in the hour ranges
         count = Counter(times)
         x = []
         y = []
@@ -67,12 +53,7 @@ class carCrashTimes(dml.Algorithm):
             x.append(key)
             y.append(value)
 
-        print(x)
-        print(y)
-
-        plt.bar(x,y)
-        plt.show()
-
+        # Calculate the linear regression on the data set
         meanX = sum(x) * 1.0 / len(x)
         meanY = sum(y) * 1.0 / len(y)
 
@@ -86,15 +67,17 @@ class carCrashTimes(dml.Algorithm):
 
         MSE = sum([(y[i] - (slope * x[i] + intercept))**2 for i in range(len(x))]) * 1.0 / len(x)
         RMSE = math.sqrt(MSE)
+        lineOfBestFit = "y = " + str(slope) + "x + " + str(intercept)
 
-        stats = {"slope": slope ,"intercept": intercept, "MSE": MSE, "RMSE": RMSE}
-        print(stats)
+        # Place the results of the linear regression into Mongo
+        result = {"line of best fit": lineOfBestFit, "slope": slope , "intercept": intercept, "mean square error": MSE, "root mean square error": RMSE}
+    
+        repo.dropCollection("CrashTimes")
+        repo.createCollection("CrashTimes")
 
+        repo['cfortuna_houset_karamy_snjan19.CrashTimes'].insert(result)
 
-        #Retrieve Time, Weather and Location of accidents
-        
         repo.logout()
-
         endTime = datetime.datetime.now()
 
         return {"start":startTime, "end":endTime}
