@@ -133,7 +133,7 @@ class shortestMbtaPath(dml.Algorithm):
         # project
 
         health_obesity_times = shortestMbtaPath.project(health_obesity, shortestMbtaPath.get_closest_path, G)
-        health_obesity_times_tuples = shortestMbtaPath.select(health_obesity_times, lambda x: 'data_value' in x['obesity_locations']['obesity'])
+        health_obesity_times_tuples = shortestMbtaPath.select(health_obesity_times, lambda x: 'data_value' in x['obesity_locations']['obesity'] and x['min_travel_time'] != sys.maxsize)
         health_obesity_times_tuples = shortestMbtaPath.project(health_obesity_times_tuples, shortestMbtaPath.get_tuples, G)
         # nx.dijkstra_path_length(G, source, target)
         repo.dropCollection('asafer_asambors_maxzm_vivyee.health_obesity')

@@ -133,7 +133,7 @@ class controlShortestMbtaPath(dml.Algorithm):
         # project
 
         control_obesity_times = controlShortestMbtaPath.project(control_obesity, controlShortestMbtaPath.get_closest_path, G)
-        control_obesity_times_tuples = controlShortestMbtaPath.select(control_obesity_times, lambda x: 'data_value' in x['obesity_locations']['obesity'])
+        control_obesity_times_tuples = controlShortestMbtaPath.select(control_obesity_times, lambda x: 'data_value' in x['obesity_locations']['obesity'] and x['min_travel_time'] != sys.maxsize)
         control_obesity_times_tuples = controlShortestMbtaPath.project(control_obesity_times_tuples, controlShortestMbtaPath.get_tuples, G)
         # nx.dijkstra_path_length(G, source, target)
 

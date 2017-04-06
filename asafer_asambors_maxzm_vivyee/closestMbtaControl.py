@@ -127,7 +127,7 @@ class closestMbtaControl(dml.Algorithm):
 
         # convert to dictionary format
         stops_by_location_dict = closestMbtaControl.aggregate(filtered_stops, closestMbtaControl.convert_to_dictionary)
-        stops_by_location_dict = closestMbtaControl.project(stops_by_location_dict, lambda x: {'healthy_locations': x[0], 'stops': x[1]})
+        stops_by_location_dict = closestMbtaControl.project(stops_by_location_dict, lambda x: {'control_locations': x[0], 'stops': x[1]})
 
         repo['asafer_asambors_maxzm_vivyee.control_mbta'].insert_many(stops_by_location_dict)
         repo['asafer_asambors_maxzm_vivyee.control_mbta'].metadata({'complete': True})
