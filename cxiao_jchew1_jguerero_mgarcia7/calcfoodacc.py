@@ -27,8 +27,12 @@ class calcfoodacc(dml.Algorithm):
 		repo.authenticate('cxiao_jchew1_jguerero_mgarcia7', 'cxiao_jchew1_jguerero_mgarcia7')
 
 		# Data cursors
-		foodsources_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.foodsources'].find()
-		add_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.masteraddress'].find()
+		if trial == 'False':
+			foodsources_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.foodsources'].find()
+			add_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.masteraddress'].find()
+		else:
+			foodsources_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.foodsources'].find().limit(200)
+			add_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.masteraddress'].find().limit(800)
 
 		fs_per_nb = defaultdict(list)
 		add_per_nb = defaultdict(list)
