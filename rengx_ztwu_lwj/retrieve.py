@@ -11,7 +11,7 @@ import ssl
 class retrieve(dml.Algorithm):
 	contributor = 'rengx_ztwu_lwj'
 	reads = []
-	writes = ["rengx_ztwu_lwj.publicschool"]
+	writes = ["rengx_ztwu_lwj.publicschool", "rengx_ztwu_lwj.market"]
 	
 	@staticmethod
 	def selection(market_data):
@@ -75,4 +75,4 @@ class retrieve(dml.Algorithm):
 	def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
 		return doc
 
-retrieve.execute()
+#retrieve.execute()

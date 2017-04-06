@@ -133,7 +133,6 @@ class union(dml.Algorithm):
                response = ss.get("pyxn-r3i2")
                r = json.loads(json.dumps(response, sort_keys=True, indent=2))
                police_data = r
-
                accessdb = union.unionF(hospital_data, garden_data, market_data, police_data)
                repo.access.drop()
                access = repo.access
@@ -148,7 +147,7 @@ class union(dml.Algorithm):
          return doc
                                           
                
-union.execute()
+#union.execute()
 #doc = union.provenance()
 #print(doc.get_provn())
 #print(json.dumps(json.loads(doc.serialize()), indent=4))

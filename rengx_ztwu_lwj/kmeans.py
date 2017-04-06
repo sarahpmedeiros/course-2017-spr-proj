@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 class kmeans(dml.Algorithm):
 	contributor = 'rengx_ztwu_lwj'
 	reads = ["rengx_ztwu_lwj.publicschool"]
-	writes = ["rengx_ztwu_lwj.centrals"]
+	writes = ["rengx_ztwu_lwj.centrals", "rengx_ztwu_lwj.kmeans"]
 	@staticmethod
 	def dist(p, q):
 		(x1,y1) = p
@@ -63,6 +63,17 @@ class kmeans(dml.Algorithm):
 			MC = kmeans.aggregate(M1, sum)
 			M = [kmeans.scale(t,c) for ((m,t),(m2,c)) in kmeans.product(MT, MC) if m == m2]
 			sorted(M)
+		for s in pcd:
+			cid = 0
+			x = int(s["x"])
+			y = int(s["y"])
+			mindist = kmeans.dist((x,y), M[0])
+			for c in M:
+				dis = kmeans.dist((x,y),c)
+				if dis < mindist:
+					cid = M.index(c)
+					mindist = dis
+			s["cid"] = str(cid)			
 #		print(M)
 #		xs = []
 #		ys = []
@@ -71,7 +82,56 @@ class kmeans(dml.Algorithm):
 #			ys.append(i[1])
 #		plt.plot(xs,ys,"ro")
 #		plt.show()
-		return M
+		return pcd, M
+	
+	@staticmethod
+	def draw(pcd, points):
+		x1 = []
+		x2 = []
+		x3 = []
+		x4 = []
+		x5 = []
+		y1 = []
+		y2 = []
+		y3 = []
+		y4 = []
+		y5 = []
+		for i in pcd:
+			x = int(i["x"])
+			y = int(i["y"])
+			cid = int(i["cid"])
+			if(cid == 0):
+				x1.append(x)
+				y1.append(y)	
+			elif(cid == 1):
+				x2.append(x)
+				y2.append(y)	
+			elif(cid == 2):
+				x3.append(x)
+				y3.append(y)	
+			elif(cid == 3):
+				x4.append(x)
+				y4.append(y)	
+			elif(cid == 4):
+				x5.append(x)
+				y5.append(y)
+		#print(x1, y1, x2, y2, x3, y3, x4, y4, x5, y5)	
+		xs = []
+		ys = []
+		plt.title("Clusters of Public Schools")
+		plt.plot(x1, y1, "go")
+		plt.plot(x2, y2, "bo")
+		plt.plot(x3, y3, "mo")
+		plt.plot(x4, y4, "yo")
+		plt.plot(x5, y5, "co")	
+		for i in points:
+			xs.append(i[0])
+			ys.append(i[1])
+			plt.plot(xs,ys,"r*")
+		plt.show()
+			
+		
+		
 	@staticmethod
 	def execute(trial = False):
 		startTime = datetime.datetime.now()
@@ -84,7 +144,17 @@ class kmeans(dml.Algorithm):
 		pcd = []
 		for i in publicschool_find:
 			pcd.append(i)
-		points = kmeans.kmeanF(pcd)
+		if trial:
+			pcd = pcd[:50]
+		pcd, points = kmeans.kmeanF(pcd)
+		#print(pcd[0])
+		#draw
+		DRAW = False
+		if(DRAW):
+			kmeans.draw(pcd, points)
+		
+		repo.kmeans.drop()
+		repo.kmeans.insert_many(pcd)
 		#print(points)
 		res = []
 		for t in points:
@@ -108,4 +178,4 @@ class kmeans(dml.Algorithm):
 	@staticmethod
 	def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
 		return doc
-kmeans.execute()
+#kmeans.execute()
