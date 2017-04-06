@@ -8,7 +8,7 @@ import sodapy
 
 class transformation2(dml.Algorithm):
     contributor = 'johnt3_rsromero'
-    reads = ['johnt3_rsromero.bpdcrimefio', 'johnt3_rsromero.bpdlocations']
+    reads = ['johnt3_rsromero.newbpdcrimefio', 'johnt3_rsromero.bpdlocations']
     writes = ['johnt3_rsromero.bpdcrimefiolocation']
 
     @staticmethod
@@ -21,7 +21,7 @@ class transformation2(dml.Algorithm):
         repo = client.repo
         repo.authenticate('johnt3_rsromero', 'johnt3_rsromero')
 
-        bpdcrimefiorepo = repo.johnt3_rsromero.bpdcrimefio
+        bpdcrimefiorepo = repo.johnt3_rsromero.newbpdcrimefio
         bpdlocations = repo.johnt3_rsromero.bpdlocations
 
         ##Run Projection on Arrays
