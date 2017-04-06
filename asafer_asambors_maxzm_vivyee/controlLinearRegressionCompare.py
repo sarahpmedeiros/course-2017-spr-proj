@@ -87,10 +87,10 @@ class controlLinearRegressionCompare(dml.Algorithm):
                 
                 doc.usage(get_control_linear_regression_obesity_time, control_time, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
                 doc.usage(get_control_linear_regression_obesity_time, obesity_time_linear_regression_data, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-                doc.wasAttributedTo(result, this_script)
-                doc.wasGeneratedBy(result, get_control_linear_regression_obesity_time, endTime)
-                doc.wasDerivedFrom(result, control_time, get_control_linear_regression_obesity_time, get_control_linear_regression_obesity_time, get_control_linear_regression_obesity_time)
-                doc.wasDerivedFrom(result, obesity_time_linear_regression_data, get_control_linear_regression_obesity_time, get_control_linear_regression_obesity_time, get_control_linear_regression_obesity_time)
+                doc.wasAttributedTo(results, this_script)
+                doc.wasGeneratedBy(results, get_control_linear_regression_obesity_time, endTime)
+                doc.wasDerivedFrom(results, control_time, get_control_linear_regression_obesity_time, get_control_linear_regression_obesity_time, get_control_linear_regression_obesity_time)
+                doc.wasDerivedFrom(results, obesity_time_linear_regression_data, get_control_linear_regression_obesity_time, get_control_linear_regression_obesity_time, get_control_linear_regression_obesity_time)
 
                 repo.logout()
 
