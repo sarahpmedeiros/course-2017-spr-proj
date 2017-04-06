@@ -60,7 +60,7 @@ class controlLinearRegressionCompare(dml.Algorithm):
 
                 print('all uploaded: results')
 
-                # print(stats)
+                print(stats)
                 return {"start":startTime, "end":endTime}
 
 
