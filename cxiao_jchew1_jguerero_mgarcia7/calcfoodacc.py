@@ -137,7 +137,6 @@ class calcfoodacc(dml.Algorithm):
 		newd = {"Neighborhoods":nbs, "Scores":scores, "Zscore_metrics":zscore_metrics, "Avg_metrics":avg_metrics}
 		pickle.dump(newd, open('info.p','wb'))
 
-
 		# Create list of tuples that can be used to update a dictionary
 		info = dict([(nb,score) for nb, score in zip(nbs,scores)])
 		print(nbs)
@@ -149,8 +148,6 @@ class calcfoodacc(dml.Algorithm):
 		for item in nstats:
 			nb = item['Neighborhood']
 			item['FoodScore'] = info.get(nb)
-
-		#print(nstats)
 
 		repo.dropCollection("neighborhoodstatistics")
 		repo.createCollection("neighborhoodstatistics")
