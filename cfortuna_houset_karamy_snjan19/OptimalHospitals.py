@@ -1,0 +1,114 @@
+import urllib.request
+import json
+import dml
+import prov.model
+import datetime
+import uuid
+import csv
+import json
+import requests 
+
+class OptimalHospitals(dml.Algorithm):
+    contributor = 'cfortuna_houset_karamy_snjan19'
+    reads = ['cfortuna_houset_karamy_snjan19.CarCrashData','cfortuna_houset_karamy_snjan19.BostonHospitalsData']
+    writes = ['cfortuna_houset_karamy_snjan19.OptimalHospitals']
+
+    @staticmethod
+    def execute(trial = False):
+        '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
+        startTime = datetime.datetime.now()
+
+        # Set up the database connection.
+        client = dml.pymongo.MongoClient()
+        repo = client.repo
+        repo.authenticate('cfortuna_houset_karamy_snjan19', 'cfortuna_houset_karamy_snjan19')
+
+        # Trial Mode is basically limiting data points on which to run execution if trial parameter set to true
+        #Retrieve Data
+        accidents = repo['cfortuna_houset_karamy_snjan19.CarCrashData'].find()#.limit(5) if trial else repo['cfortuna_houset_karamy_snjan19.CarCrashData'].find()
+        hospitals = repo['cfortuna_houset_karamy_snjan19.BostonHospitalsData'].find()
+
+        # Creating a New repo to store the data in
+        repo.dropCollection("OptimalHospitals")
+        repo.createCollection("OptimalHospitals")
+        
+        
+
+
+
+        repo.logout()
+
+        endTime = datetime.datetime.now()
+
+        return {"start":startTime, "end":endTime}
+
+    """Provenance of this Document"""
+    @staticmethod
+    def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
+        '''
+            Create the provenance document describing everything happening
+            in this script. Each run of the script will generate a new
+            document describing that invocation event.
+            '''
+
+        # Set up the database connection.
+        client = dml.pymongo.MongoClient()
+        repo = client.repo
+        repo.authenticate('cfortuna_houset_karamy_snjan19', 'cfortuna_houset_karamy_snjan19')
+        doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+        doc.add_namespace('mag', 'https://data.mass.gov/resource/')
+
+        this_script = doc.agent('alg:cfortuna_houset_karamy_snjan19#retrieveData', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        
+        wazeResource = doc.entity('bdp:dih6-az4h', {'prov:label':'Waze Traffic Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        hospitalsResource = doc.entity('bdp:u6fv-m8v4', {'prov:label':'Boston Hospitals Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        streetResource = doc.entity('mag:ms23-5ubn', {'prov:label':'Boston Streets Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+
+        getWazeTrafficData = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        getBostonHospitalsData = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        getBostonStreetsData = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+
+        doc.wasAssociatedWith(getWazeTrafficData, this_script)
+        doc.wasAssociatedWith(getBostonHospitalsData, this_script)
+        doc.wasAssociatedWith(getBostonStreetsData, this_script)
+        
+        doc.usage(getWazeTrafficData, wazeResource, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',
+                  #'ont:Query':'?type=Neighborhood+Area+Boston'
+                  }
+                  )
+        doc.usage(getBostonHospitalsData, hospitalsResource, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',
+                  #'ont:Query':'?type=Neighborhood+Area+Cambridge'
+                  }
+                  )
+        doc.usage(getBostonStreetsData, streetResource, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Retrieval',
+                  #'ont:Query':'?type=Neighborhood+Area+Cambridge'
+                  }
+                  )
+        WazeTrafficData = doc.entity('dat:cfortuna_houset_karamy_snjan19#WazeTrafficData', {prov.model.PROV_LABEL:'Waze Traffic Data', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(WazeTrafficData, this_script)
+        doc.wasGeneratedBy(WazeTrafficData, getWazeTrafficData, endTime)
+        doc.wasDerivedFrom(WazeTrafficData, wazeResource, getWazeTrafficData, getWazeTrafficData, getWazeTrafficData)
+
+        BostonHospitalsData = doc.entity('dat:cfortuna_houset_karamy_snjan19#BostonHospitalsData', {prov.model.PROV_LABEL:'Boston Hospitals Data', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(BostonHospitalsData, this_script)
+        doc.wasGeneratedBy(BostonHospitalsData, getBostonHospitalsData, endTime)
+        doc.wasDerivedFrom(BostonHospitalsData, hospitalsResource, getBostonHospitalsData, getBostonHospitalsData, getBostonHospitalsData)
+
+        BostonStreetsData = doc.entity('dat:cfortuna_houset_karamy_snjan19#BostonStreetsData', {prov.model.PROV_LABEL:'Boston Streets Data', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.wasAttributedTo(BostonStreetsData, this_script)
+        doc.wasGeneratedBy(BostonStreetsData, getBostonStreetsData, endTime)
+        doc.wasDerivedFrom(BostonStreetsData, streetResource, getBostonStreetsData, getBostonStreetsData, getBostonStreetsData)
+
+        repo.logout()
+                  
+        return doc
+
+retrieveData.execute()
+# doc = retrieveData.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
+
+## eof
