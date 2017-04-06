@@ -119,6 +119,6 @@ class cor(dml.Algorithm):
 
 		return doc
 #cor.execute()
-doc = cor.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+#doc = cor.provenance()
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
