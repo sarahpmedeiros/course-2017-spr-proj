@@ -113,11 +113,10 @@ class closestControlObesity(dml.Algorithm):
 
         this_script = doc.agent('alg:asafer_asambors_maxzm_vivyee#closestControlObesity', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
-        # get_closest_control_obesity = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        get_closest_control_obesity = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
 
-        # doc.wasAssociatedWith(get_closest_control_obesity, this_script)
+        doc.wasAssociatedWith(get_closest_control_obesity, this_script)
 
-<<<<<<< HEAD
         control_mbta = doc.entity('dat:asafer_asambors_maxzm_vivyee#control_mbta', {prov.model.PROV_LABEL:'Closest MBTA stops to Control locations', prov.model.PROV_TYPE:'ont:DataSet'})
         obesity_mbta = doc.entity('dat:asafer_asambors_maxzm_vivyee#obesity_mbta', {prov.model.PROV_LABEL:'Closest MBTA stops to Obese areas', prov.model.PROV_TYPE:'ont:DataSet'})
         control_obesity = doc.entity('dat:asafer_asambors_maxzm_vivyee#control_obesity', {prov.model.PROV_LABEL:'Closest control location to an obese area', prov.model.PROV_TYPE:'ont:DataSet'})
@@ -127,17 +126,6 @@ class closestControlObesity(dml.Algorithm):
         doc.wasGeneratedBy(control_obesity, get_closest_control_obesity, endTime)
         doc.wasDerivedFrom(control_obesity, control_mbta, get_closest_control_obesity, get_closest_control_obesity, get_closest_control_obesity)
         doc.wasDerivedFrom(control_obesity, obesity_mbta, get_closest_control_obesity, get_closest_control_obesity, get_closest_control_obesity)
-=======
-        # control_mbta = doc.entity('dat:asafer_asambors_maxzm_vivyee#control_mbta', {prov.model.PROV_LABEL:'Closest MBTA stops to Control locations', prov.model.PROV_TYPE:'ont:DataSet'})
-        # obesity_mbta = doc.entity('dat:asafer_asambors_maxzm_vivyee#obesity_mbta', {prov.model.PROV_LABEL:'Closest MBTA stops to Obese areas', prov.model.PROV_TYPE:'ont:DataSet'})
-        # control_obesity = doc.entity('dat:asafer_asambors_maxzm_vivyee#control_obesity', {prov.model.PROV_LABEL:'Closest control location to an obese area', prov.model.PROV_TYPE:'ont:DataSet'})
-        # doc.usage(get_closest_control_obesity, control_mbta, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        # doc.usage(get_closest_control_obesity, obesity_mbta, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        # doc.wasAttributedTo(control_obesity, this_script)
-        # doc.wasGeneratedBy(control_obesity, get_closest_control_obesity, endTime)
-        # doc.wasDerivedFrom(control_obesity, control_mbta, get_closest_health_obesity, get_closest_health_obesity, get_closest_health_obesity)
-        # doc.wasDerivedFrom(control_obesity, obesity_mbta, get_closest_control_obesity, get_closest_health_obesity, get_closest_health_obesity)
->>>>>>> b1ca103365718b61ef2c614b0cb30f3555854ebc
 
         repo.logout()
 
