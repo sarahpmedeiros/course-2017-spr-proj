@@ -202,6 +202,6 @@ def getCoordinates(address,zipcode):
 		print(e)
 		return None, None
 
-foodsources.execute()
+#foodsources.execute()
 ## eof
 

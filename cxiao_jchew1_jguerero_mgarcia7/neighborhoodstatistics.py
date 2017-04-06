@@ -131,6 +131,6 @@ class neighborhoodstatistics(dml.Algorithm):
 				  
 		return doc
 
-neighborhoodstatistics.execute()
+#neighborhoodstatistics.execute()
 ## eof
 

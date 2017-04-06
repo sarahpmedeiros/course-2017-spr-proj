@@ -74,7 +74,4 @@ class neighborhoods(dml.Algorithm):
                   
         return doc
 
-
-
-
 ## eof

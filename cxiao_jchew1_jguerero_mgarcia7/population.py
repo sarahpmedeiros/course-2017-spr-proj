@@ -141,5 +141,5 @@ def scrape_website():
 
 
 
-population.execute()
+#population.execute()
 ## eof

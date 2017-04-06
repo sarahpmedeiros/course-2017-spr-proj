@@ -8,14 +8,12 @@ import datetime
 import uuid
 import numpy as np
 from collections import defaultdict
-from geopy.distance import vincenty
 import pickle
-from math import radians, cos, sin, asin, sqrt
 
 
 class calcfoodacc(dml.Algorithm):
 	contributor = 'cxiao_jchew1_jguerero_mgarcia7'
-	reads = ['cxiao_jchew1_jguerero_mgarcia7.foodsources', 'cxiao_jchew1_jguerero_mgarcia7.masteraddress']
+	reads = ['cxiao_jchew1_jguerero_mgarcia7.foodsources', 'cxiao_jchew1_jguerero_mgarcia7.masteraddress', 'cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics']
 	writes = ['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics']
 
 	@staticmethod
@@ -75,30 +73,36 @@ class calcfoodacc(dml.Algorithm):
 			empty = [0.000] * len(address)
 			mat = np.array([empty]*3)
 
+			e = [0] * 3
+			m = np.array([e]*len(address))
+
+			total = 0
+
+			fm = 0
+			sm = 0
+			cs = 0
 			#walking distance metric 
 			for row in range(len(distance)):
-				mat[0][row] = sum([1 for i in range(len(distance[row])) if distance[row][i] < 1.0])
+				for i in range(len(distance[row])):
+					if distance[row][i] < 1.0: 
+						total += 1
+						if food[i][2] == 'Farmers Market':
+							m[row][0] += 1
+						elif food[i][2] == 'Supermarkets':
+							m[row][1] += 1
+						elif food[i][2] == 'Cornerstores':
+							m[row][2] += 1
+						
+				mat[0][row] = total
 
 			#distance of closest
 			for row in range(len(distance)):
 				mat[1][row] = min(distance[row])
 
 			#quality of food source
-			fm = 0
-			sm = 0
-			cs = 0
-			for i in range(len(food)):
-				if food[i][2] == 'Farmers Market':
-					fm += 1
-				elif food[i][2] == 'Supermarkets':
-					sm += 1
-				elif food[i][2] == 'Cornerstores':
-					cs += 1
-
-			total = len(food)
-			before = [1*(fm/total), (2/3)*(sm/total), (1/3)*(cs/total)]
-
-			for row in range(len(distance)):
+			t = len(food)	
+			for row in range(len(m)):
+				before = [1*((m[row][0])/t), (2/3)*((m[row][1])/t), (1/3)*((m[row][2])/t)]
 				mat[2][row] = sum(before)
 
 			return mat
@@ -123,7 +127,7 @@ class calcfoodacc(dml.Algorithm):
 		zscore_metrics = np.apply_along_axis(computeZscore,axis=0,arr=avg_metrics)
 
 		# Compute a composite score for each neighborhood
-		weights = np.array([-1,1,-1]) # Weight = -1 if it's a good thing to have a high value, 1 otherwise
+		weights = np.array([1,-1,1]) # Weight = 1 if it's a good thing to have a high value, -1 otherwise
 		scores = np.sum(weights*zscore_metrics,axis=1)
 
 		newd = {"Neighborhoods":nbs, "Scores":scores, "Zscore_metrics":zscore_metrics, "Avg_metrics":avg_metrics}
