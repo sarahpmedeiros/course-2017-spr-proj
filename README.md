@@ -1,100 +1,41 @@
-# course-2017-spr-proj
-Project repository for the course project in the Spring 2017 iteration of the Data Mechanics course at Boston University.
+# Project 1
+## Intro
+We are interested in the relation between personal income and amount of infrastructures in different regions of Bostion city. Do people with higher income share more infrastructure resource than others, or no significant relation of income and infrastructure resource?
+To anwser the question, in this project, data of employee earnings, hospital and public/private school in Boston city are investigated to generate four result datasets, which may help figure out the question.
 
-In this project, you will implement platform components that can obtain a some data sets from web services of your choice, and platform components that combine these data sets into at least two additional derived data sets. These components will interct with the backend repository by inserting and retrieving data sets as necessary. They will also satisfy a standard interface by supporting specified capabilities (such as generation of dependency information and provenance records).
+## Input datasets
+### 3 portals
+* City of Boston Data Portal
+* Boston Wicked Open Data
+* BostonMaps: Open Data
 
-**This project description will be updated as we continue work on the infrastructure.**
+### 5 datasets
+* Employee Earnings Report 2013: https://data.cityofboston.gov/resource/54s2-yxpg
+* Employee Earnings Report 2014: https://data.cityofboston.gov/resource/4swk-wcg8
+* Hospital Locations: https://data.cityofboston.gov/resource/46f7-2snz
+* Public Schools: https://boston.opendatasoft.com/explore/dataset/public-schools
+* NON PUBLIC SCHOOLS: http://bostonopendata.boston.opendata.arcgis.com/datasets/0046426a3e4340a6b025ad52b41be70a_1
 
-## MongoDB infrastructure
+## Algorithm & Transformation
+* get_data.py: fetch 5 datasets from web services and store them in mongodb
+* trans_income.py: Process raw data of employee earnings(2013, 2014) and calculate average personal income for each region of Boston city
+* trans_school.py: Process raw data of public/private schools and count amount of schools(public, private and all, respectively) in each region of Boston city
+* trans_hospital.py: Process raw data of hospital locations and count amount of hospitals in each region of Boston city
+* join_by_region.py: Join data of income, school, hospital by region to see relation between those factors
 
-### Setting up
+## Output datasets
+* regionincome: average personal income for each region of Boston city
+* regionschool: amount of schools(public, private and all, respectively) in each region of Boston city
+* regionhospital: amount of hospitals in each region of Boston city
+* income_infrastructure: relation between income and infrastructure resource in each region of Boston city
 
-We have committed setup scripts for a MongoDB database that will set up the database and collection management functions that ensure users sharing the project data repository can read everyone's collections but can only write to their own collections. Once you have installed your MongoDB instance, you can prepare it by first starting `mongod` _without authentication_:
-```
-mongod --dbpath "<your_db_path>"
-```
-If you're setting up after previously running `setup.js`, you may want to reset (i.e., delete) the repository as follows.
-```
-mongo reset.js
-```
-Next, make sure your user directories (e.g., `alice_bob` if Alice and Bob are working together on a team) are present in the same location as the `setup.js` script, open a separate terminal window, and run the script:
-```
-mongo setup.js
-```
-Your MongoDB instance should now be ready. Stop `mongod` and restart it, enabling authentication with the `--auth` option:
-```
-mongod --auth --dbpath "<your_db_path>"
-```
+## Run scripts automatically
+* python3 execute.py demo
 
-### Working on data sets with authentication
-
-With authentication enabled, you can start `mongo` on the repository (called `repo` by default) with your user credentials:
-```
-mongo repo -u alice_bob -p alice_bob --authenticationDatabase "repo"
-```
-However, you should be unable to create new collections using `db.createCollection()` in the default `repo` database created for this project:
-```
-> db.createCollection("EXAMPLE");
-{
-  "ok" : 0,
-  "errmsg" : "not authorized on repo to execute command { create: \"EXAMPLE\" }",
-  "code" : 13
-}
-```
-Instead, load the server-side functions so that you can use the customized `createCollection()` function, which creates a collection that can be read by everyone but written only by you:
-```
-> db.loadServerScripts();
-> var EXAMPLE = createCollection("EXAMPLE");
-```
-Notice that this function also prefixes the user name to the name of the collection (unless the prefix is already present in the name supplied to the function).
-```
-> EXAMPLE
-alice_bob.EXAMPLE
-> db.alice_bob.EXAMPLE.insert({value:123})
-WriteResult({ "nInserted" : 1 })
-> db.alice_bob.EXAMPLE.find()
-{ "_id" : ObjectId("56b7adef3503ebd45080bd87"), "value" : 123 }
-```
-If you do not want to run `db.loadServerScripts()` every time you open a new terminal, you can use a `.mongorc.js` file in your home directory to store any commands or calls you want issued whenever you run `mongo`.
-
-## Other required libraries and tools
-
-You will need the latest versions of the PROV, DML, and Protoql Python libraries. If you have `pip` installed, the following should install the latest versions automatically:
-```
-pip install prov --upgrade --no-cache-dir
-pip install dml --upgrade --no-cache-dir
-pip install protoql --upgrade --no-cache-dir
-```
-If you are having trouble installing `lxml` in a Windows environment, you could try retrieving it [here](http://www.lfd.uci.edu/~gohlke/pythonlibs/).
-
-Note that you may need to use `python -m pip install <library>` to avoid issues if you have multiple versions of `pip` and Python on your system.
-
-## Formatting the `auth.json` file
-
-The `auth.json` file should remain empty and should not be submitted. When you are running your algorithms, you should use the file to store your credentials for any third-party data resources, APIs, services, or repositories that you use. An example of the contents you might store in your `auth.json` file is as follows:
-```
-{
-    "services": {
-        "cityofbostondataportal": {
-            "service": "https://data.cityofboston.gov/",
-            "username": "alice_bob@example.org",
-            "token": "XxXXXXxXxXxXxxXXXXxxXxXxX",
-            "key": "xxXxXXXXXXxxXXXxXXXXXXxxXxxxxXXxXxxX"
-        },
-        "mbtadeveloperportal": {
-            "service": "http://realtime.mbta.com/",
-            "username": "alice_bob",
-            "token": "XxXX-XXxxXXxXxXXxXxX_x",
-            "key": "XxXX-XXxxXXxXxXXxXxx_x"
-        }
-    }
-}
-```
-To access the contents of the `auth.json` file after you have loaded the `dml` library, use `dml.auth`.
-
-## Running the execution script for a contributed project.
-
-To execute all the algorithms for a particular contributor (e.g., `alice_bob`) in an order that respects their explicitly specified data flow dependencies, you can run the following from the root directory:
-```
-python execute.py alice_bob
-```
+## Run scripts manually
+* 1. enter the directory of username
+* 2. python3 get_data.py
+* 3. python3 trans_income.py
+* 4. python3 trans_school.py
+* 5. python3 trans_hospital.py
+* 6. python3 join_by_region.py

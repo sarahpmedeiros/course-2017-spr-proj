@@ -6,9 +6,9 @@ import datetime
 import uuid
 
 class trans_school(dml.Algorithm):
-    contributor = 'kobesay'
-    reads = ['kobesay.publicschool', 'kobesay.nonpublicschool']
-    writes = ['kobesay.regionschool', 'kobesay.regionpublicschool', 'kobesay.regionnonpublicschool']
+    contributor = 'heming'
+    reads = ['heming.publicschool', 'heming.nonpublicschool']
+    writes = ['heming.regionschool', 'heming.regionpublicschool', 'heming.regionnonpublicschool']
 
     @staticmethod
     def execute(trial = False):
@@ -18,7 +18,7 @@ class trans_school(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('kobesay', 'kobesay')
+        repo.authenticate('heming', 'heming')
 
         repo.dropCollection("regionschool")
         repo.createCollection("regionschool")
@@ -30,22 +30,22 @@ class trans_school(dml.Algorithm):
         # select zip code and school of public schools
         # count number of public schools for each region
         items_publicschool = {}
-        publicschool = repo.kobesay.publicschool.find()
+        publicschool = repo.heming.publicschool.find()
         for x in publicschool:
             zipcode = x['fields']['zipcode'].split('-')[0]
             items_publicschool[zipcode] = items_publicschool.get(zipcode, 0) + 1
         r = [{'zipcode': zipcode, 'num': items_publicschool[zipcode]} for zipcode in items_publicschool]
-        repo['kobesay.regionpublicschool'].insert_many(r)
+        repo['heming.regionpublicschool'].insert_many(r)
 
         # select zip code and school of nonpublic schools
         # count number of nonpublic schools for each region
         items_nonpublicschool = {}
-        nonpublicschool = repo.kobesay.nonpublicschool.find()
+        nonpublicschool = repo.heming.nonpublicschool.find()
         for x in nonpublicschool:
             zipcode = x['properties']['ZIP'].split('-')[0]
             items_nonpublicschool[zipcode] = items_nonpublicschool.get(zipcode, 0) + 1
         r = [{'zipcode': zipcode, 'num': items_nonpublicschool[zipcode]} for zipcode in items_nonpublicschool]
-        repo['kobesay.regionnonpublicschool'].insert_many(r)
+        repo['heming.regionnonpublicschool'].insert_many(r)
 
         # merge result of public school and private school
         # count number of all public/private schools for each region
@@ -55,7 +55,7 @@ class trans_school(dml.Algorithm):
         for zipcode in items_nonpublicschool:
             items[zipcode] = items.get(zipcode, 0) + items_nonpublicschool[zipcode]
         r = [{'zipcode': zipcode, 'num': items[zipcode]} for zipcode in items]
-        repo['kobesay.regionschool'].insert_many(r)
+        repo['heming.regionschool'].insert_many(r)
 
         repo.logout()
 
@@ -74,7 +74,7 @@ class trans_school(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('kobesay', 'kobesay')
+        repo.authenticate('heming', 'heming')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
@@ -83,9 +83,9 @@ class trans_school(dml.Algorithm):
         doc.add_namespace('bwod', 'https://boston.opendatasoft.com/explore/dataset/') # Boston Wicked Open Data
         doc.add_namespace('bod', 'http://bostonopendata.boston.opendata.arcgis.com/datasets/') # BostonMaps: Open Data
 
-        this_script = doc.agent('alg:kobesay#trans_school', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        publicschool = doc.entity('dat:kobesay#publicschool', {'prov:label':'public school', prov.model.PROV_TYPE:'ont:DataSet'})
-        nonpublicschool = doc.entity('dat:kobesay#nonpublicschool', {'prov:label':'non public school', prov.model.PROV_TYPE:'ont:DataSet'})
+        this_script = doc.agent('alg:heming#trans_school', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        publicschool = doc.entity('dat:heming#publicschool', {'prov:label':'public school', prov.model.PROV_TYPE:'ont:DataSet'})
+        nonpublicschool = doc.entity('dat:heming#nonpublicschool', {'prov:label':'non public school', prov.model.PROV_TYPE:'ont:DataSet'})
         get_regionschool = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'get region school'})
         get_regionpublicschool = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'get region public school'})
         get_regionnonpublicschool = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'get region non public school'})
@@ -93,18 +93,18 @@ class trans_school(dml.Algorithm):
         doc.wasAssociatedWith(get_regionpublicschool, this_script)
         doc.wasAssociatedWith(get_regionnonpublicschool, this_script)
 
-        regionschool = doc.entity('dat:kobesay#regionschool', {prov.model.PROV_LABEL:'region school', prov.model.PROV_TYPE:'ont:DataSet'})
+        regionschool = doc.entity('dat:heming#regionschool', {prov.model.PROV_LABEL:'region school', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(regionschool, this_script)
         doc.wasGeneratedBy(regionschool, get_regionschool, endTime)
         doc.wasDerivedFrom(regionschool, publicschool, get_regionschool, get_regionschool, get_regionschool)
         doc.wasDerivedFrom(regionschool, nonpublicschool, get_regionschool, get_regionschool, get_regionschool)
 
-        regionpublicschool = doc.entity('dat:kobesay#regionschool', {prov.model.PROV_LABEL:'region public school', prov.model.PROV_TYPE:'ont:DataSet'})
+        regionpublicschool = doc.entity('dat:heming#regionschool', {prov.model.PROV_LABEL:'region public school', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(regionpublicschool, this_script)
         doc.wasGeneratedBy(regionpublicschool, get_regionpublicschool, endTime)
         doc.wasDerivedFrom(regionpublicschool, publicschool, get_regionpublicschool, get_regionpublicschool, get_regionpublicschool)
 
-        regionnonpublicschool = doc.entity('dat:kobesay#regionnonpublicschool', {prov.model.PROV_LABEL:'region non public school', prov.model.PROV_TYPE:'ont:DataSet'})
+        regionnonpublicschool = doc.entity('dat:heming#regionnonpublicschool', {prov.model.PROV_LABEL:'region non public school', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(regionnonpublicschool, this_script)
         doc.wasGeneratedBy(regionnonpublicschool, get_regionnonpublicschool, endTime)
         doc.wasDerivedFrom(regionnonpublicschool, nonpublicschool, get_regionnonpublicschool, get_regionnonpublicschool, get_regionnonpublicschool)
