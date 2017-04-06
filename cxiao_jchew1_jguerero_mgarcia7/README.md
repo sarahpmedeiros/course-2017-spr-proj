@@ -9,7 +9,7 @@ Our project seeks to explore the relationship between food accessibility, obesit
 4. **Corner Markets**: This dataset contains information about Corner Markets in Boston. (cornermarkets.py)
 5. **Supermarkets**: This dataset contains information about the supermarkets in Boston. (supermarkets.py)
 6. **Boston Neighborhood Shapefiles**: This dataset contains the geographic coordinates of the neighborhoods in Boston. (neighborhood.py)
-7. **Master Address List**: [INSERT TEXT HERE] 
+7. **Master Address List**: This dataset contains all the residential addresses in the neighborhoods of Boston.
 
 # Transformations
 
