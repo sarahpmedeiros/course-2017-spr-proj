@@ -138,11 +138,12 @@ class optimization(dml.Algorithm):
 			satisfiable_set = {}
 			if opt_check == sat:
 				model = opt.model()
-
 				# weight_key is w,r,t
 				# model[weight_key] is the actual fraction/weight
 				for weight_key in model:
-					weight_value = float((model[weight_key].as_decimal(30))[:-1])
+					weight_value = model[weight_key].as_string()
+					
+					# weight_value = float((model[weight_key].as_decimal(30)))
 					satisfiable_set[weight_key.name()] = weight_value
 
 				satisfiable_set["res_zipcode"] = curr_res_zipcode
@@ -163,8 +164,8 @@ class optimization(dml.Algorithm):
 		repo.createCollection("optimization")
 		repo['mbyim_seanz.optimization'].insert_many(r)
 		repo['mbyim_seanz.optimization'].metadata({'complete':True})
+		print('finished res transit optimization')
 		print(repo['mbyim_seanz.optimization'].metadata())
-	
 	@staticmethod
 	def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
 
@@ -202,4 +203,4 @@ class optimization(dml.Algorithm):
 
 # optimization.execute()
 # doc = optimization.provenance()
-# print('finished res transit optimization')
+# 

@@ -25,7 +25,16 @@ class data_pull(dml.Algorithm):
         
         #Parking Tickets Info---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         # url = 'https://data.cityofboston.gov/resource/cpdb-ie6e.json?$select=ticket_loc,violation1'
-        url = 'https://data.cityofboston.gov/resource/cpdb-ie6e.json?$limit=1000000'
+
+        print('getting parking ticket info')
+
+        url = ''
+        # if trial flag is on, then only query 10000
+        if trial == True:
+            url = 'https://data.cityofboston.gov/resource/cpdb-ie6e.json?$limit=10000'
+        else:
+            url = 'https://data.cityofboston.gov/resource/cpdb-ie6e.json?$limit=1000000'
+
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
@@ -55,6 +64,7 @@ class data_pull(dml.Algorithm):
         #    auth_key = json.load(auth_file)
         #dml.auth['services']['mbtadeveloperportal']['key']
 
+        print('getting MBTA API...')
 
         #api_key = auth_key['mbtadeveloperportal']['key']
         api_key = dml.auth['services']['mbtadeveloperportal']['key']
@@ -73,8 +83,8 @@ class data_pull(dml.Algorithm):
         stop_locations_unique = []
         for mode_id in mode_ids: #iterate through all the list of list of modes
             
-            # if trial flag is on, then only query 200
-            if trial_count > 200:
+            # if trial flag is on, then only query 50
+            if trial_count > 50 and trial == True:
                 break
 
             for route_id in mode_id: #e.g. Green-B
@@ -102,12 +112,19 @@ class data_pull(dml.Algorithm):
         repo.createCollection("mbta_stops")
         repo['mbyim_seanz.mbta_stops'].insert_many(r)
         repo['mbyim_seanz.mbta_stops'].metadata({'complete':True})
+        print('got MBTA data')
         print(repo['mbyim_seanz.mbta_stops'].metadata())
 
         #Property assessment data------------------------------------------------------------------------------------------------------------------------------------------
         # url = 'https://data.cityofboston.gov/resource/jsri-cpsq.json?%24select=full_address,ZIPCODE,AV_LAND,AV_BLDG,AV_TOTAL,Location'
 
-        url = 'https://data.cityofboston.gov/resource/jsri-cpsq.json?$limit=164090'
+        print('getting property assessment')
+        url = ''
+        # if trial flag is on, then only query 10000
+        if trial == True:
+            url = 'https://data.cityofboston.gov/resource/jsri-cpsq.json?$limit=10000'
+        else:
+            url = 'https://data.cityofboston.gov/resource/jsri-cpsq.json?$limit=164090'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
         s = json.dumps(r, sort_keys=True, indent=2)
@@ -115,9 +132,11 @@ class data_pull(dml.Algorithm):
         repo.createCollection("property_assessments")
         repo['mbyim_seanz.property_assessments'].insert_many(r)
         repo['mbyim_seanz.property_assessments'].metadata({'complete':True})
+        print('got property assessment data')
         print(repo['mbyim_seanz.property_assessments'].metadata())
 
         #Snow parking data------------------------------------------------------------------------------------------------------------------------------------------
+        print('getting snow parking info')
         url = 'http://datamechanics.io/data/mbyim_seanz/SnowParking.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
@@ -126,20 +145,25 @@ class data_pull(dml.Algorithm):
         repo.createCollection("snow_parking")
         repo['mbyim_seanz.snow_parking'].insert_many(r)
         repo['mbyim_seanz.snow_parking'].metadata({'complete':True})
+        print('got snow partking data')
         print(repo['mbyim_seanz.snow_parking'].metadata())
 
         
         #Boston Zip Code Data------------------------------------------------------------------------------------------------------------------------------------------
+        print('getting zip code info')
         url = 'http://datamechanics.io/data/mbyim_seanz/boston_zip_codes.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         r = json.loads(response)
-        print(r)
         s = json.dumps(r, sort_keys=True, indent=2)
         repo.dropCollection("boston_zip_codes")
         repo.createCollection("boston_zip_codes")
         repo['mbyim_seanz.boston_zip_codes'].insert_many(r)
         repo['mbyim_seanz.boston_zip_codes'].metadata({'complete':True})
+        print('got boston zip codes')
         print(repo['mbyim_seanz.boston_zip_codes'].metadata())
+
+        print('finished data pull from project #1')
+        print()
 
 
         #end------------------------------------------------------------------------------------------------------------------------------------------
@@ -210,11 +234,11 @@ class data_pull(dml.Algorithm):
         
         
 
-        doc.usage(get_vehicle_tax, resource_vehicle_tax, startTime, None,
-                  {prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?$select=zip' #not sure what this does
-                  }
-        )
+        # doc.usage(get_vehicle_tax, resource_vehicle_tax, startTime, None,
+        #           {prov.model.PROV_TYPE:'ont:Retrieval',
+        #           'ont:Query':'?$select=zip' #not sure what this does
+        #           }
+        # )
 
         
 
@@ -295,7 +319,6 @@ class data_pull(dml.Algorithm):
 # # datapull.property_assessment()
 
 # doc = data_pull.provenance()
-# print('finished data pull')
 
 # print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))

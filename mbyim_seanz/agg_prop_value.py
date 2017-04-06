@@ -62,13 +62,13 @@ class agg_prop_value(dml.Algorithm):
 
 		aggregated_zip_data = aggregate(zip_data, sum)	
 		aggregated_zip_data_str = str(aggregated_zip_data).replace("'",'"')	#small json fix to convert to strings
-		print(aggregated_zip_data_str)
 		zip_jsons = json.loads(aggregated_zip_data_str)
 		s = json.dumps(zip_jsons, sort_keys=True, indent = 2)
 		repo.dropCollection("agg_prop_value")
 		repo.createCollection("agg_prop_value")
 		repo['mbyim_seanz.agg_prop_value'].insert_many(zip_jsons)
 		repo['mbyim_seanz.agg_prop_value'].metadata({'complete':True})
+		print('finished aggregating property data')
 
 	@staticmethod
 	def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):

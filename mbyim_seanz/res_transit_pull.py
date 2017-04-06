@@ -10,7 +10,7 @@ import dml
 import prov.model
 import datetime
 import uuid
-from z3 import *
+import z3
 from math import radians, cos, sin, asin, sqrt
 import sys
 import random
@@ -95,14 +95,16 @@ class res_transit_pull(dml.Algorithm):
 		#	}
 		# print('finding some google maps stuff')
 
+		print('getting residential transit data from google maps API...')
+
 		for residential_property in randomized_res_keys:
 			# there are 133,000 residential properties, but we cannot query the Google Map API this many times in a feasible time 
 			# frame, so we limited it to 2,000 residential properties
 			if count > 2000:
 				break
 
-			# if trial flag is on, then only query 200
-			if trial == True and count > 200:
+			# if trial flag is on, then only query 50
+			if trial == True and count > 50:
 				break
 				
 			res_transit_dict = {} #final dictionary
@@ -165,6 +167,7 @@ class res_transit_pull(dml.Algorithm):
 		repo.createCollection("residential_transit")
 		repo['mbyim_seanz.residential_transit'].insert_many(r)
 		repo['mbyim_seanz.residential_transit'].metadata({'complete':True})
+		print('got residential transit data from google maps')
 		print(repo['mbyim_seanz.residential_transit'].metadata())
 	
 	@staticmethod

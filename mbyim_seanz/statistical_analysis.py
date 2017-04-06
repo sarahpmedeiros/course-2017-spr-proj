@@ -222,8 +222,8 @@ class statistical_analysis(dml.Algorithm):
 		          
 		return doc
 
-statistical_analysis.execute()
-statistical_analysis.provenance()
+# statistical_analysis.execute()
+# statistical_analysis.provenance()
 
 
 

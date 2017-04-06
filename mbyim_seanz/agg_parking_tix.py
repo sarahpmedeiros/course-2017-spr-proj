@@ -47,6 +47,7 @@ class agg_parking_tix(dml.Algorithm):
 		repo.createCollection("agg_parking_tix")
 		repo['mbyim_seanz.agg_parking_tix'].insert_many(parking_tix_json)
 		repo['mbyim_seanz.agg_parking_tix'].metadata({'complete':True})
+		print('finished aggregating parking tickets')
 
 	@staticmethod
 	def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
