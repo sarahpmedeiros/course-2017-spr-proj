@@ -65,7 +65,30 @@ As you can see from the table above,
 
 ### Determining Correlation: ###
 [INSERT TEXT HERE]
+[[ 1.         -0.0243795  -0.41433783]
+ [-0.0243795   1.         -0.54327576]
+ [-0.41433783 -0.54327576  1.        ]]
 
+Shown above is our coefficient correlation array
+for our three variables containing data from foodscore, 
+income, and obesity. Our calculations have determined that
+each of our coefficient correlations have successfully fallen
+in between the values 1 and -1. It appears that between each
+pair of distinct variables, there is a slight negative assocation
+that each variable has with each other. The 1's that are shown
+are obviously the full association that each variable has with its 
+own self. The variables' own coefficient correlation with itself
+irrefutably lies on the positive line of best fit representing a 
+positive correlation. 
+
+Within our linear regression model we equated our variable on obesity 
+as the dependent variable as shown as the output of our function. Since we
+set our dependent variable as obesity, we wanted to use linear regression
+to further calculate the correlation it has with our independent variables
+as represented by x which were on income and food score. With the given 
+equation y = a1x1 + a2x2, we were also given predictor values that would
+provide or "predict" the outcome of our calculation on the relationship
+between our dependent variables on our independent variable, obesity.
 
 # Required libraries and tools
 The libraries pyshp, shapely, geopy, numpy will need to be installed before the program can be executed. They can be installed with these pip3 commands:
