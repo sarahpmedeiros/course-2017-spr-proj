@@ -86,27 +86,20 @@ class statisticsanalysis(dml.Algorithm):
 
 		this_script = doc.agent('alg:cxiao_jchew1_jguerero_mgarcia7#statisticsanalysis', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 		
-		foodsources_resource = doc.entity('dat:foodsources', {'prov:label':'Food Sources', prov.model.PROV_TYPE:'ont:DataSet'})
-		masteraddresses_resource = doc.entity('dat:masteraddresses', {'prov:label':'Master Addresses', prov.model.PROV_TYPE:'ont:DataSet'})
+		neighborhoodstatistics_resource = doc.entity('dat:neighborhoodstatistics', {'prov:label':'Neighborhood Statistics', prov.model.PROV_TYPE:'ont:DataSet'})
 
 
-		computeScore = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+		get_statistics = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-		doc.wasAssociatedWith(computeScore, this_script)
-		doc.usage(computeScore, foodsources_resource, startTime, None,
+		doc.wasAssociatedWith(get_statistics, this_script)
+		doc.usage(get_statistics, neighborhoodstatistics_resource, startTime, None,
 				  {prov.model.PROV_TYPE:'ont:Computation'}
 				  )
-		doc.usage(computeScore, masteraddresses_resource, startTime, None,
-		  {prov.model.PROV_TYPE:'ont:Computation'}
-		  )
  
-		'''
-		foodsources = doc.entity('dat:cxiao_jchew1_jguerero_mgarcia7#statisticsanalysis', {prov.model.PROV_LABEL:'Sources of food per neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
-		doc.wasAttributedTo(foodsources, this_script)
-		doc.wasGeneratedBy(foodsources, computeScore, endTime)
-		doc.wasDerivedFrom(foodsources, supermarkets_resource, computeScore, computeScore, computeScore)
-		doc.wasDerivedFrom(foodsources, farmersmarkets_resource, computeScore, computeScore, computeScore)
-		'''
+		statisticsanalysis = doc.entity('dat:cxiao_jchew1_jguerero_mgarcia7#statisticsanalysis', {prov.model.PROV_LABEL:'Neighborhood statistical analysis', prov.model.PROV_TYPE:'ont:DataSet'})
+		doc.wasAttributedTo(statisticsanalysis, this_script)
+		doc.wasGeneratedBy(statisticsanalysis, get_statistics, endTime)
+		doc.wasDerivedFrom(statisticsanalysis, neighborhoodstatistics_resource, get_statistics, get_statistics, get_statistics)
 
 
 		repo.logout()
