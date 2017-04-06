@@ -17,7 +17,7 @@ class estimateNeighCentroid(dml.Algorithm):
     writes = ['billy108_zhouy13_jw0208.neighborhoodCentroid']
 
     @staticmethod
-    def execute(trial = False):
+    def execute(trial = True):
         startTime = datetime.datetime.now()
 
         # Set up the database connection.
@@ -26,9 +26,28 @@ class estimateNeighCentroid(dml.Algorithm):
         repo.authenticate('billy108_zhouy13_jw0208', 'billy108_zhouy13_jw0208')
         buildingPermits = repo['billy108_zhouy13_jw0208.buildingPermits']
 
+        buildingPermitsList = []
+
+        # 3b. If trial is true, run algorithm in trial mode
+        if (trial == True):
+            count = 0
+            # sample data
+            for entry in buildingPermits.find():
+                if count >= 40:
+                    break
+                else:
+                    buildingPermitsList.append(entry)
+                    count += 1
+        else:
+            for entry in buildingPermits.find():
+                buildingPermitsList.append(entry)
+
+
+        # print(len(buildingPermitsList))
+
         neighCoordinates = []
         # for each entry, project its neighborhood and the neiborhood's coordinates
-        for entry in buildingPermits.find():
+        for entry in buildingPermitsList:
             if 'location' in entry and 'city' in entry:
                 if ('coordinates' in entry['location'] and len(entry['location']['coordinates']) > 0):
                     list = [entry['location']['coordinates'][0], entry['location']['coordinates'][1]]

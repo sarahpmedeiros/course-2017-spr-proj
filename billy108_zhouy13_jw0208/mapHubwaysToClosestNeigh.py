@@ -17,7 +17,7 @@ class mapHubwaysToClosestNeigh(dml.Algorithm):
     writes = ['billy108_zhouy13_jw0208.hubwaysInNeigh']
 
     @staticmethod
-    def execute(trial=False):
+    def execute(trial=True):
 
         startTime = datetime.datetime.now()
 
@@ -28,6 +28,26 @@ class mapHubwaysToClosestNeigh(dml.Algorithm):
         hubwayStations = repo['billy108_zhouy13_jw0208.hubwayStations']
         neighborhoodCentroid = repo['billy108_zhouy13_jw0208.neighborhoodCentroid']
 
+        hubwayStationsList = []
+
+        # 3b. If trial is true, run algorithm in trial mode
+        if (trial == True):
+            count = 0
+            # sample data
+            for entry in hubwayStations.find():
+                if count >= 40:
+                    break
+                else:
+                    hubwayStationsList.append(entry)
+                    count += 1
+        else:
+            for entry in hubwayStations.find():
+                hubwayStationsList.append(entry)
+
+
+        # print(len(hubwayStationsList))
+
+
         # Helper Method
         def dist(p, q):
             (x1, y1) = p
@@ -37,7 +57,7 @@ class mapHubwaysToClosestNeigh(dml.Algorithm):
         hubwayNeighMapping = []
 
         # For each hubway station with its coordinate, map it with the nearest neighborhood centroid coordinates
-        for entry in hubwayStations.find():
+        for entry in hubwayStationsList:
             longitude, latitude = entry['geometry']['coordinates'][0], entry['geometry']['coordinates'][1]
             hubwayCoords = tuple((longitude, latitude))
 
@@ -130,7 +150,7 @@ class mapHubwaysToClosestNeigh(dml.Algorithm):
 
         return doc
 
-        # mapHubwaysToClosestNeigh.execute()
-        # doc = mapHubwaysToClosestNeigh.provenance()
-        # print(doc.get_provn())
-        # print(json.dumps(json.loads(doc.serialize()), indent=4))
+# mapHubwaysToClosestNeigh.execute()
+# doc = mapHubwaysToClosestNeigh.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))

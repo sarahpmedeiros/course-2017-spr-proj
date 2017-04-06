@@ -12,7 +12,7 @@ class combineAll(dml.Algorithm):
     writes = ['billy108_zhouy13_jw0208.allRecreationalPlaces']
 
     @staticmethod
-    def execute(trial = False):
+    def execute(trial = True):
 
         startTime = datetime.datetime.now()
 
