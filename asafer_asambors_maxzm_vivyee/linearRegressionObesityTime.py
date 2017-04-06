@@ -59,7 +59,7 @@ class linearRegressionObesityTime(dml.Algorithm):
 
                 print('all uploaded: linearRegressionObesityTime')
 
-                print(stats)
+                # print(stats)
                 return {"start":startTime, "end":endTime}
 
 
