@@ -26,13 +26,10 @@ class getStudents(dml.Algorithm):
 		response = urllib.request.urlopen(req).read().decode("UTF-8")
 
 		r = json.loads(response)
-		# for entry in r['features']:
-		# 	print (entry)
-		# 	break
-		# print (r)
+
 		repo.dropCollection("students")
 		repo.createCollection("students")
-		repo['skaram13_smedeiro.students'].insert(r)
+		repo['skaram13_smedeiro.students'].insert_many(r['features'])
 		repo['skaram13_smedeiro.students'].metadata({'complete':True})
 		# print(repo['skaram13_smedeiro.GradRates'].metadata())
 
