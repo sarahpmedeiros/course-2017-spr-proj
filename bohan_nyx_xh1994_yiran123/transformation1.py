@@ -28,9 +28,9 @@ def geodistance(lat1, lon1, lat2, lon2):
         return EARTH_R * c
 
 class transformation1(dml.Algorithm):
-    contributor = 'bohan_xh1994'
-    reads = ['bohan_xh1994.Active_Food_Establishment_Licenses', 'bohan_xh1994.crime_boston']
-    writes = ['bohan_xh1994.Restaurants_safety']
+    contributor = 'bohan_nyx_xh1994_yiran123'
+    reads = ['bohan_nyx_xh1994_yiran123.Active_Food_Establishment_Licenses', 'bohan_nyx_xh1994_yiran123.crime_boston']
+    writes = ['bohan_nyx_xh1994_yiran123.Restaurants_safety']
 
 
 
@@ -43,9 +43,9 @@ class transformation1(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('bohan_xh1994', 'bohan_xh1994')  
-        AFoodL = repo.bohan_xh1994.Active_Food_Establishment_Licenses.find()
-        crime = repo.bohan_xh1994.crime_boston.find()
+        repo.authenticate('bohan_nyx_xh1994_yiran123', 'bohan_nyx_xh1994_yiran123')  
+        AFoodL = repo.bohan_nyx_xh1994_yiran123.Active_Food_Establishment_Licenses.find()
+        crime = repo.bohan_nyx_xh1994_yiran123.crime_boston.find()
         crimes = [c for c in crime]
         # print(crime[0]['location'])
         # print(FoodEI[0])
@@ -89,10 +89,10 @@ class transformation1(dml.Algorithm):
             insertMaterial = {'Businessname':i['businessname'], 'location':i['location'], 'crime incidents number within akm':crime_incident_within_akm}
             #insertMaterial = {'Businessname':i['businessname'], 'location':None, 'crime incidents number within amile':crime_incident_within_amile}
   
-            repo['bohan_xh1994.Restaurants_safety'].insert_one(insertMaterial)
+            repo['bohan_nyx_xh1994_yiran123.Restaurants_safety'].insert_one(insertMaterial)
             setdis=[]
 
-        #repo['bohan_xh1994.Restaurants_safety'].insert_many(safety_level)
+        #repo['bohan_nyx_xh1994_yiran123.Restaurants_safety'].insert_many(safety_level)
         repo.logout()
 
         endTime = datetime.datetime.now()
@@ -110,7 +110,7 @@ class transformation1(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('bohan_xh1994', 'bohan_xh1994')
+        repo.authenticate('bohan_nyx_xh1994_yiran123', 'bohan_nyx_xh1994_yiran123')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
@@ -118,20 +118,22 @@ class transformation1(dml.Algorithm):
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
         doc.add_namespace('airbnbr','http://datamechanics.io/?prefix=bohan_xh1994/')
 
-        this_script = doc.agent('alg:bohan_xh1994#transformation1', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        Rest_safe = doc.entity('dat:bohan_xh1994#Restaurants_safety', {prov.model.PROV_LABEL:'safety_level of restaurant', prov.model.PROV_TYPE:'ont:DataSet'})
+        this_script = doc.agent('alg:bohan_nyx_xh1994_yiran123#transformation1', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        Rest_safe = doc.entity('dat:bohan_nyx_xh1994_yiran123#Restaurants_safety', {prov.model.PROV_LABEL:'safety_level of restaurant', prov.model.PROV_TYPE:'ont:DataSet'})
         get_safe = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(get_safe, this_script)
-        doc.used(get_safe, Rest_safe, startTime
+        doc.usage(get_safe, Rest_safe, startTime
                    , {prov.model.PROV_TYPE:'ont:Retrieval',
                    'ont:Computation':'?type=crime_incident_within_akm&$select=type,location,bussinessname,crime_incident_within_akm'
                   }
                   )
-
+        rest_s = doc.entity('dat: bohan_xh1994#transformation1',
+                            {prov.model.PROV_LABEL:'Safty level of restaurant',
+                             prov.model.PROV_TYPE: 'ont:DataSet'})
         #lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(Rest_safe, this_script)
         doc.wasGeneratedBy(Rest_safe, get_safe, endTime)
-        doc.wasDerivedFrom(Rest_safe, Rest_safe, get_safe, get_safe, get_safe)
+        doc.wasDerivedFrom(rest_s, Rest_safe, get_safe, get_safe, get_safe)
 
         repo.logout()
                   

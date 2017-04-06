@@ -7,9 +7,9 @@ import uuid
 
 
 class transformation3(dml.Algorithm):
-    contributor = 'bohan_xh1994'
-    reads = ['bohan_xh1994.Active_Food_Establishment_Licenses','bohan_xh1994.Food_Establishment_Inspections']
-    writes = ['bohan_xh1994.restaurant_cleanness_level']
+    contributor = 'bohan_nyx_xh1994_yiran123'
+    reads = ['bohan_nyx_xh1994_yiran123.Active_Food_Establishment_Licenses','bohan_nyx_xh1994_yiran123.Food_Establishment_Inspections']
+    writes = ['bohan_nyx_xh1994_yiran123.restaurant_cleanness_level']
 
 
     def union(R, S):
@@ -43,10 +43,11 @@ class transformation3(dml.Algorithm):
 
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
+        print(11111111111111111)
         repo = client.repo
-        repo.authenticate('bohan_xh1994', 'bohan_xh1994')  
-        FoodAL = repo.bohan_xh1994.Active_Food_Establishment_Licenses.find()
-        Food = repo.bohan_xh1994.Food_Establishment_Inspections.find({"licstatus": 'Active'})
+        repo.authenticate('bohan_nyx_xh1994_yiran123', 'bohan_nyx_xh1994_yiran123')  
+        FoodAL = repo.bohan_nyx_xh1994_yiran123.Active_Food_Establishment_Licenses.find()
+        Food = repo.bohan_nyx_xh1994_yiran123.Food_Establishment_Inspections.find({"licstatus": 'Active'})
         FoodEI = [c for c in Food]
 
 
@@ -80,15 +81,17 @@ class transformation3(dml.Algorithm):
                 passrate =0
 
             else:                    
-                passrate = '{:.1%}'.format(pass_time/total)
+                #passrate = '{:.1%}'.format(pass_time/total)
+                passrate = pass_time/total
             insertMaterial = {'Businessname':i['businessname'], 'location':i['location'],'total inspections': total, 'pass inspectins': pass_time, 'cleanness level' :passrate}
 
-            repo['bohan_xh1994.restaurant_cleanness_level'].insert_one(insertMaterial)
+            repo['bohan_nyx_xh1994_yiran123.restaurant_cleanness_level'].insert_one(insertMaterial)
 
             
 
-        #repo['bohan_xh1994.Restaurants_safety'].insert_many(safety_level)
+        #repo['bohan_nyx_xh1994_yiran123.Restaurants_safety'].insert_many(safety_level)
         repo.logout()
+        print(11111111111111)
 
         endTime = datetime.datetime.now()
 
@@ -105,27 +108,30 @@ class transformation3(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('bohan_xh1994', 'bohan_xh1994')
+        repo.authenticate('bohan_nyx_xh1994_yiran123', 'bohan_nyx_xh1994_yiran123')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:bohan_xh1994#transformation3', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        clean = doc.entity('dat:bohan_xh1994#restaurant_cleanness_level', {prov.model.PROV_LABEL:'food establishment cleanness level', prov.model.PROV_TYPE:'ont:DataSet'})
+        this_script = doc.agent('alg:bohan_nyx_xh1994_yiran123#transformation3', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        clean = doc.entity('dat:bohan_nyx_xh1994_yiran123#restaurant_cleanness_level', {prov.model.PROV_LABEL:'food establishment cleanness level', prov.model.PROV_TYPE:'ont:DataSet'})
         get_clean= doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
         doc.wasAssociatedWith(get_clean, this_script)
-        doc.used(get_clean, clean, startTime
+        doc.usage(get_clean, clean, startTime
                   ,{prov.model.PROV_TYPE:'ont:Retrieval',
                   'ont:Query':'?type=Food_Establishment_cleanness&$select=type,businessname,location,total inspections, pass inspections, cleanness level'
                   }
                   )
 
+        Clean_level = doc.entity('dat: bohan_nyx_xh1994_yiran123#transformation3',
+                                {prov.model.PROV_LABEL:'Restaurant Cleanness Level',
+                                 prov.model.PROV_TYPE: 'ont:DataSet'})
         #lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(clean, this_script)
         doc.wasGeneratedBy(clean, get_clean, endTime)
-        #doc.wasDerivedFrom(Rest_safe, resource, get_lost, get_lost, get_lost)
+        doc.wasDerivedFrom(Clean_level, clean, get_clean, get_clean, get_clean)
 
         repo.logout()
                   

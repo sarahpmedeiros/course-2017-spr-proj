@@ -1,31 +1,10 @@
-Project #1: Data Retrieval, Storage, Provenance, and Transformations
+README
 
-Han Xiao and Bohan Li
-
-Overview:
-	In this project, we’re trying to use various dataset, including food establishment distributions and cleanness inspections, entertainment in boston, crime incident, traffic in boston and airbnb information,  to find good airbnb housings in respect to safety, transportation convenience, accessibility to surrounding restaurants and entertainments.
-	In the first transformation, we try to find the relationship between restaurants and crime incidents. We come up with a new dataset containing restaurants and incidents happens around them within radius of  1 km.
-	In the second transformation, we try to find the number of restaurants and entertainments around each airbnb housing in boston, to evaluate whether it’s a good place to stay.
-	In the third transformation, we try to evaluate the cleanness level of each food establishment by calculate the ratio between how many times it received inspections and how many time it passed inspections.
-
-Data Sets:
-	1. From city of Boston: 
-		a. city of boston crime incident July 2012 - August 2015:
-		    https://data.cityofboston.gov/resource/ufcx-3fdn.json
-		b. Food Establishment Inspections:
-		    https://data.cityofboston.gov/resource/427a-3cn5.json
-		c. Active_Food_Establishment_Licenses:
-		    https://data.cityofboston.gov/resource/fdxy-gydq.json
-		d. Entertainment Licenses:
-		    https://data.cityofboston.gov/resource/cz6t-w69j.json
-	2. TRAFFIC SIGNALS:
-	     http://bostonopendata-boston.opendata.arcgis.com/datasets/de08c6fe69c942509089e6db98c716a3_0.geojson
-	3. Airbnb_boston:
-	     http://datamechanics.io/data/bohan_xh1994/airbnb.json
-
-To run:
-Connect to set up mongodb server first: mongod --dbpath "<your_db_path>"
-To run each file, simple do “python3 filename.py”
+Questions:
+1. See if the datasets we created in project 1 are related or not. Build a scoring system.
+2. Rank airbnb housings in Boston area, according to a criteria we designed
 
 
-
+In project 2 we first made some adjustments to datasets that we generated in project1.
+We basically designed a scoring system for Airbnbs in Boston. We evaluate airbnbs in respect of ratings given by customers(obtain by calculating overall scores, cleanliness scores, noisy levels, accuracies), transportation convenience, surrounding entertainment. We also created a restaurant scoring system. We obtain restaurant number and quality by calculating each restaurant's cleanliness level and safety level. In future, we will combine restaurant score and airbnb score to give a more convincing ranking of airbnbs in Boston.
+We normalized each field so that we could get a general evaluation. To determine which filed to be used, we also calculated correlation coefficients of each two columns (pairs of columns: MBTA stops number around airbnb and entertainment number around airbnb, MBTA stops number and airbnb ratings, Entertainment number and airbnb ratings, cleanness level of restaurants and crime numbers around the restaurants) of the airbnb, to check if the features of airbnb are in positive relation, if they are, they are similar traits to the scoring system of airbnb, so we can eliminate one of them to only have to use one to represent two features.
