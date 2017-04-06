@@ -6,7 +6,21 @@ import datetime
 import uuid
 import csv
 import json
-import requests 
+import requests
+from matplotlib import pyplot as plt
+import matplotlib as mp
+import numpy as np
+import pandas as pd
+from sklearn.cluster import KMeans
+import sklearn.manifold
+from scipy import cluster
+import seaborn as sns
+import sklearn.datasets as sk_data
+import sklearn.metrics as metrics
+from scipy.cluster.vq import kmeans2
+import urllib
+import time
+#get_ipython().magic('matplotlib inline')
 
 class OptimalHospitals(dml.Algorithm):
     contributor = 'cfortuna_houset_karamy_snjan19'
@@ -32,6 +46,9 @@ class OptimalHospitals(dml.Algorithm):
         repo.dropCollection("OptimalHospitals")
         repo.createCollection("OptimalHospitals")
         
+        df = pd.DataFrame.read_json('cfortuna_houset_karamy_snjan19.BostonHospitalsData')
+
+        df.set_index('name', inplace=True)
         
 
 
@@ -106,7 +123,7 @@ class OptimalHospitals(dml.Algorithm):
                   
         return doc
 
-retrieveData.execute()
+OptimalHospitals.execute()
 # doc = retrieveData.provenance()
 # print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
