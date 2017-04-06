@@ -53,16 +53,15 @@ class corr_gradrates(dml.Algorithm):
         repo.dropPermanent("corr_gradrates")
         repo.createPermanent("corr_gradrates")
 
-        
-        trial = False
-
+        #trial = True
+        #accomodate for trial mode
         fund_grad = []
         if trial == True:
             fund_grad.append(repo.hschurma_rcalleja.funding_gradrates.find_one({}))
         else:
             fund_grad = list(repo.hschurma_rcalleja.funding_gradrates.aggregate([{"$project":{"_id":0}}]))
-        #print(fund_grad)
 
+        #calculate the correlation between grad rates and funding for each school
         correlation = []
         for i in range(len(fund_grad)):
             x = []
@@ -111,7 +110,7 @@ class corr_gradrates(dml.Algorithm):
         
         get_corr_grad = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_corr_fund, this_script)
+        doc.wasAssociatedWith(get_corr_grad, this_script)
 
         doc.used(get_corr_grad, funding_gradrates, startTime)
 
@@ -121,14 +120,14 @@ class corr_gradrates(dml.Algorithm):
         
         doc.wasDerivedFrom(corr_grad, funding_gradrates, get_corr_grad, get_corr_grad, get_corr_grad)
         
-        repo.record(doc.serialize())
+        #repo.record(doc.serialize())
         repo.logout()
 
         return doc
                   
 
-#corr_gradrates.execute()
-doc = corr_gradrates.provenance()
+corr_gradrates.execute()
+#doc = corr_gradrates.provenance()
 #print(json.dumps(json.loads(doc.serialize()), indent=4))
         
         
