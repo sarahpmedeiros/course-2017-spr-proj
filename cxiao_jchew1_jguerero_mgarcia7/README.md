@@ -61,7 +61,7 @@ After finding these values for each house in the neighborhood, we calculated the
 
 \* *Within walking distance of a residence, which we defined to be < 1km*
 
-As you can see from the table above, 
+The composite Z-score is what we are considering our food accessibility score per neighborhood. A high, positive score denotes that the food accessibility is better in that neighborhood compared to other neighborhoods in Boston.  In our case, the best neighborhood in regards to food accessibility belongs is Back Bay, whereas the worst is West Roxbury. 
 
 ### Determining Correlation: Our Coefficient Correlation Array ###
 
