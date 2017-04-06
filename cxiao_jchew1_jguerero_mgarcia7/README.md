@@ -67,9 +67,9 @@ As you can see from the table above,
 
 |       | Food Score |   Income |   Obesity |
 |:----------------------------|-------------------------:|-------------------------------------------:|---------------------------:|
-|*Food Score* | 1.0         |   -0.0243795  |  -0.41433783  |                       
-|*Income* | -0.0243795  |   1.0         |  -0.54327576  |                       
-|*Obesity* | -0.41433783 |   -0.54327576 |  1.0          |
+|**Food Score** | 1.0         |   -0.0243795  |  -0.41433783  |                       
+|**Income** | -0.0243795  |   1.0         |  -0.54327576  |                       
+|**Obesity** | -0.41433783 |   -0.54327576 |  1.0          |
 
 Shown above is our coefficient correlation array
 for our three variables containing data from foodscore, 
