@@ -238,7 +238,7 @@ class corr_location(dml.Algorithm):
         proj_corr = project(sel_corr , lambda t: {'School Name': t[0]['School Name'], 'SAT_Neighbor Funding Correlation': t[0]['SAT_Neighbor Funding Correlation'],
                                                   'Grad Rates Correlation': t[1]['Grad Rates Correlation']})
 
-        #print(proj_corr)
+        print(proj_corr)
 
         repo.dropCollection('corr_location')
         repo.createCollection('corr_location')

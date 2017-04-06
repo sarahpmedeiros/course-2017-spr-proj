@@ -78,7 +78,7 @@ class corr_gradrates(dml.Algorithm):
             
             correlation.append({'School Name': fund_grad[i]['Name'], 'SAT_Funding Correlation': corr(x,y)})
 
-        #print(correlation)        
+        print(correlation)
 
         repo.dropCollection('corr_gradrates')
         repo.createCollection('corr_gradrates')
