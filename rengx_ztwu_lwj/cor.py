@@ -70,7 +70,55 @@ class cor(dml.Algorithm):
 		endTime = datetime.datetime.now()
 		#print("geo complete")
 		return {"start":startTime, "end":endTime}
+	
+	
 	@staticmethod
-	def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
+
+
+	def provenance(doc=prov.model.ProvDocument(), startTime=None, endTime=None):
+		# Set up the database connection.
+		client = dml.pymongo.MongoClient()
+		repo = client.repo
+		repo.authenticate('rengx_ztwu_lwj', 'rengx_ztwu_lwj')
+
+		doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
+		doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
+		doc.add_namespace('ont', 'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
+		doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
+		doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+		doc.add_namespace('cdp', 'https://data.cambridgema.gov/')
+		doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
+		# Agent
+		this_script = doc.agent('alg:rengx_ztwu_lwj#cor',{prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
+
+		# Resources
+		resource_publicschool_accessibility = doc.entity('dat:rengx_ztwu_lwj#publicschool_accessibility',{'prov:label': 'Number of acessibilities', prov.model.PROV_TYPE: 'ont:DataResource', 'ont:Extension': 'json'})
+		resource_metadata = doc.entity('dat:rengx_ztwu_lwj#metadata', {'prov:label': 'metadata',prov.model.PROV_TYPE: 'ont:DataResource','ont:Extension': 'json'})
+
+
+		# Activities
+		doStatsAnalysis = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime, { prov.model.PROV_LABEL: "Compute coorrelation and p-value between the Distance of Schools and acessibilities ", prov.model.PROV_TYPE: 'ont:Computation'})
+
+		# Activities' Associations with Agent
+		doc.wasAssociatedWith(doStatsAnalysis, this_script)
+
+		# Record which activity used which resource
+		doc.usage(doStatsAnalysis, resource_publicschool_accessibility, startTime)
+		doc.usage(doStatsAnalysis, resource_metadata, startTime)
+
+		# Result dataset entity
+		result = doc.entity('dat:rengx_ztwu_lwj#result',{prov.model.PROV_LABEL: 'Statistics between accessibilities and distance', prov.model.PROV_TYPE: 'ont:DataSet'})
+
+		doc.wasAttributedTo(result, this_script)
+		doc.wasGeneratedBy(result, doStatsAnalysis, endTime)
+		doc.wasDerivedFrom(result, resource_publicschool_accessibility, doStatsAnalysis, doStatsAnalysis, doStatsAnalysis)
+		doc.wasDerivedFrom(result, resource_metadata, doStatsAnalysis,doStatsAnalysis, doStatsAnalysis)
+
+
+		repo.logout()
+
 		return doc
 #cor.execute()
+doc = cor.provenance()
+print(doc.get_provn())
+print(json.dumps(json.loads(doc.serialize()), indent=4))

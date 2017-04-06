@@ -177,5 +177,40 @@ class kmeans(dml.Algorithm):
 	
 	@staticmethod
 	def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
+		# Set up the database connection
+		client = dml.pymongo.MongoClient()
+		repo = client.repo
+		repo.authenticate('rengx_ztwu_lwj', 'rengx_ztwu_lwj')
+		
+		doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
+		doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
+		doc.add_namespace('ont', 'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
+		doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
+		doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+		doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
+		#doc.add_namespace('mas', 'https://data.mass.gov')
+		doc.add_namespace('cdp', 'https://data.cambridgema.gov/')
+		
+		this_script = doc.agent('alg:rengx_ztwu_lwj#kmeans', {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
+
+		publicschool_resource = doc.entity('bdp:492y-i77g', {'prov:label': 'Public School', prov.model.PROV_TYPE: 'ont:DataResource', 'ont:Extension': 'json'})
+		findSchoolCentroid = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime,{prov.model.PROV_LABEL: "Use K-means algorithm to find schools's centroid coordinates"})
+
+		doc.wasAssociatedWith(findSchoolCentroid, this_script)
+
+		doc.usage(findSchoolCentroid, publicschool_resource, startTime, None, {prov.model.PROV_TYPE: 'ont:Computation'})
+
+		# Result dataset entities
+		SchoolCentroid = doc.entity('dat:rengx_ztwu_lwj#SchoolCentroid',{prov.model.PROV_LABEL: 'Centroid coordinates of schools', prov.model.PROV_TYPE: 'ont:DataSet'})
+
+		doc.wasAttributedTo(SchoolCentroid, this_script)
+		doc.wasGeneratedBy(SchoolCentroid, findSchoolCentroid, endTime)
+		doc.wasDerivedFrom(SchoolCentroid, publicschool_resource, findSchoolCentroid, findSchoolCentroid, findSchoolCentroid)
+
+		repo.logout()
+
 		return doc
 #kmeans.execute()
+#doc = kmeans.provenance()
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))

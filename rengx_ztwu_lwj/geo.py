@@ -137,11 +137,61 @@ class geo(dml.Algorithm):
 		return {"start":startTime, "end":endTime}
 		 
 	@staticmethod
-	def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
-		return doc
-														
+	def provenance(doc=prov.model.ProvDocument(), startTime=None, endTime=None):
+		# Set up the database connection.
+		client = dml.pymongo.MongoClient()
+		repo = client.repo
+		repo.authenticate('rengx_ztwu_lwj', 'rengx_ztwu_lwj')
+		doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
+		doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
+		doc.add_namespace('ont','http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
+		doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
+		doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+		doc.add_namespace('cdp', 'https://data.cambridgema.gov/')
+		doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
+
+		# Agent
+		this_script = doc.agent('alg:rengx_ztwu_lwj#statsAnalysisForRecreatPlaces',{prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
+
+		# Resources
+		resource_access = doc.entity('dat:rengx_ztwu_lwj#access', {'prov:label': 'access', prov.model.PROV_TYPE: 'ont:DataResource','ont:Extension': 'json'})
+
+		resource_kmeans = doc.entity('dat:rengx_ztwu_lwj#kmeans',{'prov:label': 'kmeans', prov.model.PROV_TYPE: 'ont:DataResource', 'ont:Extension': 'json'})
+
+		resource_metadata = doc.entity('dat:rengx_ztwu_lwj#metadata',{'prov:label': 'metadata', prov.model.PROV_TYPE: 'ont:DataResource','ont:Extension': 'json'})
+		# Activities
+		geomap = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime, {prov.model.PROV_LABEL:"Compute coorrelation and p-value between the distance and accessibilities",prov.model.PROV_TYPE: 'ont:Computation'})
+
+		# Activities' Associations with Agent
+		doc.wasAssociatedWith(geomap, this_script)
+		
+		# Record which activity used which resource
+		doc.usage(geomap, resource_access, startTime)
+		doc.usage(geomap, resource_kmeans, startTime)
+		doc.usage(geomap, resource_metadata, startTime)
+
+		# Result dataset entity
+		publicschool_accessibility = doc.entity('dat:rengx_ztwu_lwj#RecreatPlacesStats', {prov.model.PROV_LABEL: 'Statistics between recreational places', prov.model.PROV_TYPE: 'ont:DataSet'})
+
+		doc.wasAttributedTo(publicschool_accessibility, this_script)
+		doc.wasGeneratedBy(publicschool_accessibility, geomap, endTime)
+		doc.wasDerivedFrom(publicschool_accessibility, resource_access, geomap, geomap, geomap)
+		doc.wasDerivedFrom(publicschool_accessibility, resource_kmeans, geomap,geomap, geomap)
+		doc.wasDerivedFrom(publicschool_accessibility, resource_metadata, geomap, geomap,geomap)
+
+		metadata = doc.entity('dat:rengx_ztwu_lwj#RecreatPlacesStats', {prov.model.PROV_LABEL: 'Statistics between recreational places', prov.model.PROV_TYPE: 'ont:DataSet'})
+
+		doc.wasAttributedTo(metadata, this_script)
+		doc.wasGeneratedBy(metadata, geomap, endTime)
+		doc.wasDerivedFrom(metadata, resource_access, geomap,geomap,geomap)
+		doc.wasDerivedFrom(metadata, resource_kmeans, geomap, geomap, geomap)
+		doc.wasDerivedFrom(metadata, resource_metadata, geomap,geomap,geomap)
+
+		repo.logout()
+
+		return doc														
 					
 #geo.execute()
-#doc = union.provenance()
+#doc = geo.provenance()
 #print(doc.get_provn())
 #print(json.dumps(json.loads(doc.serialize()), indent=4))
