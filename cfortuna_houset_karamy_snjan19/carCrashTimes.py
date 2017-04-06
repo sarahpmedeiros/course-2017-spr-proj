@@ -7,10 +7,13 @@ import uuid
 import csv
 import json
 import requests 
+from collections import *
+import math
+import matplotlib.pyplot as plt
 
-class AccidentConditions(dml.Algorithm):
+class carCrashTimes(dml.Algorithm):
     contributor = 'cfortuna_houset_karamy_snjan19'
-    reads = ['cfortuna_houset_karamy_snjan19.TrafficAccidents']
+    reads = ['cfortuna_houset_karamy_snjan19.CarCrashData']
     writes = ['']
 
     @staticmethod
@@ -18,7 +21,7 @@ class AccidentConditions(dml.Algorithm):
         '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
         startTime = datetime.datetime.now()
 
-      	def intersect(R, S):
+        def intersect(R, S):
             return [t for t in R if t in S]
 
         def aggregate(R, f):
@@ -41,12 +44,55 @@ class AccidentConditions(dml.Algorithm):
 
         # Trial Mode is basically limiting data points on which to run execution if trial parameter set to true
         #Retrieve Data
-        accidents = repo['cfortuna_houset_karamy_snjan19.TrafficAccidents'].find().limit(5) if trial else repo['cfortuna_houset_karamy_snjan19.TrafficAccidents'].find()
+        repoData = repo['cfortuna_houset_karamy_snjan19.CarCrashData'].find()#.limit(5) if trial else repo['cfortuna_houset_karamy_snjan19.CarCrashData'].find()
         
+        times = []
+        for element in repoData:
+            time_string = element["Crash Time"]
+            time_split = time_string.split(" ")
+
+            print(time_split)
+
+            if time_split[1] == "PM" and int(time_split[0].split(":")[0]) != 12:
+                time_digit = int(time_split[0].split(":")[0]) + 12
+            else:
+                time_digit = int(time_split[0].split(":")[0])
+            
+            times.append(time_digit)
+
+        count = Counter(times)
+        x = []
+        y = []
+        for key, value in count.items():
+            x.append(key)
+            y.append(value)
+
+        print(x)
+        print(y)
+
+        plt.bar(x,y)
+        plt.show()
+
+        meanX = sum(x) * 1.0 / len(x)
+        meanY = sum(y) * 1.0 / len(y)
+
+        varX = sum([(v - meanX)**2 for v in x])
+        varY = sum([(v - meanY)**2 for v in y])
+
+        minYHatCov = sum([(x[i] - meanX) * (y[i] - meanY) for i in range(len(y))])
+
+        slope = minYHatCov / varX
+        intercept = meanY - slope * meanX
+
+        MSE = sum([(y[i] - (slope * x[i] + intercept))**2 for i in range(len(x))]) * 1.0 / len(x)
+        RMSE = math.sqrt(MSE)
+
+        stats = {"slope": slope ,"intercept": intercept, "MSE": MSE, "RMSE": RMSE}
+        print(stats)
+
+
         #Retrieve Time, Weather and Location of accidents
         
-
-
         repo.logout()
 
         endTime = datetime.datetime.now()
@@ -117,7 +163,7 @@ class AccidentConditions(dml.Algorithm):
                   
         return doc
 
-retrieveData.execute()
+carCrashTimes.execute()
 # doc = retrieveData.provenance()
 # print(doc.get_provn())
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
