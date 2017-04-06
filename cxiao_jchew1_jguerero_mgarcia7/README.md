@@ -93,11 +93,12 @@ provide or "predict" the outcome of our calculation on the relationship
 between our dependent variables on our independent variable, obesity.
 
 # Required libraries and tools
-The libraries pyshp, shapely, geopy, numpy will need to be installed before the program can be executed. They can be installed with these pip3 commands:
-@EVERYONE: Make sure to include the libraries here you used that don't come packaged with Python
+The libraries pyshp, shapely, geopy, numpy, pickle, sklearn will need to be installed before the program can be executed. They can be installed with these pip3 commands:
 ```
 pip3 install pyshp
 pip3 install shapely
 pip3 install geopy
 pip3 install numpy
+pip3 install pickle
+pip3 install sklearn
 ```
