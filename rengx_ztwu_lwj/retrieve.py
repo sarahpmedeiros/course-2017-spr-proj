@@ -73,6 +73,69 @@ class retrieve(dml.Algorithm):
 		return {"start": startTime, "end": endTime}
 	@staticmethod
 	def provenance(doc = prov.model.ProvDocument(), startTime = None, endTime = None):
+		# Set up the database connection.
+		client = dml.pymongo.MongoClient()
+		repo = client.repo
+		repo.authenticate('rengx_ztwu_lwj', 'rengx_ztwu_lwj')
+
+		doc.add_namespace('alg', 'http://datamechanics.io/algorithm/')  # The scripts are in <folder>#<filename> format.
+		doc.add_namespace('dat', 'http://datamechanics.io/data/')  # The data sets are in <user>#<collection> format.
+		doc.add_namespace('ont',
+					'http://datamechanics.io/ontology#')  # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
+		doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
+		doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
+		doc.add_namespace('bod', 'http://bostonopendata-boston.opendata.arcgis.com/datasets/')
+		doc.add_namespace('mas', 'https://data.mass.gov')
+
+
+		# agent
+		this_script = doc.agent('alg:rengx_ztwu_lwj#retreiveData',
+					{prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
+
+		publicschool_resource = doc.entity('bdp:492y-i77g', {'prov:label': 'Public School',
+									prov.model.PROV_TYPE: 'ont:DataResource',
+									'ont:Extension': 'json'})
+		market_resource = doc.entity('mas:66t5-f563', {'prov:label': 'market',
+									 prov.model.PROV_TYPE: 'ont:DataResource',
+									 'ont:Extension': 'json'})
+
+
+		# activities
+		get_publicschool = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+		get_market = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+
+		doc.wasAssociatedWith(get_publicschool, this_script)
+		doc.wasAssociatedWith(get_market, this_script)
+
+		doc.usage(get_publicschool, publicschool_resource, startTime, None,
+				{prov.model.PROV_TYPE: 'ont:Retrieval'})
+		doc.usage(get_market, market_resource, startTime, None,
+				{prov.model.PROV_TYPE: 'ont:Retrieval'})
+
+		publicschool = doc.entity('dat:rengx_ztwu_lwj#publicschool',
+						{prov.model.PROV_LABEL: 'Public school Locations',
+						 prov.model.PROV_TYPE: 'ont:DataSet'})
+		market = doc.entity('dat:rengx_ztwu_lwj#market',
+								{prov.model.PROV_LABEL: 'Market db',
+								 prov.model.PROV_TYPE: 'ont:DataSet'})
+		doc.wasAttributedTo(publicschool, this_script)
+		doc.wasGeneratedBy(publicschool, get_publicschool, endTime)
+		doc.wasDerivedFrom(publicschool, publicschool_resource)
+
+		policestation = doc.entity('dat:rengx_ztwu_lwj#market',
+						 {prov.model.PROV_LABEL: "market Locations",
+					 prov.model.PROV_TYPE: "ont:DataSet"})
+		doc.wasAttributedTo(market, this_script)
+		doc.wasGeneratedBy(market, get_market, endTime)
+		doc.wasDerivedFrom(market, market_resource)
+
+
+		#repo.record(doc.serialize())
+		repo.logout()
+
 		return doc
 
 #retrieve.execute()
+#doc = retrieve.provenance()
+#print(doc.get_provn())
+#print(json.dumps(json.loads(doc.serialize()), indent=4))
