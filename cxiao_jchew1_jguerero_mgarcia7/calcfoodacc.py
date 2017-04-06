@@ -10,6 +10,8 @@ import numpy as np
 from collections import defaultdict
 from geopy.distance import vincenty
 import pickle
+from math import radians, cos, sin, asin, sqrt
+
 
 class calcfoodacc(dml.Algorithm):
 	contributor = 'cxiao_jchew1_jguerero_mgarcia7'
@@ -45,14 +47,25 @@ class calcfoodacc(dml.Algorithm):
 		def createDistanceMatrix(address,food):
 			empty = [0] * len(food)
 			mat = np.array([empty]*len(address), dtype=float)
+			address = np.array(address)
+			food = np.array(food)
 
+			address = address[:,:2]
+
+			'''
 			for row in range(len(address)):
 				a = (address[row][0], address[row][1])
 				for column in range(len(food)):
 					f = (food[column][0], food[column][1])
 					dist = vincenty(a, f).kilometers
 					mat[row,column] = dist
+
+			'''
+			for idx,fs in enumerate(food):
+				mat[:,idx] = np.apply_along_axis(distanceKm, 0, fs, address)
+				print(mat[:,idx])
 			return mat
+
 		def createMetricsMatrix(address, food, distance): #metrics = rows and then columns is food
 			empty = [0.000] * len(address)
 			mat = np.array([empty]*3)
@@ -86,7 +99,6 @@ class calcfoodacc(dml.Algorithm):
 			return mat
 
 
-
 		# Get the average metric score per neighborhood
 		nbs = list(set(fs_per_nb.keys()).intersection(set(add_per_nb.keys())))
 		avg_metrics = np.zeros((len(nbs), 3), dtype=np.float64)
@@ -105,14 +117,27 @@ class calcfoodacc(dml.Algorithm):
 		zscore_metrics = np.apply_along_axis(computeZscore,axis=0,arr=avg_metrics)
 
 		# Compute a composite score for each neighborhood
-
-		weights = np.array([-1,0,-1]) # Weight = -1 if it's a good thing to have a high value
+		weights = np.array([-1,1,-1]) # Weight = -1 if it's a good thing to have a high value, 1 otherwise
 		scores = np.sum(weights*zscore_metrics,axis=1)
-
 
 		newd = {"Neighborhoods":nbs, "Scores":scores, "Zscore_metrics":zscore_metrics, "Avg_metrics":avg_metrics}
 		pickle.dump(newd, open('info.p','wb'))
 
+
+		# Create list of tuples that can be used to update a dictionary
+		info = dict([(nb,score) for nb, score in zip(nbs,scores)])
+
+		# Insert food accessbility score in the repo
+		nstats = repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics'].find()
+		for item in nstats:
+			nb = item['Neighborhood']
+			item['FoodScore'] = info[nb]
+
+		repo.dropCollection("neighborhoodstatistics")
+		repo.createCollection("neighborhoodstatistics")
+		repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics'].insert_many(nstats)
+		repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics'].metadata({'complete':True})
+		print(repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics'].metadata())
 		repo.logout()
 		endTime = datetime.datetime.now()
 
@@ -164,8 +189,37 @@ class calcfoodacc(dml.Algorithm):
 				  
 		return doc
 
-def calc_distance():
-	pass
+def distanceKm(pt,add):
+    """
+    Calculate the great circle distance between two points 
+    on the earth (specified in decimal degrees)
+    """
+    print(pt)
+    print(add)
+    pt = np.radians(pt)
+    add = np.radians(add)
+
+    lat1 = pt[0]
+    lon1 = pt[1]
+
+    lat2 = add[:,0]
+    lon2 = add[:,1]
+
+    '''
+
+    # convert decimal degrees to radians 
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    '''
+
+    # haversine formula 
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    r = 6371 # Radius of earth in kilometers. Use 3956 for miles
+    return c * r
+
+	
 
 calcfoodacc.execute()
 ## eof
