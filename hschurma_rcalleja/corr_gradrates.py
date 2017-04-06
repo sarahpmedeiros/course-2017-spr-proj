@@ -120,13 +120,13 @@ class corr_gradrates(dml.Algorithm):
         
         doc.wasDerivedFrom(corr_grad, funding_gradrates, get_corr_grad, get_corr_grad, get_corr_grad)
         
-        #repo.record(doc.serialize())
+        repo.record(doc.serialize())
         repo.logout()
 
         return doc
                   
 
-corr_gradrates.execute()
+#corr_gradrates.execute()
 #doc = corr_gradrates.provenance()
 #print(json.dumps(json.loads(doc.serialize()), indent=4))
         
