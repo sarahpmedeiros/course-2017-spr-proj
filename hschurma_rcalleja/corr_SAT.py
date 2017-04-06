@@ -123,35 +123,35 @@ class corr_SAT(dml.Algorithm):
         doc.add_namespace('log', 'http://datamechanics.io/log/')  # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
-        this_script = doc.agent('alg:hschurma_rcalleja#corr_gradrates',
+        this_script = doc.agent('alg:hschurma_rcalleja#corr_SAT',
                                 {prov.model.PROV_TYPE: prov.model.PROV['SoftwareAgent'], 'ont:Extension': 'py'})
 
-        funding_gradrates = doc.entity('dat:hschurma_rcalleja#funding_gradrates',
-                                       {'prov:label': 'Funding and Gradrates', \
+        funding_SAT = doc.entity('dat:hschurma_rcalleja#funding_SAT',
+                                       {'prov:label': 'Funding and SAT', \
                                         prov.model.PROV_TYPE: 'ont:DataSet'})
 
-        get_corr_grad = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        get_corr_SAT = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_corr_fund, this_script)
+        doc.wasAssociatedWith(get_corr_SAT, this_script)
 
-        doc.used(get_corr_fund, funding_gradrates, startTime)
+        doc.used(get_corr_SAT, funding_SAT, startTime)
 
-        corr_fund = doc.entity('dat:hschurma_rcalleja#corr_gradrates',
-                               {prov.model.PROV_LABEL: 'High School Funding and Graduation Data Correlation',
+        corr_SAT = doc.entity('dat:hschurma_rcalleja#corr_gradrates',
+                               {prov.model.PROV_LABEL: 'High School Funding and SAT Scores Correlation',
                                 prov.model.PROV_TYPE: 'ont:DataSet'})
-        doc.wasAttributedTo(corr_fund, this_script)
-        doc.wasGeneratedBy(corr_fund, get_corr_fund, endTime)
+        doc.wasAttributedTo(corr_SAT, this_script)
+        doc.wasGeneratedBy(corr_SAT, get_corr_SAT, endTime)
 
-        doc.wasDerivedFrom(corr_fund, funding_gradrates, get_corr_fund, get_corr_fund, get_corr_fund)
+        doc.wasDerivedFrom(corr_SAT, funding_SAT, get_corr_SAT, get_corr_SAT, get_corr_SAT)
 
-        repo.record(doc.serialize())
+        #repo.record(doc.serialize())
         repo.logout()
 
         return doc
 
 
 corr_SAT.execute()
-
+#doc = corr_SAT.provenance()
 
 
 
