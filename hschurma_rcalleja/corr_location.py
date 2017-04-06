@@ -8,8 +8,8 @@ import uuid
 from math import sin, cos, sqrt, atan2, radians
 
 from random import shuffle
-from math import sqrt
 
+'''methods used for calculating correlation'''
 def permute(x):
     shuffled = [xi for xi in x]
     shuffle(shuffled)
@@ -37,6 +37,7 @@ def p(x, y):
         corrs.append(corr(x, y_permuted))
     return len([c for c in corrs if abs(c) > c0])/len(corrs)
 
+'''methods used to find closest schools'''
 def distance(x,y):
     [lat1,lon1] = x
     [lat2,lon2] = y
@@ -65,12 +66,11 @@ def shortest_dist(x):
         newlist = sorted(i['Distance'], key=lambda k: k['Distance'])
         shortest.append({'School Name': i['School Name'], 'Closest': newlist[:3]})
     return shortest
-    #return sorted(x, key=x.get, reverse=True)[:3]
 
 
 #find distances then sort list and take the last 3 (top 3)
 
-
+'''methods used to project data sets'''
 def union(R, S):
     return R + S
 
@@ -113,46 +113,46 @@ class corr_location(dml.Algorithm):
         repo.dropPermanent("corr_location")
         repo.createPermanent("corr_location")
 
-
-        fund_loc = list(repo.hschurma_rcalleja.funding_location.aggregate([{"$project":{"_id":0}}]))
-        #print(fund_loc)
-
+        #grab location, SAT, and graduation data
+        #accomodate for trial mode
+        #trial = False
+        fund_loc = []
+        if trial == True:
+            fund_loc.append(repo.hschurma_rcalleja.funding_location.find_one({}))
+        else:
+            fund_loc = list(repo.hschurma_rcalleja.funding_location.aggregate([{"$project":{"_id":0}}]))
 
         fund_SAT = list(repo.hschurma_rcalleja.funding_SAT.aggregate([{"$project": {"_id": 0}}]))
-        #print(fund_SAT)
-
-    
         fund_grad = list(repo.hschurma_rcalleja.funding_gradrates.aggregate([{"$project":{"_id":0}}]))
-        print(fund_grad)
 
-
+        #project grad rates and SAT data together
         P = product(fund_SAT, fund_grad)
-        #print(P)
         S = select(P, lambda t: t[0]['Name'] == t[1]['Name'])
-        #print(S)
         PR = project(S, lambda t: {'School Name': t[0]['Name'], 'SAT': t[0]['SAT'], 'Grad Rates': t[1]['Graduation Rates']})
-        #print(PR)
         
-
+        #create lists of schools and coordinates
         coord = []
         for i in fund_loc:
             coord.append({'School Name': i['Name'], 'Location': i['location'][1]})
 
-        #print(coord)
-
+        #calculate distances between each school
+        #accomodate for trial mode
+        if trial == True:
+            fund_loc = list(repo.hschurma_rcalleja.funding_location.aggregate([{"$project":{"_id":0}}]))
+            
         dists = []
         for c in coord:
             locs = []
-            for s in coord:
-                if c['School Name'] != s['School Name']:
-                    locs.append({'School Name': s['School Name'], 'Distance': distance(c['Location'],s['Location'])})
+            for s in fund_loc:
+                if c['School Name'] != s['Name']:
+                    locs.append({'School Name': c['School Name'], 'Distance': distance(c['Location'],s['location'][1])})
             
             dists.append({'School Name': c['School Name'], 'Distance': locs})
 
-        #print(dists)
+        #find the closest 3 schools to each school
         closest = shortest_dist(dists)
 
-        
+        #include finding
         close_with_fund = {}
         total_fund = {}
         for school in closest:
@@ -160,30 +160,20 @@ class corr_location(dml.Algorithm):
             total_fund[name] = {'2008':0, '2009':0,'2010':0, '2011':0,'2012':0, '2013':0,'2014':0, '2015':0, '2016':0}
 
 
-        #print(total_fund)
 
-        
+        #calculate total funding from all three closest schools for each year
         for school in closest:
             for c in school['Closest']:
                 name = c['School Name']
-                #print(name)
                 fund = {}
                 for i in fund_loc:
                     if i['Name'] == name:
                         fund = {name: i['Funding']}
-                
-                #print(fund)
-                #print(school['School Name'])
-                #print(name)
-                
             
                 for j in range(2008,2017):
                     year = str(j)
                     s = school['School Name']
-                    #print(s)
-                    #print(fund[name])
 
-                    #print(fund[name][year])
                     if type(fund[name][year]) != int:
                         fund[name][year] = int(fund[name][year].replace("$", "").replace(",", ""))
                     else:
@@ -191,16 +181,17 @@ class corr_location(dml.Algorithm):
 
                     total_fund[s][year] += fund[name][year]
 
-        #print(total_fund)
-
+        #create list of dictionaries that we can use to project
         tot_fund_final = []
         for f in total_fund:
             tot_fund_final.append({'School Name': f, 'Neighbor Funding': total_fund[f]})
 
+        #project SAT and Grad data with funding data for neighboring schools
         prod_close = product(PR, tot_fund_final)
         sel_close = select(prod_close, lambda t: t[0]['School Name'] == t[1]['School Name'])
         proj_close = project(sel_close, lambda t: {'School Name': t[0]['School Name'], 'SAT': t[0]['SAT'], 'Grad Rates': t[0]['Grad Rates'], 'Neighbor Funding': t[1]['Neighbor Funding']})
 
+        #calculate SAT correlation with total funding from neighboring schools
         SAT_corr = []
         for i in range(len(proj_close)):
             x_scores = []
@@ -214,12 +205,12 @@ class corr_location(dml.Algorithm):
                     score = scores[year]['Total']
                     x_scores.append(score)
                     y_funds.append(fund)
-            print("Scores ", x_scores, '\n')
-            print("Funds ", y_funds, '\n')
+            #print("Scores ", x_scores, '\n')
+            #print("Funds ", y_funds, '\n')
             SAT_corr.append({'School Name': proj_close[i]['School Name'], 'SAT_Neighbor Funding Correlation': corr(x_scores, y_funds)})
-        print(SAT_corr)
+        #print(SAT_corr)
 
-        #gradrates corr
+        #Calculate grad rates correlation with total funding from neighboring schools
         gradr_corr = []
         for i in range(len(proj_close)):
             x_grad = []
@@ -240,26 +231,18 @@ class corr_location(dml.Algorithm):
                     y_fund.append(fund)
             gradr_corr.append({'School Name': proj_close[i]['School Name'], 'Grad Rates Correlation': corr(x_grad, y_fund)})
 
+
+        #project Grad correlation and SAT correlation
         prod_corr = product(SAT_corr, gradr_corr)
         sel_corr = select(prod_corr, lambda t: t[0]['School Name'] == t[1]['School Name'])
         proj_corr = project(sel_corr , lambda t: {'School Name': t[0]['School Name'], 'SAT_Neighbor Funding Correlation': t[0]['SAT_Neighbor Funding Correlation'],
                                                   'Grad Rates Correlation': t[1]['Grad Rates Correlation']})
 
-        print(proj_corr)
-        '''
-        sat_grad_loc = []
-        for school in closest:
-            for c in school['Closest']:
-                sat_grad_loc.append({'School Name': school['School Name'], 
-                
-                
-        
-        print(shortest)'''
-
+        #print(proj_corr)
 
         repo.dropCollection('corr_location')
         repo.createCollection('corr_location')
-        repo['hschurma_rcalleja.corr_location'].insert(closest)
+        repo['hschurma_rcalleja.corr_location'].insert(proj_corr)
         
 
     @staticmethod
@@ -285,18 +268,28 @@ class corr_location(dml.Algorithm):
 
         funding_location = doc.entity('dat:hschurma_rcalleja#funding_location', {'prov:label':'Funding and School Location', \
             prov.model.PROV_TYPE:'ont:DataSet'})
+        funding_gradrates = doc.entity('dat:hschurma_rcalleja#funding_gradrates', {'prov:label':'School Funding and Graduation Rates', \
+            prov.model.PROV_TYPE:'ont:DataSet'})
+        funding_SAT = doc.entity('dat:hschurma_rcalleja#funding_SAT', {'prov:label':'School Funding and SAT data', \
+            prov.model.PROV_TYPE:'ont:DataSet'})
+        
         
         get_corr_loc = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
         doc.wasAssociatedWith(get_corr_loc, this_script)
 
         doc.used(get_corr_loc, funding_location, startTime)
+        doc.used(get_corr_loc, funding_gradrates, startTime)
+        doc.used(get_corr_loc, funding_SAT, startTime)
 
-        corr_loc = doc.entity('dat:hschurma_rcalleja#corr_location', {prov.model.PROV_LABEL:'High School Funding and Location Correlation', prov.model.PROV_TYPE:'ont:DataSet'})
+        corr_loc = doc.entity('dat:hschurma_rcalleja#corr_location', {prov.model.PROV_LABEL:'School Funding Correlation with SAT and Graduation Rates based on Location', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(corr_loc, this_script)
         doc.wasGeneratedBy(corr_loc, get_corr_loc, endTime)
         
         doc.wasDerivedFrom(corr_loc, funding_location, get_corr_loc, get_corr_loc, get_corr_loc)
+        doc.wasDerivedFrom(corr_loc, funding_gradrates, get_corr_loc, get_corr_loc, get_corr_loc)
+        doc.wasDerivedFrom(corr_loc, funding_SAT, get_corr_loc, get_corr_loc, get_corr_loc)
+
         
         #repo.record(doc.serialize())
         repo.logout()
