@@ -67,11 +67,9 @@ As you can see from the table above,
 
 |       | Food Score |   Income |   Obesity |
 |:----------------------------|-------------------------:|-------------------------------------------:|---------------------------:|
-|Food Score | 1.0         |   -0.0243795  |  -0.41433783  |                       
-|Income | -0.0243795  |   1.0         |  -0.54327576  |                       
-|Obesity | -0.41433783 |   -0.54327576 |  1.0          |
-
-
+|*Food Score* | 1.0         |   -0.0243795  |  -0.41433783  |                       
+|*Income* | -0.0243795  |   1.0         |  -0.54327576  |                       
+|*Obesity* | -0.41433783 |   -0.54327576 |  1.0          |
 
 Shown above is our coefficient correlation array
 for our three variables containing data from foodscore, 
@@ -85,14 +83,9 @@ own self. The variables' own coefficient correlation with itself
 irrefutably lies on the positive line of best fit representing a 
 positive correlation. 
 
-Within our linear regression model we equated our variable on obesity 
-as the dependent variable as shown as the output of our function. Since we
-set our dependent variable as obesity, we wanted to use linear regression
-to further calculate the correlation it has with our independent variables
-as represented by x which were on income and food score. With the given 
-equation y = a1x1 + a2x2, we were also given predictor values that would
-provide or "predict" the outcome of our calculation on the relationship
-between our dependent variables on our independent variable, obesity.
+Specfically, the correlation coefficient array shows that there is a relatively strong negative correlation between obesity and income, as well as between the food accessibility score and obesity. However, there doesn't seem to be any correlation between the food accessbility score and the income. 
+
+We also decided to create a linear regression model in order to give us an idea of how related the independent variables (food accessbility and income) were to the dependent variable (obesity). 
 
 # Required libraries and tools
 The libraries pyshp, shapely, geopy, numpy, pickle, sklearn will need to be installed before the program can be executed. They can be installed with these pip3 commands:
