@@ -124,8 +124,8 @@ class closestControlObesity(dml.Algorithm):
         doc.usage(get_closest_control_obesity, obesity_mbta, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
         doc.wasAttributedTo(control_obesity, this_script)
         doc.wasGeneratedBy(control_obesity, get_closest_control_obesity, endTime)
-        doc.wasDerivedFrom(control_obesity, control_mbta, get_closest_health_obesity, get_closest_health_obesity, get_closest_health_obesity)
-        doc.wasDerivedFrom(control_obesity, obesity_mbta, get_closest_control_obesity, get_closest_health_obesity, get_closest_health_obesity)
+        doc.wasDerivedFrom(control_obesity, control_mbta, get_closest_control_obesity, get_closest_control_obesity, get_closest_control_obesity)
+        doc.wasDerivedFrom(control_obesity, obesity_mbta, get_closest_control_obesity, get_closest_control_obesity, get_closest_control_obesity)
 
         repo.logout()
 

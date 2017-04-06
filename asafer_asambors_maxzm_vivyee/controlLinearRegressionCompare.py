@@ -75,19 +75,22 @@ class controlLinearRegressionCompare(dml.Algorithm):
                 doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
                 doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
                 
-                this_script = doc.agent('alg:asafer_asambors_maxzm_vivyee#linearRegressionObesityTime', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+                this_script = doc.agent('alg:asafer_asambors_maxzm_vivyee#controlLinearRegressionObesityTime', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
-                get_linear_regression_obesity_time = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+                get_control_linear_regression_obesity_time = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
 
-                doc.wasAssociatedWith(get_linear_regression_obesity_time, this_script)
+                doc.wasAssociatedWith(get_control_linear_regression_obesity_time, this_script)
 
-                obesity_time = doc.entity('dat:asafer_asambors_maxzm_vivyee#obesity_time', {prov.model.PROV_LABEL:'Time to get to a healthy location from an obese area (percentage)', prov.model.PROV_TYPE:'ont:DataSet'})
-                obesity_time_linear_regression = doc.entity('dat:asafer_asambors_maxzm_vivyee#obesity_time_linear_regression', {prov.model.PROV_LABEL:'Linear regression on time to get to a healthy location from an obese area (percentage)', prov.model.PROV_TYPE:'ont:DataSet'})
-
-                doc.usage(get_linear_regression_obesity_time, obesity_time, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-                doc.wasAttributedTo(obesity_time_linear_regression, this_script)
-                doc.wasGeneratedBy(obesity_time_linear_regression, get_linear_regression_obesity_time, endTime)
-                doc.wasDerivedFrom(obesity_time_linear_regression, obesity_time, get_linear_regression_obesity_time, get_linear_regression_obesity_time, get_linear_regression_obesity_time)
+                control_time = doc.entity('dat:asafer_asambors_maxzm_vivyee#obesity_time', {prov.model.PROV_LABEL:'Time to get to a healthy location from an obese area (percentage)', prov.model.PROV_TYPE:'ont:DataSet'})
+                obesity_time_linear_regression_data = doc.entity('dat:asafer_asambors_maxzm_vivyee#obesity_time_linear_regression_data', {prov.model.PROV_LABEL:'Linear regression on time to get to a healthy location from an obese area (percentage)', prov.model.PROV_TYPE:'ont:DataSet'})
+                results = doc.entity('dat:asafer_asambors_maxzm_vivyee#results', {prov.model.PROV_LABEL:'Final results', prov.model.PROV_TYPE:'ont:DataSet'})
+                
+                doc.usage(get_control_linear_regression_obesity_time, control_time, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+                doc.usage(get_control_linear_regression_obesity_time, obesity_time_linear_regression_data, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+                doc.wasAttributedTo(result, this_script)
+                doc.wasGeneratedBy(result, get_control_linear_regression_obesity_time, endTime)
+                doc.wasDerivedFrom(result, control_time, get_control_linear_regression_obesity_time, get_control_linear_regression_obesity_time, get_control_linear_regression_obesity_time)
+                doc.wasDerivedFrom(result, obesity_time_linear_regression_data, get_control_linear_regression_obesity_time, get_control_linear_regression_obesity_time, get_control_linear_regression_obesity_time)
 
                 repo.logout()
 

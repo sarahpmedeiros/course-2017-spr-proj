@@ -161,33 +161,33 @@ class controlShortestMbtaPath(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
 
-        this_script = doc.agent('alg:asafer_asambors_maxzm_vivyee#shortestMbtaPath', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:asafer_asambors_maxzm_vivyee#controlShortestMbtaPath', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
-        get_shortest_mbta_path = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
-        get_obesity_time = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        get_control_shortest_mbta_path = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        get_control_obesity_time = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_shortest_mbta_path, this_script)
-        doc.wasAssociatedWith(get_obesity_time, this_script)
+        doc.wasAssociatedWith(get_control_shortest_mbta_path, this_script)
+        doc.wasAssociatedWith(get_control_obesity_time, this_script)
 
-        health_obesity = doc.entity('dat:asafer_asambors_maxzm_vivyee#health_obesity', {prov.model.PROV_LABEL:'Closest healthy location to an obese area', prov.model.PROV_TYPE:'ont:DataSet'})
+        control_obesity = doc.entity('dat:asafer_asambors_maxzm_vivyee#control_obesity', {prov.model.PROV_LABEL:'Closest control to an obese area', prov.model.PROV_TYPE:'ont:DataSet'})
         mbta_routes = doc.entity('dat:asafer_asambors_maxzm_vivyee#mbta_routes', {prov.model.PROV_LABEL:'MBTA Routes', prov.model.PROV_TYPE:'ont:DataSet'})
-        obesity_time = doc.entity('dat:asafer_asambors_maxzm_vivyee#obesity_time', {prov.model.PROV_LABEL:'Time to get to a healthy location from an obese area (percentage)', prov.model.PROV_TYPE:'ont:DataSet'}) 
+        control_time = doc.entity('dat:asafer_asambors_maxzm_vivyee#control_time', {prov.model.PROV_LABEL:'Time to get to a control location from an obese area (percentage)', prov.model.PROV_TYPE:'ont:DataSet'}) 
 
-        doc.usage(get_shortest_mbta_path, health_obesity, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.usage(get_shortest_mbta_path, mbta_routes, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.usage(get_obesity_time, health_obesity, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.usage(get_obesity_time, mbta_routes, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_control_shortest_mbta_path, control_obesity, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_control_shortest_mbta_path, mbta_routes, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_control_obesity_time, control_obesity, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_control_obesity_time, mbta_routes, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
 
-        doc.wasAttributedTo(health_obesity, this_script)
-        doc.wasAttributedTo(obesity_time, this_script)
+        doc.wasAttributedTo(control_obesity, this_script)
+        doc.wasAttributedTo(control_time, this_script)
 
-        doc.wasGeneratedBy(health_obesity, get_shortest_mbta_path, endTime)
-        doc.wasGeneratedBy(obesity_time, get_obesity_time, endTime)
+        doc.wasGeneratedBy(control_obesity, get_control_shortest_mbta_path, endTime)
+        doc.wasGeneratedBy(control_time, get_control_obesity_time, endTime)
 
-        doc.wasDerivedFrom(health_obesity, health_obesity, get_shortest_mbta_path, get_shortest_mbta_path, get_shortest_mbta_path)
-        doc.wasDerivedFrom(health_obesity, mbta_routes, get_shortest_mbta_path, get_shortest_mbta_path, get_shortest_mbta_path)
+        doc.wasDerivedFrom(control_obesity, control_obesity, get_control_shortest_mbta_path, get_control_shortest_mbta_path, get_control_shortest_mbta_path)
+        doc.wasDerivedFrom(control_obesity, mbta_routes, get_control_shortest_mbta_path, get_control_shortest_mbta_path, get_control_shortest_mbta_path)
 
-        doc.wasDerivedFrom(obesity_time, health_obesity, get_obesity_time, get_obesity_time, get_obesity_time)
+        doc.wasDerivedFrom(control_time, control_obesity, get_control_obesity_time, get_control_obesity_time, get_control_obesity_time)
 
         repo.logout()
 

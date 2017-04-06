@@ -150,23 +150,23 @@ class closestMbtaControl(dml.Algorithm):
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
 
-        this_script = doc.agent('alg:asafer_asambors_maxzm_vivyee#health_mbta', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:asafer_asambors_maxzm_vivyee#control_mbta', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
         # datamechanics.io data
-        get_health_mbta = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+        get_control_mbta = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
 
-        doc.wasAssociatedWith(get_health_mbta, this_script)
+        doc.wasAssociatedWith(get_control_mbta, this_script)
 
-        healthy_locations = doc.entity('dat:asafer_asambors_maxzm_vivyee#healthy_locations', {prov.model.PROV_LABEL:'Aggregate of Health related locations', prov.model.PROV_TYPE:'ont:DataSet'})
+        control = doc.entity('dat:asafer_asambors_maxzm_vivyee#control', {prov.model.PROV_LABEL:'Big belly locations', prov.model.PROV_TYPE:'ont:DataSet'})
         mbta_routes = doc.entity('dat:asafer_asambors_maxzm_vivyee#mbta_routes', {prov.model.PROV_LABEL:'MBTA Routes', prov.model.PROV_TYPE:'ont:DataSet'})
         
-        health_mbta = doc.entity('dat:asafer_asambors_maxzm_vivyee#health_mbta', {prov.model.PROV_LABEL:'Closest MBTA stops to Health locations', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.usage(get_health_mbta, healthy_locations, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.usage(get_health_mbta, mbta_routes, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
-        doc.wasAttributedTo(health_mbta, this_script)
-        doc.wasGeneratedBy(health_mbta, get_health_mbta, endTime)
-        doc.wasDerivedFrom(health_mbta, healthy_locations, get_health_mbta, get_health_mbta, get_health_mbta)
-        doc.wasDerivedFrom(health_mbta, mbta_routes, get_health_mbta, get_health_mbta, get_health_mbta)
+        control_mbta = doc.entity('dat:asafer_asambors_maxzm_vivyee#control_mbta', {prov.model.PROV_LABEL:'Control data and MBTA', prov.model.PROV_TYPE:'ont:DataSet'})
+        doc.usage(get_control_mbta, control, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.usage(get_control_mbta, mbta_routes, startTime, None, {prov.model.PROV_TYPE:'ont:Retrieval'})
+        doc.wasAttributedTo(control_mbta, this_script)
+        doc.wasGeneratedBy(control_mbta, get_control_mbta, endTime)
+        doc.wasDerivedFrom(control_mbta, control, get_control_mbta, get_control_mbta, get_control_mbta)
+        doc.wasDerivedFrom(control_mbta, mbta_routes, get_control_mbta, get_control_mbta, get_control_mbta)
 
         repo.logout()
 
