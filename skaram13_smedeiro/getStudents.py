@@ -26,10 +26,20 @@ class getStudents(dml.Algorithm):
 		response = urllib.request.urlopen(req).read().decode("UTF-8")
 
 		r = json.loads(response)
+<<<<<<< HEAD
 
 		repo.dropCollection("students")
 		repo.createCollection("students")
 		repo['skaram13_smedeiro.students'].insert_many(r['features'])
+=======
+		# for entry in r['features']:
+		# 	print (entry)
+		# 	break
+		# print (r)
+		repo.dropCollection("students")
+		repo.createCollection("students")
+		repo['skaram13_smedeiro.students'].insert(r)
+>>>>>>> origin/master
 		repo['skaram13_smedeiro.students'].metadata({'complete':True})
 		# print(repo['skaram13_smedeiro.GradRates'].metadata())
 
@@ -90,4 +100,8 @@ getStudents.execute()
 # example.execute()
 # doc = example.provenance()
 # print(doc.get_provn())
+<<<<<<< HEAD
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
+=======
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
+>>>>>>> origin/master
