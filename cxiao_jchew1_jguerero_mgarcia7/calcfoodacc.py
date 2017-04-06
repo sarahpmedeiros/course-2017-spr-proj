@@ -32,9 +32,13 @@ class calcfoodacc(dml.Algorithm):
 		foodsources_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.foodsources'].find()
 		add_data_cursor = repo['cxiao_jchew1_jguerero_mgarcia7.masteraddress'].find()
 
-		fs = [(source['Neighborhood'], source['latitude'], source['longitude'], source['Type']) for source in foodsources_data_cursor]
-		add = [(a.get('neighborhood'),a['latitude'], a['longitude'], 'Residential') for a in add_data_cursor]
+		fs_per_nb = defaultdict(list)
+		add_per_nb = defaultdict(list)
 
+		dummy_fs = [fs_per_nb[source['Neighborhood']].append((source['latitude'], source['longitude'], source['Type'])) for source in foodsources_data_cursor]
+		dummy_add = [add_per_nb[a['neighborhood']].append((a['latitude'], a['longitude'], 'Residential')) for a in add_data_cursor if a.get('neighborhood') is not None] #[(a.get('neighborhood'),a['latitude'], a['longitude'], 'Residential') for a in add_data_cursor]
+
+		'''
 		# Aggregate fs and add per neighborhood
 		def aggregate(R):
 			keys = {r[0] for r in R if r[0] is not None}
@@ -42,6 +46,7 @@ class calcfoodacc(dml.Algorithm):
 
 		fs_per_nb = aggregate(fs)
 		add_per_nb = aggregate(add)
+		'''
 
 
 		def createDistanceMatrix(address,food):
@@ -50,7 +55,8 @@ class calcfoodacc(dml.Algorithm):
 			address = np.array(address)
 			food = np.array(food)
 
-			address = address[:,:2]
+			address = address[:,:2].astype(float)
+			food = food[:,:2].astype(float)
 
 			'''
 			for row in range(len(address)):
@@ -63,7 +69,6 @@ class calcfoodacc(dml.Algorithm):
 			'''
 			for idx,fs in enumerate(food):
 				mat[:,idx] = np.apply_along_axis(distanceKm, 0, fs, address)
-				print(mat[:,idx])
 			return mat
 
 		def createMetricsMatrix(address, food, distance): #metrics = rows and then columns is food
@@ -98,9 +103,10 @@ class calcfoodacc(dml.Algorithm):
 
 			return mat
 
-
 		# Get the average metric score per neighborhood
 		nbs = list(set(fs_per_nb.keys()).intersection(set(add_per_nb.keys())))
+		print(nbs)
+
 		avg_metrics = np.zeros((len(nbs), 3), dtype=np.float64)
 
 		for idx,nb in enumerate(nbs):
@@ -126,18 +132,24 @@ class calcfoodacc(dml.Algorithm):
 
 		# Create list of tuples that can be used to update a dictionary
 		info = dict([(nb,score) for nb, score in zip(nbs,scores)])
+		print(nbs)
+		print(info)
 
 		# Insert food accessbility score in the repo
 		nstats = repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics'].find()
+		nstats = [row for row in nstats]
 		for item in nstats:
 			nb = item['Neighborhood']
-			item['FoodScore'] = info[nb]
+			item['FoodScore'] = info.get(nb)
+
+		#print(nstats)
 
 		repo.dropCollection("neighborhoodstatistics")
 		repo.createCollection("neighborhoodstatistics")
 		repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics'].insert_many(nstats)
 		repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics'].metadata({'complete':True})
 		print(repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoodstatistics'].metadata())
+
 		repo.logout()
 		endTime = datetime.datetime.now()
 
@@ -194,8 +206,9 @@ def distanceKm(pt,add):
     Calculate the great circle distance between two points 
     on the earth (specified in decimal degrees)
     """
-    print(pt)
-    print(add)
+    #print("pt",pt)
+    #print("add",add)
+
     pt = np.radians(pt)
     add = np.radians(add)
 
@@ -214,8 +227,8 @@ def distanceKm(pt,add):
     # haversine formula 
     dlon = lon2 - lon1 
     dlat = lat2 - lat1 
-    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-    c = 2 * asin(sqrt(a)) 
+    a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+    c = 2 * np.arcsin(np.sqrt(a)) 
     r = 6371 # Radius of earth in kilometers. Use 3956 for miles
     return c * r
 

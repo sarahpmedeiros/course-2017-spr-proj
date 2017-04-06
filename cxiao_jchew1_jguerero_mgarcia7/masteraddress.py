@@ -37,14 +37,11 @@ class masteraddress(dml.Algorithm):
         residential_codes = set(['A', 'CD', 'R1', 'R2', 'R3', 'R4', 'RC'])
         residential_add = select(r, lambda d: d.get('land_usage') in residential_codes)
 
-        '''
         # For each food source, standardize the neighborhoods by looking at the latitude and longitude and finding out what neighborhood it fits into
         neighborhoods = repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoods']
 
         # Create shapeobjects for each neighborhood
         neighborhood_shapes = {n['name']:shape(n['the_geom']) for n in neighborhoods.find({})}
-
-        print(neighborhood_shapes.keys())
 
         # Find which neighborhood each point belongs to
         for row in residential_add:
@@ -60,7 +57,6 @@ class masteraddress(dml.Algorithm):
                     row['neighborhood'] = name
                     break
 
-        '''
 
         repo.dropCollection("masteraddress")
         repo.createCollection("masteraddress")
