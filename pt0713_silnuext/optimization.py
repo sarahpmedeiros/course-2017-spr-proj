@@ -18,7 +18,7 @@ from pyproj import Proj, transform
 from random import shuffle
 from math import sqrt
 
-
+    
 # implementation of functions from course notes
 
 def union(R, S):
@@ -85,36 +85,12 @@ def p(x, y):
         y_permuted = permute(y)
         corrs.append(corr(x, y_permuted))
     return len([c for c in corrs if abs(c) > c0])/len(corrs)
+    
 
-
-# getting zipcode data from local directory/internet
-
-myshp = open("zipcodes_nt/ZIPCODES_NT_POLY.shp", "rb")
-mydbf = open("zipcodes_nt/ZIPCODES_NT_POLY.dbf", "rb")
-r = shapefile.Reader(shp=myshp, dbf=mydbf)
-shapes = r.shapes()
-
-zipcode = [x[0] for x in r.records()]
-coor = [x.points for x in shapes]
-
-inProj = Proj(init='epsg:26986')
-outProj = Proj(init='epsg:4326')
-zip_to_coor = {}
-
-for i in range(len(zipcode)):
-	for j in range(len(coor[i])):
-		x1, y1 = coor[i][j][0], coor[i][j][1]
-		x2, y2 = transform(inProj, outProj, x1, y1)
-		coor[i][j] = [y2, x2]
-		zip_to_coor[zipcode[i]] = coor[i]
-
-
-
-class proj2(dml.Algorithm):
+class optimization(dml.Algorithm):
     contributor = 'pt0713_silnuext'
-    reads = ['pt0713_silnuext.property_2015',
-             'pt0713_silnuext.crime']
-    writes = ['pt0713_silnuext.proj2']
+    reads = ['pt0713_silnuext.property_2015', 'pt0713_silnuext.crime']
+    writes = ['pt0713_silnuext.optimization']
 
     @staticmethod
     def execute(trial = True):
@@ -127,6 +103,30 @@ class proj2(dml.Algorithm):
         repo.authenticate('pt0713_silnuext', 'pt0713_silnuext')
         crime = repo.pt0713_silnuext.crime.find()
         property_2015 = repo.pt0713_silnuext.property_2015.find()
+        repo.dropCollection("optimization")
+        repo.createCollection("optimization")
+
+        # getting zipcode data from local directory/internet
+
+        myshp = open("pt0713_silnuext/zipcodes_nt/ZIPCODES_NT_POLY.shp", "rb")
+        mydbf = open("pt0713_silnuext/zipcodes_nt/ZIPCODES_NT_POLY.dbf", "rb")
+        r = shapefile.Reader(shp=myshp, dbf=mydbf)
+        shapes = r.shapes()
+
+        zipcode = [x[0] for x in r.records()]
+        coor = [x.points for x in shapes]
+
+        inProj = Proj(init='epsg:26986')
+        outProj = Proj(init='epsg:4326')
+        zip_to_coor = {}
+
+        for i in range(len(zipcode)):
+            for j in range(len(coor[i])):
+                x1, y1 = coor[i][j][0], coor[i][j][1]
+                x2, y2 = transform(inProj, outProj, x1, y1)
+                coor[i][j] = [y2, x2]
+                zip_to_coor[zipcode[i]] = coor[i]
+
 
         # getting coordination of crimes happened in 2015
         crime_coordination = project(crime, lambda x:(x["year"], x["month"], x["location"]["latitude"],x["location"]["longitude"]))     
@@ -277,8 +277,8 @@ class proj2(dml.Algorithm):
                   
         return doc
 
-proj2.execute()
-doc = proj2.provenance()
+optimization.execute()
+doc = optimization.provenance()
 print(doc.get_provn())
 print(json.dumps(json.loads(doc.serialize()), indent=4))
 

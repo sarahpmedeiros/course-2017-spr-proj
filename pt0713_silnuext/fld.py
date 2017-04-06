@@ -77,9 +77,9 @@ class fld(dml.Algorithm):
                   
         return doc
 
-fld.execute()
-doc = fld.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# fld.execute()
+# doc = fld.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

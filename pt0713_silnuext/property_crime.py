@@ -193,9 +193,9 @@ class property_crime(dml.Algorithm):
                   
         return doc
 
-property_crime.execute()
-doc = property_crime.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# property_crime.execute()
+# doc = property_crime.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

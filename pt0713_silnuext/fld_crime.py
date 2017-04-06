@@ -162,9 +162,9 @@ class fld_crime(dml.Algorithm):
                   
         return doc
 
-fld_crime.execute()
-doc = fld_crime.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# fld_crime.execute()
+# doc = fld_crime.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
