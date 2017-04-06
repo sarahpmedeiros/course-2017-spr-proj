@@ -7,6 +7,35 @@ import uuid
 
 from math import sin, cos, sqrt, atan2, radians
 
+from random import shuffle
+from math import sqrt
+
+def permute(x):
+    shuffled = [xi for xi in x]
+    shuffle(shuffled)
+    return shuffled
+
+def avg(x): # Average
+    return sum(x)/len(x)
+
+def stddev(x): # Standard deviation.
+    m = avg(x)
+    return sqrt(sum([(xi-m)**2 for xi in x])/len(x))
+
+def cov(x, y): # Covariance.
+    return sum([(xi-avg(x))*(yi-avg(y)) for (xi,yi) in zip(x,y)])/len(x)
+
+def corr(x, y): # Correlation coefficient.
+    if stddev(x)*stddev(y) != 0:
+        return cov(x, y)/(stddev(x)*stddev(y))
+
+def p(x, y):
+    c0 = corr(x, y)
+    corrs = []
+    for k in range(0, 2000):
+        y_permuted = permute(y)
+        corrs.append(corr(x, y_permuted))
+    return len([c for c in corrs if abs(c) > c0])/len(corrs)
 
 def distance(x,y):
     [lat1,lon1] = x
@@ -94,7 +123,7 @@ class corr_location(dml.Algorithm):
 
     
         fund_grad = list(repo.hschurma_rcalleja.funding_gradrates.aggregate([{"$project":{"_id":0}}]))
-        #print(fund_grad)
+        print(fund_grad)
 
 
         P = product(fund_SAT, fund_grad)
@@ -153,23 +182,70 @@ class corr_location(dml.Algorithm):
                     s = school['School Name']
                     #print(s)
                     #print(fund[name])
-                    
-                    fund[name][year] = int(fund[name][year].replace("$", "").replace(",", ""))
 
-                    print(fund[name][year])
+                    #print(fund[name][year])
+                    if type(fund[name][year]) != int:
+                        fund[name][year] = int(fund[name][year].replace("$", "").replace(",", ""))
+                    else:
+                        fund[name][year] = fund[name][year]
+
                     total_fund[s][year] += fund[name][year]
 
-        print(total_fund)
-                    
-            
+        #print(total_fund)
 
-        prod_close = product(closest, PR)
-        sel_close = (prod_close, lambda t: t[0]['School Name'] == t[1]['School Name'])
-        proj_close = (sel_close, lambda t: {'School Name': t[0]['School Name'], 'SAT': t[0]['SAT'], 'Grad Rates': t[0]['Grad Rates'], 'Closest': t[1]['Closest']})
+        tot_fund_final = []
+        for f in total_fund:
+            tot_fund_final.append({'School Name': f, 'Neighbor Funding': total_fund[f]})
 
-        #print(proj_close)
-        
+        prod_close = product(PR, tot_fund_final)
+        sel_close = select(prod_close, lambda t: t[0]['School Name'] == t[1]['School Name'])
+        proj_close = project(sel_close, lambda t: {'School Name': t[0]['School Name'], 'SAT': t[0]['SAT'], 'Grad Rates': t[0]['Grad Rates'], 'Neighbor Funding': t[1]['Neighbor Funding']})
 
+        SAT_corr = []
+        for i in range(len(proj_close)):
+            x_scores = []
+            y_funds = []
+            scores = proj_close[i]['SAT']
+            funds = proj_close[i]['Neighbor Funding']
+            for j in range(2008, 2017):
+                year = str(j)
+                if (year in scores.keys() and year in funds.keys()):
+                    fund = funds[year]
+                    score = scores[year]['Total']
+                    x_scores.append(score)
+                    y_funds.append(fund)
+            print("Scores ", x_scores, '\n')
+            print("Funds ", y_funds, '\n')
+            SAT_corr.append({'School Name': proj_close[i]['School Name'], 'SAT_Neighbor Funding Correlation': corr(x_scores, y_funds)})
+        print(SAT_corr)
+
+        #gradrates corr
+        gradr_corr = []
+        for i in range(len(proj_close)):
+            x_grad = []
+            y_fund = []
+            grads = proj_close[i]['Grad Rates']
+            for g in grads:
+                if grads[g] == '-' or grads[g] == '':
+                    grads[g] = '0'
+                x_grad.append(float(grads[g]))
+
+            funds = proj_close[i]['Neighbor Funding']
+            for j in range(2008, 2017):
+                year = str(j)
+                if (year in grads.keys() and year in funds.keys()):
+                    fund = funds[year]
+                    grad = grads[year]
+                    x_grad.append(float(grad))
+                    y_fund.append(fund)
+            gradr_corr.append({'School Name': proj_close[i]['School Name'], 'Grad Rates Correlation': corr(x_grad, y_fund)})
+
+        prod_corr = product(SAT_corr, gradr_corr)
+        sel_corr = select(prod_corr, lambda t: t[0]['School Name'] == t[1]['School Name'])
+        proj_corr = project(sel_corr , lambda t: {'School Name': t[0]['School Name'], 'SAT_Neighbor Funding Correlation': t[0]['SAT_Neighbor Funding Correlation'],
+                                                  'Grad Rates Correlation': t[1]['Grad Rates Correlation']})
+
+        print(proj_corr)
         '''
         sat_grad_loc = []
         for school in closest:
