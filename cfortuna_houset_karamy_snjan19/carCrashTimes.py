@@ -9,9 +9,6 @@ import json
 import requests 
 from collections import *
 import math
-import matplotlib.pyplot as plt
-from scipy.optimize import curve_fit
-import numpy as np
 
 class carCrashTimes(dml.Algorithm):
     contributor = 'cfortuna_houset_karamy_snjan19'
@@ -28,8 +25,8 @@ class carCrashTimes(dml.Algorithm):
         repo = client.repo
         repo.authenticate('cfortuna_houset_karamy_snjan19', 'cfortuna_houset_karamy_snjan19')
 
-        # Trial Mode is basically limiting data points on which to run execution if trial parameter set to true
-        repoData = repo['cfortuna_houset_karamy_snjan19.CarCrashData'].find().limit(0) if trial else repo['cfortuna_houset_karamy_snjan19.CarCrashData'].find()
+        # Trial Mode limits the data points on which to run execution if trial parameter set to True
+        repoData = repo['cfortuna_houset_karamy_snjan19.CarCrashData'].find().limit(10) if trial else repo['cfortuna_houset_karamy_snjan19.CarCrashData'].find()
 
         # Categorize the times into the hour that the crash has occured
         times = []
@@ -43,7 +40,6 @@ class carCrashTimes(dml.Algorithm):
                 time_digit = int(time_split[0].split(":")[0])
             
             times.append(time_digit)
-            print(time_string)
 
         # Count the amount of car crashes that appear in the hour ranges
         count = Counter(times)
@@ -80,7 +76,7 @@ class carCrashTimes(dml.Algorithm):
         repo.logout()
         endTime = datetime.datetime.now()
 
-        return {"start":startTime, "end":endTime}
+        return {"start": startTime, "end": endTime}
 
     """Provenance of this Document"""
     @staticmethod
