@@ -63,11 +63,11 @@ After finding these values for each house in the neighborhood, we calculated the
 
 As you can see from the table above, 
 
-### Determining Correlation: ###
+### Determining Correlation: Our Coefficient Correlation Array ###
 
-| 1.0         | -0.0243795  | -0.41433783  |                       
-| -0.0243795  |   1.0       | -0.54327576  |                       
-| -0.41433783 |  -0.54327576|  1.0         |
+| 1.0         |   -0.0243795  |  -0.41433783  |                       
+| -0.0243795  |   1.0         |  -0.54327576  |                       
+| -0.41433783 |   -0.54327576 |  1.0          |
 
 
 
