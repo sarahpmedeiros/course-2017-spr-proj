@@ -4,35 +4,45 @@ import dml
 import prov.model
 import datetime
 import uuid
-
 from math import radians, sqrt, sin, cos, atan2
+from random import shuffle
+from math import sqrt
 
-from geopy.distance import vincenty
+
+def permute(x):
+    shuffled = [xi for xi in x]
+    shuffle(shuffled)
+    return shuffled
+
+def avg(x): # Average
+    return sum(x)/len(x)
+
+def stddev(x): # Standard deviation.
+    m = avg(x)
+    return sqrt(sum([(xi-m)**2 for xi in x])/len(x))
+
+def cov(x, y): # Covariance.
+    return sum([(xi-avg(x))*(yi-avg(y)) for (xi,yi) in zip(x,y)])/len(x)
+
+def corr(x, y): # Correlation coefficient.
+    if stddev(x)*stddev(y) != 0:
+        return cov(x, y)/(stddev(x)*stddev(y))
+
+def p(x, y):
+    c0 = corr(x, y)
+    corrs = []
+    for k in range(0, 2000):
+        y_permuted = permute(y)
+        corrs.append(corr(x, y_permuted))
+    return len([c for c in corrs if abs(c) > c0])/len(corrs)
 
 
-#helper function
-def geodistance(lat1, lon1, lat2, lon2):
-        lat1 = radians(lat1)
-        lon1 = radians(lon1)
-        lat2 = radians(lat2)
-        lon2 = radians(lon2)
 
-        dlon = lon1 - lon2
-
-        EARTH_R = 6372.8
-
-        y = sqrt(
-            (cos(lat2) * sin(dlon)) ** 2
-            + (cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dlon)) ** 2
-            )
-        x = sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(dlon)
-        c = atan2(y, x)
-        return EARTH_R * c
 
 class transformation4(dml.Algorithm):
     contributor = 'bohan_nyx_xh1994_yiran123'
-    reads = ['bohan_nyx_xh1994_yiran123.restaurant_score_system', 'bohan_nyx_xh1994_yiran123.airbnb_rating']
-    writes = ['bohan_nyx_xh1994_yiran123.Airbnb_surrounding_restauranScoreAVG']
+    reads = ['bohan_nyx_xh1994_yiran123.restaurant_cleanness_level','bohan_nyx_xh1994_yiran123.Restaurants_safety', 'bohan_nyx_xh1994_yiran123.airbnb_rating_relation_with_MBTAstops_num_and_entertainment']
+    writes = ['bohan_nyx_xh1994_yiran123.restaurant_correlation_distance_analysis_filtered', 'bohan_nyx_xh1994_yiran123.newairbnb_eliminated_version']
 
 
 
@@ -46,49 +56,92 @@ class transformation4(dml.Algorithm):
         client = dml.pymongo.MongoClient()
         repo = client.repo
         repo.authenticate('bohan_nyx_xh1994_yiran123', 'bohan_nyx_xh1994_yiran123')  
-        rest_score = repo.bohan_nyx_xh1994_yiran123.restaurant_score_system.find()
-        airbnb = repo.bohan_nyx_xh1994_yiran123.airbnb_rating.find()
-        airbnbrate = [a for a in airbnb]
-        restScore = [s for s in rest_score]
-       
-
-    
-        repo.dropCollection("Airbnb_surrounding_restauranScoreAVG")
-        repo.createCollection("Airbnb_surrounding_restauranScoreAVG")
-        #counter = 0
-        #jcounter=0
-        for i in airbnbrate:
-            print(i)
-            #jcounter+=1
-            restaurant_num = 0
-            TotalScore = 0
-
-            for j in restScore:
-                
-                try:
-                    #distance = geodistance(i['latitude'],i['longitude'],j[0]['geometry']['coordinates'][1],j[0]['geometry']['coordinates'][0])
-                    distance = geodistance(i['latitude'],i['longitude'], j['location']['coordinates'][0],j['location']['coordinates'][1])
-                    print(distance)
-                except:
-                    distance = 30.0
-                
-                if distance<=1:
-                    restaurant_num +=1
-                    TotalScore += float(j['overall score'])
-            
-            if restaurant_num == 0:
-                restaurant_num =999999999
-
-            AvgScore = TotalScore/restaurant_num
-            insertMaterial = {'longitude':i['longitude'], 'latitude':i['latitude'], 'Surrounding Restaurants num':restaurant_num, 'Avg Restaurants Score':AvgScore}
+        rests_safe = repo.bohan_nyx_xh1994_yiran123.Restaurants_safety.find()
+        rests_clean = repo.bohan_nyx_xh1994_yiran123.restaurant_cleanness_level.find()
+        similarity = False
+        crimenum = [c['crime incidents number within akm'] for c in rests_safe]
+        #print(crimenum)
+        passrate = [b['cleanness level'] for b in rests_clean]
+        crimenum = list(map(int, crimenum))
+        passrate = list(map(float, passrate))
+        rests_safe = repo.bohan_nyx_xh1994_yiran123.Restaurants_safety.find()
+        rests_clean = repo.bohan_nyx_xh1994_yiran123.restaurant_cleanness_level.find()
+        clean = [a for a in rests_clean]
+        safe = [d for d in rests_safe]
+        crr_crime_clean = corr(crimenum,passrate)
 
 
-            #insertMaterial = {'Businessname':i['businessname'], 'location':None, 'crime incidents number within amile':crime_incident_within_amile}
-  
-            repo['bohan_nyx_xh1994_yiran123.Airbnb_surrounding_restauranScoreAVG'].insert_one(insertMaterial)
+        repo.dropCollection("restaurant_correlation_distance_analysis_filtered")
+        repo.createCollection("restaurant_correlation_distance_analysis_filtered")
+        if(crr_crime_clean >= 0.5):
+            similarity = True
+            #this is a moderate or a strong positive relation, we only keep one field, lets keep cleanness
+            repo['bohan_nyx_xh1994_yiran123.restaurant_correlation_distance_analysis_filtered'].insert(safe)
 
-        #repo['bohan_nyx_xh1994_yiran123.Restaurants_safety'].insert_many(safety_level)
+        else:
+            #keep both since they are not too similar which can give us good sense of rating
+            # print(2020202020)
+            #print(safe)
+            for i in safe:
+                #print(2020202020)
+                #print(i['location']['coordinates'][0])
+                if(i['location']['coordinates'][0] != i['location']['coordinates'][1]):
+                    #print(i['location'])
+                    for j in clean:
+                        #print(j['Businessname'])
+                        #print(i['location'])
+                        if(str(i['location']['coordinates']) == str(j['location']['coordinates'])):
+                            #print(j['location'])
+                            insertMaterial = {'Businessname':i['Businessname'], 'location':i['location'], 'crimes within one km':i['crime incidents number within akm'], 'clean level':j['cleanness level']}
+                            repo['bohan_nyx_xh1994_yiran123.restaurant_correlation_distance_analysis_filtered'].insert(insertMaterial)
+
+
+        repo.dropCollection('newairbnb_eliminated_version')
+        repo.createCollection('newairbnb_eliminated_version')
+        airbnb_score_entertainment_MBTA = repo.bohan_nyx_xh1994_yiran123.airbnb_rating_relation_with_MBTAstops_num_and_entertainment.find()
+        airbnb_score_enter_MB_list = [h for h in airbnb_score_entertainment_MBTA]
+        MBTAnum = [e['MBTA stops num within 2km'] for e in airbnb_score_enter_MB_list]
+        #rating = [f['review_scores_rating'] for f in airbnb_score_enter_MB_list]
+        entertainnum = [g['entertainment around number'] for g in airbnb_score_enter_MB_list]
+        MBTAnum = list(map(int, MBTAnum))
+        #rating = list(map(int, rating))
+        entertainnum = list(map(int, entertainnum))
+        crr_MBTA_entertain = corr(MBTAnum,entertainnum)
+        #crr_MBTA_rating = corr(MBTAnum,rating)
+        #crr_rating_entertain = corr(rating,entertainnum)
+        keepMBTA = False
+        keepentertain = True
+        #print(crr_MBTA_entertain)
+        if(crr_MBTA_entertain>=0.2):
+            keepMBTA = False
+        #if(crr_MBTA_rating>=0.3):
+           #keepMBTA = False
+        #if(crr_rating_entertain>=0.3):
+            #keepentertain = False
+
+        '''if(keepentertain == False and keepMBTA == False):
+            for i in airbnb_score_enter_MB_list:
+                inserM = {'airbnb name': i['name'], 'longitude': i['longitude'], 'latitude': i['latitude'], 'rating': i['review_scores_rating']}
+                repo['bohan_nyx_xh1994_yiran123.newairbnb_eliminated_version'].insert(inserM)'''
+
+        '''elif(keepentertain == False and keepMBTA == True):
+            for i in airbnb_score_enter_MB_list:
+                inserM = {'airbnb name': i['name'], 'longitude': i['longitude'], 'latitude': i['latitude'], 'rating': i['review_scores_rating'], 'entertainment around number': i['entertainment around number']}
+                repo['bohan_nyx_xh1994_yiran123.newairbnb_eliminated_version'].insert(inserM)'''
+        if(keepentertain == True and keepMBTA == False):
+            #print(3030303030)
+            for i in airbnb_score_enter_MB_list:
+                inserM = {'airbnb name': i['name'], 'longitude': i['longitude'], 'latitude': i['latitude'], 'rating': i['review_scores_rating'], 'MBTA stops num within 2km': i['MBTA stops num within 2km']}
+                repo['bohan_nyx_xh1994_yiran123.newairbnb_eliminated_version'].insert(inserM)
+
+        else:
+            repo['bohan_nyx_xh1994_yiran123.newairbnb_eliminated_version'].insert_many(airbnb_score_entertainment_MBTA)
+           # print(909090990909090909009)
+
+
+
         repo.logout()
+        #print(crr_crime_clean)
 
         endTime = datetime.datetime.now()
 
@@ -105,31 +158,59 @@ class transformation4(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('bohan_nyx_xh1994_yiran123', 'bohan_nyx_xh1994_yiran123')
+        repo.authenticate('bohan_xh1994', 'bohan_xh1994')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
-        doc.add_namespace('airbnbr','http://datamechanics.io/?prefix=bohan_xh1994/')
+        #doc.add_namespace('airbnbr','http://datamechanics.io/?prefix=bohan_xh1994/')
+        
 
-        this_script = doc.agent('alg:bohan_nyx_xh1994_yiran123#transformation1', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        Rest_safe = doc.entity('dat:bohan_nyx_xh1994_yiran123#Restaurants_safety', {prov.model.PROV_LABEL:'safety_level of restaurant', prov.model.PROV_TYPE:'ont:DataSet'})
-        get_safe = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_safe, this_script)
-        doc.usage(get_safe, Rest_safe, startTime
-                   , {prov.model.PROV_TYPE:'ont:Retrieval',
-                   'ont:Computation':'?type=crime_incident_within_akm&$select=type,location,bussinessname,crime_incident_within_akm'
-                  }
+        this_script = doc.agent('alg:bohan_xh1994#transformation4', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        
+        resource_safe = doc.entity('dat:bohan_xh1994#Restaurants_safety', {prov.model.PROV_LABEL:'Restaurant Safety', prov.model.PROV_TYPE:'ont:DataSet'})
+        resource_rest_clean = doc.entity('dat:bohan_nyx_xh1994_yiran123#restaurant_cleanness_level', {prov.model.PROV_LABEL:'Restaurant cleanness', prov.model.PROV_TYPE:'ont:DataSet'})
+        resource_airbnb_mbta = doc.entity('dat:bohan_nyx_xh1994_yiran123#airbnb_rating_relation_with_MBTAstops_num_and_entertainment', {prov.model.PROV_LABEL:'Airbnb with MBTA', prov.model.PROV_TYPE:'ont:DataSet'})
+        
+        get_rest_correlation = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        get_newairbnb_eliminated_version = doc.activity('log:uuid' + str(uuid.uuid4()), startTime, endTime)
+
+        doc.wasAssociatedWith(get_rest_correlation, this_script)
+        doc.wasAssociatedWith(get_newairbnb_eliminated_version, this_script)
+
+        doc.usage(get_rest_correlation, resource_safe, startTime, None,
+                  {prov.model.PROV_TYPE:'ont:Computation'}
+                 # , {prov.model.PROV_TYPE:'ont:Retrieval',
+                  # 'ont:Computation':'?type=airbnb_rating+entertainment_license+&$select=entertainmentnum,airbnbname,airbnblocation,airbnbrating, weekly price'
+                  # }
                   )
-        surrounding_airbnb = doc.entity('dat: bohan_nyx_xh1994_yiran123#transformation4',
-                                {prov.model.PROV_LABEL:'Airbnb Surrounding',
-                                 prov.model.PROV_TYPE: 'ont:DataSet'})
+        doc.usage(get_rest_correlation, resource_rest_clean, startTime, None,
+                    {prov.model.PROV_TYPE:'ont:Computation'})
+        doc.usage(get_rest_correlation, resource_airbnb_mbta, startTime, None,
+                    {prov.model.PROV_TYPE:'ont:Computation'})
+
+        restaurant_correlation_distance_analysis_filtered = doc.entity('dat:bohan_nyx_xh1994_yiran123#restaurant_correlation_distance_analysis_filtered',
+                                                                prov.model.PROV_LABEL:'Restaurant Correlation Distance Analysis',
+                                                                prov.model.PROV_TYPE: 'ont:DataSet')
+
+        newairbnb_eliminated_version = doc.entity('dat:bohan_nyx_xh1994_yiran123#newairbnb_eliminated_version',
+                                                                prov.model.PROV_LABEL:'New Airbnb Eliminated Version',
+                                                                prov.model.PROV_TYPE: 'ont:DataSet')
+
 
         #lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(Rest_safe, this_script)
-        doc.wasGeneratedBy(Rest_safe, get_safe, endTime)
-        doc.wasDerivedFrom(surrounding_airbnb, Rest_safe, get_safe, get_safe, get_safe)
+        doc.wasAttributedTo(restaurant_correlation_distance_analysis_filtered, this_script)
+        doc.wasAttributedTo(newairbnb_eliminated_version, this_script)
+
+        doc.wasGeneratedBy(restaurant_correlation_distance_analysis_filtered, get_rest_correlation, endTime)
+        doc.wasGeneratedBy(newairbnb_eliminated_version, get_newairbnb_eliminated_version, endTime)
+
+        doc.wasDerivedFrom(restaurant_correlation_distance_analysis_filtered, resource_rest_clean, get_rest_correlation, get_rest_correlation, get_rest_correlation)
+        doc.wasDerivedFrom(restaurant_correlation_distance_analysis_filtered, resource_safe, get_rest_correlation, get_rest_correlation, get_rest_correlation)
+        doc.wasDerivedFrom(newairbnb_eliminated_version, resource_airbnb_mbta, get_newairbnb_eliminated_version, get_newairbnb_eliminated_version, get_newairbnb_eliminated_version)
+        
+        #doc.wasDerivedFrom(Rest_safe, resource, get_lost, get_lost, get_lost)
 
         repo.logout()
                   

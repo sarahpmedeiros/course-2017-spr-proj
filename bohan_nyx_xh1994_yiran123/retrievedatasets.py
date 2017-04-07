@@ -139,99 +139,78 @@ class retrievedatasets(dml.Algorithm):
 
             this_script = doc.agent('alg:bohan_nyx_xh1994_yiran123#retrievedatasets', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
             
-            crime_resource = doc.entity('bdp:ufcx-3fdn', {'prov:label':'crime', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-            get_crime = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-            #get_property = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-            doc.wasAssociatedWith(get_crime, this_script)
-            #doc.wasAssociatedWith(get_lost, this_script)
-            doc.usage(get_crime, crime_resource, startTime, None,
-              {prov.model.PROV_TYPE:'ont:Retrieval'
-                      #'ont:Query':'?type=Animal+Found&$select=type,latitude,longitude,OPEN_DT'
-                      }
-                      )
-            
-            food_EI_resource = doc.entity('bdp:427a-3cn5', {'prov:label':'foodEI', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-            get_foodEI = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-            doc.usage(get_foodEI, food_EI_resource, startTime, None,
-              {prov.model.PROV_TYPE:'ont:Retrieval'
-                      #'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                      }
-                      )
+            resource_crime_boston = doc.entity('bdp:ufcx-3fdn', {'prov:label':'Crime Boston', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+            resource_food_estab_inspections = doc.entity('bdp:427a-3cn5', {'prov:label':'Food Establishment Inspections', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+            resource_entertainment_licenses = doc.entity('bdp:cz6t-w69j', {'prov:label':'Entertainment Licenses', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+            resource_airbnb_rating = doc.entity('airbnbr:airbnb', {'prov:label':'Airbnb Rating', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+            resource_food_estab_licenses = doc.entity('bdp:fdxy-gydq', {'prov:label':'Food Establishment Licenses', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+            resource_mbta_bus_stops = doc.entity('MBTAbusr:MBTAbus', {'prov:label':'MBTA Bus stops', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'geojson'})
 
-            Afood_EL_resource = doc.entity('bdp:fdxy-gydq', {'prov:label':'foodEL', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-            get_AfoodEL = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-            doc.usage(get_AfoodEL, Afood_EL_resource, startTime, None,
-              {prov.model.PROV_TYPE:'ont:Retrieval'
-                      #'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                      }
-                      )            
 
-            entertainmentL_resource = doc.entity('bdp:cz6t-w69j', {'prov:label':'entertainmentL', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-            get_entertainmentL = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-            doc.usage(get_entertainmentL, entertainmentL_resource, startTime, None,
-              {prov.model.PROV_TYPE:'ont:Retrieval'
-                      #'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                      }
-                      )
+            get_crime_boston = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+            get_food_estab_inspections = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+            get_entertainment_licenses = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+            get_airbnb_rating = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+            get_food_estab_licenses = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+            get_mbta_bus_stops = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
 
-            '''traffic_signal_resource = doc.entity('analyzeBoston:de08c6fe69c942509089e6db98c716a3_0', {'prov:label':'traffic_signal', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'geojson'})
-            get_traffic_signal = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-            doc.usage(get_traffic_signal, traffic_signal_resource, startTime, None,
-              {prov.model.PROV_TYPE:'ont:Retrieval'
-                      #'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                      }
-                      )'''
-            airbnb_resource = doc.entity('airbnbr:airbnb', {'prov:label':'airbnb_rating', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
-            get_airbnb = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-            doc.usage(get_airbnb, airbnb_resource, startTime, None,
-              {prov.model.PROV_TYPE:'ont:Retrieval'
-                      #'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                      }
-                      )
+            doc.wasAssociatedWith(get_crime_boston, this_script)
+            doc.wasAssociatedWith(get_food_estab_inspections, this_script)
+            doc.wasAssociatedWith(get_entertainment_licenses, this_script)
+            doc.wasAssociatedWith(get_airbnb_rating, this_script)
+            doc.wasAssociatedWith(get_food_estab_licenses, this_script)
+            doc.wasAssociatedWith(get_mbta_bus_stops, this_script)
 
-            MBTAbus_resource = doc.entity('MBTAbusr:MBTAbus', {'prov:label':'MBTA_Bus_stops', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'geojson'})
-            get_MBTAbus = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-            doc.usage(get_MBTAbus, MBTAbus_resource, startTime, None,
-              {prov.model.PROV_TYPE:'ont:Retrieval'
-                      #'ont:Query':'?type=Animal+Lost&$select=type,latitude,longitude,OPEN_DT'
-                      }
-                      )  
 
-            crime = doc.entity('dat:bohan_nyx_xh1994_yiran123#crime', {prov.model.PROV_LABEL:'crime incident data', prov.model.PROV_TYPE:'ont:DataSet'})
-            doc.wasAttributedTo(crime, this_script)
-            doc.wasGeneratedBy(crime, get_crime, endTime)
-            doc.wasDerivedFrom(crime, crime_resource, get_crime, get_crime, get_crime)
+            doc.usage(get_crime_boston, resource_crime_boston, startTime, None,
+                        {prov.model.PROV_TYPE:'ont:Retrieval'})
+            doc.usage(get_food_estab_inspections, resource_food_estab_inspections, startTime, None,
+                        {prov.model.PROV_TYPE:'ont:Retrieval'})
+            doc.usage(get_entertainment_licenses, resource_entertainment_licenses, startTime, None,
+                        {prov.model.PROV_TYPE:'ont:Retrieval'})
+            doc.usage(get_airbnb_rating, resource_airbnb_rating, startTime, None,
+                        {prov.model.PROV_TYPE:'ont:Retrieval'})
+            doc.usage(get_food_estab_licenses, resource_food_estab_licenses, startTime, None,
+                        {prov.model.PROV_TYPE:'ont:Retrieval'})
+            doc.usage(get_mbta_bus_stops, resource_mbta_bus_stops, startTime, None,
+                        {prov.model.PROV_TYPE:'ont:Retrieval'})
 
-            foodEI = doc.entity('dat:bohan_nyx_xh1994_yiran123#foodEI', {prov.model.PROV_LABEL:'food establishment inspection', prov.model.PROV_TYPE:'ont:DataSet'})
-            doc.wasAttributedTo(foodEI, this_script)
-            doc.wasGeneratedBy(foodEI, get_foodEI, endTime)
-            doc.wasDerivedFrom(foodEI, food_EI_resource, get_foodEI, get_foodEI, get_foodEI)
 
-            AfoodEL = doc.entity('dat:bohan_nyx_xh1994_yiran123#AfoodEL', {prov.model.PROV_LABEL:'Active Food Establishment Licenses', prov.model.PROV_TYPE:'ont:DataSet'})
-            doc.wasAttributedTo(AfoodEL, this_script)
-            doc.wasGeneratedBy(AfoodEL, get_AfoodEL, endTime)
-            doc.wasDerivedFrom(AfoodEL, Afood_EL_resource, get_AfoodEL, get_AfoodEL, get_AfoodEL)
+            crime_boston = doc.entity('dat:bohan_nyx_xh1994_yiran123#crime_boston', {prov.model.PROV_LABEL: 'Crime Boston', prov.model.PROV_TYPE:'ont:DataSet'})
+            doc.wasAttributedTo(crime_boston, this_script)
+            doc.wasGeneratedBy(crime_boston, get_crime_boston, endTime)
+            doc.wasDerivedFrom(crime_boston, resource_crime_boston, get_crime_boston, get_crime_boston, get_crime_boston)
 
-            entertainmentL = doc.entity('dat:bohan_nyx_xh1994_yiran123#entertainmentL', {prov.model.PROV_LABEL:'Entertainment License', prov.model.PROV_TYPE:'ont:DataSet'})
-            doc.wasAttributedTo(entertainmentL, this_script)
-            doc.wasGeneratedBy(entertainmentL, get_entertainmentL, endTime)
-            doc.wasDerivedFrom(entertainmentL, entertainmentL_resource, get_entertainmentL, get_entertainmentL, get_entertainmentL)
 
-            '''traffic_signal = doc.entity('dat:bohan_nyx_xh1994_yiran123#traffic_signal', {prov.model.PROV_LABEL:'Traffic Signal', prov.model.PROV_TYPE:'ont:DataSet'})
-            doc.wasAttributedTo(traffic_signal, this_script)
-            doc.wasGeneratedBy(traffic_signal, get_traffic_signal, endTime)
-            doc.wasDerivedFrom(traffic_signal, traffic_signal_resource, get_traffic_signal, get_traffic_signal, get_traffic_signal)
-            '''
-            
-            airbnb_rating = doc.entity('dat:bohan_nyx_xh1994_yiran123#airbnb_rating', {prov.model.PROV_LABEL:'Airbnb Rating', prov.model.PROV_TYPE:'ont:DataSet'})
+            food_estab_inspections = doc.entity('dat:bohan_nyx_xh1994_yiran123#Food_Establishment_Inspections', {prov.model.PROV_LABEL: 'Food Establishment Inspections', prov.model.PROV_TYPE:'ont:DataSet'})
+            doc.wasAttributedTo(food_estab_inspections, this_script)
+            doc.wasGeneratedBy(food_estab_inspections, get_food_estab_inspections, endTime)
+            doc.wasDerivedFrom(food_estab_inspections, resource_food_estab_inspections, get_food_estab_inspections, get_food_estab_inspections, get_food_estab_inspections)
+
+
+            entertainment_licenses = doc.entity('dat:bohan_nyx_xh1994_yiran123#Entertainment_Licenses', {prov.model.PROV_LABEL: 'Entertainment Licenses', prov.model.PROV_TYPE:'ont:DataSet'})
+            doc.wasAttributedTo(entertainment_licenses, this_script)
+            doc.wasGeneratedBy(entertainment_licenses, get_entertainment_licenses, endTime)
+            doc.wasDerivedFrom(entertainment_licenses, resource_entertainment_licenses, get_entertainment_licenses, get_entertainment_licenses, get_entertainment_licenses)
+
+
+            airbnb_rating = doc.entity('dat:bohan_nyx_xh1994_yiran123#airbnb_rating', {prov.model.PROV_LABEL: 'Airbnb Rating', prov.model.PROV_TYPE:'ont:DataSet'})
             doc.wasAttributedTo(airbnb_rating, this_script)
-            doc.wasGeneratedBy(airbnb_rating, get_airbnb, endTime)
-            doc.wasDerivedFrom(airbnb_rating, airbnb_resource, airbnb_rating, airbnb_rating, airbnb_rating)
+            doc.wasGeneratedBy(airbnb_rating, get_airbnb_rating, endTime)
+            doc.wasDerivedFrom(airbnb_rating, resource_airbnb_rating, get_airbnb_rating, get_airbnb_rating, get_airbnb_rating)
 
-            MBTA_Bus_stops = doc.entity('dat:bohan_nyx_xh1994_yiran123#MBTA_Bus_stops', {prov.model.PROV_LABEL:'MBTA Bus Stops', prov.model.PROV_TYPE:'ont:DataSet'})
-            doc.wasAttributedTo(MBTA_Bus_stops, this_script)
-            doc.wasGeneratedBy(MBTA_Bus_stops, get_MBTAbus, endTime)
-            doc.wasDerivedFrom(MBTA_Bus_stops, MBTAbus_resource, MBTA_Bus_stops, MBTA_Bus_stops, MBTA_Bus_stops)
+
+            food_estab_licenses = doc.entity('dat:bohan_nyx_xh1994_yiran123#Active_Food_Establishment_Licenses', {prov.model.PROV_LABEL: 'Food Establishment Licenses', prov.model.PROV_TYPE:'ont:DataSet'})
+            doc.wasAttributedTo(food_estab_licenses, this_script)
+            doc.wasGeneratedBy(food_estab_licenses, get_food_estab_licenses, endTime)
+            doc.wasDerivedFrom(food_estab_licenses, resource_food_estab_licenses, get_food_estab_licenses, get_food_estab_licenses, get_food_estab_licenses)
+
+
+            mbta_bus_stops = doc.entity('dat:bohan_nyx_xh1994_yiran123#MBTA_Bus_stops', {prov.model.PROV_LABEL: 'MBTA Bus Stops', prov.model.PROV_TYPE:'ont:DataSet'})
+            doc.wasAttributedTo(mbta_bus_stops, this_script)
+            doc.wasGeneratedBy(mbta_bus_stops, get_mbta_bus_stops, endTime)
+            doc.wasDerivedFrom(mbta_bus_stops, resource_mbta_bus_stops, get_mbta_bus_stops, get_mbta_bus_stops, get_mbta_bus_stops)
+
 
 
 

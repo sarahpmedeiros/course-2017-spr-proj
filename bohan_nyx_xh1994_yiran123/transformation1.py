@@ -119,21 +119,29 @@ class transformation1(dml.Algorithm):
         doc.add_namespace('airbnbr','http://datamechanics.io/?prefix=bohan_xh1994/')
 
         this_script = doc.agent('alg:bohan_nyx_xh1994_yiran123#transformation1', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        Rest_safe = doc.entity('dat:bohan_nyx_xh1994_yiran123#Restaurants_safety', {prov.model.PROV_LABEL:'safety_level of restaurant', prov.model.PROV_TYPE:'ont:DataSet'})
-        get_safe = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_safe, this_script)
-        doc.usage(get_safe, Rest_safe, startTime
-                   , {prov.model.PROV_TYPE:'ont:Retrieval',
-                   'ont:Computation':'?type=crime_incident_within_akm&$select=type,location,bussinessname,crime_incident_within_akm'
-                  }
-                  )
-        rest_s = doc.entity('dat: bohan_xh1994#transformation1',
-                            {prov.model.PROV_LABEL:'Safty level of restaurant',
-                             prov.model.PROV_TYPE: 'ont:DataSet'})
+        
+        resource_food_estab_licenses = doc.entity('dat:bohan_nyx_xh1994_yiran123#Active_Food_Establishment_Licenses', {prov.model.PROV_LABEL:'Food Establishment Licenses', prov.model.PROV_TYPE:'ont:DataSet'})
+        resource_crime_boston = doc.entity('dat:bohan_nyx_xh1994_yiran123#crime_boston', {prov.model.PROV_LABEL:'Crime Boston', prov.model.PROV_TYPE:'ont:DataSet'})
+
+        get_restaurant_safe = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        
+        doc.wasAssociatedWith(get_restaurant_safe, this_script)
+        
+        doc.usage(get_restaurant_safe, resource_food_estab_licenses, startTime, None, 
+                  {prov.model.PROV_TYPE:'ont:Computation'})
+        doc.usage(get_restaurant_safe, resource_crime_boston, startTime, None, 
+                  {prov.model.PROV_TYPE:'ont:Computation'})
+        
+        restaurant_safe = doc.entity('dat:bohan_nyx_xh1994_yiran123#Restaurants_safety',
+                                    {prov.model.PROV_LABEL:'Restaurant Safety',
+                                     prov.model.PROV_TYPE:'ont:DataSet'})
+
         #lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(Rest_safe, this_script)
-        doc.wasGeneratedBy(Rest_safe, get_safe, endTime)
-        doc.wasDerivedFrom(rest_s, Rest_safe, get_safe, get_safe, get_safe)
+        doc.wasAttributedTo(restaurant_safe, this_script)
+        doc.wasGeneratedBy(restaurant_safe, get_restaurant_safe, endTime)
+        doc.wasDerivedFrom(restaurant_safe, resource_food_estab_licenses, get_restaurant_safe, get_restaurant_safe, get_restaurant_safe)
+        doc.wasDerivedFrom(restaurant_safe, resource_crime_boston, get_restaurant_safe, get_restaurant_safe, get_restaurant_safe)
+
 
         repo.logout()
                   

@@ -46,7 +46,7 @@ class transformation2_newwithMBTA(dml.Algorithm):
         MBTA_Bus_stops = repo.bohan_nyx_xh1994_yiran123.MBTA_Bus_stops.find()
         stops = [c['features'] for c in MBTA_Bus_stops]
         stops = stops[0]
-        print(stops[1])
+        #print(stops[1])
         airbnb_rating = repo.bohan_nyx_xh1994_yiran123.airbnb_rating.find()
         airbnbrate = [a for a in airbnb_rating]
         Entertainment_Licenses = repo.bohan_nyx_xh1994_yiran123.Entertainment_Licenses.find()
@@ -110,7 +110,7 @@ class transformation2_newwithMBTA(dml.Algorithm):
             
             repo['bohan_nyx_xh1994_yiran123.airbnb_rating_relation_with_MBTAstops_num_and_entertainment'].insert_one(insertMaterial)
             #setdis=[]
-        print(stops[1])
+        #print(stops[1])
 
         #repo['bohan_nyx_xh1994_yiran123.Restaurants_safety'].insert_many(safety_level)
         repo.logout()
@@ -141,22 +141,34 @@ class transformation2_newwithMBTA(dml.Algorithm):
         
 
         this_script = doc.agent('alg:bohan_nyx_xh1994_yiran123#transformation2_newwithMBTA', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        Res_airbnb_rate = doc.entity('dat:bohan_nyx_xh1994_yiran123#airbnb_rating_relation_with_MBTAstops_num_and_entertainment', {prov.model.PROV_LABEL:'airbnb_rating_relation_with_MBTAstops_num_and_entertainment', prov.model.PROV_TYPE:'ont:DataSet'})
+        
+        resource_mbta_stops = doc.entity('dat:bohan_nyx_xh1994_yiran123#MBTA_Bus_stops', {prov.model.PROV_LABEL:'MBTA Bus Stops', prov.model.PROV_TYPE:'ont:DataSet'})
+        resource_airbnb_rate = doc.entity('dat:bohan_nyx_xh1994_yiran123#airbnb_rating', {prov.model.PROV_LABEL:'Airbnb Rating', prov.model.PROV_TYPE:'ont:DataSet'})
+        resource_entertainment_licenses = doc.entity('dat:bohan_nyx_xh1994_yiran123#Entertainment_Licenses', {prov.model.PROV_LABEL:'Entertainment Licenses', prov.model.PROV_TYPE:'ont:DataSet'})
+
         get_airbnb_rate_relation = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        
         doc.wasAssociatedWith(get_airbnb_rate_relation, this_script)
-        doc.usage(get_airbnb_rate_relation, Res_airbnb_rate, startTime
-                  , {prov.model.PROV_TYPE:'ont:Retrieval',
-                   'ont:Computation':'?type=airbnb_rating+entertainment_license+&$select=MBTAstopsnum,entertainmentnum,airbnbname,airbnblocation,airbnbrating, weekly price'
-                   }
-                  )
+
+        doc.usage(get_airbnb_rate_relation, resource_mbta_stops, startTime, None, 
+                    {prov.model.PROV_TYPE:'ont:Computation',})
+        doc.usage(get_airbnb_rate_relation, resource_airbnb_rate, startTime, None, 
+                    {prov.model.PROV_TYPE:'ont:Computation',})
+        doc.usage(get_airbnb_rate_relation, resource_entertainment_licenses, startTime, None, 
+                    {prov.model.PROV_TYPE:'ont:Computation',})
 
         #airbnbrating = doc.entity('dat:bohan_1994#lost', {prov.model.PROV_LABEL:'airbnb_rating_relation_with_MBTAstops_num_and_entertainment', prov.model.PROV_TYPE:'ont:DataSet'})
-        mbta_trans = doc.entity('dat:bohan_nyx_xh1994_yiran123#transformation2_newwithMBTA',
-                                {prov.model.PROV_LABEL:'airbnb_rating_relation_with_MBTAstops_num_and_entertainment',
+        airbnb_rating_relation_with_MBTAstops_num_and_entertainment = doc.entity('dat:bohan_nyx_xh1994_yiran123#airbnb_rating_relation_with_MBTAstops_num_and_entertainment',
+                                {prov.model.PROV_LABEL:'Airbnb rating relation with MBTA stops num and entertainment',
                                  prov.model.PROV_TYPE: 'ont:DataSet'})
-        doc.wasAttributedTo(Res_airbnb_rate, this_script)
-        doc.wasGeneratedBy(Res_airbnb_rate, get_airbnb_rate_relation, endTime)
-        doc.wasDerivedFrom(Res_airbnb_rate, mbta_trans, get_airbnb_rate_relation, get_airbnb_rate_relation, get_airbnb_rate_relation)
+
+        doc.wasAttributedTo(airbnb_rating_relation_with_MBTAstops_num_and_entertainment, this_script)
+        
+        doc.wasGeneratedBy(airbnb_rating_relation_with_MBTAstops_num_and_entertainment, get_airbnb_rate_relation, endTime)
+        
+        doc.wasDerivedFrom(airbnb_rating_relation_with_MBTAstops_num_and_entertainment, resource_mbta_stops, get_airbnb_rate_relation, get_airbnb_rate_relation, get_airbnb_rate_relation)
+        doc.wasDerivedFrom(airbnb_rating_relation_with_MBTAstops_num_and_entertainment, resource_airbnb_rate, get_airbnb_rate_relation, get_airbnb_rate_relation, get_airbnb_rate_relation)
+        doc.wasDerivedFrom(airbnb_rating_relation_with_MBTAstops_num_and_entertainment, resource_entertainment_licenses, get_airbnb_rate_relation, get_airbnb_rate_relation, get_airbnb_rate_relation)
 
         repo.logout()
                   

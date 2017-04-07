@@ -43,7 +43,7 @@ class transformation3(dml.Algorithm):
 
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
-        print(11111111111111111)
+        #print(11111111111111111)
         repo = client.repo
         repo.authenticate('bohan_nyx_xh1994_yiran123', 'bohan_nyx_xh1994_yiran123')  
         FoodAL = repo.bohan_nyx_xh1994_yiran123.Active_Food_Establishment_Licenses.find()
@@ -116,22 +116,32 @@ class transformation3(dml.Algorithm):
         doc.add_namespace('bdp', 'https://data.cityofboston.gov/resource/')
 
         this_script = doc.agent('alg:bohan_nyx_xh1994_yiran123#transformation3', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        clean = doc.entity('dat:bohan_nyx_xh1994_yiran123#restaurant_cleanness_level', {prov.model.PROV_LABEL:'food establishment cleanness level', prov.model.PROV_TYPE:'ont:DataSet'})
-        get_clean= doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
-        doc.wasAssociatedWith(get_clean, this_script)
-        doc.usage(get_clean, clean, startTime
-                  ,{prov.model.PROV_TYPE:'ont:Retrieval',
-                  'ont:Query':'?type=Food_Establishment_cleanness&$select=type,businessname,location,total inspections, pass inspections, cleanness level'
-                  }
-                  )
+        
+        resource_food_estab_licenses = doc.entity('dat:bohan_nyx_xh1994_yiran123#Active_Food_Establishment_Licenses', {prov.model.PROV_LABEL:'food establishment licenses', prov.model.PROV_TYPE:'ont:DataSet'})
+        resource_food_estab_inspections = doc.entity('dat:bohan_nyx_xh1994_yiran123#Food_Establishment_Inspections', {prov.model.PROV_LABEL:'food establishment inspections', prov.model.PROV_TYPE:'ont:DataSet'})
 
-        Clean_level = doc.entity('dat: bohan_nyx_xh1994_yiran123#transformation3',
-                                {prov.model.PROV_LABEL:'Restaurant Cleanness Level',
-                                 prov.model.PROV_TYPE: 'ont:DataSet'})
+        get_clean_level= doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        
+        doc.wasAssociatedWith(get_clean_level, this_script)
+        
+        doc.usage(get_clean_level, resource_food_estab_licenses, startTime, None,
+                {prov.model.PROV_TYPE:'ont:Computation'})
+        doc.usage(get_clean_level, resource_food_estab_inspections, startTime, None,
+                {prov.model.PROV_TYPE:'ont:Computation'})
+
+        clean_level = doc.entity('dat:bohan_nyx_xh1994_yiran123#restaurant_cleanness_level',
+                    {prov.model.PROV_LABEL:'Restaurant clean level',
+                     prov.model.PROV_TYPE:'ont:DataSet'})
+
         #lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
-        doc.wasAttributedTo(clean, this_script)
-        doc.wasGeneratedBy(clean, get_clean, endTime)
-        doc.wasDerivedFrom(Clean_level, clean, get_clean, get_clean, get_clean)
+        doc.wasAttributedTo(clean_level, this_script)
+
+        doc.wasGeneratedBy(clean_level, get_clean_level, endTime)
+        
+        doc.wasDerivedFrom(clean_level, resource_food_estab_licenses, get_clean_level, get_clean_level, get_clean_level)
+        doc.wasDerivedFrom(clean_level, resource_food_estab_inspections, get_clean_level, get_clean_level, get_clean_level)
+
+        #doc.wasDerivedFrom(Rest_safe, resource, get_lost, get_lost, get_lost)
 
         repo.logout()
                   
