@@ -191,12 +191,12 @@ class transformation4(dml.Algorithm):
                     {prov.model.PROV_TYPE:'ont:Computation'})
 
         restaurant_correlation_distance_analysis_filtered = doc.entity('dat:bohan_nyx_xh1994_yiran123#restaurant_correlation_distance_analysis_filtered',
-                                                                prov.model.PROV_LABEL:'Restaurant Correlation Distance Analysis',
-                                                                prov.model.PROV_TYPE: 'ont:DataSet')
+                                                                {prov.model.PROV_LABEL:'Restaurant Correlation Distance Analysis',
+                                                                prov.model.PROV_TYPE: 'ont:DataSet'})
 
         newairbnb_eliminated_version = doc.entity('dat:bohan_nyx_xh1994_yiran123#newairbnb_eliminated_version',
-                                                                prov.model.PROV_LABEL:'New Airbnb Eliminated Version',
-                                                                prov.model.PROV_TYPE: 'ont:DataSet')
+                                                                {prov.model.PROV_LABEL:'New Airbnb Eliminated Version',
+                                                                prov.model.PROV_TYPE: 'ont:DataSet'})
 
 
         #lost = doc.entity('dat:alice_bob#lost', {prov.model.PROV_LABEL:'Animals Lost', prov.model.PROV_TYPE:'ont:DataSet'})
