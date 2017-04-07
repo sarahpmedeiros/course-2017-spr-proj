@@ -188,7 +188,7 @@ class transformation7(dml.Algorithm):
 
         doc.wasAttributedTo(airbnb_score_system, this_script)
 
-        doc.wasGeneratedBy(airbnb_score_system, get_Airbnb, endTime)
+        doc.wasGeneratedBy(airbnb_score_system, get_airbnb_score_system, endTime)
         
         doc.wasDerivedFrom(airbnb_score_system, resource_airbnb_rating, get_airbnb_score_system, get_airbnb_score_system, get_airbnb_score_system)
         doc.wasDerivedFrom(airbnb_score_system, resource_newairbnb_eliminated_version, get_airbnb_score_system, get_airbnb_score_system, get_airbnb_score_system)
