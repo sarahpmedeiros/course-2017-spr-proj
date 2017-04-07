@@ -1,20 +1,11 @@
-##Project 2
-
-For project 2, we continued our focus on education in Boston but switched our problem to deal with the transportation issue plaguing our public schools. Currently transportations costs account for 11% of the districts budget. In this project our goal is to optimize where the bus stops for students that must walk to the corners.
-
-This problem is too large to solve in one three week project so we chose to break it down by looking more closely at the Routing Challenge. We want to determine where the most effeective bus stops would be for students that are picked up at the corner. We chose to ignore the constraint that they cannot walk more than .5 miles.
-
+***Project 2***
+For project 2, we continued our focus on education in Boston but switched our problem to deal with the transportation issue plaguing our public schools. Currently transportations costs account for 11% of the district’s budget. In this project, our goal is to optimize the location of corner bus stops. 
 The data sets that we chose are the students-simulated.geoson and the Boston, MA geojson (OSM2PGSQL) which we retrieved from https://mapzen.com/data/metro-extracts/metro/boston_massachusetts/.
+The students-simulated file gives us simulated Boston students, which school they currently attend, how far they can walk, their longitude and latitude, the start and end time for their school, their grade, and much more information. We decided to use their location, school, and their status as corner to corner students as the premise for our project. 
+We employed the k-means algorithm to choose preliminary bus stops. Fist we separated the students by schools and then ran k-means on these groups of students. This helped us choose the best k bus stops for all students that attend the same school. We tried multiple k’s to try to minimize the amount of stops while also trying to keep students from having to walk more than .5 of a mile.
+After finding the best places for the stops, we had to deal with another constraint problem given by the city of Boston. We cannot have the children walk to any random point; it must be a corner so we transformed our results from k-means to corners in Boston. To do this we followed the theory behind rtrees but we wrote our own version so that we could minimize unnecessary work. 
+For this step, we used the city of boston geojson dataset to get all of the intersections in Boston. We used this data to create searchable subsets for each school so that we could minimize the amount of area that we had to check for possible bus stop placement.
 
-The students-simulated file gives us simulated boston students, which school they currently attend, how far they are allowd to walk, their location in lat and long coords, the start and end time for their school, their grade, and much more information. But we chose to focus on their current school, their max walking distance, and the lat and long coordingates of where they live.
-
-In order to pick the best bus stops, we employed the k-means algorithm. Fist we sepearated the students by schools and then ran k-means on these groups of students. We used k-means to find the best k bus stops for each school.
-
-After finding the best places for the stops, we had to deal with another constraint problem given by the city of Boston. We cannot have the children walk to any random point, it has to be a corner. 
-
-So next we transformed our results from k-means to corners in Boston. To do this we followed the theory behind rtrees but we wrote our own version so that we could minimize unnecessary work. 
-
-For this step we had to use the city of boston geojson dataset in order to get all of the corners that could be possible stops for the buses. Then we created a box for each school so that we could minimize the amount of area that we have to cheak to place bus stops.
 
 #Project 1
 In this project we gathered datasets on high school graduation rates, available technology in
