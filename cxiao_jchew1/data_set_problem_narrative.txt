@@ -1,4 +1,0 @@
-cxiao_jchew1
-Problem 2a Data Set Problem Narrative
-
-A problem we would like to solve in this project is to prove the actual crime rate in Boston. There has been many people who have been very concerned about which areas of Boston are safe and not safe to go through, especially for those who are not from the New England area. Some people may wonder what crime incidents happen the most in Boston so they can predict how dangerous these areas actually are. In order to solve this problem, we can find the crime data by displaying the crime description, crime location, and weapon type. Therefore, people will be aware which areas of Boston are the most dangerous and what specific crime they should expect the most.
