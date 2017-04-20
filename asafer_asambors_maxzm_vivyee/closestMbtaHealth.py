@@ -46,16 +46,16 @@ class closestMbtaHealth(dml.Algorithm):
         a = math.sin(dlat/2)**2 + (math.cos(stop_lat) * math.cos(healthy_lat) * math.sin(dlon/2)**2)
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
         d = 3961 * c
-        return (healthy, (stop, d))
+        return (str(healthy_lat) + ',' + str(healthy_lon), (healthy, stop, d))
 
     @staticmethod
     def close_stop(info):
-        return info[1][1] <= 0.25
+        return info[1][2] <= 0.25
 
     @staticmethod
     def convert_to_dictionary(info):
         new_stops = []
-        for stop, distance in info:
+        for healthy, stop, distance in info:
             new_stops.append(stop)
 
         return new_stops

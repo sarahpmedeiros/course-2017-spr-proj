@@ -21,7 +21,7 @@ class closestMbtaControl(dml.Algorithm):
     @staticmethod
     def aggregate(R, f):
         keys = {r[0] for r in R}
-        return [(key, f([v for (k,v) in R if k == key])) for key in keys]
+        return [f([v for (k,v) in R if k == key]) for key in keys]
 
     @staticmethod
     def project(R, p):
@@ -48,7 +48,7 @@ class closestMbtaControl(dml.Algorithm):
             a = math.sin(dlat/2)**2 + (math.cos(stop_lat) * math.cos(control_lat) * math.sin(dlon/2)**2)
             c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
             d = 3961 * c
-            return (control, (stop, d))
+            return (str(control_lat) + ',' + str(control_lon), (control, stop, d))
         except IndexError:
             0
 
@@ -56,14 +56,14 @@ class closestMbtaControl(dml.Algorithm):
     @staticmethod
     def close_stop(info):
         try:
-            return info[1][1] <= 0.25
+            return info[1][2] <= 0.25
         except TypeError:
             return False
 
     @staticmethod
     def convert_to_dictionary(info):
         new_stops = []
-        for stop, distance in info:
+        for control, stop, distance in info:
             new_stops.append(stop)
 
         return new_stops
