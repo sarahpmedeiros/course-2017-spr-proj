@@ -81,10 +81,8 @@ class shortestMbtaPath(dml.Algorithm):
 
                         tots /= 60.0
                         total_added_time_for_walking += tots
-
-                    # print("OBESITY STOP IS {}, LAT {}, LONG {}".format(o_stop, o_stop_lat, o_stop_long))
-                    # print("HEALTHY STOP IS {}, LAT {}, LONG {}".format(h_stop, h_stop_lat, h_stop_long))
-                    print('TIME IS {}'.format(time + total_added_time_for_walking))
+ 
+                    # print('TIME IS {}'.format(time + total_added_time_for_walking))
                     min_times.append(time + total_added_time_for_walking)
                 except nx.NetworkXNoPath: 
                     pass
@@ -107,7 +105,7 @@ class shortestMbtaPath(dml.Algorithm):
 
             sum /= 60.0
             min_times.append(sum) 
-            
+
         # # print("Origin lat long {} {} and destination lat long {} {}".format(origin_lat, origin_long, dest_lat, dest_long))
  
         if len(min_times) == 0:
