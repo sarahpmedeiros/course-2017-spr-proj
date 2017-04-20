@@ -80,10 +80,13 @@ class closestMbtaControl(dml.Algorithm):
     @staticmethod
     def change_radians(info):
         if 'stop_lat' in info:
+            info['rect_lat'] = float(info['stop_lat'])
+            info['rect_lon'] = float(info['stop_lon'])
             info['stop_lat'] = np.radians(float(info['stop_lat']))
             info['stop_lon'] = np.radians(float(info['stop_lon']))
         else:
             try:
+                info['rect_location'] = (float(literal_eval(info['Location'])[0]),float(literal_eval(info['Location'])[1]))
                 info['Location'] = (np.radians(float(literal_eval(info['Location'])[0])),np.radians(float(literal_eval(info['Location'])[1])))
             except SyntaxError:
                 0

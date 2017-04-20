@@ -72,9 +72,12 @@ class closestMbtaHealth(dml.Algorithm):
     @staticmethod
     def change_radians(info):
         if 'stop_lat' in info:
+            info['rect_lat'] = float(info['stop_lat'])
+            info['rect_lon'] = float(info['stop_lon'])
             info['stop_lat'] = np.radians(float(info['stop_lat']))
             info['stop_lon'] = np.radians(float(info['stop_lon']))
         else:
+            info['rect_location'] = [float(info['location'][0]),float(info['location'][1])]
             info['location'][0] = np.radians(float(info['location'][0]))
             info['location'][1] = np.radians(float(info['location'][1]))
 

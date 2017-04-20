@@ -75,9 +75,13 @@ class closestMbtaObesity(dml.Algorithm):
     @staticmethod
     def change_radians(info):
         if 'stop_lat' in info:
+            info['rect_lat'] = float(info['stop_lat'])
+            info['rect_lon'] = float(info['stop_lon'])
             info['stop_lat'] = np.radians(float(info['stop_lat']))
             info['stop_lon'] = np.radians(float(info['stop_lon']))
         else:
+            info['geolocation']['rect_lat'] = float(info['geolocation']['latitude'])
+            info['geolocation']['rect_lon'] = float(info['geolocation']['longitude'])
             info['geolocation']['latitude'] = np.radians(float(info['geolocation']['latitude']))
             info['geolocation']['longitude'] = np.radians(float(info['geolocation']['longitude']))
 
