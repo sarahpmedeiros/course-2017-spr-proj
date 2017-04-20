@@ -23,42 +23,83 @@ class shortestMbtaPath(dml.Algorithm):
 
     @staticmethod
     def get_closest_path(info, G):
-        obesity_stops = [ stop['stop_id'] for stop in info['obesity_locations']['stops'] if stop['mode'] == 'Subway' ]
-        healthy_stops = [ stop['stop_id'] for stop in info['healthy_locations']['stops'] if stop['mode'] == 'Subway' ]
+        obesity_stops = [ (stop['stop_id'], stop['rect_lat'], stop['rect_lon']) for stop in info['obesity_locations']['stops'] if stop['mode'] == 'Subway' ]
+        healthy_stops = [ (stop['stop_id'], stop['rect_lat'], stop['rect_lon']) for stop in info['healthy_locations']['stops'] if stop['mode'] == 'Subway' ]
         
-        # print('obesity stops length:', len(obesity_stops), 'healthy stops length:', len(obesity_stops))
-        min_times = []
-        for o_stop in obesity_stops:
-            for h_stop in healthy_stops:
-                try:
-                    time = nx.dijkstra_path_length(G, o_stop, h_stop)
-                    min_times.append(time)
-                except nx.NetworkXNoPath:
-                    # print('no path found')
-                    pass
-
-
-        # obesity_bus_stops = [ stop['stop_id'] for stop in info['obesity_locations']['stops'] if stop['mode'] != 'Subway' ]
-        # healthy_bus_stops = [ stop['stop_id'] for stop in info['healthy_locations']['stops'] if stop['mode'] != 'Subway' ]
-
         origin_long = info['obesity_locations']['obesity']['geolocation']['rect_lon']
         origin_lat = info['obesity_locations']['obesity']['geolocation']['rect_lat']
 
         dest_lat = info['healthy_locations']['healthy_locations']['rect_location'][0]
         dest_long = info['healthy_locations']['healthy_locations']['rect_location'][1]
 
+        google_key = dml.auth['services']['googlemaps']['key']
+
+        base_link = "https://maps.googleapis.com/maps/api/directions/json?" 
+        origin = "origin=" + str(origin_lat) + "," + str(origin_long) 
+        destination = "&destination=" + str(dest_lat) + "," + str(dest_long) 
+        bus_mode = "&mode=transit&transit_mode=bus"
+        walk_mode = "&mode=walking"
+        api_key = "&key=" + google_key
+
+        # print('obesity stops length:', len(obesity_stops), 'healthy stops length:', len(obesity_stops))
+        min_times = []
+        for o_stop, o_stop_lat, o_stop_long in obesity_stops:
+            for h_stop, h_stop_lat, h_stop_long in healthy_stops:
+                try:
+                    time = nx.dijkstra_path_length(G, o_stop, h_stop)
+
+                    # Find walking distance/duration from start to o_stop
+                    o_stop_coords = "&destination=" + str(o_stop_lat) + "," + str(o_stop_long)
+                    walking_to_url = base_link + origin + o_stop_coords + walk_mode + api_key
+                    response = rq(method="GET", url=walking_to_url)
+
+                    raw = response.json()
+                    total_added_time_for_walking = 0
+
+                    for route in raw['routes']:
+                        tots = 0
+                        for leg in route['legs']:
+                            time_in_seconds = leg['duration']['value']
+                            tots += time_in_seconds
+
+                        tots /= 60.0
+                        total_added_time_for_walking += tots
+ 
+
+                    # Find walking distance/duration from h_stop to stop
+                    h_stop_coords = "origin=" + str(h_stop_lat) + "," + str(h_stop_long)
+                    walking_from_url = base_link + h_stop_coords + destination + walk_mode + api_key
+                    response = rq(method="GET", url=walking_from_url)
+                    raw = response.json()
+
+                    # print("RESPONSE TEXT IS {}".format(response.text))
+                    for route in raw['routes']:
+                        tots = 0
+                        for leg in route['legs']:
+                            time_in_seconds = leg['duration']['value']
+                            tots += time_in_seconds
+
+                        tots /= 60.0
+                        total_added_time_for_walking += tots
+
+                    # print("OBESITY STOP IS {}, LAT {}, LONG {}".format(o_stop, o_stop_lat, o_stop_long))
+                    # print("HEALTHY STOP IS {}, LAT {}, LONG {}".format(h_stop, h_stop_lat, h_stop_long))
+                    print('TIME IS {}'.format(time + total_added_time_for_walking))
+                    min_times.append(time + total_added_time_for_walking)
+                except nx.NetworkXNoPath: 
+                    pass
+
+
+        # obesity_bus_stops = [ stop['stop_id'] for stop in info['obesity_locations']['stops'] if stop['mode'] != 'Subway' ]
+        # healthy_bus_stops = [ stop['stop_id'] for stop in info['healthy_locations']['stops'] if stop['mode'] != 'Subway' ]
+
         # print("Origin lat long {} {} and destination lat long {} {}".format(origin_lat, origin_long, dest_lat, dest_long))
 
-        base_link = "https://maps.googleapis.com/maps/api/directions/json?origin=" 
-        params = str(origin_lat) + "," + str(origin_long) + "&destination=" + str(dest_lat) + "," + str(dest_long) 
-        mode = "&mode=transit&transit_mode=bus"
-        key = "&key=AIzaSyACe_alFTeQloNBbdF1mIDguNBoLVYZAnc"
-
-        link = base_link + params + mode + key
-
+        bus_link = base_link + origin + destination + bus_mode + api_key
+        
         # print("\nREQUEST URL IS {} ".format(link))
 
-        response = rq(method="GET", url=link)
+        response = rq(method="GET", url=bus_link)
         raw_json = response.json()
 
         for route in raw_json['routes']:
@@ -77,7 +118,7 @@ class shortestMbtaPath(dml.Algorithm):
             info['min_travel_time'] = sys.maxsize
         else:
             info['min_travel_time'] = min(min_times)
-            print("MIN TRAVEL TIME {}".format(info['min_travel_time'])) 
+            # print("MIN TRAVEL TIME {}".format(info['min_travel_time'])) 
         
         # print(min_times)
         # print('info is\n' + str(info))
