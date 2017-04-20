@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+    header, footer {padding:1em;color:white;background-color:black;clear:left;text-align:center;}
+    hr{max-width:800px;margin-left:400px;}
+    </style>
+  </head>
+  <body>
+  	<header ><h1>Find the best office location</h1></header>
+    <hr />
+    {% block body %}{% endblock %}
+    <hr>
+    <!-- <footer><strong>Thanks for visiting!</strong></footer> -->
+  </body>
+  
+</html>

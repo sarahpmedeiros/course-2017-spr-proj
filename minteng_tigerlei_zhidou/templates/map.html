@@ -1,0 +1,81 @@
+<!DOCTYPE html >
+<head>
+<title>Map Results</title>
+
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+<style type="text/css">
+#map { height: 1000px; }
+</style>
+</head>
+
+<body>
+<p><a href="/optimize/">&#8592; Go back to homepage</a></p>
+
+<div id="map"></div>
+<script type="text/javascript">
+
+var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    osm = L.tileLayer(osmUrl, {
+	maxZoom: 17,
+	 attribution: 'Li &copy; <a href="#">LiOpen</a> contributors'	
+	});
+
+var map = L.map('map');     
+map.setView([42.3137055, -71.0566365], 12);  
+map.addLayer(osm);
+//marker
+var temp='#1:  '+'('+String({{a.center}})+ ')'
+var marker = new L.Marker(new L.latLng({{a.center}}));
+marker.addTo(map).bindPopup('#1', {autoClose:false}).openPopup();
+
+var temp='#2:  '+'('+String({{b.center}})+ ')'
+var marker = new L.Marker(new L.latLng({{b.center}}));
+marker.addTo(map).bindPopup('#2', {autoClose:false});
+
+var temp='#3:  '+'('+String({{c.center}})+ ')'
+var marker = new L.Marker(new L.latLng({{c.center}}));
+marker.addTo(map).bindPopup('#3', {autoClose:false});
+
+var temp='#4:  '+'('+String({{d.center}})+ ')'
+var marker = new L.Marker(new L.latLng({{d.center}}));
+marker.addTo(map).bindPopup('#4', {autoClose:false});
+
+var temp='#5:  '+'('+String({{e.center}})+ ')'
+var marker = new L.Marker(new L.latLng({{e.center}}));
+marker.addTo(map).bindPopup('#5', {autoClose:false});
+
+
+//cycle
+var circle = L.circle({{a.center}}, 3000, {
+     color: 'black',
+     fillColor: 'red',
+     fillOpacity: 0.3
+    }).addTo(map);
+
+var circle = L.circle({{b.center}}, 2000, {
+     color: 'black',
+     fillColor: 'blue',
+     fillOpacity: 0.3
+    }).addTo(map);
+
+var circle = L.circle({{c.center}}, 1500, {
+     color: 'black',
+     fillColor: 'green',
+     fillOpacity: 0.3
+    }).addTo(map);
+
+var circle = L.circle({{d.center}}, 1000, {
+     color: 'black',
+     fillColor: 'yellow',
+     fillOpacity: 0.3
+    }).addTo(map);
+
+var circle = L.circle({{e.center}}, 500, {
+     color: 'black',
+     fillColor: 'grey',
+     fillOpacity: 0.3
+    }).addTo(map);
+</script>
+</body>
