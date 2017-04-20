@@ -81,7 +81,7 @@ class shortestMbtaPath(dml.Algorithm):
 
                         tots /= 60.0
                         total_added_time_for_walking += tots
- 
+                        
                     # print('TIME IS {}'.format(time + total_added_time_for_walking))
                     min_times.append(time + total_added_time_for_walking)
                 except nx.NetworkXNoPath: 
