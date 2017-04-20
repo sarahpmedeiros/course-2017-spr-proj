@@ -33,42 +33,44 @@ class shortestMbtaPath(dml.Algorithm):
                 try:
                     time = nx.dijkstra_path_length(G, o_stop, h_stop)
                     min_times.append(time)
+                    # if time > 200:
+                    #     print('o_stop:', o_stop, '; h_stop:', h_stop)
                 except nx.NetworkXNoPath:
                     # print('no path found')
                     pass
 
 
-        # obesity_bus_stops = [ stop['stop_id'] for stop in info['obesity_locations']['stops'] if stop['mode'] != 'Subway' ]
-        # healthy_bus_stops = [ stop['stop_id'] for stop in info['healthy_locations']['stops'] if stop['mode'] != 'Subway' ]
+        obesity_bus_stops = [ stop['stop_id'] for stop in info['obesity_locations']['stops'] if stop['mode'] != 'Subway' ]
+        healthy_bus_stops = [ stop['stop_id'] for stop in info['healthy_locations']['stops'] if stop['mode'] != 'Subway' ]
 
-        # origin_long = info['obesity_locations']['obesity']['geolocation']['rect_lon']
-        # origin_lat = info['obesity_locations']['obesity']['geolocation']['rect_lat']
+        origin_long = info['obesity_locations']['obesity']['geolocation']['rect_lon']
+        origin_lat = info['obesity_locations']['obesity']['geolocation']['rect_lat']
 
-        # dest_lat = info['healthy_locations']['healthy_locations']['rect_location'][0]
-        # dest_long = info['healthy_locations']['healthy_locations']['rect_location'][1]
+        dest_lat = info['healthy_locations']['healthy_locations']['rect_location'][0]
+        dest_long = info['healthy_locations']['healthy_locations']['rect_location'][1]
 
-        # # print("Origin lat long {} {} and destination lat long {} {}".format(origin_lat, origin_long, dest_lat, dest_long))
+        # print("Origin lat long {} {} and destination lat long {} {}".format(origin_lat, origin_long, dest_lat, dest_long))
 
-        # base_link = "https://maps.googleapis.com/maps/api/directions/json?origin=" 
-        # params = str(origin_lat) + "," + str(origin_long) + "&destination=" + str(dest_lat) + "," + str(dest_long) 
-        # mode = "&mode=transit&transit_mode=bus"
-        # key = "&key=AIzaSyACe_alFTeQloNBbdF1mIDguNBoLVYZAnc"
+        base_link = "https://maps.googleapis.com/maps/api/directions/json?origin=" 
+        params = str(origin_lat) + "," + str(origin_long) + "&destination=" + str(dest_lat) + "," + str(dest_long) 
+        mode = "&mode=transit&transit_mode=bus"
+        key = "&key=AIzaSyACe_alFTeQloNBbdF1mIDguNBoLVYZAnc"
 
-        # link = base_link + params + mode + key
+        link = base_link + params + mode + key
 
-        # # print("\nREQUEST URL IS {} ".format(link))
+        # print("\nREQUEST URL IS {} ".format(link))
 
-        # response = rq(method="GET", url=link)
-        # raw_json = response.json()
+        response = rq(method="GET", url=link)
+        raw_json = response.json()
 
-        # for route in raw_json['routes']:
-        #     sum = 0
-        #     for leg in route['legs']:
-        #         time_in_seconds = leg['duration']['value']
-        #         sum += time_in_seconds
+        for route in raw_json['routes']:
+            sum = 0
+            for leg in route['legs']:
+                time_in_seconds = leg['duration']['value']
+                sum += time_in_seconds
 
-        #     sum /= 60.0
-        #     min_times.append(sum)
+            sum /= 60.0
+            min_times.append(sum)
  
         # print("\nRESPONSE IS {}".format(response.json()))
         # print("\nSTATUS CODE IS {}".format(response.status_code))
@@ -77,7 +79,8 @@ class shortestMbtaPath(dml.Algorithm):
             info['min_travel_time'] = sys.maxsize
         else:
             info['min_travel_time'] = min(min_times)
-            print("MIN TRAVEL TIME {}".format(info['min_travel_time'])) 
+            if info['min_travel_time'] > 200:
+                print("MIN TRAVEL TIME {}".format(info['min_travel_time'])) 
         
         # print(min_times)
         # print('info is\n' + str(info))
@@ -236,5 +239,5 @@ class shortestMbtaPath(dml.Algorithm):
         return doc
 
 
-shortestMbtaPath.execute()
+# shortestMbtaPath.execute()
 

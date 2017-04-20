@@ -20,7 +20,7 @@ class closestControlObesity(dml.Algorithm):
     @staticmethod
     def aggregate(R, f):
         keys = {r[0] for r in R}
-        return [(key, f([v for (k,v) in R if k == key])) for key in keys]
+        return [f([v for (k,v) in R if k == key]) for key in keys]
 
     @staticmethod
     def project(R, p):
@@ -47,16 +47,16 @@ class closestControlObesity(dml.Algorithm):
         a = math.sin(dlat/2)**2 + (math.cos(obesity_lat) * math.cos(control_lat) * math.sin(dlon/2)**2)
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
         d = 3961 * c
-        return (obesity, (control, d))
+        return (str(obesity_lat) + ',' + str(obesity_lon),(obesity, control, d))
 
     @staticmethod
     def closest(info):
-        closest_control = min(info, key = lambda t: t[1])
+        closest_control = min(info, key = lambda t: t[2])
         return closest_control
 
     @staticmethod
     def convert_to_dictionary(info):
-        return {'obesity_locations': info[0], 'control_locations': info[1][0]}
+        return {'obesity_locations': info[0], 'control_locations': info[1]}
 
     @staticmethod
     def execute(trial = False):

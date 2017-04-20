@@ -138,5 +138,5 @@ class closestHealthObesity(dml.Algorithm):
         return doc
         
 
-closestHealthObesity.execute()
+# closestHealthObesity.execute()
 
