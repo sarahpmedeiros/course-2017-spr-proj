@@ -54,7 +54,7 @@ class shortestMbtaPath(dml.Algorithm):
                     response = rq(method="GET", url=walking_to_url)
 
                     raw = response.json()
-                    total_added_time_for_walking = 0
+                    total_added_time_for_walking = 0 
 
                     for route in raw['routes']:
                         tots = 0
@@ -102,14 +102,34 @@ class shortestMbtaPath(dml.Algorithm):
         response = rq(method="GET", url=bus_link)
         raw_json = response.json()
 
-        for route in raw_json['routes']:
-            sum = 0
-            for leg in route['legs']:
-                time_in_seconds = leg['duration']['value']
-                sum += time_in_seconds
+        # origin_long = info['obesity_locations']['obesity']['geolocation']['rect_lon']
+        # origin_lat = info['obesity_locations']['obesity']['geolocation']['rect_lat']
 
-            sum /= 60.0
-            min_times.append(sum)
+        # dest_lat = info['healthy_locations']['healthy_locations']['rect_location'][0]
+        # dest_long = info['healthy_locations']['healthy_locations']['rect_location'][1]
+
+        # # print("Origin lat long {} {} and destination lat long {} {}".format(origin_lat, origin_long, dest_lat, dest_long))
+
+        # base_link = "https://maps.googleapis.com/maps/api/directions/json?origin=" 
+        # params = str(origin_lat) + "," + str(origin_long) + "&destination=" + str(dest_lat) + "," + str(dest_long) 
+        # mode = "&mode=transit&transit_mode=bus"
+        # key = "&key=AIzaSyACe_alFTeQloNBbdF1mIDguNBoLVYZAnc"
+
+        # link = base_link + params + mode + key
+
+        # # print("\nREQUEST URL IS {} ".format(link))
+
+        # response = rq(method="GET", url=link)
+        # raw_json = response.json() 
+
+        # for route in raw_json['routes']:
+        #     sum = 0
+        #     for leg in route['legs']:
+        #         time_in_seconds = leg['duration']['value']
+        #         sum += time_in_seconds
+
+        #     sum /= 60.0
+        #     min_times.append(sum)
  
         # print("\nRESPONSE IS {}".format(response.json()))
         # print("\nSTATUS CODE IS {}".format(response.status_code))

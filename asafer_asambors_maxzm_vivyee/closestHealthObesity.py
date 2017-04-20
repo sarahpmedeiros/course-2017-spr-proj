@@ -19,8 +19,8 @@ class closestHealthObesity(dml.Algorithm):
 
     @staticmethod
     def aggregate(R, f):
-        keys = [r[0] for r in R]
-        return [(key, f([v for (k,v) in R if k == key])) for key in keys]
+        keys = {r[0] for r in R}
+        return [f([v for (k,v) in R if k == key]) for key in keys]
 
     @staticmethod
     def project(R, p):
@@ -38,6 +38,7 @@ class closestHealthObesity(dml.Algorithm):
 
         obesity_lat = obesity['obesity']['geolocation']['latitude']
         obesity_lon = obesity['obesity']['geolocation']['longitude']
+        # print('lat:', obesity_lat, '; lon:', obesity_lon)
 
         # formula from: http://andrew.hedges.name/experiments/haversine/
         # used R = 3961 miles
@@ -46,16 +47,19 @@ class closestHealthObesity(dml.Algorithm):
         a = math.sin(dlat/2)**2 + (math.cos(obesity_lat) * math.cos(healthy_lat) * math.sin(dlon/2)**2)
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
         d = 3961 * c
-        return (obesity, (healthy, d))
+        return (str(obesity_lat) + ',' + str(obesity_lon), (obesity, healthy, d))
 
     @staticmethod
     def closest(info):
-        closest_health = min(info, key = lambda t: t[1])
+        closest_health = min(info, key = lambda t: t[2])
+        # obesity_lat = closest_health[0]['obesity']['geolocation']['latitude']
+        # obesity_lon = closest_health[0]['obesity']['geolocation']['longitude']
+        # print('lat:', obesity_lat, '; lon:', obesity_lon)
         return closest_health
 
     @staticmethod
     def convert_to_dictionary(info):
-        return {'obesity_locations': info[0], 'healthy_locations': info[1][0]}
+        return {'obesity_locations': info[0], 'healthy_locations': info[1]}
 
     @staticmethod
     def execute(trial = False):
@@ -85,9 +89,12 @@ class closestHealthObesity(dml.Algorithm):
 
         # for each obesity location, keep only the closest healthy location
         obesity_by_closest = closestHealthObesity.aggregate(distances, closestHealthObesity.closest)
-
+        
         # convert to dictionary format
         obesity_by_closest_dict = closestHealthObesity.project(obesity_by_closest, closestHealthObesity.convert_to_dictionary)
+        # print(obesity_by_closest_dict[0])
+        # print('\n')
+        # print(obesity_by_closest_dict[1])
 
         repo['asafer_asambors_maxzm_vivyee.health_obesity'].insert_many(obesity_by_closest_dict)
         repo['asafer_asambors_maxzm_vivyee.health_obesity'].metadata({'complete': True})
@@ -131,5 +138,5 @@ class closestHealthObesity(dml.Algorithm):
         return doc
         
 
-# closestHealthObesity.execute()
+closestHealthObesity.execute()
 

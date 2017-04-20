@@ -20,7 +20,7 @@ class closestMbtaControl(dml.Algorithm):
 
     @staticmethod
     def aggregate(R, f):
-        keys = [r[0] for r in R]
+        keys = {r[0] for r in R}
         return [(key, f([v for (k,v) in R if k == key])) for key in keys]
 
     @staticmethod
