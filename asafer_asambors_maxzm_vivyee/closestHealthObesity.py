@@ -52,9 +52,9 @@ class closestHealthObesity(dml.Algorithm):
     @staticmethod
     def closest(info):
         closest_health = min(info, key = lambda t: t[2])
-        obesity_lat = closest_health[0]['obesity']['geolocation']['latitude']
-        obesity_lon = closest_health[0]['obesity']['geolocation']['longitude']
-        print('lat:', obesity_lat, '; lon:', obesity_lon)
+        # obesity_lat = closest_health[0]['obesity']['geolocation']['latitude']
+        # obesity_lon = closest_health[0]['obesity']['geolocation']['longitude']
+        # print('lat:', obesity_lat, '; lon:', obesity_lon)
         return closest_health
 
     @staticmethod
