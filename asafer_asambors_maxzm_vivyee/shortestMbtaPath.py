@@ -271,5 +271,5 @@ class shortestMbtaPath(dml.Algorithm):
         return doc
 
 
-shortestMbtaPath.execute()
+# shortestMbtaPath.execute()
 
