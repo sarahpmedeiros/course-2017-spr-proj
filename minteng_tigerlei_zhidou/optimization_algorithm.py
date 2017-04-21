@@ -63,7 +63,11 @@ def get_result(f,t,s,r):
 	# 	print("Bound:",result[i]['box'])
 	# 	print("Area:",result[i]['area'],result[i]['postal_code'],"   Avg rent:",result[i]['avg_rent'])
 	# 	print("Grades:",result[i]['grade'],'\n')
-
+	for i in result:
+		i['leftdown']=[i['box'][0][0],i['box'][0][1]]
+		i['leftup']=[i['box'][0][0],i['box'][1][1]]
+		i['rightdown']=[i['box'][1][0],i['box'][0][1]]
+		i['rightup']=[i['box'][1][0],i['box'][1][1]]
 
 	return result
 

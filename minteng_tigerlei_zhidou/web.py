@@ -22,13 +22,14 @@ def optimize_result():
     transport=request.args['Transport']
     safe=request.args['Safety']
     rent=request.args['Rent']
-    #print(food,transport,safe,rent)
+    # print(food,transport,safe,rent)
     result=optimization_algorithm.get_result(int(food),int(transport),int(safe),int(rent))
     res=result[:5]
     for i in res:
         i['grade']=[i['grade']['food'],i['grade']['transport'],i['grade']['safety'],i['grade']['rent']]
     global info
     info=res
+    # print(res)
     return render_template('optimize-result.html',f=food,t=transport,s=safe,r=rent,res=res)
 
 @app.route("/map/")
