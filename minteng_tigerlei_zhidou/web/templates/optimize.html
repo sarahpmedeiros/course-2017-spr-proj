@@ -3,24 +3,22 @@
 {% block title %}Optimize{% endblock %}
 
 {% block body %}
-  <section>
-    <div >
-      <p><a href="/">&#8592; Back</a></p>
-    </div>
-  </section>
 
   <section>
-    <div>
+    <div class="opContainer" >
+    <div class="opMain">
+      <p><a href="/">&#8592; Back</a></p>
       <h2 style="color: black">Optimization</h2>
       <p>Intro.......</p>
 
-      <h2>Input your ratings</h2>
+      <p><strong>Input your ratings</strong></p>
       
       <form class="ratings" action="/optimize-result/" method="GET">
         <p>Select ratings for every factors, the rating is 1 - 5, the higher the better......</p>
         
         <p><span style="color:red">Food</span>:
         <select class="select" name="Food" >
+            <option value="Food" selected> Food</option>>
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -58,9 +56,17 @@
         <input type="submit" value="Research">
       </form>
     </div>
+    </div>
 
 
   </section>
-
-
+  <link href="/static/opt.css" rel="stylesheet">
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('body').css('background-image', 'url(/static/img/Boston.jpg)');
+        
+        // $('body').css('background-image', 'url(/static/img/Boston.jpg)');
+    });
+  </script> -->
 {% endblock %}

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
+    <!-- <title>{% block title %}{% endblock %}</title> -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +10,7 @@
     <meta name="author" content="">
     <!-- <link rel="icon" href="../../favicon.ico"> -->
 
-    <title>{% block title %}{% endblock %}</title>
+    <title>Carousel Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -28,30 +29,15 @@
     <![endif]-->
 
     <!-- Custom styles for this template -->
-    <!-- <link href="/static/carousel.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <!-- <link href="/static/style.css" rel="stylesheet" > -->
+    <link href="/static/carousel.css" rel="stylesheet">
+    
   </head>
-
   <body>
-    <header ><h1>Find the best office location</h1></header>
-    {% block body %}{% endblock %}
+  	<header ><h1>Find the best office location</h1></header>
     <hr>
-
-    <!-- FOOTER -->
-    <footer>
-      <p style="text-align: center;font-size: 10px;"><a href="#" style="color: white; font-size: 20px;">Back to top</a>------------Images come from Google</p>
-      
-    </footer>
-  
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/static/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="/static/dist/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="/static/assets/js/vendor/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="/static/assets/js/ie10-viewport-bug-workaround.js"></script>
+    {% block body %}
+    {% endblock %}
+    <!-- <footer><strong>Thanks for visiting!</strong></footer> -->
   </body>
 </html>
