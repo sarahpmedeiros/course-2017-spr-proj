@@ -20,7 +20,7 @@ class closestMbtaObesity(dml.Algorithm):
     @staticmethod
     def aggregate(R, f):
         keys = {r[0] for r in R}
-        return [(key, f([v for (k,v) in R if k == key])) for key in keys]
+        return [f([v for (k,v) in R if k == key]) for key in keys]
 
     @staticmethod
     def project(R, p):
@@ -60,7 +60,8 @@ class closestMbtaObesity(dml.Algorithm):
         for obesity, stop, distance in info:
             new_stops.append(stop)
 
-        return new_stops
+        # print(obesity)
+        return (obesity, new_stops)
 
     @staticmethod
     def get_stops(info):
@@ -121,10 +122,12 @@ class closestMbtaObesity(dml.Algorithm):
 
         # find all places within a mile
         filtered_stops = closestMbtaObesity.select(distances, closestMbtaObesity.close_stop)
+        # print(filtered_stops[0][1][1])
 
         # convert to dictionary format
         stops_by_location_dict = closestMbtaObesity.aggregate(filtered_stops, closestMbtaObesity.convert_to_dictionary)
         stops_by_location_dict = closestMbtaObesity.project(stops_by_location_dict, lambda x: {'obesity': x[0], 'stops': x[1]})
+        # print(stops_by_location_dict[0]['obesity'])
     
         repo['asafer_asambors_maxzm_vivyee.obesity_mbta'].insert_many(stops_by_location_dict)
         repo['asafer_asambors_maxzm_vivyee.obesity_mbta'].metadata({'complete': True})

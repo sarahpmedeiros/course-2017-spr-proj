@@ -66,7 +66,7 @@ class closestMbtaControl(dml.Algorithm):
         for control, stop, distance in info:
             new_stops.append(stop)
 
-        return new_stops
+        return (control, new_stops)
 
     @staticmethod
     def get_stops(info):

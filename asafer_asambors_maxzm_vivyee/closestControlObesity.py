@@ -37,6 +37,8 @@ class closestControlObesity(dml.Algorithm):
         control_lat = control['control_locations']['Location'][0]
         control_lon = control['control_locations']['Location'][1]
 
+        # print(obesity['obesity'])
+
         obesity_lat = obesity['obesity']['geolocation']['latitude']
         obesity_lon = obesity['obesity']['geolocation']['longitude']
 

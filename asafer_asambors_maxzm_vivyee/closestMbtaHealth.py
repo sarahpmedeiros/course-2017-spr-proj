@@ -20,7 +20,7 @@ class closestMbtaHealth(dml.Algorithm):
     @staticmethod
     def aggregate(R, f):
         keys = {r[0] for r in R}
-        return [(key, f([v for (k,v) in R if k == key])) for key in keys]
+        return [f([v for (k,v) in R if k == key]) for key in keys]
 
     @staticmethod
     def project(R, p):
@@ -58,7 +58,7 @@ class closestMbtaHealth(dml.Algorithm):
         for healthy, stop, distance in info:
             new_stops.append(stop)
 
-        return new_stops
+        return (healthy, new_stops)
 
     @staticmethod
     def get_stops(info):
