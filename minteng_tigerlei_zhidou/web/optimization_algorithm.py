@@ -1,6 +1,7 @@
 import urllib.request
 import json
-import dml
+# import dml
+import pymongo
 import prov.model
 import datetime 
 import uuid
@@ -10,7 +11,7 @@ def get_result(f,t,s,r):
 	contributor = 'minteng_tigerlei_zhidou'
 	reads = ['minteng_tigerlei_zhidou.box_count']
 	writes = ['minteng_tigerlei_zhidou.optimization_result']
-	client = dml.pymongo.MongoClient()
+	client = pymongo.MongoClient()
 	repo = client.repo
 	repo.authenticate('minteng_tigerlei_zhidou', 'minteng_tigerlei_zhidou')
 
@@ -71,4 +72,4 @@ def get_result(f,t,s,r):
 
 	return result
 
-#get_result(3,4,3,4)
+get_result(3,4,3,4)

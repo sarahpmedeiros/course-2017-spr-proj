@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-import dml
 import optimization_algorithm
 
 app = Flask(__name__)
