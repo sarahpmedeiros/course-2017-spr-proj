@@ -22,7 +22,7 @@ class bpdcrime(dml.Algorithm):
         repo.authenticate('johnt3_rsromero', 'johnt3_rsromero')
 
 
-        url = 'https://data.cityofboston.gov/resource/ufcx-3fdn.json'
+        url = 'http://datamechanics.io/data/johnt3_rsromero/bpdcrime.json'
         response = urllib.request.urlopen(url).read().decode("utf-8")
         
         r = json.loads(response)
@@ -55,21 +55,25 @@ class bpdcrime(dml.Algorithm):
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
         doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
-        doc.add_namespace('bdp', 'https://data.cityofboston.gov/')
+        doc.add_namespace('bdp', 'https://data.cityofboston.gov/') #city of boston data portal
 
         this_script = doc.agent('alg:johnt3_rsromero#bpdcrime', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        resource = doc.entity('bdp:ufcx-3fdn', {'prov:label':'Boston Police Department Crime Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        bpdcrime_resource = doc.entity('bdp:ufcx-3fdn', {'prov:label':'Boston Police Department Crime Data', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
+        
         get_bpdcrime = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
+        
         doc.wasAssociatedWith(get_bpdcrime, this_script)
-        doc.usage(get_bpdcrime, resource, startTime, None,
+        
+        doc.usage(get_bpdcrime, bpdcrime_resource, startTime, None,
                   {prov.model.PROV_TYPE:'ont:Retrieval',
+                  'ont:Query':'?type=Boston+Crime'
                   }
                   )
 
         bpdcrime = doc.entity('dat:johnt3_rsromero#bpdcrime', {prov.model.PROV_LABEL:'Boston Police Department Crime Data', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(bpdcrime, this_script)
         doc.wasGeneratedBy(bpdcrime, get_bpdcrime, endTime)
-        doc.wasDerivedFrom(bpdcrime, resource, get_bpdcrime, get_bpdcrime, get_bpdcrime)
+        doc.wasDerivedFrom(bpdcrime, bpdcrime_resource, get_bpdcrime, get_bpdcrime, get_bpdcrime)
 
         repo.logout()
                   
