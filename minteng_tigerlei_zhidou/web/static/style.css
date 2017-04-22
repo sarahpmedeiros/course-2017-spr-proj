@@ -4,7 +4,7 @@ header, footer {
   background-color:black;
   clear:left;
   text-align:center;
-  font-size: 2rem;
+  /*font-size: 2rem;*/
 
 }
 
@@ -43,11 +43,14 @@ form.ratings {
   border: 2px solid #666666;
   padding: 1rem 2rem 2rem;
   font-size: 15px;
+  width: 45%;
+  margin-left: 25%;
+  opacity: 0.8;
 }
 select.select {
   width: 25%;
   position: absolute;
-  left: 630px;
+  left: 36%;
   box-sizing: border-box;
   border: 1px solid #666666;
   padding: .75rem;
@@ -60,4 +63,30 @@ input[type="submit"] {
   padding: 1rem 2rem;
   margin-top: 1rem;
   font-size: 20px;
+  margin-left: 40%;
+}
+.my-container {
+    /*position: relative;*/
+    /*overflow: hidden;*/
+    z-index: 1;
+    /*text-align: center;*/
+}
+.my-container img {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    opacity: 0.4;
+    z-index: 1;
+}
+.opt p,a,h1,h2{
+  text-align: center;
+}
+.opt{
+  position: relative;
+  z-index: 5;
+}
+.con {
+  position: relative;
 }

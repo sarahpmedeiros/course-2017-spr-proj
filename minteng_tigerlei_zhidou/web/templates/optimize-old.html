@@ -1,35 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% extends "base.html" %}
 
+{% block title %}Optimize{% endblock %}
 
-    <!-- Custom styles for this template -->
-    <!-- <link href="/static/carousel.css" rel="stylesheet"> -->
-    <link href="/static/style.css" rel="stylesheet">
-  </head>
+{% block body %}
 
-  <body>
-    <header ><h1>Find the best office location</h1></header>
-
-    <div class="con">
-
-    <div class="opt">
+  <section>
+    <div class="opMain">
       <p><a href="/">&#8592; Back</a></p>
       <h2 style="color: black">Optimization</h2>
       <p>Intro.......</p>
+
       <p><strong>Input your ratings</strong></p>
       
       <form class="ratings" action="/optimize-result/" method="GET">
         <p>Select ratings for every factors, the rating is 1 - 5, the higher the better......</p>
         
-        <p style="text-align: left;"><span style="color:red">Food</span>:
+        <p><span style="color:red">Food</span>:
         <select class="select" name="Food" >
+            <option value="Food" selected> Food</option>>
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -37,7 +25,7 @@
             <option>5</option>
         </select></p>
 
-        <p style="text-align: left;"><span style="color:red">Transport</span>:
+        <p><span style="color:red">Transport</span>:
         <select class="select" name="Transport" >
             <option>1</option>
             <option>2</option>
@@ -46,7 +34,7 @@
             <option>5</option>
         </select></p>
 
-        <p style="text-align: left;"><span style="color:red">Safety</span>:
+        <p><span style="color:red">Safety</span>:
         <select class="select" name="Safety" >
             <option>1</option>
             <option>2</option>
@@ -55,7 +43,7 @@
             <option>5</option>
         </select></p>
 
-        <p style="text-align: left;"><span style="color:red">Rent</span>:
+        <p><span style="color:red">Rent</span>:
         <select class="select" name="Rent" >
             <option>1</option>
             <option>2</option>
@@ -67,12 +55,15 @@
         <input type="submit" value="Research">
       </form>
     </div>
-    
-    <div class="my-container">
-        <img src="../static/img/Boston.jpg">
-    </div>
 
-    </div>
-
-  </body>
-</html>
+  </section>
+  <link href="/static/opt.css" rel="stylesheet">
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('body').css('background-image', 'url(/static/img/Boston.jpg)');
+        
+        // $('body').css('background-image', 'url(/static/img/Boston.jpg)');
+    });
+  </script> -->
+{% endblock %}
