@@ -77,9 +77,9 @@ class property_2014(dml.Algorithm):
                   
         return doc
 
-property_2014.execute()
-doc = property_2014.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# property_2014.execute()
+# doc = property_2014.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

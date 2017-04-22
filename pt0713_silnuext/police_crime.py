@@ -41,7 +41,8 @@ def reduce(f, R):
 
 class police_crime(dml.Algorithm):
     contributor = 'pt0713_silnuext'
-    reads = ['pt0713_silnuext.police_crime']
+    reads = ['pt0713_silnuext.police_districts',
+            'pt0713_silnuext.crime']
     writes = ['pt0713_silnuext.police_crime']
 
     @staticmethod
@@ -160,9 +161,9 @@ class police_crime(dml.Algorithm):
                   
         return doc
 
-police_crime.execute()
-doc = police_crime.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# police_crime.execute()
+# doc = police_crime.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof
