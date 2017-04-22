@@ -6,16 +6,16 @@ import datetime
 import uuid
 
 class join_by_region(dml.Algorithm):
-    contributor = 'kobesay'
+    contributor = 'heming'
     reads = [
-        'kobesay.regionincome',
-        'kobesay.regionhospital',
-        'kobesay.regionschool',
-        'kobesay.regionpublicschool',
-        'kobesay.regionnonpublicschool'
+        'heming.regionincome',
+        'heming.regionhospital',
+        'heming.regionschool',
+        'heming.regionpublicschool',
+        'heming.regionnonpublicschool'
     ]
     writes = [
-        'kobesay.income_infrastructure',
+        'heming.income_infrastructure',
     ]
 
     @staticmethod
@@ -26,24 +26,24 @@ class join_by_region(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('kobesay', 'kobesay')
+        repo.authenticate('heming', 'heming')
 
         repo.dropCollection("income_infrastructure")
         repo.createCollection("income_infrastructure")
 
-        regionincome = repo.kobesay.regionincome.find()
+        regionincome = repo.heming.regionincome.find()
         regionincome_info = {x['zipcode']: x['income'] for x in regionincome}
 
-        regionhospital = repo.kobesay.regionhospital.find()
+        regionhospital = repo.heming.regionhospital.find()
         regionhospital_info = {x['zipcode']: x['num'] for x in regionhospital}
 
-        regionschool = repo.kobesay.regionschool.find()
+        regionschool = repo.heming.regionschool.find()
         regionschool_info = {x['zipcode']: x['num'] for x in regionschool}
 
-        regionpublicschool = repo.kobesay.regionpublicschool.find()
+        regionpublicschool = repo.heming.regionpublicschool.find()
         regionpublicschool_info = {x['zipcode']: x['num'] for x in regionpublicschool}
 
-        regionnonpublicschool = repo.kobesay.regionnonpublicschool.find()
+        regionnonpublicschool = repo.heming.regionnonpublicschool.find()
         regionnonpublicschool_info = {x['zipcode']: x['num'] for x in regionnonpublicschool}
 
         zipcodes = regionincome_info.keys() | regionhospital_info.keys() | regionschool_info.keys() | regionpublicschool_info.keys() | regionnonpublicschool_info.keys()
@@ -67,7 +67,7 @@ class join_by_region(dml.Algorithm):
             }
             r.append(item)
         #print(r)
-        repo['kobesay.income_infrastructure'].insert_many(r)
+        repo['heming.income_infrastructure'].insert_many(r)
 
         repo.logout()
 
@@ -86,7 +86,7 @@ class join_by_region(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('kobesay', 'kobesay')
+        repo.authenticate('heming', 'heming')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
@@ -95,16 +95,16 @@ class join_by_region(dml.Algorithm):
         doc.add_namespace('bwod', 'https://boston.opendatasoft.com/explore/dataset/') # Boston Wicked Open Data
         doc.add_namespace('bod', 'http://bostonopendata.boston.opendata.arcgis.com/datasets/') # BostonMaps: Open Data
 
-        this_script = doc.agent('alg:kobesay#join_by_region', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        regionincome = doc.entity('dat:kobesay#regionincome', {'prov:label':'region income', prov.model.PROV_TYPE:'ont:DataSet'})
-        regionhospital = doc.entity('dat:kobesay#regionhospital', {'prov:label':'region hospital', prov.model.PROV_TYPE:'ont:DataSet'})
-        regionschool = doc.entity('dat:kobesay#regionschool', {'prov:label':'region school', prov.model.PROV_TYPE:'ont:DataSet'})
-        regionpublicschool = doc.entity('dat:kobesay#regionpublicschool', {'prov:label':'region public school', prov.model.PROV_TYPE:'ont:DataSet'})
-        regionnonpublicschool = doc.entity('dat:kobesay#regionnonpublicschool', {'prov:label':'region non public school', prov.model.PROV_TYPE:'ont:DataSet'})
+        this_script = doc.agent('alg:heming#join_by_region', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        regionincome = doc.entity('dat:heming#regionincome', {'prov:label':'region income', prov.model.PROV_TYPE:'ont:DataSet'})
+        regionhospital = doc.entity('dat:heming#regionhospital', {'prov:label':'region hospital', prov.model.PROV_TYPE:'ont:DataSet'})
+        regionschool = doc.entity('dat:heming#regionschool', {'prov:label':'region school', prov.model.PROV_TYPE:'ont:DataSet'})
+        regionpublicschool = doc.entity('dat:heming#regionpublicschool', {'prov:label':'region public school', prov.model.PROV_TYPE:'ont:DataSet'})
+        regionnonpublicschool = doc.entity('dat:heming#regionnonpublicschool', {'prov:label':'region non public school', prov.model.PROV_TYPE:'ont:DataSet'})
         get_income_infrastructure = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'get relation of region income and infrastructure'})
         doc.wasAssociatedWith(get_income_infrastructure, this_script)
 
-        income_infrastructure = doc.entity('dat:kobesay#income_infrastructure', {prov.model.PROV_LABEL:'region income and infrastructure', prov.model.PROV_TYPE:'ont:DataSet'})
+        income_infrastructure = doc.entity('dat:heming#income_infrastructure', {prov.model.PROV_LABEL:'region income and infrastructure', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(income_infrastructure, this_script)
         doc.wasGeneratedBy(income_infrastructure, get_income_infrastructure, endTime)
         doc.wasDerivedFrom(income_infrastructure, regionincome, get_income_infrastructure, get_income_infrastructure, get_income_infrastructure)

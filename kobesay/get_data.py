@@ -18,14 +18,14 @@ def fetch_json_local(filename):
     return r
 
 class get_data(dml.Algorithm):
-    contributor = ‘kobesay’
+    contributor = ‘heming’
     reads = []
     writes = [
-        'kobesay.income2013',
-        'kobesay.income2014',
-        'kobesay.hospital',
-        'kobesay.publicschool',
-        'kobesay.nonpublicschool'
+        'heming.income2013',
+        'heming.income2014',
+        'heming.hospital',
+        'heming.publicschool',
+        'heming.nonpublicschool'
     ]
 
     @staticmethod
@@ -36,35 +36,35 @@ class get_data(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('kobesay', 'kobesay')
+        repo.authenticate('heming', 'heming')
 
         # income 2013
         r = fetch_json('http://data.cityofboston.gov/resource/54s2-yxpg.json')
         #r = fetch_json_local('income2013.json')
         repo.dropCollection("income2013")
         repo.createCollection("income2013")
-        repo['kobesay.income2013'].insert_many(r)
+        repo['heming.income2013'].insert_many(r)
 
         # income 2014
         r = fetch_json('http://data.cityofboston.gov/resource/4swk-wcg8.json')
         #r = fetch_json_local('income2014.json')
         repo.dropCollection("income2014")
         repo.createCollection("income2014")
-        repo['kobesay.income2014'].insert_many(r)
+        repo['heming.income2014'].insert_many(r)
 
         # hospital
         r = fetch_json('http://data.cityofboston.gov/resource/46f7-2snz.json')
         #r = fetch_json_local('hospital.json')
         repo.dropCollection("hospital")
         repo.createCollection("hospital")
-        repo['kobesay.hospital'].insert_many(r)
+        repo['heming.hospital'].insert_many(r)
 
         # public school
         r = fetch_json('http://boston.opendatasoft.com/explore/dataset/public-schools/download/?format=json')
         #r = fetch_json_local('publicschool.json')
         repo.dropCollection("publicschool")
         repo.createCollection("publicschool")
-        repo['kobesay.publicschool'].insert_many(r)
+        repo['heming.publicschool'].insert_many(r)
 
         # non public school
         r = fetch_json('http://bostonopendata.boston.opendata.arcgis.com/datasets/0046426a3e4340a6b025ad52b41be70a_1.geojson')
@@ -72,7 +72,7 @@ class get_data(dml.Algorithm):
         r = r['features']
         repo.dropCollection("nonpublicschool")
         repo.createCollection("nonpublicschool")
-        repo['kobesay.nonpublicschool'].insert_many(r)
+        repo['heming.nonpublicschool'].insert_many(r)
 
         repo.logout()
 
@@ -91,7 +91,7 @@ class get_data(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('kobesay', 'kobesay')
+        repo.authenticate('heming', 'heming')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
@@ -100,7 +100,7 @@ class get_data(dml.Algorithm):
         doc.add_namespace('bwod', 'https://boston.opendatasoft.com/explore/dataset/') # Boston Wicked Open Data
         doc.add_namespace('bod', 'http://bostonopendata.boston.opendata.arcgis.com/datasets/') # BostonMaps: Open Data
 
-        this_script = doc.agent('alg:kobesay#get_data', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        this_script = doc.agent('alg:heming#get_data', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 
         resource_income2013 = doc.entity('bdp:54s2-yxpg', {'prov:label':'Employee Earnings Report 2013', prov.model.PROV_TYPE:'ont:DataResource', 'ont:Extension':'json'})
         get_income2013 = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime)
@@ -142,27 +142,27 @@ class get_data(dml.Algorithm):
                   }
             )
 
-        income2013 = doc.entity('dat:kobesay#income2013', {prov.model.PROV_LABEL:'income 2013', prov.model.PROV_TYPE:'ont:DataSet'})
+        income2013 = doc.entity('dat:heming#income2013', {prov.model.PROV_LABEL:'income 2013', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(income2013, this_script)
         doc.wasGeneratedBy(income2013, get_income2013, endTime)
         doc.wasDerivedFrom(income2013, resource_income2013, get_income2013, get_income2013, get_income2013)
 
-        income2014 = doc.entity('dat:kobesay#income2014', {prov.model.PROV_LABEL:'income 2014', prov.model.PROV_TYPE:'ont:DataSet'})
+        income2014 = doc.entity('dat:heming#income2014', {prov.model.PROV_LABEL:'income 2014', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(income2014, this_script)
         doc.wasGeneratedBy(income2014, get_income2014, endTime)
         doc.wasDerivedFrom(income2014, resource_income2014, get_income2014, get_income2014, get_income2014)
 
-        hospital = doc.entity('dat:kobesay#hospital', {prov.model.PROV_LABEL:'hospital', prov.model.PROV_TYPE:'ont:DataSet'})
+        hospital = doc.entity('dat:heming#hospital', {prov.model.PROV_LABEL:'hospital', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(hospital, this_script)
         doc.wasGeneratedBy(hospital, get_hospital, endTime)
         doc.wasDerivedFrom(hospital, resource_hospital, get_hospital, get_hospital, get_hospital)
 
-        publicschool = doc.entity('dat:kobesay#publicschool', {prov.model.PROV_LABEL:'public school', prov.model.PROV_TYPE:'ont:DataSet'})
+        publicschool = doc.entity('dat:heming#publicschool', {prov.model.PROV_LABEL:'public school', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(publicschool, this_script)
         doc.wasGeneratedBy(publicschool, get_publicschool, endTime)
         doc.wasDerivedFrom(publicschool, resource_publicschool, get_publicschool, get_publicschool, get_publicschool)
 
-        nonpublicschool = doc.entity('dat:kobesay#nonpublicschool', {prov.model.PROV_LABEL:'non public school', prov.model.PROV_TYPE:'ont:DataSet'})
+        nonpublicschool = doc.entity('dat:heming#nonpublicschool', {prov.model.PROV_LABEL:'non public school', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(nonpublicschool, this_script)
         doc.wasGeneratedBy(nonpublicschool, get_nonpublicschool, endTime)
         doc.wasDerivedFrom(nonpublicschool, resource_nonpublicschool, get_nonpublicschool, get_nonpublicschool, get_nonpublicschool)
