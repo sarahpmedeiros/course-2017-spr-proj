@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Optimize{% endblock %}
+
+{% block body %}
+
+  <section>
+    <div class="opMain">
+      <p><a href="/">&#8592; Back</a></p>
+      <h2 style="color: black">Optimization</h2>
+      <p>Intro.......</p>
+
+      <p><strong>Input your ratings</strong></p>
+      
+      <form class="ratings" action="/optimize-result/" method="GET">
+        <p>Select ratings for every factors, the rating is 1 - 5, the higher the better......</p>
+        
+        <p><span style="color:red">Food</span>:
+        <select class="select" name="Food" >
+            <option value="Food" selected> Food</option>>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select></p>
+
+        <p><span style="color:red">Transport</span>:
+        <select class="select" name="Transport" >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select></p>
+
+        <p><span style="color:red">Safety</span>:
+        <select class="select" name="Safety" >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select></p>
+
+        <p><span style="color:red">Rent</span>:
+        <select class="select" name="Rent" >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select></p>
+
+        <input type="submit" value="Research">
+      </form>
+    </div>
+
+  </section>
+  <link href="/static/opt.css" rel="stylesheet">
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('body').css('background-image', 'url(/static/img/Boston.jpg)');
+        
+        // $('body').css('background-image', 'url(/static/img/Boston.jpg)');
+    });
+  </script> -->
+{% endblock %}

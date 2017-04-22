@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <!-- Custom styles for this template -->
+    <!-- <link href="/static/carousel.css" rel="stylesheet"> -->
+    <link href="/static/style.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header ><h1>Find the best office location</h1></header>
+
+    <div class="con">
+
+    <div class="opt">
+      <p><a href="/">&#8592; Back</a></p>
+      <h2 style="color: black">Optimization</h2>
+      <p>Intro.......</p>
+      <p><strong>Input your ratings</strong></p>
+      
+      <form class="ratings" action="/optimize-result/" method="GET">
+        <p>Select ratings for every factors, the rating is 1 - 5, the higher the better......</p>
+        
+        <p style="text-align: left;"><span style="color:red">Food</span>:
+        <select class="select" name="Food" >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select></p>
+
+        <p style="text-align: left;"><span style="color:red">Transport</span>:
+        <select class="select" name="Transport" >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select></p>
+
+        <p style="text-align: left;"><span style="color:red">Safety</span>:
+        <select class="select" name="Safety" >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select></p>
+
+        <p style="text-align: left;"><span style="color:red">Rent</span>:
+        <select class="select" name="Rent" >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select></p>
+
+        <input type="submit" value="Research">
+      </form>
+    </div>
+    
+    <div class="my-container">
+        <img src="../static/img/Boston.jpg">
+    </div>
+
+    </div>
+
+  </body>
+</html>
