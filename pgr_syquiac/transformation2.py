@@ -82,7 +82,7 @@ class transformation2(dml.Algorithm):
 
             # print(addr)
             # print("Count : " + str(count))
-            location = geolocator.geocode(addr)
+            location = geolocator.geocode(addr, timeout=10)
             # print("Address: " + location.address)
             # print("Coordinates: " + str((location.longitude, location.latitude)))
             # print("--**--")
@@ -127,6 +127,7 @@ class transformation2(dml.Algorithm):
 
             stores[idx]['obesity_rates'].append(i)
 
+        print(stores[0])
 
         repo.dropPermanent("obesity_pools_stores")
         repo.createPermanent("obesity_pools_stores")
@@ -168,3 +169,4 @@ class transformation2(dml.Algorithm):
 
         return doc
 
+transformation2.execute()
