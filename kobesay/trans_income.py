@@ -6,9 +6,9 @@ import datetime
 import uuid
 
 class trans_income(dml.Algorithm):
-    contributor = 'kobesay'
-    reads = ['kobesay.income2013', 'kobesay.income2014']
-    writes = ['kobesay.regionincome']
+    contributor = 'heming'
+    reads = ['heming.income2013', 'heming.income2014']
+    writes = ['heming.regionincome']
 
     @staticmethod
     def execute(trial = False):
@@ -18,7 +18,7 @@ class trans_income(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('kobesay', 'kobesay')
+        repo.authenticate('heming', 'heming')
 
         repo.dropCollection("regionincome")
         repo.createCollection("regionincome")
@@ -28,8 +28,8 @@ class trans_income(dml.Algorithm):
         # select zip code and total earnings
         # merge result of income2013 and income2014
         # calculate average income of each region
-        income2013 = repo.kobesay.income2013.find()
-        income2014 = repo.kobesay.income2014.find()
+        income2013 = repo.heming.income2013.find()
+        income2014 = repo.heming.income2014.find()
         for x in income2013:
             zipcode = x['zip'].split('-')[0]
             income = float(x['total_earnings'])
@@ -45,7 +45,7 @@ class trans_income(dml.Algorithm):
             else:
                 items[zipcode] = [income]
         r = [{'zipcode': zipcode, 'income': sum(items[zipcode]) / len(items[zipcode])} for zipcode in items]
-        repo['kobesay.regionincome'].insert_many(r)
+        repo['heming.regionincome'].insert_many(r)
 
         repo.logout()
 
@@ -64,7 +64,7 @@ class trans_income(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('kobesay', 'kobesay')
+        repo.authenticate('heming', 'heming')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
@@ -73,13 +73,13 @@ class trans_income(dml.Algorithm):
         doc.add_namespace('bwod', 'https://boston.opendatasoft.com/explore/dataset/') # Boston Wicked Open Data
         doc.add_namespace('bod', 'http://bostonopendata.boston.opendata.arcgis.com/datasets/') # BostonMaps: Open Data
 
-        this_script = doc.agent('alg:kobesay#trans_income', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        income2013 = doc.entity('dat:kobesay#income2013', {'prov:label':'income 2013', prov.model.PROV_TYPE:'ont:DataSet'})
-        income2014 = doc.entity('dat:kobesay#income2014', {'prov:label':'income 2014', prov.model.PROV_TYPE:'ont:DataSet'})
+        this_script = doc.agent('alg:heming#trans_income', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        income2013 = doc.entity('dat:heming#income2013', {'prov:label':'income 2013', prov.model.PROV_TYPE:'ont:DataSet'})
+        income2014 = doc.entity('dat:heming#income2014', {'prov:label':'income 2014', prov.model.PROV_TYPE:'ont:DataSet'})
         get_regionincome = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'get region income'})
         doc.wasAssociatedWith(get_regionincome, this_script)
 
-        regionincome = doc.entity('dat:kobesay#regionincome', {prov.model.PROV_LABEL:'region income', prov.model.PROV_TYPE:'ont:DataSet'})
+        regionincome = doc.entity('dat:heming#regionincome', {prov.model.PROV_LABEL:'region income', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(regionincome, this_script)
         doc.wasGeneratedBy(regionincome, get_regionincome, endTime)
         doc.wasDerivedFrom(regionincome, income2013, get_regionincome, get_regionincome, get_regionincome)
