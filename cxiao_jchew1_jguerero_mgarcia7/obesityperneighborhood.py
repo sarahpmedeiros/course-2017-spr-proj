@@ -9,9 +9,9 @@ from collections import defaultdict
 from shapely.geometry import shape #pip install shapely
 
 class obesityperneighborhood(dml.Algorithm):
-	contributor = 'jguerero_mgarcia7'
-	reads = ['jguerero_mgarcia7.neighborhoods', 'jguerero_mgarcia7.obesitystats']
-	writes = ['jguerero_mgarcia7.obesityperneighborhood']
+	contributor = 'cxiao_jchew1_jguerero_mgarcia7'
+	reads = ['cxiao_jchew1_jguerero_mgarcia7.neighborhoods', 'cxiao_jchew1_jguerero_mgarcia7.obesitystats']
+	writes = ['cxiao_jchew1_jguerero_mgarcia7.obesityperneighborhood']
 
 	@staticmethod
 	def execute(trial = False):
@@ -20,11 +20,11 @@ class obesityperneighborhood(dml.Algorithm):
 		# Set up the database connection.
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
-		repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
+		repo.authenticate('cxiao_jchew1_jguerero_mgarcia7', 'cxiao_jchew1_jguerero_mgarcia7')
 
 
-		neighborhoods = repo['jguerero_mgarcia7.neighborhoods']
-		obesitystats = repo['jguerero_mgarcia7.obesitystats']
+		neighborhoods = repo['cxiao_jchew1_jguerero_mgarcia7.neighborhoods']
+		obesitystats = repo['cxiao_jchew1_jguerero_mgarcia7.obesitystats']
 
 		# Create shapeobjects for each neighborhood
 		neighborhood_shapes = {n['name']:shape(n['the_geom']) for n in neighborhoods.find({})}
@@ -62,9 +62,9 @@ class obesityperneighborhood(dml.Algorithm):
 
 		repo.dropCollection("obesityperneighborhood")
 		repo.createCollection("obesityperneighborhood")
-		repo['jguerero_mgarcia7.obesityperneighborhood'].insert_many(r)
-		repo['jguerero_mgarcia7.obesityperneighborhood'].metadata({'complete':True})
-		print(repo['jguerero_mgarcia7.obesityperneighborhood'].metadata())
+		repo['cxiao_jchew1_jguerero_mgarcia7.obesityperneighborhood'].insert_many(r)
+		repo['cxiao_jchew1_jguerero_mgarcia7.obesityperneighborhood'].metadata({'complete':True})
+		print(repo['cxiao_jchew1_jguerero_mgarcia7.obesityperneighborhood'].metadata())
 
 		repo.logout()
 
@@ -83,14 +83,14 @@ class obesityperneighborhood(dml.Algorithm):
 		# Set up the database connection.
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
-		repo.authenticate('jguerero_mgarcia7', 'jguerero_mgarcia7')
+		repo.authenticate('cxiao_jchew1_jguerero_mgarcia7', 'cxiao_jchew1_jguerero_mgarcia7')
 		doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
-		doc.add_namespace('dat', 'http://datamechanics.io/data/jguerero_mgarcia7') # The data sets are in <user>#<collection> format.
+		doc.add_namespace('dat', 'http://datamechanics.io/data/cxiao_jchew1_jguerero_mgarcia7') # The data sets are in <user>#<collection> format.
 		doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
 		doc.add_namespace('log', 'http://datamechanics.io/log/') # The event log.
 
 
-		this_script = doc.agent('alg:jguerero_mgarcia7#obesityperneighborhood', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+		this_script = doc.agent('alg:cxiao_jchew1_jguerero_mgarcia7#obesityperneighborhood', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
 		obesitystats_resource = doc.entity('dat:obesitystats', {'prov:label':'Obesity Statistics MA', prov.model.PROV_TYPE:'ont:DataSet'})
 		neighborhoods_resource = doc.entity('dat:neighborhoods', {'prov:label':'Neighborhoods Shapefile', prov.model.PROV_TYPE:'ont:DataSet'})
 
@@ -104,7 +104,7 @@ class obesityperneighborhood(dml.Algorithm):
 		  {prov.model.PROV_TYPE:'ont:Computation'}
 		  )
 
-		obesityperneighborhood = doc.entity('dat:jguerero_mgarcia7#obesityperneighborhood', {prov.model.PROV_LABEL:'Obesity Statistics Per Neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
+		obesityperneighborhood = doc.entity('dat:cxiao_jchew1_jguerero_mgarcia7#obesityperneighborhood', {prov.model.PROV_LABEL:'Obesity Statistics Per Neighborhood', prov.model.PROV_TYPE:'ont:DataSet'})
 		doc.wasAttributedTo(obesityperneighborhood, this_script)
 		doc.wasGeneratedBy(obesityperneighborhood, get_obesityperneighborhood, endTime)
 		doc.wasDerivedFrom(obesityperneighborhood, obesitystats_resource, get_obesityperneighborhood, get_obesityperneighborhood, get_obesityperneighborhood)
