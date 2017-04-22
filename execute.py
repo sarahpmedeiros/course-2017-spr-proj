@@ -23,7 +23,6 @@ for r,d,f in os.walk(path):
 
 # Create an ordering of the algorithms based on the data
 # sets that they read and write.
-
 datasets = set()
 ordered = []
 while len(algorithms) > 0:
