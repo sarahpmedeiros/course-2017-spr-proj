@@ -1,0 +1,163 @@
+<!DOCTYPE html >
+<head>
+<title>Map Results</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js"></script>
+
+<style type="text/css">
+#map { height: 1000px; }
+.legend {
+    line-height: 18px;
+    color: #555;
+    width: 200px;
+}
+.legend i {
+    width: 20px;
+    height: 18px;
+    float: left;
+    clear: left;
+    margin-left: 8px;
+    opacity: 0.7;  
+}
+.info {
+    padding: 6px 8px;
+    font: 16px/20px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.5);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+<!-- <p><a href="/optimize/">&#8592; Go back to homepage</a></p> -->
+<div id="map"></div>
+<script type="text/javascript">
+
+var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    osm = L.tileLayer(osmUrl, {
+	maxZoom: 17,
+	 attribution: 'Li &copy; <a href="#">LiOpen</a> contributors'	
+	});
+
+var map = L.map('map');     
+map.setView([42.3137055, -71.0566365], 12);  
+map.addLayer(osm);
+//marker
+var temp='#1:  '+'('+String({{a.center}})+ ')';
+var marker = new L.Marker(new L.latLng({{a.center}}));
+marker.addTo(map).bindPopup(temp, {autoClose:false}).openPopup();
+
+var temp='#2:  '+'('+String({{b.center}})+ ')';
+var marker = new L.Marker(new L.latLng({{b.center}}));
+marker.addTo(map).bindPopup(temp, {autoClose:false});
+
+var temp='#3:  '+'('+String({{c.center}})+ ')';
+var marker = new L.Marker(new L.latLng({{c.center}}));
+marker.addTo(map).bindPopup(temp, {autoClose:false});
+
+var temp='#4:  '+'('+String({{d.center}})+ ')';
+var marker = new L.Marker(new L.latLng({{d.center}}));
+marker.addTo(map).bindPopup(temp, {autoClose:false});
+
+var temp='#5:  '+'('+String({{e.center}})+ ')';
+var marker = new L.Marker(new L.latLng({{e.center}}));
+marker.addTo(map).bindPopup(temp, {autoClose:false});
+
+
+//cycle
+// var circle = L.circle({{a.center}}, 3000, {
+//      color: 'black',
+//      fillColor: 'red',
+//      fillOpacity: 0.3
+//     }).addTo(map);
+
+// var circle = L.circle({{b.center}}, 2000, {
+//      color: 'black',
+//      fillColor: 'blue',
+//      fillOpacity: 0.3
+//     }).addTo(map);
+
+// var circle = L.circle({{c.center}}, 1500, {
+//      color: 'black',
+//      fillColor: 'green',
+//      fillOpacity: 0.3
+//     }).addTo(map);
+
+// var circle = L.circle({{d.center}}, 1000, {
+//      color: 'black',
+//      fillColor: 'yellow',
+//      fillOpacity: 0.3
+//     }).addTo(map);
+
+// var circle = L.circle({{e.center}}, 500, {
+//      color: 'black',
+//      fillColor: 'grey',
+//      fillOpacity: 0.3
+//     }).addTo(map);
+
+//polygon
+var polygon = L.polygon([
+    {{a.leftdown}},
+    {{a.leftup}},
+    {{a.rightup}},
+    {{a.rightdown}}],
+    { color:'black',
+	  fillColor: 'red',
+	  fillOpacity: 0.3}
+	).addTo(map);
+var polygon = L.polygon([
+    {{b.leftdown}},
+    {{b.leftup}},
+    {{b.rightup}},
+    {{b.rightdown}}],
+    { color:'black',
+	  fillColor: 'blue',
+	  fillOpacity: 0.3}
+	).addTo(map);
+var polygon = L.polygon([
+    {{c.leftdown}},
+    {{c.leftup}},
+    {{c.rightup}},
+    {{c.rightdown}}],
+    { color:'black',
+	  fillColor: 'green',
+	  fillOpacity: 0.3}
+	).addTo(map);
+var polygon = L.polygon([
+    {{d.leftdown}},
+    {{d.leftup}},
+    {{d.rightup}},
+    {{d.rightdown}}],
+    { color:'black',
+	  fillColor: 'yellow',
+	  fillOpacity: 0.3}
+	).addTo(map);
+var polygon = L.polygon([
+    {{e.leftdown}},
+    {{e.leftup}},
+    {{e.rightup}},
+    {{e.rightdown}}],
+    { color:'black',
+	  fillColor: 'grey',
+	  fillOpacity: 0.3}
+	).addTo(map);
+//add legend
+var legend = L.control({position: 'topright'});
+legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend'),
+        color=['red','blue','green','yellow','grey']
+        text=['------No. 1','------No. 2','------No. 3','------No. 4', '------No. 5']
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < color.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + color[i] + '"></i> ' + text[i]+'<br>' ;
+    }
+    return div;
+};
+legend.addTo(map);
+
+</script>
+</body>
