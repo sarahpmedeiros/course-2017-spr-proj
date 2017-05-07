@@ -2,12 +2,12 @@
 * Run Mongo:
 	* Mongod --auth --dbpath /data/db
 * Run these python files first in order:
-* * python getStudents.py
-Make sure you are ready to use Flask by following the quick start guide to setup your machine.
+	* python getStudents.py
+* Make sure you are ready to use Flask by following the quick start guide to setup your machine.
 http://flask.pocoo.org/docs/0.12/quickstart/
-Run the webservice:
-	python webservice.py or flask run
-After the service is running, go to localhost:5000/home.
+* Run the webservice:
+	* python webservice.py or flask run
+* After the service is running, go to localhost:5000/home.
 If you go to localhost:5000 you will be redirected.
 
 
