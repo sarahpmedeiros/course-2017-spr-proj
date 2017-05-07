@@ -2,7 +2,8 @@
 * Run Mongo:
 	* Mongod --auth --dbpath /data/db
 * Run this python file:
-	* python getStudents.py
+	* python initialize.py
+	* this will call the execute function of getStudents.
 * Make sure you are ready to use Flask by following the quick start guide to setup your machine.
 http://flask.pocoo.org/docs/0.12/quickstart/
 * Run the webservice:
