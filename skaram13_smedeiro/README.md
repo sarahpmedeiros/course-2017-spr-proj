@@ -1,3 +1,17 @@
+***How to run our visualizations:***
+Run Mongo:
+	Mongod --auth --dbpath /data/db
+Run these python files first in order:
+python getStudents.py
+Make sure you are ready to use Flask by following the quick start guide to setup your machine.
+http://flask.pocoo.org/docs/0.12/quickstart/
+Run the webservice:
+	python webservice.py or flask run
+After the service is running, go to localhost:5000/home.
+If you go to localhost:5000 you will be redirected.
+
+
+
 ***Project 2***  
 For project 2, we continued our focus on education in Boston but switched our problem to deal with the transportation issue plaguing our public schools. Currently transportations costs account for 11% of the district’s budget. In this project, our goal is to optimize the location of corner bus stops. 
 The data sets that we chose are the students-simulated.geoson and the Boston, MA geojson (OSM2PGSQL) which we retrieved from https://mapzen.com/data/metro-extracts/metro/boston_massachusetts/.
