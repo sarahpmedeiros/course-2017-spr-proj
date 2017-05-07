@@ -29,6 +29,8 @@ class studentsGraph(dml.Algorithm):
 	reads = ['skaram13_smedeiro.potential_stops']
 	writes = ['skaram13_smedeiro.new_stops']
 
+	
+
 
 	def storeNewStops(data):
 		startTime = datetime.datetime.now()
@@ -51,11 +53,67 @@ class studentsGraph(dml.Algorithm):
 		repo.logout()
 		endTime = datetime.datetime.now()
 		return {"start":startTime, "end":endTime}
+
+	def findNewStops(school,dictOfCenters,dictOfSchoolStops, studentsByBusStop, latInput=0, lonInput=0, newStudentStop=[]):
+		with open('input_data/boston_massachusetts_osm_line.geojson', encoding="utf8") as data_file:
+			
+			print('loading')
+			g = json.load(data_file)
+			g = geoql.features_properties_null_remove(g)
+			g = geoql.features_tags_parse_str_to_dict(g)
+			g = geoql.features_keep_by_property(g, {"highway": {"$in": ["residential", "secondary", "tertiary"]}})
+			lat = dictOfCenters[school]['latitude']
+			longi = dictOfCenters[school]['longitude']
+			radius = dictOfCenters[school]['radius']
+			g = geoql.features_keep_within_radius(g, (lat, longi), radius, 'miles') # Within 0.75 of Boston Common.
+			g = geoql.features_node_edge_graph(g) # Converted into a graph with nodes and edges.
+			print('code time!')
+			
+
+			#for each bus_stop in school
+			yay = 0 
+			nay = 0
+			stops = dictOfSchoolStops[school]
+			for stop in stops:
+				lat = stop[1]
+				longi = stop[0]
+				minValue = 100
+				minCoord = []
+				#find the closest corner to the mean
+				for x in (g['features']):
+					if ('geometry' not in x and 'coordinates' in x):
+						latCorner = (x['coordinates'][1])
+						longCorner = (x['coordinates'][0])
+						tmp = (abs(lat-latCorner)+abs(longi- longCorner))
+						if (tmp < minValue):
+				 			minValue = tmp
+				 			minCoord = [latCorner,longCorner]
+				#check if every student can reach the new stop
+				for student in studentsByBusStop[str(stop)]:
+					sLat = (student['latitude'])
+					sLong = (student['longitude'])
+					walkDist = (student['walk'])
+
+					if latInput!= 0 and lonInput != 0:
+						if (str(sLat) == str(latInput)) and (str(sLong) == str(lonInput)):
+							print("Student:", student)
+							newStudentStop.append({"lat": minCoord[0],"lon": minCoord[1]})
+
+					dist = ((vincenty((sLat,sLong),(minCoord[0],minCoord[1])).miles)) 
+					if (dist > walkDist):
+						nay += 1
+					else:
+						yay +=1
+
+			print(school)
+			print('yays:', yay)
+			print('nays:', nay)
+			return ({'withinWalk': yay, 'outsideWalk': nay, 'school':school, 'coordinates': minCoord})
 	
 	
 	@staticmethod
-	def execute(trial = False):
-		# print (trial)
+	def execute(schoolInput = "", latInput=0, lonInput =0 ,trial = False):
+		
 		#results = studentsGraph.getPotentialStops()
 		client = dml.pymongo.MongoClient()
 		repo = client.repo
@@ -69,6 +127,7 @@ class studentsGraph(dml.Algorithm):
 		dictOfSchoolStops = {}
 		dictOfCenters = {}
 		studentsByBusStop = {}
+		newStudentStop = []
 
 		newStops = []
 
@@ -94,64 +153,27 @@ class studentsGraph(dml.Algorithm):
 
 
 		i = len(dictOfSchoolStops)
-		for school in dictOfSchoolStops:
-			if (trial == True):
-				if i < len(dictOfSchoolStops):
-					print(newStops)
-					break
 
-			print(i, ' left to go!')
-			i -= 1
+		if (schoolInput == ""):
+			for school in dictOfSchoolStops:
+				if (trial == True):
+					if i < len(dictOfSchoolStops):
+						print(newStops)
+						break
 
-			with open('skaram13_smedeiro/input_data/boston_massachusetts_osm_line.geojson', encoding="utf8") as data_file:
-				print('loading')
-				g = json.load(data_file)
-				g = geoql.features_properties_null_remove(g)
-				g = geoql.features_tags_parse_str_to_dict(g)
-				g = geoql.features_keep_by_property(g, {"highway": {"$in": ["residential", "secondary", "tertiary"]}})
-				lat = dictOfCenters[school]['latitude']
-				longi = dictOfCenters[school]['longitude']
-				radius = dictOfCenters[school]['radius']
-				g = geoql.features_keep_within_radius(g, (lat, longi), radius, 'miles') # Within 0.75 of Boston Common.
-				g = geoql.features_node_edge_graph(g) # Converted into a graph with nodes and edges.
-				print('code time!')
-				
+				print(i, ' left to go!')
+				i -= 1
 
-				#for each bus_stop in school
-				yay = 0 
-				nay = 0
-				stops = dictOfSchoolStops[school]
-				for stop in stops:
-					lat = stop[1]
-					longi = stop[0]
-					minValue = 100
-					minCoord = []
-					#find the closest corner to the mean
-					for x in (g['features']):
-						if ('geometry' not in x and 'coordinates' in x):
-							latCorner = (x['coordinates'][1])
-							longCorner = (x['coordinates'][0])
-							tmp = (abs(lat-latCorner)+abs(longi- longCorner))
-							if (tmp < minValue):
-					 			minValue = tmp
-					 			minCoord = [latCorner,longCorner]
-					#check if every student can reach the new stop
-					for student in studentsByBusStop[str(stop)]:
-						sLat = (student['latitude'])
-						sLong = (student['longitude'])
-						walkDist = (student['walk'])
-						dist = ((vincenty((sLat,sLong),(minCoord[0],minCoord[1])).miles)) 
-						if (dist > walkDist):
-							nay += 1
-						else:
-							yay +=1
-
-				print(school)
-				print('yays:', yay)
-				print('nays:', nay)
-				newStops.append({'withinWalk': yay, 'outsideWalk': nay, 'school':school, 'coordinates': minCoord})
+				print ("here 2")
+				newStop = studentsGraph.findNewStops(school, dictOfCenters, dictOfSchoolStops, studentsByBusStop)
+				newStops.append(newStop)
+		else:
+			newStop = studentsGraph.findNewStops(schoolInput, dictOfCenters, dictOfSchoolStops, studentsByBusStop, latInput, lonInput, newStudentStop)
+			newStops.append(newStop)
 		
 		studentsGraph.storeNewStops(newStops)	
+
+		return newStudentStop
 
 
 	@staticmethod
@@ -194,9 +216,15 @@ class studentsGraph(dml.Algorithm):
 				  
 		return doc
 
-studentsGraph.execute()
-doc = studentsGraph.provenance()
-print(doc.get_provn())
+#studentsGraph.execute()
+#test!
+
+
+#newStop = studentsGraph.execute(schoolInput="Everett ES", lonInput=-71.06911,  latInput= 42.29891)
+#print("NEW STOP:", newStop)   
+
+#doc = studentsGraph.provenance()
+#print(doc.get_provn())
 			
 
-
+#McKinley Middle

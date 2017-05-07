@@ -25,6 +25,7 @@ class getStudents(dml.Algorithm):
 		response = urllib.request.urlopen(req).read().decode("UTF-8")
 
 		r = json.loads(response)
+		print (r)
 
 		repo.dropCollection("students")
 		repo.createCollection("students")
@@ -77,8 +78,8 @@ class getStudents(dml.Algorithm):
 				  
 		return doc
 
-getStudents.execute()
-doc = getStudents.provenance()
-print(doc.get_provn())
+# getStudents.execute()
+# doc = getStudents.provenance()
+# print(doc.get_provn())
 
 # print(json.dumps(json.loads(doc.serialize()), indent=4))
