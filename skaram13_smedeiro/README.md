@@ -1,3 +1,6 @@
+*** Note ***
+It takes a few minutes to add the new student and find their bus stop, please wait for it to finish running before clicking anything. You can check the progress in the terminal.
+
 ***How to run our visualizations:***
 * Run Mongo:
 	* Mongod --auth --dbpath /data/db
@@ -10,6 +13,7 @@ http://flask.pocoo.org/docs/0.12/quickstart/
 	* python webservice.py or flask run
 * After the service is running, go to localhost:5000/home.
 If you go to localhost:5000 you will be redirected.
+
 
 
 
