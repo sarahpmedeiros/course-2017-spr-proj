@@ -1,6 +1,6 @@
 ***How to run our visualizations:***
 Run Mongo:
-	Mongod --auth --dbpath /data/db
+	#Mongod --auth --dbpath /data/db
 Run these python files first in order:
 python getStudents.py
 Make sure you are ready to use Flask by following the quick start guide to setup your machine.
