@@ -6,9 +6,9 @@ import datetime
 import uuid
 
 class trans_hospital(dml.Algorithm):
-    contributor = 'kobesay'
-    reads = ['kobesay.hospital']
-    writes = ['kobesay.regionhospital']
+    contributor = 'heming'
+    reads = ['heming.hospital']
+    writes = ['heming.regionhospital']
 
     @staticmethod
     def execute(trial = False):
@@ -18,7 +18,7 @@ class trans_hospital(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('kobesay', 'kobesay')
+        repo.authenticate('heming', 'heming')
 
         repo.dropCollection("regionhospital")
         repo.createCollection("regionhospital")
@@ -27,7 +27,7 @@ class trans_hospital(dml.Algorithm):
 
         # select zip code and hospital
         # count number of hospitals for each region
-        hospital = repo.kobesay.hospital.find()
+        hospital = repo.heming.hospital.find()
         for x in hospital:
             zipcode = x['zipcode'].split('-')[0]
             if len(zipcode) == 4:
@@ -35,7 +35,7 @@ class trans_hospital(dml.Algorithm):
             items[zipcode] = items.get(zipcode, 0) + 1
         r = [{'zipcode': zipcode, 'num': items[zipcode]} for zipcode in items]
         #print(r)
-        repo['kobesay.regionhospital'].insert_many(r)
+        repo['heming.regionhospital'].insert_many(r)
 
         repo.logout()
 
@@ -54,7 +54,7 @@ class trans_hospital(dml.Algorithm):
         # Set up the database connection.
         client = dml.pymongo.MongoClient()
         repo = client.repo
-        repo.authenticate('kobesay', 'kobesay')
+        repo.authenticate('heming', 'heming')
         doc.add_namespace('alg', 'http://datamechanics.io/algorithm/') # The scripts are in <folder>#<filename> format.
         doc.add_namespace('dat', 'http://datamechanics.io/data/') # The data sets are in <user>#<collection> format.
         doc.add_namespace('ont', 'http://datamechanics.io/ontology#') # 'Extension', 'DataResource', 'DataSet', 'Retrieval', 'Query', or 'Computation'.
@@ -63,12 +63,12 @@ class trans_hospital(dml.Algorithm):
         doc.add_namespace('bwod', 'https://boston.opendatasoft.com/explore/dataset/') # Boston Wicked Open Data
         doc.add_namespace('bod', 'http://bostonopendata.boston.opendata.arcgis.com/datasets/') # BostonMaps: Open Data
 
-        this_script = doc.agent('alg:kobesay#trans_hospital', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
-        hospital = doc.entity('dat:kobesay#hospital', {'prov:label':'hospital', prov.model.PROV_TYPE:'ont:DataSet'})
+        this_script = doc.agent('alg:heming#trans_hospital', {prov.model.PROV_TYPE:prov.model.PROV['SoftwareAgent'], 'ont:Extension':'py'})
+        hospital = doc.entity('dat:heming#hospital', {'prov:label':'hospital', prov.model.PROV_TYPE:'ont:DataSet'})
         get_regionhospital = doc.activity('log:uuid'+str(uuid.uuid4()), startTime, endTime, {'prov:label':'get region hospital'})
         doc.wasAssociatedWith(get_regionhospital, this_script)
 
-        regionhospital = doc.entity('dat:kobesay#regionhospital', {prov.model.PROV_LABEL:'region hospital', prov.model.PROV_TYPE:'ont:DataSet'})
+        regionhospital = doc.entity('dat:heming#regionhospital', {prov.model.PROV_LABEL:'region hospital', prov.model.PROV_TYPE:'ont:DataSet'})
         doc.wasAttributedTo(regionhospital, this_script)
         doc.wasGeneratedBy(regionhospital, get_regionhospital, endTime)
         doc.wasDerivedFrom(regionhospital, hospital, get_regionhospital, get_regionhospital, get_regionhospital)

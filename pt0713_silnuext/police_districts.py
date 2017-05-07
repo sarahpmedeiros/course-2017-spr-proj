@@ -82,9 +82,9 @@ class police_districts(dml.Algorithm):
                   
         return doc
 
-police_districts.execute()
-doc = police_districts.provenance()
-print(doc.get_provn())
-print(json.dumps(json.loads(doc.serialize()), indent=4))
+# police_districts.execute()
+# doc = police_districts.provenance()
+# print(doc.get_provn())
+# print(json.dumps(json.loads(doc.serialize()), indent=4))
 
 ## eof

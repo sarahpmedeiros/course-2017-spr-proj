@@ -79,6 +79,7 @@ class transformation1(dml.Algorithm):
         repo.createPermanent("sleep_rates_universities")
         repo['pgr_syquiac.sleep_rates_universities'].insert_many(boston_schools)
         print("Inserted new collection!")
+        print(boston_schools[0])
 
         repo.logout()
         endTime = datetime.datetime.now()
@@ -117,4 +118,4 @@ class transformation1(dml.Algorithm):
 
         return doc
 
-
+transformation1.execute()

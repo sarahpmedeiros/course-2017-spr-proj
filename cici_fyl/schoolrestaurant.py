@@ -104,5 +104,3 @@ class schoolrestaurant(dml.Algorithm):
         repo.logout()
                   
         return doc
-
-

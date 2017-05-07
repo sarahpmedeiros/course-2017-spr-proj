@@ -32,8 +32,12 @@ class crimeStationStats(dml.Algorithm):
         repo = client.repo
         repo.authenticate('jgrishey', 'jgrishey')
 
-        stations = list(repo['jgrishey.redlineStations'].find(None, ['_id', 'lat', 'lon']))
-        crimes = list(repo['jgrishey.crime'].find(None, ['_id', 'lat', 'long']))
+        if trial:
+            stations = list(repo['jgrishey.redlineStations'].find(None, ['_id', 'lat', 'lon']))[:20]
+            crimes = list(repo['jgrishey.crime'].find(None, ['_id', 'lat', 'long']))[:20]
+        else:
+            stations = list(repo['jgrishey.redlineStations'].find(None, ['_id', 'lat', 'lon']))
+            crimes = list(repo['jgrishey.crime'].find(None, ['_id', 'lat', 'long']))
 
         res = {}
 

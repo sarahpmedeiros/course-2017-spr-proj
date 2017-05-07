@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Optimize Result{% endblock %}
+
+{% block body %}
+  <section>
+    <div>
+      <p><a href="/optimize/">&#8592; Back</a></p>
+      <h2 style="color: black">Optimization Results</h2>
+      <h2>Inputs</h2>
+      <p>Your input ratings are: </p>
+      <table border="6">
+        <tr><th>Food</th><th>Transport</th><th>Safety</th><th>Rent</th></tr>
+        <tr><td>{{f}}</td><td>{{t}}</td><td>{{s}}</td><td>{{r}}</td></tr>
+      </table>      
+
+      <h2>Results</h2>
+      <p>If we find results with every rating of (food, transport, safety, rent) above the requirement, return the result with maximal sum of these four ratings. Else we would return the result with minimal distance from the requirement ratings.</p>
+      <p><strong>Top fitted areas:</strong></p>
+      <table border="6">
+        <tr><th>Center</th><th>Area</th><th>Zipcode</th><th>Avg Rent</th><th>Grades</th></tr>
+        {% for rr in res %}
+        <tr><td>{{rr.center}}</td><td>{{rr.area}}</td><td>{{rr.postal_code}}</td><td>{{rr.avg_rent}}</td><td>{{rr.grade}}</td></tr>
+        {% endfor %}
+      </table>  
+
+      <h2>Map</h2>
+      <p>We use Leaflet to plot those top resluts in map</p>
+      <p><a href="/map/" target="_blank" >&#8594; Check!</a></p>
+    </div>
+  </section>
+
+
+{% endblock %}

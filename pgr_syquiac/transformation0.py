@@ -64,7 +64,6 @@ class transformation0(dml.Algorithm):
 
             locations[idx]['doctorVisits'].append(i)
 
-
         repo.dropPermanent("hospitals_doctor_visits")
         repo.createPermanent("hospitals_doctor_visits")
         repo['pgr_syquiac.hospitals_doctor_visits'].insert_many(locations)
@@ -109,4 +108,4 @@ class transformation0(dml.Algorithm):
 
         return doc
 
-
+transformation0.execute()

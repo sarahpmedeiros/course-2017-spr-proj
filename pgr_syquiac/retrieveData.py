@@ -18,7 +18,7 @@ import sodapy
 class retrieveData(dml.Algorithm):
     contributor = 'pgr_syquiac'
     reads = []
-    writes = ['pgr_syquiac.hospitals', 'pgr_syquiac.cdc', 'pgr_syquiac.schools','pgr_syquiac.pools','pgr_syquiac.stores']
+    writes = ['pgr_syquiac.hospitals', 'pgr_syquiac.cdc', 'pgr_syquiac.schools','pgr_syquiac.pools','pgr_syquiac.stores', 'pgr_syquiac.mbta']
     @staticmethod
     def execute(trial = False):
         '''Retrieve some data sets (not using the API here for the sake of simplicity).'''
@@ -177,3 +177,4 @@ class retrieveData(dml.Algorithm):
         return doc
 
 ## eof
+retrieveData.execute()

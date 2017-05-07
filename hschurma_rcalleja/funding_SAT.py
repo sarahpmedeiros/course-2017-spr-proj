@@ -58,36 +58,47 @@ class funding_SAT(dml.Algorithm):
         repo.dropPermanent("funding_SAT")
         repo.createPermanent("funding_SAT")
 
-        # size of SAT data set
         SAT = list(repo.hschurma_rcalleja.SAT.find())
         SATlen = len(SAT)
+        #print("SAT Data \n", SAT)
 
-        # list of schools in form [{'Name': val, 'NumTesting': val, 'Reading': val, 'Math': val, 'Writing': val}]
-        SATschools = []
-        for i in range(2,SATlen):
-            temp = SAT[i]
-            SATschools.append({'Name': temp['FIELD1'].strip(), 'NumTesting': temp['FIELD2'], 'Reading': temp['FIELD3'], 'Math': temp['FIELD4'], 'Writing': temp['FIELD5']})
+        #dict of schools in form {{Name: {Year: {'NumTesting': val, 'Reading': val, 'Math': val, 'Writing': val}, Year2: ...}}}
+        SATsch_temp = {}
+        for i in SAT:
+            SATsch_temp[i['School'].strip()] = {}
+        for i in SAT:
+            if (type(i['Writing']) == int):
+                total = i['Writing'] + i['Mathematics'] + i['Critical Reading']
+            SATsch_temp[i['School'].strip()][str(i['Year'])] = {'Total': total, 'Writing': i['Writing'], 'Mathematics': i['Mathematics'], 'Critical Reading': i['Critical Reading'], 'Test Takers': i['Test Takers']}
+        #print(SATsch_temp)
 
-        #print(SATschools)
-        # Dict of School name and Funding
-        funding = list(repo.hschurma_rcalleja.funding.aggregate([{"$project": {"_id": 0, "FIELD2": 1, "FIELD13": 1}}]))
-
-        # [{'Name': val, 'Funding': val}]
+        # Add 'Name' and 'SAT' key in preparation for product transformation
+        SATsch_fin = []
+        for s in SATsch_temp:
+            SATsch_fin.append({'Name': s, 'SAT':SATsch_temp[s]})
+        #print(SATsch_fin)
+        # List of School name and Funding
+        funding = list(repo.hschurma_rcalleja.funding.aggregate([{"$project": {"_id": 0}}]))
         nameFund = []
-        for i in range(len(funding)):
-            nameFund.append({'Name': funding[i]["FIELD2"].strip(), 'Funding': funding[i]["FIELD13"].strip()})
+        for f in funding:
+            nameFund.append({'Name': f['School Name'].strip(),
+                             'Funding': {'2008': f['2008_All'].strip(), '2009': f['2009_All'].strip(),
+                                         '2010': f['2010_All'].strip(), '2011': f['2011_All'].strip(),
+                                         '2012': f['2012_All'].strip(), '2013': f['2013_All'].strip(),
+                                         '2014': f['2014_All'].strip(), '2015': f['2015_All'].strip(),
+                                         '2016': f['2016_All'].strip()}})
 
         #print(nameFund)
         # print(nameLoc)
         # print(nameFund)
 
-        
-        P = product(SATschools, nameFund)
+
+        P = product(SATsch_fin, nameFund)
         #print(P)
         S = select(P, lambda t: t[0]['Name'] == t[1]['Name'])
         #print(S)
-        PR = project(S, lambda t: {'Name': t[0]['Name'], 'NumTesting': t[0]['NumTesting'], 'Reading': t[0]['Reading'], 'Math': t[0]['Math'], 'Writing': t[0]['Writing'], 'Funding': t[1]['Funding']})
-        #print(PR)
+        PR = project(S, lambda t: {'Name': t[0]['Name'], 'SAT': t[0]['SAT'], 'Funding': t[1]['Funding']})
+        print(PR)
 
         repo.dropCollection('funding_SAT')
         repo.createCollection('funding_SAT')
@@ -143,6 +154,6 @@ class funding_SAT(dml.Algorithm):
         return doc
 
 
-'''funding_SAT.execute()
-doc = funding_SAT.provenance()'''
+funding_SAT.execute()
+#doc = funding_SAT.provenance()'''
 

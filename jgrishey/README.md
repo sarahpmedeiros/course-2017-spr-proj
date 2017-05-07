@@ -16,3 +16,20 @@ MBTA - Need an account/token
 City of Boston/Cambdrige - Socrata
 
 Geonames - Need an account/username (No token)
+
+# Project 2
+
+For this project, I am using the City of Boston Data Portal along with a JSON file that
+has data about the major hospitals around Boston. I am getting the crime data from City of
+Boston. I'm trying to solve the problem of where hospitals should be located and the expected
+load of currently-placed hospitals over time. I am going to use the K-means
+algorithm along with crime data to determine where hospitals should be placed. Obviously this
+is a bit short-sighted, because crime isn't the only factor in placement of hospitals. Also, I am using
+crime and currently-placed hospital data to determine the load of a certain hospital. I iterate through
+the crimes and assign them to each hospital, giving each hospital a coefficient based off of its square footage.
+This coefficient leads to larger hospitals getting more patients. This could potentially be used to guide a victim
+of a crime or even just a person in-need to the best hospital that would have the least load and is closest.
+
+City of Boston - Socrata
+
+Hospital JSON - http://datamechanics.io/data/hospitalsgeo.json

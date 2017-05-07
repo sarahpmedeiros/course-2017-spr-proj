@@ -46,16 +46,10 @@ class income(dml.Algorithm):
         repo['cici_fyl.property_2016'].insert_many(a)
         repo['cici_fyl.property_2016'].metadata({'complete':True})
 
-        temp= methods.merge1(r,a)
-        temp1=[]
-
-        for i in temp:
-            for l in i:
-                temp1.append(l)
 
         repo.dropCollection("property")
         repo.createCollection("property")
-        repo['cici_fyl.property'].insert_many(temp1)
+        repo['cici_fyl.property'].insert_many(r)
         repo['cici_fyl.property'].metadata({'complete':True})
         repo.dropCollection("property_2016")
 
@@ -142,5 +136,3 @@ class income(dml.Algorithm):
         repo.logout()
                   
         return doc
-
-
